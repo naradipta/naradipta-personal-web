@@ -1,0 +1,96 @@
+---
+import { siteConfig } from "../config/site";
+---
+
+<section class="skills" id="skills">
+  <div class="skills__inner container">
+    <p class="kicker">05 — Skills</p>
+    <h2>Tools & Skills</h2>
+    <div class="skills__grid">
+      {
+        siteConfig.skills.map((group) => (
+          <div class="skills__group">
+            <h3>{group.category}</h3>
+            <ul class="skills__list">
+              {group.skills.map((skill) => (
+                <li>{skill}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills {
+    background-color: var(--color-bg-subtle);
+  }
+
+  .skills__inner {
+    padding-block: var(--space-16);
+  }
+
+  .skills h2 {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-8);
+  }
+
+  .skills__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+    gap: var(--space-6);
+  }
+
+  .skills__group {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+  }
+
+  .skills__group h3 {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-3);
+  }
+
+  .skills__list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+  }
+
+  .skills__list li {
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .skills__list li:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  @media (max-width: 400px) {
+    .skills__inner {
+      padding-block: var(--space-12);
+    }
+
+    .skills h2 {
+      font-size: var(--text-xl);
+    }
+  }
+</style>

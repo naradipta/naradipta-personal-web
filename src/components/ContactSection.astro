@@ -1,0 +1,122 @@
+---
+import { siteConfig } from "../config/site";
+---
+
+<section class="contact" id="contact">
+  <div class="contact__inner container">
+    <p class="kicker contact__kicker">07 — Contact</p>
+    <h2>Let's work together.</h2>
+    <p class="contact__text">
+      Open to QA Engineer, SDET opportunities, or automation project collaborations.
+    </p>
+    <p class="contact__availability">
+      {siteConfig.availability.location} ({siteConfig.availability.timezone}) ·{" "}
+      {siteConfig.availability.statusLine}
+    </p>
+    <div class="contact__actions">
+      <a class="button button--primary" href={`mailto:${siteConfig.contact.email}`}>
+        Email Me
+      </a>
+      {
+        siteConfig.resumeUrl && (
+          <a class="button button--ghost" href={siteConfig.resumeUrl} target="_blank" rel="noopener noreferrer">
+            Download Resume
+          </a>
+        )
+      }
+      <a
+        class="button button--ghost"
+        href={siteConfig.contact.whatsapp}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        WhatsApp
+      </a>
+      <a
+        class="button button--ghost"
+        href={siteConfig.contact.linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        LinkedIn
+      </a>
+      <a
+        class="button button--ghost"
+        href={siteConfig.contact.github}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact {
+    background-color: var(--color-text);
+    color: var(--color-bg);
+  }
+
+  .contact__inner {
+    padding-block: var(--space-16);
+  }
+
+  .contact__kicker {
+    color: var(--color-primary);
+  }
+
+  .contact h2 {
+    font-size: var(--text-2xl);
+  }
+
+  .contact__text {
+    margin-top: var(--space-4);
+    max-width: 40rem;
+    color: color-mix(in srgb, var(--color-bg) 70%, var(--color-text));
+    font-size: var(--text-lg);
+  }
+
+  .contact__availability {
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-primary);
+  }
+
+  .contact__actions {
+    margin-top: var(--space-8);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  .contact__actions .button--ghost {
+    color: inherit;
+    border-color: color-mix(in srgb, var(--color-bg) 30%, transparent);
+  }
+
+  .contact__actions .button--ghost:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+
+  @media (max-width: 400px) {
+    .contact__inner {
+      padding-block: var(--space-12);
+    }
+
+    .contact h2 {
+      font-size: var(--text-xl);
+    }
+
+    .contact__text {
+      font-size: var(--text-base);
+    }
+
+    .contact__actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+</style>

@@ -1,0 +1,42 @@
+---
+import { siteConfig } from "../config/site";
+---
+
+<section class="about" id="about">
+  <div class="about__inner container">
+    <p class="kicker">01 — About</p>
+    <h2>How I Work</h2>
+    <p class="about__text">{siteConfig.valueProposition}</p>
+  </div>
+</section>
+
+<style>
+  .about__inner {
+    padding-block: var(--space-16);
+  }
+
+  .about h2 {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-6);
+  }
+
+  .about__text {
+    max-width: 48rem;
+    color: var(--color-text-muted);
+    font-size: var(--text-lg);
+  }
+
+  @media (max-width: 400px) {
+    .about__inner {
+      padding-block: var(--space-12);
+    }
+
+    .about h2 {
+      font-size: var(--text-xl);
+    }
+
+    .about__text {
+      font-size: var(--text-base);
+    }
+  }
+</style>

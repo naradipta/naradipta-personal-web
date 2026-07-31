@@ -1,0 +1,170 @@
+---
+import { siteConfig } from "../config/site";
+
+const initials = siteConfig.name
+  .split(" ")
+  .map((word) => word[0])
+  .join("")
+  .slice(0, 2)
+  .toUpperCase();
+---
+
+<section class="hero" id="hero">
+  <div class="hero__glow" aria-hidden="true"></div>
+  <div class="hero__inner container">
+    <div class="hero__avatar-wrap">
+      {
+        siteConfig.avatar ? (
+          <img class="hero__avatar" src={siteConfig.avatar} alt={siteConfig.name} />
+        ) : (
+          <div class="hero__avatar hero__avatar--placeholder" aria-hidden="true">
+            {initials}
+          </div>
+        )
+      }
+    </div>
+    <div class="hero__content">
+      <p class="hero__pill">
+        <span class="hero__pill-dot" aria-hidden="true"></span>
+        {siteConfig.role}
+      </p>
+      <h1 class="hero__name">{siteConfig.name}</h1>
+      <p class="hero__tagline">{siteConfig.tagline}</p>
+      <div class="hero__actions">
+        <a class="button button--primary" href="#work">View Work</a>
+        <a class="button button--ghost" href="#contact">Get in Touch</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding-block: var(--space-24) var(--space-16);
+    overflow: hidden;
+  }
+
+  .hero__glow {
+    position: absolute;
+    top: -12rem;
+    left: 50%;
+    width: 44rem;
+    height: 30rem;
+    transform: translateX(-50%);
+    background: radial-gradient(closest-side, var(--color-primary-tint), transparent);
+    filter: blur(10px);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .hero__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-8);
+  }
+
+  .hero__content {
+    min-width: 0;
+  }
+
+  .hero__avatar-wrap {
+    flex-shrink: 0;
+  }
+
+  .hero__avatar {
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    box-shadow: var(--shadow-md);
+  }
+
+  @media (min-width: 768px) {
+    .hero__inner {
+      flex-direction: row-reverse;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-16);
+    }
+
+    .hero__content {
+      flex: 1 1 32rem;
+    }
+
+    .hero__avatar {
+      width: 16rem;
+      height: 16rem;
+    }
+  }
+
+  .hero__avatar--placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+    color: var(--color-primary-contrast);
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .hero__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1) var(--space-4) var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--space-6);
+  }
+
+  .hero__pill-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: var(--color-success);
+  }
+
+  .hero__name {
+    font-size: var(--text-4xl);
+    max-width: 40rem;
+  }
+
+  .hero__tagline {
+    margin-top: var(--space-6);
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    max-width: 42rem;
+  }
+
+  .hero__actions {
+    margin-top: var(--space-8);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  @media (max-width: 400px) {
+    .hero {
+      padding-block: var(--space-16) var(--space-12);
+    }
+
+    .hero__name {
+      font-size: var(--text-2xl);
+    }
+
+    .hero__actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+</style>

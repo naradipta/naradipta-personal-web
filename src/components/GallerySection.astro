@@ -1,0 +1,124 @@
+---
+import { getCollection } from "astro:content";
+
+const photos = (await getCollection("gallery")).sort((a, b) => a.data.order - b.data.order);
+
+// 3 kolom x 3 baris di layar desktop (lihat breakpoint di <style>).
+const COLUMNS = 3;
+const INITIAL_ROWS = 3;
+const BATCH_SIZE = COLUMNS * INITIAL_ROWS;
+---
+
+{
+  photos.length > 0 && (
+    <section class="gallery" id="gallery">
+      <div class="gallery__inner container">
+        <p class="kicker">06 — Gallery</p>
+        <h2>Behind the Work</h2>
+        <div class="gallery__grid" data-batch-size={BATCH_SIZE}>
+          {photos.map((photo, i) => (
+            <figure class="gallery__item" hidden={i >= BATCH_SIZE}>
+              <img class="gallery__image" src={photo.data.image} alt={photo.data.alt} loading="lazy" />
+              {photo.data.caption && <figcaption>{photo.data.caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
+        {photos.length > BATCH_SIZE && (
+          <button type="button" class="button button--ghost gallery__load-more">
+            Load More Photos
+          </button>
+        )}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .gallery__inner {
+    padding-block: var(--space-16);
+  }
+
+  .gallery h2 {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-8);
+  }
+
+  .gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+
+  .gallery__item {
+    margin: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .gallery__item:hover {
+    transform: translateY(-6px) scale(1.04);
+    box-shadow: var(--shadow-lg);
+    z-index: 1;
+  }
+
+  .gallery__image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .gallery__item figcaption {
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .gallery__load-more {
+    display: flex;
+    margin: var(--space-8) auto 0;
+  }
+
+  @media (max-width: 900px) {
+    .gallery__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .gallery__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .gallery__inner {
+      padding-block: var(--space-12);
+    }
+
+    .gallery h2 {
+      font-size: var(--text-xl);
+    }
+  }
+</style>
+
+<script>
+  const grid = document.querySelector<HTMLElement>(".gallery__grid");
+  const loadMoreBtn = document.querySelector<HTMLButtonElement>(".gallery__load-more");
+
+  if (grid && loadMoreBtn) {
+    const batchSize = Number(grid.dataset.batchSize) || 9;
+
+    loadMoreBtn.addEventListener("click", () => {
+      const hiddenItems = Array.from(grid.querySelectorAll<HTMLElement>(".gallery__item[hidden]"));
+      hiddenItems.slice(0, batchSize).forEach((item) => item.removeAttribute("hidden"));
+
+      if (grid.querySelectorAll(".gallery__item[hidden]").length === 0) {
+        loadMoreBtn.hidden = true;
+      }
+    });
+  }
+</script>

@@ -1,0 +1,118 @@
+---
+import { siteConfig } from "../config/site";
+import type { WhatIDoIcon } from "../config/site";
+
+const icons: Record<WhatIDoIcon, string> = {
+  bug: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 8v9a3 3 0 0 0 6 0V8"/><path d="M12 8a3 3 0 0 0 3-3"/><path d="M12 8a3 3 0 0 1-3-3"/><path d="M5 12H3M21 12h-2M5 17l-2 2M19 17l2 2M5 8l-2-2M19 8l2-2"/></svg>`,
+  gear: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 0 1-4 0v-.09a1.7 1.7 0 0 0-1-1.55 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.55-1H3a2 2 0 0 1 0-4h.09a1.7 1.7 0 0 0 1.55-1 1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34H9a1.7 1.7 0 0 0 1-1.55V3a2 2 0 0 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V9a1.7 1.7 0 0 0 1.55 1H21a2 2 0 0 1 0 4h-.09a1.7 1.7 0 0 0-1.55 1z"/></svg>`,
+  cloud: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 0-9 6 6 0 0 0-11.4-1.5A4.5 4.5 0 0 0 6.5 19h11z"/></svg>`,
+  mobile: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>`,
+  shield: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>`,
+  sparkle: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/></svg>`,
+  doc: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6M9 9h1"/></svg>`,
+  checklist: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="m8.5 9 1.5 1.5L12.5 8M8.5 15l1.5 1.5L12.5 14"/><path d="M15 9h2M15 15h2"/></svg>`,
+};
+---
+
+<section class="what-i-do" id="what-i-do">
+  <div class="what-i-do__inner container">
+    <p class="kicker">04 — What I Do</p>
+    <h2>What I Do</h2>
+    <br>
+    <div class="what-i-do__grid">
+      {
+        siteConfig.whatIDo.map((item) => (
+          <div class="what-i-do__card">
+            <span class="what-i-do__icon" set:html={icons[item.icon]} />
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .what-i-do__inner {
+    padding-block: var(--space-16);
+  }
+
+  .what-i-do h2 {
+    font-size: var(--text-2xl);
+  }
+
+  .what-i-do__quote {
+    margin: var(--space-10) auto;
+    max-width: 38rem;
+    text-align: center;
+  }
+
+  .what-i-do__quote p {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    color: var(--color-text);
+  }
+
+  .what-i-do__quote cite {
+    display: block;
+    margin-top: var(--space-3);
+    font-style: normal;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .what-i-do__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: var(--space-6);
+  }
+
+  .what-i-do__card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    padding: var(--space-6);
+  }
+
+  .what-i-do__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-md);
+    background-color: var(--color-primary-tint);
+    color: var(--color-primary);
+    margin-bottom: var(--space-4);
+  }
+
+  .what-i-do__icon :global(svg) {
+    width: 1.35rem;
+    height: 1.35rem;
+  }
+
+  .what-i-do__card h3 {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-2);
+  }
+
+  .what-i-do__card p {
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 400px) {
+    .what-i-do__inner {
+      padding-block: var(--space-12);
+    }
+
+    .what-i-do h2 {
+      font-size: var(--text-xl);
+    }
+
+    .what-i-do__quote {
+      margin-block: var(--space-8);
+    }
+  }
+</style>

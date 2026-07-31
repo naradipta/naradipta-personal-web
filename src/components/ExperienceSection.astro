@@ -1,0 +1,126 @@
+---
+import { siteConfig } from "../config/site";
+---
+
+<section class="experience" id="experience">
+  <div class="experience__inner container">
+    <p class="kicker">03 — Experience</p>
+    <h2>Where I've Worked</h2>
+    <ol class="experience__timeline">
+      {
+        siteConfig.experience.map((entry) => (
+          <li class="experience__item">
+            <span class="experience__marker" aria-hidden="true" />
+            <p class="experience__period">
+              {entry.period} · {entry.location}
+            </p>
+            <h3>{entry.role}</h3>
+            <p class="experience__company">{entry.company}</p>
+            <ul class="experience__highlights">
+              {entry.highlights.map((highlight) => (
+                <li>{highlight}</li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .experience__inner {
+    padding-block: var(--space-16);
+  }
+
+  .experience h2 {
+    font-size: var(--text-2xl);
+  }
+
+  .experience__timeline {
+    list-style: none;
+    margin: var(--space-8) 0 0;
+    padding: 0;
+    max-width: 42rem;
+  }
+
+  .experience__item {
+    position: relative;
+    padding-left: var(--space-8);
+    padding-bottom: var(--space-10);
+    border-left: 2px solid var(--color-border);
+  }
+
+  .experience__item:last-child {
+    border-left-color: transparent;
+    padding-bottom: 0;
+  }
+
+  .experience__marker {
+    position: absolute;
+    left: -0.5rem;
+    top: 0.3rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    box-shadow: 0 0 0 4px var(--color-primary-tint);
+  }
+
+  .experience__period {
+    margin-top: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-2);
+  }
+
+  .experience__item h3 {
+    font-size: var(--text-lg);
+  }
+
+  .experience__company {
+    margin-top: var(--space-1);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-primary);
+  }
+
+  .experience__highlights {
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .experience__highlights li {
+    position: relative;
+    padding-left: var(--space-4);
+    color: var(--color-text-muted);
+  }
+
+  .experience__highlights li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 0.35rem;
+    height: 0.35rem;
+    border-radius: 50%;
+    background-color: var(--color-border);
+  }
+
+  @media (max-width: 400px) {
+    .experience__inner {
+      padding-block: var(--space-12);
+    }
+
+    .experience h2 {
+      font-size: var(--text-xl);
+    }
+  }
+</style>
