@@ -69,8 +69,7 @@ export const siteConfig: SiteConfig = {
   name: "Muhammad Arrafi",
   role: "QA Engineer & SDET",
   avatar: "/profile/avatar.jpg",
-  // Taruh file resume di public/resume.pdf lalu isi path-nya di sini, mis:
-  // resumeUrl: "/resume.pdf",
+  resumeUrl: "/Muhammad_Arrafi_Resume.pdf",
   tagline: "QA Engineer & SDET with 5+ years testing Web, Android, iOS, and API platforms in fast-paced Agile teams. I build scalable test automation frameworks, drive testing for large-scale service migrations while safeguarding tracker data integrity, and use AI/LLM to move faster without cutting corners on release quality.",
   valueProposition: "I treat quality as a shared responsibility, not a gate at the end of a sprint — I get involved from PRD review onward so ambiguous requirements get caught before they become bugs. When something breaks, I care more about the root cause than closing the ticket fast, and I default to automating anything I'd otherwise repeat by hand. I also lean on AI/LLM tools deliberately: to move faster through the repetitive parts of QA, never as a substitute for actually understanding what I'm testing.",
 
@@ -170,11 +169,11 @@ export const siteConfig: SiteConfig = {
     },
     {
       category: "Testing Tools",
-      skills: ["Selenium", "Appium", "Katalon Studio", "Postman", "Proxyman", "Flipper"],
+      skills: ["Selenium", "Appium", "Katalon Studio", "Postman", "Proxyman", "Flipper","Locust"],
     },
     {
       category: "Frameworks",
-      skills: ["Java Test Framework", "JUnit", "TestNG", "Unittest", "Locust", "CI/CD"],
+      skills: ["JUnit", "TestNG", "Unittest", "Maven"]
     },
     {
       category: "AI-Assisted QA",
