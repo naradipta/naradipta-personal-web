@@ -19,8 +19,8 @@
 set -euo pipefail
 
 # --- Konfigurasi (sesuaikan bila perlu) ---
-SRC_DIR="/var/www/portfolio-src"   # lokasi clone repo
-WEB_ROOT="/var/www/portfolio"      # root yang disajikan Nginx
+SRC_DIR="/var/www/naradipta-personal-web"   # lokasi clone repo
+WEB_ROOT="/var/www/naradipta-personal-web"      # root yang disajikan Nginx
 BRANCH="main"                      # branch yang dideploy
 
 echo "==> Deploy dimulai"
