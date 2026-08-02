@@ -43,26 +43,32 @@ const { Content } = await render(project);
           )
         }
 
-        <div class="project-detail__links">
-          {project.data.repo ? (
-            <a class="button button--ghost" href={project.data.repo} target="_blank" rel="noopener noreferrer">
-              GitHub Repo
-            </a>
-          ) : (
-            <span class="button button--ghost button--disabled" aria-disabled="true">
-              GitHub Repo — Coming Soon
-            </span>
-          )}
-          {project.data.demo ? (
-            <a class="button button--ghost" href={project.data.demo} target="_blank" rel="noopener noreferrer">
-              Demo
-            </a>
-          ) : (
-            <span class="button button--ghost button--disabled" aria-disabled="true">
-              Demo — Coming Soon
-            </span>
-          )}
-        </div>
+        {
+          (project.data.showRepo || project.data.showDemo) && (
+            <div class="project-detail__links">
+              {project.data.showRepo &&
+                (project.data.repo ? (
+                  <a class="button button--ghost" href={project.data.repo} target="_blank" rel="noopener noreferrer">
+                    GitHub Repo
+                  </a>
+                ) : (
+                  <span class="button button--ghost button--disabled" aria-disabled="true">
+                    GitHub Repo — Coming Soon
+                  </span>
+                ))}
+              {project.data.showDemo &&
+                (project.data.demo ? (
+                  <a class="button button--ghost" href={project.data.demo} target="_blank" rel="noopener noreferrer">
+                    Demo
+                  </a>
+                ) : (
+                  <span class="button button--ghost button--disabled" aria-disabled="true">
+                    Demo — Coming Soon
+                  </span>
+                ))}
+            </div>
+          )
+        }
       </header>
 
       {

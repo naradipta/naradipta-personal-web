@@ -23,7 +23,12 @@ const featuredProjects = projects
   <section class="projects" id="work">
     <div class="container">
       <p class="kicker">02 — Work</p>
-      <h2>What I've Built</h2>
+      <div class="projects__header">
+        <h2>What I've Built</h2>
+        <a class="button button--ghost projects__see-all" href="/projects">
+          See All Projects <span aria-hidden="true">→</span>
+        </a>
+      </div>
       {
         featuredProjects.length > 0 ? (
           <div class="projects__grid">
@@ -61,6 +66,18 @@ const featuredProjects = projects
     font-size: var(--text-2xl);
   }
 
+  .projects__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  .projects__header h2 {
+    margin: 0;
+  }
+
   .projects__grid {
     margin-top: var(--space-8);
     display: grid;
@@ -73,13 +90,47 @@ const featuredProjects = projects
     color: var(--color-text-muted);
   }
 
+  .projects__see-all {
+    flex-shrink: 0;
+    gap: var(--space-2);
+  }
+
+  @media (max-width: 600px) {
+    .projects__header h2 {
+      font-size: var(--text-xl);
+    }
+
+    .projects__see-all {
+      padding: var(--space-2) var(--space-4);
+      font-size: var(--text-sm);
+    }
+
+    .projects__grid {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-block: var(--space-3) var(--space-2);
+    }
+
+    .projects__grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .projects__grid :global(.project-card) {
+      flex: 0 0 85%;
+      scroll-snap-align: center;
+    }
+  }
+
   @media (max-width: 400px) {
     .projects {
       padding-block: var(--space-12);
     }
 
-    .projects h2 {
-      font-size: var(--text-xl);
+    .projects__grid :global(.project-card) {
+      flex-basis: 90%;
     }
   }
 </style>

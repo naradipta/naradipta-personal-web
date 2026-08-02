@@ -3,7 +3,7 @@ title: "Automated Integration Testing for CI/CD Pipeline"
 summary: "Automated integration test suite that verifies product and widget behavior across multiple service dependencies before every release."
 status: "completed"
 featured: true
-order: 1
+order: 5
 tags: ["Automation", "Integration Testing", "CI/CD"]
 # repo: "https://github.com/you/your-repo"        # optional — omit until ready
 # demo: "https://your-demo-video-or-link"          # optional — omit if none

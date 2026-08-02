@@ -3,7 +3,7 @@ title: "Load & Stress Test Scripting Strategy"
 summary: "Author and maintain the load-test scripts that size traffic from real BAU and event data, catching capacity risks before they hit production."
 status: "completed"
 featured: true
-order: 4
+order: 2
 tags: ["Load Testing", "Locust", "Performance", "Python", "QA Automation"]
 # repo: "https://github.com/you/your-repo"        # optional — omit until ready
 # demo: "https://your-demo-video-or-link"          # optional — omit if none
