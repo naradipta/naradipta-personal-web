@@ -50,8 +50,10 @@ Kalau sebuah fitur bisa dikerjakan dengan HTML statis, kerjakan dengan HTML stat
 
 ```
 public/
-└── learn/                   # QA Drill (app belajar mandiri, statis, tanpa build) → /learn/
-                             # Edit questions/*.json lalu `python3 tools/build-data.py`; tes: `node tests/grade.test.js`
+└── learn/                   # QA Drill: aplikasi belajar mandiri (HTML/CSS/JS klasik, tanpa build) → /learn/
+qa-drill/                    # sumber dan alat QA Drill (soal *.json, build-data.py, tes); TIDAK terbit
+                             # Pengecualian terdokumentasi: /learn/ memakai JS vanilla sendiri (bukan Astro/React)
+                             # karena berupa aplikasi interaktif mandiri; detail di qa-drill/CLAUDE.md
 src/
 ├── config/
 │   └── site.ts              # nama, tagline, kontak, link sosial, daftar skills

@@ -1,6 +1,11 @@
 // Jalankan: node tests/grade.test.js
 const assert = require("assert");
-const G = require("../js/grade.js");
+// grade.js ada di public/learn (dilayani sebagai skrip klasik), jadi dimuat lewat vm agar tidak
+// bergantung pada "type" package.json milik situs.
+const fs = require("fs"), path = require("path"), vm = require("vm");
+const mod = { exports: {} };
+vm.runInNewContext(fs.readFileSync(path.join(__dirname, "..", "..", "public", "learn", "js", "grade.js"), "utf8"), { module: mod });
+const G = mod.exports;
 
 const put = { keywords: [["put"], ["patch"], ["full", "penuh", "seluruh", "entire", "replace", "ganti"], ["partial", "sebagian"]], pass: 0.75 };
 

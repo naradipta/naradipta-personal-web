@@ -13,15 +13,15 @@ QA.questions = [
 "options": {
 "id": [
 "Menunggu elemen visible, stabil, enabled, dan bisa menerima event (actionability checks)",
-"Langsung klik tanpa menunggu apa pun",
-"Selalu menunggu 30 detik tetap",
-"Menunggu networkidle lalu klik"
+"Langsung mengklik koordinat elemen tanpa menunggu apa pun agar test cepat",
+"Selalu menunggu 30 detik tetap lalu mengklik walau elemen sudah siap lebih awal",
+"Menunggu networkidle di seluruh halaman, baru kemudian mengklik elemen tersebut"
 ],
 "en": [
-"Waits for the element to be visible, stable, enabled and able to receive events (actionability checks)",
-"Clicks immediately without waiting",
-"Always waits a fixed 30 seconds",
-"Waits for networkidle then clicks"
+"Waits for the element to be visible, stable, enabled and able to receive events",
+"Clicks the element's coordinates immediately without waiting so the test is fast",
+"Always waits a fixed 30 seconds and then clicks even if the element was ready earlier",
+"Waits for networkidle on the whole page before finally clicking the element"
 ]
 },
 "answer": 0,
@@ -70,16 +70,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Web-first assertion mencoba ulang sampai timeout, sedangkan isVisible() hanya membaca sekali sehingga rawan flaky",
-"Keduanya identik",
-"toBeVisible() lebih cepat karena tidak menunggu",
-"isVisible() tidak bisa dipakai di TypeScript"
+"Web-first assertion mencoba ulang sampai timeout, sedangkan isVisible() membaca sekali sehingga rawan flaky",
+"Keduanya identik karena isVisible() juga menunggu elemen tampil sebelum mengembalikan hasil",
+"toBeVisible() lebih cepat karena tidak menunggu sama sekali dan langsung memberi hasil",
+"isVisible() tidak bisa dipakai di TypeScript sehingga proyek TypeScript wajib memakai toBeVisible()"
 ],
 "en": [
 "The web-first assertion retries until timeout, while isVisible() reads once and is prone to flakiness",
-"They are identical",
-"toBeVisible() is faster because it does not wait",
-"isVisible() cannot be used in TypeScript"
+"They are identical because isVisible() also waits for the element to appear before returning",
+"toBeVisible() is faster because it never waits and gives a result straight away",
+"isVisible() cannot be used in TypeScript so TypeScript projects must use toBeVisible()"
 ]
 },
 "answer": 0,
@@ -99,16 +99,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Cookie, storage, dan sesi terisolasi antar test tanpa perlu membuka browser baru",
-"Semua test berbagi login yang sama secara otomatis",
-"Test otomatis berjalan berurutan",
-"Browser tidak perlu dipasang"
+"Cookie, storage, dan sesi terisolasi antar test tanpa membuka browser baru",
+"Semua test otomatis berbagi sesi login yang sama sehingga tidak perlu login berulang kali",
+"Test otomatis berjalan berurutan di satu halaman sehingga tidak mungkin berjalan paralel",
+"Browser tidak perlu dipasang karena Playwright menjalankan semua test tanpa browser nyata"
 ],
 "en": [
 "Cookies, storage and sessions are isolated between tests without launching a new browser",
-"All tests automatically share the same login",
-"Tests automatically run sequentially",
-"No browser needs to be installed"
+"All tests automatically share the same login session so nobody has to log in repeatedly",
+"Tests automatically run one after another on a single page so parallel runs are impossible",
+"No browser needs to be installed because Playwright runs every test without a real browser"
 ]
 },
 "answer": 0,
@@ -158,15 +158,15 @@ QA.questions = [
 "options": {
 "id": [
 "page.route('**/api/products', route => route.fulfill({ status: 500 }))",
-"Matikan server backend secara manual",
-"Ubah kode aplikasi agar melempar error",
-"Tidak bisa diuji di Playwright"
+"Mematikan server backend secara manual lalu menjalankan test sebelum server dinyalakan lagi",
+"Mengubah kode aplikasi supaya melempar error setiap kali memanggil API produk dalam test",
+"Tidak bisa diuji di Playwright karena Playwright tidak dapat memanipulasi request jaringan"
 ],
 "en": [
 "page.route('**/api/products', route => route.fulfill({ status: 500 }))",
-"Shut the backend server down manually",
-"Change app code to throw an error",
-"It cannot be tested in Playwright"
+"Shutting the backend server down manually and running the test before turning it back on",
+"Changing the app code to throw an error every time it calls the products API during tests",
+"It cannot be tested in Playwright because Playwright cannot manipulate network requests"
 ]
 },
 "answer": 0,
@@ -186,16 +186,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Command Cypress dijalankan async dalam antrean dan mengembalikan chainable, bukan nilai; gunakan .then() atau alias",
-"Karena cy.get hanya mendukung ID kelas",
-"Karena Cypress tidak punya fungsi text()",
-"Karena harus memakai await"
+"Command Cypress async dalam antrean dan mengembalikan chainable, bukan nilai; pakai .then() atau alias",
+"Karena cy.get hanya mendukung selector ID dan tidak bisa membaca teks elemen sama sekali",
+"Karena Cypress memang tidak menyediakan fungsi untuk membaca teks dari sebuah elemen",
+"Karena semua command Cypress wajib diawali dengan await agar nilai kembaliannya tersedia"
 ],
 "en": [
-"Cypress commands are queued and asynchronous and return a chainable, not a value; use .then() or an alias",
-"Because cy.get only supports class IDs",
-"Because Cypress has no text() function",
-"Because you must use await"
+"Cypress commands are queued and async and return a chainable, not a value; use .then() or an alias",
+"Because cy.get only supports ID selectors and cannot read element text at all",
+"Because Cypress simply provides no function to read text from an element",
+"Because every Cypress command must be prefixed with await for its return value to be available"
 ]
 },
 "answer": 0,
@@ -245,15 +245,15 @@ QA.questions = [
 "options": {
 "id": [
 "Query dan assertion diulang otomatis sampai lolos atau timeout (default 4 detik)",
-"Seluruh test diulang jika gagal tanpa konfigurasi",
-"Command yang mengubah state (mis. click) diulang berkali-kali",
-"Cypress mengulang test sampai hijau"
+"Seluruh test diulang jika gagal tanpa perlu konfigurasi apa pun oleh pengguna Cypress",
+"Command yang mengubah state seperti click diulang berkali-kali sampai berhasil dijalankan",
+"Cypress mengulang test terus-menerus sampai hasilnya hijau, berapa pun jumlah percobaannya"
 ],
 "en": [
 "Queries and assertions are retried automatically until they pass or time out (default 4 seconds)",
-"The whole test is rerun on failure without configuration",
-"State-changing commands (e.g. click) are retried repeatedly",
-"Cypress reruns tests until green"
+"The whole test is rerun on failure without any configuration from the Cypress user",
+"State-changing commands such as click are retried repeatedly until they succeed",
+"Cypress keeps rerunning the test until the result is green, however many attempts it takes"
 ]
 },
 "answer": 0,
@@ -273,16 +273,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"cy.session() untuk menyimpan dan memulihkan sesi login (login lewat API bila memungkinkan)",
-"Login manual lalu jalankan Cypress",
-"Nonaktifkan autentikasi di aplikasi",
-"Pakai cy.wait(10000) saat login"
+"cy.session() untuk menyimpan dan memulihkan sesi login (login lewat API bila bisa)",
+"Login manual dulu di browser lalu menjalankan Cypress tanpa pernah menutup browser itu",
+"Menonaktifkan autentikasi di aplikasi sepenuhnya selama test berjalan di lingkungan apa pun",
+"Memakai cy.wait(10000) setiap kali login supaya sesi sempat terbentuk dengan sempurna"
 ],
 "en": [
 "cy.session() to cache and restore the login session (log in via API where possible)",
-"Log in manually and then run Cypress",
-"Disable authentication in the app",
-"Use cy.wait(10000) when logging in"
+"Log in manually first in the browser and run Cypress without ever closing that browser",
+"Disable authentication in the app entirely while tests run in any environment",
+"Use cy.wait(10000) at every login so the session has time to form perfectly"
 ]
 },
 "answer": 0,
@@ -303,15 +303,15 @@ QA.questions = [
 "options": {
 "id": [
 "Gunakan cy.origin() untuk perintah di domain lain; Cypress tidak mendukung banyak tab",
-"Tidak ada batasan apa pun",
-"Cypress tidak bisa menguji aplikasi yang memakai SSO",
-"Cukup ganti baseUrl di tengah test"
+"Tidak ada batasan apa pun karena Cypress bebas berpindah antar domain di satu test",
+"Cypress tidak bisa menguji aplikasi yang memakai SSO pihak ketiga dalam bentuk apa pun",
+"Cukup mengganti baseUrl di tengah test lalu melanjutkan perintah seperti biasa"
 ],
 "en": [
 "Use cy.origin() for commands on another domain; Cypress does not support multiple tabs",
-"There is no limitation",
-"Cypress cannot test apps that use SSO",
-"Just change baseUrl mid-test"
+"There is no limitation because Cypress moves freely across domains within one test",
+"Cypress cannot test apps that use third-party SSO in any form whatsoever",
+"Just change baseUrl in the middle of the test and continue with commands as usual"
 ]
 },
 "answer": 0,
@@ -332,15 +332,15 @@ QA.questions = [
 "options": {
 "id": [
 "Execution Profile berisi variabel global (mis. baseUrl) yang dipilih saat eksekusi",
-"Menyalin test case dan mengganti URL manual",
-"Menulis URL langsung di tiap langkah",
-"Dua project berbeda"
+"Menyalin semua test case lalu mengganti URL secara manual di setiap langkah yang memakainya",
+"Menulis URL langsung di tiap langkah test supaya setiap test bisa dibaca sendiri",
+"Membuat dua project berbeda, satu untuk staging dan satu lagi untuk production"
 ],
 "en": [
 "An Execution Profile with global variables (e.g. baseUrl) selected at run time",
-"Copying test cases and changing URLs manually",
-"Hard-coding the URL in every step",
-"Two separate projects"
+"Copying every test case and changing the URL manually in each step that uses it",
+"Hard-coding the URL in every test step so that each test can be read on its own",
+"Creating two separate projects, one for staging and another one for production"
 ]
 },
 "answer": 0,
@@ -360,16 +360,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Menjalankan beberapa test suite sekaligus, mis. di beberapa browser atau profile, secara berurutan atau paralel",
-"Menyimpan locator elemen",
-"Menyimpan data uji CSV",
-"Membuat laporan bug otomatis"
+"Menjalankan beberapa test suite sekaligus, mis. lintas browser atau profile, berurutan atau paralel",
+"Menyimpan locator elemen web secara terpusat untuk dipakai ulang oleh seluruh test case",
+"Menyimpan data uji dalam file CSV yang dihubungkan ke langkah-langkah test case",
+"Membuat laporan bug otomatis ke sistem tracker setiap kali sebuah test gagal"
 ],
 "en": [
 "Running several test suites together, e.g. across browsers or profiles, sequentially or in parallel",
-"Storing element locators",
-"Storing CSV test data",
-"Creating bug reports automatically"
+"Storing web element locators centrally for reuse by every test case",
+"Storing test data in CSV files linked to the steps of test cases",
+"Creating bug reports automatically in the tracker whenever a test fails"
 ]
 },
 "answer": 0,
@@ -390,15 +390,15 @@ QA.questions = [
 "options": {
 "id": [
 "Membuat custom keyword (Groovy) atau test case yang dipanggil ulang",
-"Menyalin langkah login ke setiap test case",
-"Merekam ulang tiap kali",
-"Menghapus login dari test"
+"Menyalin langkah login ke setiap test case supaya tiap test benar-benar berdiri sendiri",
+"Merekam ulang langkah login tiap kali dibutuhkan lewat fitur recorder bawaan Katalon",
+"Menghapus login dari semua test lalu menguji dalam kondisi sudah login dari awal"
 ],
 "en": [
 "Create a custom keyword (Groovy) or a reusable test case that is called",
-"Copy the login steps into every test case",
-"Re-record each time",
-"Remove login from the tests"
+"Copy the login steps into every test case so each test is fully self-contained",
+"Re-record the login steps every time they are needed using Katalon's built-in recorder",
+"Remove login from all tests and test from a state that is already logged in from the start"
 ]
 },
 "answer": 0,
@@ -418,16 +418,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Locator disimpan terpusat sehingga satu perubahan memperbaiki semua test yang memakainya; self-healing dapat memakai locator alternatif",
-"Karena membuat test berjalan lebih cepat",
-"Karena menghilangkan kebutuhan assertion",
-"Karena otomatis menulis data uji"
+"Locator disimpan terpusat sehingga satu perubahan memperbaiki semua test; ada self-healing",
+"Karena membuat setiap test berjalan jauh lebih cepat dibanding menulis locator di langkah",
+"Karena menghilangkan kebutuhan assertion pada hampir seluruh langkah verifikasi test",
+"Karena otomatis menuliskan data uji yang dibutuhkan oleh setiap test case baru"
 ],
 "en": [
-"Locators are kept centrally so one change fixes every test using them; self-healing can use alternative locators",
-"Because it makes tests run faster",
-"Because it removes the need for assertions",
-"Because it writes test data automatically"
+"Locators are kept centrally so one change fixes all tests; self-healing is available",
+"Because it makes every test run far faster than writing locators inside the steps",
+"Because it removes the need for assertions in nearly all verification steps of a test",
+"Because it automatically writes the test data every new test case needs"
 ]
 },
 "answer": 0,
@@ -506,15 +506,15 @@ QA.questions = [
 "options": {
 "id": [
 "WHERE memfilter baris sebelum pengelompokan; HAVING memfilter grup hasil agregasi",
-"Keduanya sama persis",
-"WHERE hanya untuk angka; HAVING hanya untuk teks",
-"HAVING dijalankan sebelum WHERE"
+"Keduanya sama persis dan bisa saling menggantikan pada semua jenis query tanpa pengecualian",
+"WHERE hanya dapat dipakai untuk kolom angka, sedangkan HAVING hanya dapat dipakai untuk teks",
+"HAVING dijalankan lebih dulu daripada WHERE sehingga baris sudah terfilter sebelum dikelompokkan"
 ],
 "en": [
 "WHERE filters rows before grouping; HAVING filters groups after aggregation",
-"They are exactly the same",
-"WHERE is for numbers only; HAVING is for text only",
-"HAVING runs before WHERE"
+"They are exactly the same and can replace each other in every kind of query without exception",
+"WHERE can only be used on numeric columns, whereas HAVING can only be used on text",
+"HAVING runs before WHERE so rows are already filtered before they are grouped"
 ]
 },
 "answer": 0,
@@ -534,16 +534,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Beri ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY created_at DESC), lalu ambil yang bernomor 1",
-"SELECT MAX(*) FROM orders",
-"ORDER BY created_at lalu LIMIT 1 untuk semua user",
-"GROUP BY user_id tanpa fungsi agregat"
+"ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY created_at DESC), lalu ambil nomor 1",
+"SELECT MAX(*) FROM orders GROUP BY user_id sehingga setiap user otomatis mendapat baris terbarunya",
+"ORDER BY created_at DESC lalu LIMIT 1 yang dijalankan sekali untuk seluruh user sekaligus",
+"GROUP BY user_id tanpa fungsi agregat, lalu SELECT * agar memperoleh pesanan paling baru"
 ],
 "en": [
-"Use ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY created_at DESC), then keep row number 1",
-"SELECT MAX(*) FROM orders",
-"ORDER BY created_at then LIMIT 1 for all users",
-"GROUP BY user_id without aggregate functions"
+"ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY created_at DESC), then keep row number 1",
+"SELECT MAX(*) FROM orders GROUP BY user_id so every user automatically gets their latest row",
+"ORDER BY created_at DESC then LIMIT 1 run once for all users at the same time",
+"GROUP BY user_id without aggregate functions, then SELECT * to obtain the newest order"
 ]
 },
 "answer": 0,
@@ -592,16 +592,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Perbandingan dengan NULL menghasilkan UNKNOWN, sehingga baris NULL terlewat; tambahkan OR status IS NULL",
-"Operator <> tidak ada di SQL",
-"Karena huruf kecil/besar selalu diabaikan",
-"Tidak ada masalah"
+"Perbandingan dengan NULL menghasilkan UNKNOWN, jadi baris NULL terlewat; tambahkan OR status IS NULL",
+"Operator <> tidak tersedia di SQL standar sehingga harus diganti dengan NOT EQUAL",
+"Karena huruf kecil dan besar selalu diabaikan sehingga 'PAID' dan 'paid' dianggap sama",
+"Tidak ada masalah sama sekali karena baris NULL otomatis ikut terpilih oleh <>"
 ],
 "en": [
 "Comparison with NULL yields UNKNOWN, so NULL rows are missed; add OR status IS NULL",
-"The <> operator does not exist in SQL",
-"Because case is always ignored",
-"There is no problem"
+"The <> operator is not available in standard SQL so it must be replaced with NOT EQUAL",
+"Because upper and lower case are always ignored so 'PAID' and 'paid' count as the same",
+"There is no problem at all because NULL rows are automatically selected by <>"
 ]
 },
 "answer": 0,
@@ -845,16 +845,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Tester melakukan testing (menunjukkan failure); developer melakukan debugging (menemukan dan memperbaiki penyebab)",
-"Keduanya melakukan debugging",
-"Tester melakukan debugging; developer melakukan testing",
-"Menemukan failure dan memperbaiki defect adalah aktivitas yang sama"
+"Tester melakukan testing (memunculkan failure); developer melakukan debugging (memperbaiki penyebab)",
+"Keduanya melakukan debugging karena menemukan failure dan memperbaikinya sama-sama debugging",
+"Tester melakukan debugging untuk memperbaiki kode, sedangkan developer melakukan testing tambahan",
+"Menemukan failure dan memperbaiki defect adalah satu aktivitas yang sama bernama testing"
 ],
 "en": [
-"The tester does testing (showing the failure); the developer does debugging (finding and fixing the cause)",
-"Both do debugging",
-"The tester does debugging; the developer does testing",
-"Finding a failure and fixing a defect are the same activity"
+"The tester does testing (exposing the failure); the developer does debugging (fixing the cause)",
+"Both do debugging because finding a failure and fixing it are both debugging",
+"The tester does debugging to fix the code, while the developer does additional testing",
+"Finding a failure and fixing a defect are one and the same activity called testing"
 ]
 },
 "answer": 0,
@@ -877,15 +877,15 @@ QA.questions = [
 "options": {
 "id": [
 "Kesalahpahaman aturan diskon oleh analis",
-"Harga salah yang dilihat pelanggan",
-"Rumus yang keliru di kode",
-"Test case yang kurang"
+"Harga salah yang akhirnya dilihat oleh pelanggan pada halaman pembayaran aplikasi",
+"Rumus yang keliru pada kode program yang menghitung diskon untuk setiap pesanan",
+"Jumlah test case yang kurang untuk mencakup semua kombinasi aturan diskon yang ada"
 ],
 "en": [
 "The analyst's misunderstanding of the discount rule",
-"The wrong price the customer saw",
-"The wrong formula in the code",
-"Too few test cases"
+"The wrong price the customer finally saw on the application's payment page",
+"The wrong formula in the program code that calculates the discount for each order",
+"Too few test cases to cover all the combinations of the existing discount rules"
 ]
 },
 "answer": 0,
@@ -939,15 +939,15 @@ QA.questions = [
 "options": {
 "id": [
 "Segera terlihat test case mana yang perlu ditinjau atau diubah (analisis dampak)",
-"Test case otomatis ditulis ulang",
-"Requirement tidak perlu diuji lagi",
-"Defect otomatis diperbaiki"
+"Seluruh test case otomatis ditulis ulang oleh sistem sesuai requirement yang berubah",
+"Requirement itu tidak perlu diuji lagi karena sudah tercatat dalam matriks keterlacakan",
+"Defect yang terkait dengan requirement tersebut otomatis diperbaiki oleh tool"
 ],
 "en": [
 "It is immediately visible which test cases must be reviewed or changed (impact analysis)",
-"Test cases are rewritten automatically",
-"The requirement no longer needs testing",
-"Defects are fixed automatically"
+"All test cases are rewritten automatically by the system to match the changed requirement",
+"The requirement no longer needs testing since it is recorded in the traceability matrix",
+"Defects tied to that requirement are fixed automatically by the tool"
 ]
 },
 "answer": 0,
@@ -969,16 +969,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Keuntungan: sudut pandang berbeda dan bebas bias penulis; risiko: terisolasi dan developer merasa tidak lagi bertanggung jawab atas kualitas",
-"Keuntungan: tidak butuh komunikasi; risiko: tidak ada",
-"Keuntungan: defect pasti nol; risiko: biaya tool",
-"Keuntungan: developer tidak perlu menguji; risiko: tidak ada"
+"Keuntungan: sudut pandang berbeda dan bebas bias penulis; risiko: terisolasi dan tanggung jawab kualitas memudar",
+"Keuntungan: komunikasi tim tidak diperlukan lagi; risiko: hampir tidak ada risiko berarti",
+"Keuntungan: defect dijamin nol setelah testing; risiko: biaya tool menjadi lebih besar",
+"Keuntungan: developer tidak perlu menguji kodenya sendiri; risiko: tidak ada sama sekali"
 ],
 "en": [
-"Benefit: different perspective and freedom from author bias; risk: isolation, and developers may stop feeling responsible for quality",
-"Benefit: no communication needed; risk: none",
-"Benefit: zero defects guaranteed; risk: tool cost",
-"Benefit: developers need not test; risk: none"
+"Benefit: different perspective and freedom from author bias; risk: isolation and fading ownership of quality",
+"Benefit: team communication is no longer needed; risk: hardly any meaningful risk",
+"Benefit: zero defects guaranteed after testing; risk: tool costs become larger",
+"Benefit: developers need not test their own code; risk: none at all"
 ]
 },
 "answer": 0,
@@ -1062,16 +1062,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Memberi umpan balik cepat atas perubahan sehingga defect ditemukan segera setelah diperkenalkan",
-"Menghilangkan kebutuhan test case",
-"Menjamin tidak ada defect di produksi",
-"Menggantikan semua testing manual"
+"Memberi umpan balik cepat atas perubahan sehingga defect cepat terlihat",
+"Menghilangkan kebutuhan test case karena pipeline sudah memeriksa semua perubahan kode",
+"Menjamin tidak ada defect yang lolos ke produksi selama pipeline berwarna hijau",
+"Menggantikan semua testing manual sehingga tester dapat dialihkan ke pekerjaan lain"
 ],
 "en": [
-"It gives fast feedback on changes so defects are found soon after introduction",
-"It removes the need for test cases",
-"It guarantees no defects in production",
-"It replaces all manual testing"
+"Gives fast feedback on changes so defects show up quickly",
+"Removes the need for test cases because the pipeline already checks every code change",
+"Guarantees no defects reach production as long as the pipeline stays green",
+"Replaces all manual testing so testers can be reassigned to other work"
 ]
 },
 "answer": 0,
@@ -1093,16 +1093,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Menyepakati tindakan perbaikan proses, mis. stabilisasi test dan aturan karantina, lalu meninjau hasilnya sprint berikutnya",
-"Menyalahkan tester yang menulis test",
-"Menghapus semua test otomasi",
-"Menunda retrospective sampai rilis selesai"
+"Menyepakati tindakan perbaikan proses, mis. stabilisasi test dan aturan karantina, lalu meninjaunya",
+"Menyalahkan tester yang menulis test yang flaky agar kejadian serupa tidak terulang",
+"Menghapus semua test otomasi supaya rilis tidak lagi terhambat oleh test yang gagal",
+"Menunda pembahasan sampai rilis selesai agar tim tidak terganggu tekanan jadwal"
 ],
 "en": [
-"Agreeing improvement actions, e.g. stabilising tests and a quarantine rule, and reviewing the result next sprint",
-"Blaming the tester who wrote the tests",
-"Deleting all automated tests",
-"Postponing the retrospective until after release"
+"Agreeing process improvement actions, e.g. stabilising tests and a quarantine rule, then reviewing them",
+"Blaming the tester who wrote the flaky tests so a similar thing does not happen again",
+"Deleting all automated tests so releases are no longer held up by failing tests",
+"Postponing the discussion until the release is done so the team is not distracted by schedule pressure"
 ]
 },
 "answer": 0,
@@ -1186,16 +1186,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Maintenance testing: uji migrasi data, lingkungan baru, dan regression untuk memastikan fungsi tetap benar",
-"Tidak perlu testing karena fitur tidak berubah",
-"Hanya component testing satu fungsi",
-"Hanya testing performa setahun setelahnya"
+"Maintenance testing: uji migrasi data, lingkungan baru, dan regression agar fungsi tetap benar",
+"Tidak perlu testing karena tidak ada fitur yang berubah selama proses migrasi berlangsung",
+"Hanya component testing satu fungsi, karena perubahan terjadi di lapisan penyimpanan",
+"Hanya testing performa yang dijalankan setahun setelah migrasi selesai dilakukan"
 ],
 "en": [
-"Maintenance testing: test data migration, the new environment, and regression to confirm behaviour is unchanged",
-"No testing needed since features did not change",
-"Only component testing of one function",
-"Only performance testing a year later"
+"Maintenance testing: test data migration, the new environment, and regression to keep behaviour correct",
+"No testing is needed because no feature changes while the migration is under way",
+"Only component testing of one function, since the change is in the storage layer",
+"Only performance testing run a year after the migration has been completed"
 ]
 },
 "answer": 0,
@@ -1527,16 +1527,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Setelah 5 kali password salah berturut-turut, akun dikunci 15 menit dan pengguna melihat pesan penguncian",
-"Login harus aman dan nyaman",
-"Sistem harus bagus",
-"Developer menulis kode login dengan rapi"
+"Setelah 5 kali password salah berturut-turut, akun dikunci 15 menit dan muncul pesan penguncian",
+"Login harus aman, nyaman, dan cepat bagi seluruh jenis pengguna aplikasi",
+"Sistem harus bagus dan berfungsi dengan baik dalam semua kondisi penggunaan",
+"Developer menulis kode login dengan rapi serta mengikuti standar penulisan kode"
 ],
 "en": [
-"After 5 consecutive wrong passwords the account is locked for 15 minutes and the user sees a lock message",
-"Login must be secure and pleasant",
-"The system must be good",
-"The developer writes tidy login code"
+"After 5 consecutive wrong passwords the account is locked for 15 minutes and a lock message shows",
+"Login must be secure, pleasant and fast for every kind of application user",
+"The system must be good and work well under all conditions of use",
+"The developer writes tidy login code and follows the coding standard"
 ]
 },
 "answer": 0,
@@ -1682,16 +1682,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Pembulatan salah pada perhitungan cicilan yang merugikan pelanggan",
-"Anggota tim kunci pindah di tengah proyek",
-"Lingkungan test terlambat tersedia",
-"Anggaran tool dipotong"
+"Pembulatan salah pada hitungan cicilan yang merugikan pelanggan",
+"Anggota tim kunci pindah ke perusahaan lain di tengah proyek yang sedang berjalan",
+"Lingkungan test terlambat tersedia sehingga jadwal eksekusi tes bergeser dua minggu",
+"Anggaran untuk tool testing dipotong oleh manajemen pada kuartal berikutnya"
 ],
 "en": [
 "A rounding error in instalment calculation that harms customers",
-"A key team member leaves mid-project",
-"The test environment arrives late",
-"The tool budget is cut"
+"A key team member leaves for another company in the middle of the running project",
+"The test environment arrives late so the test execution schedule slips by two weeks",
+"The budget for testing tools is cut by management in the following quarter"
 ]
 },
 "answer": 0,
@@ -1745,15 +1745,15 @@ QA.questions = [
 "options": {
 "id": [
 "Persentase test case yang sudah dieksekusi dari yang direncanakan",
-"Gaji tester",
-"Warna dashboard",
-"Jumlah rapat per bulan"
+"Gaji tester yang dihitung per orang untuk setiap bulan selama proyek berjalan",
+"Warna dashboard yang dipilih tim untuk menampilkan hasil testing kepada stakeholder",
+"Jumlah rapat yang diadakan setiap bulan oleh tim selama iterasi berlangsung"
 ],
 "en": [
 "Percentage of planned test cases executed",
-"Tester salary",
-"Dashboard colour",
-"Number of meetings per month"
+"Tester salaries calculated per person for each month while the project is running",
+"The dashboard colour the team picked to present testing results to stakeholders",
+"The number of meetings the team holds every month during the iteration"
 ]
 },
 "answer": 0,
@@ -1775,16 +1775,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Ringkasan testing, deviasi dari rencana, status terhadap exit criteria, metrik, dan risiko yang tersisa",
-"Seluruh log eksekusi mentah",
-"Hanya jumlah test lolos tanpa konteks",
-"Kode sumber test"
+"Ringkasan testing, deviasi dari rencana, status terhadap exit criteria, metrik, dan risiko tersisa",
+"Seluruh log eksekusi mentah dari setiap test case yang dijalankan selama iterasi berlangsung",
+"Hanya jumlah test yang lolos tanpa konteks apa pun tentang cakupan maupun risikonya",
+"Kode sumber seluruh test otomasi beserta riwayat perubahannya di repositori"
 ],
 "en": [
 "A summary of testing, deviations from plan, status against exit criteria, metrics and remaining risks",
-"All raw execution logs",
-"Only the number of passed tests with no context",
-"The test source code"
+"All raw execution logs of every test case run during the iteration",
+"Only the number of passed tests, with no context about coverage or risks",
+"The source code of all automated tests together with their change history in the repository"
 ]
 },
 "answer": 0,
@@ -1806,16 +1806,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Mengidentifikasi dan mengendalikan versi testware dan test item agar hasil test dapat ditelusuri ke versi yang diuji",
-"Menentukan prioritas bisnis fitur",
-"Menulis test case baru",
-"Menghitung estimasi usaha"
+"Mengidentifikasi dan mengendalikan versi testware dan test item agar hasil test dapat ditelusuri",
+"Menentukan prioritas bisnis fitur dan urutan pengerjaannya bagi tim pengembangan",
+"Menulis test case baru secara otomatis dari perubahan kode yang di-commit hari ini",
+"Menghitung estimasi usaha testing dari jumlah requirement pada iterasi berjalan"
 ],
 "en": [
-"Identifying and controlling versions of testware and test items so results trace back to the version tested",
-"Setting business priority of features",
-"Writing new test cases",
-"Calculating effort estimates"
+"Identifying and controlling versions of testware and test items so results are traceable",
+"Setting the business priority of features and the order in which the team builds them",
+"Writing new test cases automatically from the code changes committed today",
+"Calculating testing effort estimates from the number of requirements in the iteration"
 ]
 },
 "answer": 0,
@@ -1961,16 +1961,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Memperbaiki defect yang ditemukan di kode",
+"Memperbaiki defect yang ditemukan di kode setelah testing dinamis selesai dijalankan",
 "Mengevaluasi work product seperti requirement dan desain",
-"Men-deploy aplikasi ke produksi",
-"Menulis kode fitur baru"
+"Men-deploy aplikasi ke produksi setelah semua test otomatis dinyatakan lolos",
+"Menulis kode untuk fitur baru berdasarkan hasil analisis requirement oleh tim"
 ],
 "en": [
-"Fixing the defects found in code",
+"Fixing the defects found in the code after dynamic testing has been run",
 "Evaluating work products such as requirements and design",
-"Deploying the application to production",
-"Writing code for a new feature"
+"Deploying the application to production once all automated tests are declared passed",
+"Writing code for a new feature based on the team's requirement analysis results"
 ]
 },
 "answer": 1,
@@ -1992,16 +1992,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Testing memperbaiki defect, debugging menemukan failure",
-"Testing memicu failure akibat defect, debugging menemukan dan memperbaiki penyebabnya",
-"Keduanya sama-sama dilakukan tester",
-"Debugging hanya dilakukan setelah rilis"
+"Testing memperbaiki defect, sedangkan debugging menemukan failure pada saat sistem berjalan",
+"Testing memicu failure akibat defect; debugging menemukan dan memperbaiki penyebabnya",
+"Keduanya sama-sama selalu dilakukan oleh tester karena tujuan dan hasilnya identik",
+"Debugging hanya dilakukan setelah rilis, ketika pengguna sudah melaporkan masalah di produksi"
 ],
 "en": [
-"Testing fixes defects, debugging finds failures",
+"Testing fixes defects, while debugging finds failures while the system is running",
 "Testing triggers failures caused by defects; debugging finds and fixes their causes",
-"Both are always done by testers",
-"Debugging is only done after release"
+"Both are always done by testers because their purpose and results are identical",
+"Debugging is only done after release, once users have reported problems in production"
 ]
 },
 "answer": 1,
@@ -2023,16 +2023,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Menjamin sistem bebas defect",
-"Mengurangi risiko failure saat sistem beroperasi dengan menemukan defect lebih dulu",
-"Menghilangkan kebutuhan review",
-"Menggantikan kebutuhan requirement"
+"Menjamin sistem bebas defect sehingga tidak ada failure yang akan terjadi di produksi",
+"Mengurangi risiko failure saat beroperasi dengan menemukan defect lebih dulu",
+"Menghilangkan kebutuhan review karena semua masalah pasti ditemukan oleh pengujian",
+"Menggantikan requirement karena test case sudah menjelaskan perilaku yang diharapkan"
 ],
 "en": [
-"It guarantees the system is defect-free",
-"It reduces the risk of failures in operation by finding defects beforehand",
-"It removes the need for reviews",
-"It replaces requirements"
+"Guarantees the system is defect-free so no failure will occur in production",
+"Reduces the risk of failures in operation by finding defects beforehand",
+"Removes the need for reviews because testing is certain to find every problem",
+"Replaces requirements because the test cases already describe the expected behaviour"
 ]
 },
 "answer": 1,
@@ -2240,16 +2240,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Menjamin test case selalu otomatis",
-"Menilai coverage requirement oleh tes dan analisis dampak perubahan",
-"Menghilangkan perlunya test plan",
-"Mempercepat eksekusi tes"
+"Menjamin semua test case selalu otomatis sehingga eksekusi tidak butuh tenaga manusia",
+"Menilai coverage requirement oleh tes dan menganalisis dampak perubahan",
+"Menghilangkan perlunya test plan karena semua hubungan sudah tercatat dalam matriks",
+"Mempercepat eksekusi tes dengan menjalankan hanya test yang terhubung ke requirement baru"
 ],
 "en": [
-"It guarantees test cases are always automated",
+"Guarantees all test cases are always automated so execution needs no human effort",
 "Assessing requirement coverage by tests and analysing the impact of changes",
-"It removes the need for a test plan",
-"It speeds up test execution"
+"Removes the need for a test plan because every relationship is already recorded in the matrix",
+"Speeds up test execution by running only the tests linked to the new requirements"
 ]
 },
 "answer": 1,
@@ -2271,16 +2271,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Mendesain test case",
-"Menjalankan test case",
+"Mendesain test case berdasarkan kondisi test yang sudah dianalisis",
+"Menjalankan test case dan membandingkan hasil aktual dengan hasil yang diharapkan",
 "Memantau kemajuan dan mengontrol aktivitas test",
-"Menyiapkan data tes"
+"Menyiapkan data tes dan lingkungan yang dibutuhkan untuk eksekusi"
 ],
 "en": [
-"Designing test cases",
-"Executing test cases",
+"Designing test cases from the test conditions that were analysed",
+"Executing test cases and comparing actual results with expected results",
 "Monitoring progress and controlling test activities",
-"Preparing test data"
+"Preparing test data and the environment needed for execution"
 ]
 },
 "answer": 2,
@@ -2302,16 +2302,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Mereka menemukan jenis defect yang sama dengan developer",
+"Mereka menemukan jenis defect yang sama persis dengan yang ditemukan developer",
 "Mereka bisa terisolasi dari tim dan developer merasa kualitas bukan tanggung jawabnya",
-"Mereka tidak bisa menulis test case",
-"Mereka selalu bias"
+"Mereka sama sekali tidak bisa menulis test case karena tidak memahami kode aplikasi",
+"Mereka selalu bias terhadap hasil kerja developer sehingga laporannya tidak bisa dipercaya"
 ],
 "en": [
-"They find the same kinds of defects as developers",
-"They may be isolated from the team and developers may feel quality is not their responsibility",
-"They cannot write test cases",
-"They are always biased"
+"They find exactly the same kinds of defects as developers do",
+"They may become isolated from the team, and developers may feel quality is not their job",
+"They cannot write test cases at all because they do not understand the application code",
+"They are always biased against the developers' work so their reports cannot be trusted"
 ]
 },
 "answer": 1,
@@ -2333,16 +2333,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Hanya tester yang bertanggung jawab atas kualitas",
-"Siapa pun dengan keahlian yang dibutuhkan dapat mengerjakan tugas dan seluruh tim bertanggung jawab atas kualitas",
-"Semua orang harus menjadi tester bersertifikat",
-"Developer dilarang menguji"
+"Hanya tester yang bertanggung jawab atas kualitas, sedangkan anggota tim lain fokus pada fitur",
+"Siapa pun dengan keahlian yang dibutuhkan bisa mengerjakan tugas; seluruh tim bertanggung jawab atas kualitas",
+"Semua orang di tim harus menjadi tester bersertifikat sebelum boleh ikut mengerjakan tugas",
+"Developer dilarang menguji agar pekerjaan pengujian tetap independen dari pengembangan"
 ],
 "en": [
-"Only testers are responsible for quality",
-"Anyone with the needed skills can do the tasks and the whole team is responsible for quality",
-"Everyone must be a certified tester",
-"Developers are forbidden from testing"
+"Only testers are responsible for quality, while other team members focus on features",
+"Anyone with the needed skills can do the tasks; the whole team is responsible for quality",
+"Everyone on the team must be a certified tester before taking part in any tasks",
+"Developers are forbidden from testing so that testing stays independent of development"
 ]
 },
 "answer": 1,
@@ -2488,16 +2488,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Menghilangkan semua manual testing",
-"Umpan balik cepat atas kualitas lewat pipeline CI/CD yang menjalankan tes otomatis",
-"Tidak perlu merawat otomasi",
-"Test environment tidak lagi dibutuhkan"
+"Menghilangkan semua manual testing karena pipeline menjalankan semua jenis pengujian",
+"Umpan balik kualitas cepat lewat pipeline CI/CD yang menjalankan tes otomatis",
+"Tidak perlu lagi merawat otomasi karena pipeline memperbaiki test yang rusak sendiri",
+"Test environment tidak lagi dibutuhkan karena semua tes berjalan di mesin developer"
 ],
 "en": [
-"It removes all manual testing",
-"Fast quality feedback via CI/CD pipelines running automated tests",
-"Automation no longer needs maintenance",
-"Test environments are no longer needed"
+"Removes all manual testing because the pipeline runs every kind of test",
+"Fast quality feedback through CI/CD pipelines that run automated tests",
+"Automation no longer needs maintenance because the pipeline repairs broken tests itself",
+"Test environments are no longer needed because all tests run on developers' machines"
 ]
 },
 "answer": 1,
@@ -2519,16 +2519,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Menunda test sampai tahap akhir",
+"Menunda test sampai tahap akhir proyek ketika semua fitur sudah selesai dibuat",
 "Mereview user story dan acceptance criteria sebelum coding dimulai",
-"Menambah tester setelah rilis",
-"Menghapus static analysis"
+"Menambah jumlah tester setelah rilis agar defect produksi bisa diperbaiki lebih cepat",
+"Menghapus static analysis dari pipeline supaya proses build berjalan lebih singkat"
 ],
 "en": [
-"Postponing tests to the final phase",
+"Postponing tests to the final phase of the project when every feature is finished",
 "Reviewing user stories and acceptance criteria before coding begins",
-"Adding testers after release",
-"Removing static analysis"
+"Adding more testers after release so production defects can be fixed more quickly",
+"Removing static analysis from the pipeline so the build process runs more briefly"
 ]
 },
 "answer": 1,
@@ -2550,16 +2550,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Sebelum proyek dimulai untuk menentukan jadwal",
+"Sebelum proyek dimulai untuk menetapkan jadwal dan pembagian tugas seluruh anggota tim",
 "Di akhir proyek atau iterasi untuk membahas keberhasilan dan perbaikan",
-"Hanya ketika produksi gagal",
-"Untuk menilai kinerja individu"
+"Hanya ketika produksi gagal total, sebagai bagian dari analisis insiden yang formal",
+"Setiap kuartal untuk menilai kinerja individu dan menentukan kenaikan gaji anggota tim"
 ],
 "en": [
-"Before the project starts to set the schedule",
+"Before the project starts to set the schedule and the division of tasks for all team members",
 "At the end of a project or iteration to discuss successes and improvements",
-"Only when production fails",
-"To evaluate individual performance"
+"Only when production fails completely, as part of a formal incident analysis",
+"Each quarter to evaluate individual performance and decide pay raises for team members"
 ]
 },
 "answer": 1,
@@ -2644,15 +2644,15 @@ QA.questions = [
 "options": {
 "id": [
 "Didasarkan pada struktur internal sistem seperti kode atau arsitektur",
-"Hanya dilakukan pada acceptance level",
-"Didasarkan hanya pada spesifikasi",
-"Tidak mengukur coverage"
+"Hanya dilakukan pada acceptance level oleh pengguna bisnis sebelum rilis dilakukan",
+"Didasarkan hanya pada spesifikasi tanpa melihat bagaimana sistem dibangun di dalamnya",
+"Tidak mengukur coverage apa pun karena fokusnya hanya pada perilaku dari luar"
 ],
 "en": [
 "It is based on the internal structure of the system such as code or architecture",
-"It is done only at acceptance level",
-"It is based only on the specification",
-"It does not measure coverage"
+"It is done only at acceptance level by business users before the release happens",
+"It is based only on the specification, without looking at how the system is built inside",
+"It does not measure any coverage because it focuses only on behaviour seen from outside"
 ]
 },
 "answer": 0,
@@ -2768,15 +2768,15 @@ QA.questions = [
 "options": {
 "id": [
 "Menemukan defect lebih awal sehingga lebih murah diperbaiki",
-"Menjamin kode bebas bug",
-"Menggantikan dynamic testing",
-"Mengukur performa"
+"Menjamin kode bebas bug sebelum masuk ke tahap pengujian dinamis maupun rilis",
+"Menggantikan dynamic testing sepenuhnya sehingga eksekusi kode tidak lagi diperlukan",
+"Mengukur performa aplikasi di bawah beban nyata dengan banyak pengguna sekaligus"
 ],
 "en": [
 "Finding defects early so they are cheaper to fix",
-"Guaranteeing bug-free code",
-"Replacing dynamic testing",
-"Measuring performance"
+"Guaranteeing bug-free code before it enters dynamic testing or release",
+"Replacing dynamic testing completely so executing the code is no longer necessary",
+"Measuring application performance under real load with many users at the same time"
 ]
 },
 "answer": 0,
@@ -3201,16 +3201,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Memasukkan koin saat Idle",
-"Memilih produk saat Ready",
+"Memasukkan koin saat mesin sedang Idle dan belum ada produk yang dipilih",
+"Memilih produk saat mesin berada pada state Ready setelah koin dimasukkan",
 "Memilih produk saat mesin Idle",
-"Refund saat Ready"
+"Meminta refund saat mesin Ready setelah koin dimasukkan tetapi belum ada produk dipilih"
 ],
 "en": [
-"Inserting a coin while Idle",
-"Selecting a product while Ready",
+"Inserting a coin while the machine is Idle and no product has been selected yet",
+"Selecting a product while the machine is in the Ready state after a coin was inserted",
 "Selecting a product while the machine is Idle",
-"Refund while Ready"
+"Requesting a refund while Ready after a coin was inserted but no product was selected"
 ]
 },
 "answer": 2,
@@ -3294,16 +3294,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Menemukan fungsi yang hilang dari kode",
-"Mempertimbangkan seluruh implementasi sehingga defect dapat ditemukan meski spesifikasi kabur",
-"Tidak memerlukan akses ke kode",
-"Selalu menggantikan black-box"
+"Menemukan fungsi yang hilang dari kode tetapi sudah ada di spesifikasi dengan jelas",
+"Mempertimbangkan seluruh implementasi sehingga defect bisa ditemukan meski spesifikasi kabur",
+"Tidak memerlukan akses ke kode maupun pengetahuan tentang struktur internal sistem",
+"Selalu menggantikan black-box testing karena cakupannya pasti lebih lengkap dan murah"
 ],
 "en": [
-"Finding functionality missing from the code",
+"Finding functionality missing from the code even though it is clearly in the specification",
 "Considering the whole implementation so defects can be found even if the specification is vague",
-"Needing no access to code",
-"Always replacing black-box testing"
+"Needing no access to the code or knowledge of the system's internal structure",
+"Always replacing black-box testing because its coverage is certainly more complete and cheaper"
 ]
 },
 "answer": 1,
@@ -3356,16 +3356,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Desain dan eksekusi tes dipisah jauh dan didokumentasikan penuh",
+"Desain dan eksekusi tes dipisah jauh dan didokumentasikan penuh sebelum dijalankan",
 "Desain, eksekusi, dan pembelajaran dilakukan bersamaan, dipandu test charter dan sering dibatasi waktu",
-"Tes hanya dijalankan oleh tool",
-"Hanya dipakai pada unit level"
+"Tes hanya dijalankan oleh tool otomatis berdasarkan skrip yang ditulis jauh sebelumnya",
+"Hanya dipakai pada unit level oleh developer yang menulis kode yang sedang diuji"
 ],
 "en": [
-"Test design and execution are far apart and fully documented",
+"Test design and execution are kept far apart and fully documented before being run",
 "Design, execution and learning happen together, guided by a test charter and often time-boxed",
-"Tests are only run by tools",
-"Only used at unit level"
+"Tests are run only by automated tools following scripts written long beforehand",
+"Only used at unit level by the developers who wrote the code being tested"
 ]
 },
 "answer": 1,
@@ -3387,16 +3387,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Item checklist harus berisi langkah rinci",
+"Item checklist harus berisi langkah rinci agar siapa pun dapat menjalankannya persis sama",
 "Item checklist bersifat tingkat tinggi dan checklist perlu diperbarui berkala",
-"Checklist tidak boleh berasal dari data defect",
-"Checklist menggantikan test condition"
+"Checklist tidak boleh berasal dari data defect karena akan membuat tester menjadi bias",
+"Checklist menggantikan test condition sehingga analisis test tidak diperlukan lagi"
 ],
 "en": [
-"Checklist items must contain detailed steps",
+"Checklist items must contain detailed steps so anyone can run them in exactly the same way",
 "Checklist items are high-level and the checklist should be updated regularly",
-"A checklist must not come from defect data",
-"A checklist replaces test conditions"
+"A checklist must not come from defect data because that would make testers biased",
+"A checklist replaces test conditions so test analysis is no longer needed"
 ]
 },
 "answer": 1,
@@ -3542,16 +3542,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Menulis seluruh kode iterasi",
+"Menulis seluruh kode iterasi bersama developer supaya pekerjaan selesai lebih cepat",
 "Membantu membuat user story yang dapat diuji beserta acceptance criteria",
-"Menentukan anggaran proyek",
-"Menghapus risiko dari backlog"
+"Menentukan anggaran proyek dan jumlah anggota tim untuk iterasi yang akan datang",
+"Menghapus semua risiko dari backlog sebelum iterasi dimulai agar tim tenang"
 ],
 "en": [
-"Writing all the iteration's code",
+"Writing all the iteration's code together with developers so work finishes sooner",
 "Helping create testable user stories with acceptance criteria",
-"Setting the project budget",
-"Removing risks from the backlog"
+"Setting the project budget and the number of team members for the coming iteration",
+"Removing every risk from the backlog before the iteration starts so the team can relax"
 ]
 },
 "answer": 1,
@@ -3573,16 +3573,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Semua defect kritis sudah ditutup",
+"Semua defect kritis sudah ditutup dan tidak ada yang tersisa pada daftar defect terbuka",
 "Test environment siap dan data tes tersedia",
-"Coverage target tercapai",
-"Laporan akhir sudah dikirim"
+"Coverage target tercapai berdasarkan laporan alat pengukur coverage pada build terakhir",
+"Laporan akhir sudah dikirim kepada seluruh stakeholder yang terlibat dalam proyek ini"
 ],
 "en": [
-"All critical defects are closed",
+"All critical defects are closed and none remain on the open defect list",
 "The test environment is ready and test data is available",
-"The coverage target is met",
-"The final report has been sent"
+"The coverage target is met according to the coverage tool report on the last build",
+"The final report has been sent to all the stakeholders involved in this project"
 ]
 },
 "answer": 1,
@@ -3791,15 +3791,15 @@ QA.questions = [
 "options": {
 "id": [
 "Menentukan cakupan, teknik, dan usaha testing serta prioritas tes",
-"Menggantikan semua test case",
-"Menghapus test plan",
-"Menentukan gaji tester"
+"Menggantikan semua test case dengan satu dokumen ringkasan yang disetujui manajer",
+"Menghapus test plan lama setelah setiap iterasi supaya tidak membingungkan tim",
+"Menentukan gaji dan jenjang karier tester berdasarkan jumlah defect yang ditemukan"
 ],
 "en": [
 "Decide test scope, techniques and effort, and prioritise tests",
-"Replace all test cases",
-"Remove the test plan",
-"Decide testers' salaries"
+"Replace all test cases with one summary document approved by the manager",
+"Delete the old test plan after each iteration so it does not confuse the team",
+"Decide testers' salaries and career levels based on the number of defects found"
 ]
 },
 "answer": 0,
@@ -3821,16 +3821,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Persentase test case yang sudah dijalankan atau lulus",
-"Jumlah baris kode",
-"Gaji tim",
-"Jumlah karyawan"
+"Persentase test case yang sudah dijalankan atau lulus dari yang direncanakan",
+"Jumlah baris kode yang ditulis developer pada iterasi yang sedang berjalan",
+"Total gaji tim yang terlibat dalam proyek selama satu kuartal penuh",
+"Jumlah karyawan di perusahaan pada saat dilakukannya testing berlangsung"
 ],
 "en": [
-"Percentage of test cases executed or passed",
-"Lines of code",
-"Team salaries",
-"Number of employees"
+"Percentage of planned test cases executed or passed",
+"Lines of code written by developers in the current iteration",
+"Total salaries of the team involved in the project over a full quarter",
+"Number of employees at the company when the testing takes place"
 ]
 },
 "answer": 0,
@@ -3852,16 +3852,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Setiap hari tanpa pengecualian",
+"Setiap hari tanpa pengecualian, termasuk saat testing baru dimulai sedikit",
 "Di akhir proyek, fase, atau iterasi untuk merangkum testing dan penyimpangan dari rencana",
-"Sebelum requirement ditulis",
-"Hanya jika semua tes gagal"
+"Sebelum requirement ditulis, agar tim tahu apa yang akan dilaporkan nanti",
+"Hanya jika semua tes gagal, sebagai bukti kepada manajemen proyek"
 ],
 "en": [
-"Every day without exception",
+"Every day without exception, even when testing has only just started",
 "At the end of a project, phase or iteration to summarise testing and deviations from plan",
-"Before requirements are written",
-"Only if all tests fail"
+"Before requirements are written, so the team knows what will be reported later",
+"Only if all tests fail, as evidence for project management"
 ]
 },
 "answer": 1,
@@ -3914,16 +3914,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Memastikan item test dan testware punya identitas unik, terkontrol versinya, dan saling terhubung",
-"Menggantikan test plan",
-"Menjalankan tes otomatis",
-"Menentukan prioritas defect"
+"Memastikan item test dan testware teridentifikasi unik, terkontrol versinya, dan saling terhubung",
+"Menggantikan test plan dengan daftar versi build yang disetujui manajemen proyek",
+"Menjalankan ulang seluruh tes otomatis setiap kali ada versi baru dari testware",
+"Menentukan prioritas defect berdasarkan versi yang dilaporkan oleh pengguna"
 ],
 "en": [
-"Ensuring test items and testware are uniquely identified, version controlled and related to each other",
-"Replacing the test plan",
-"Running automated tests",
-"Setting defect priority"
+"Ensuring test items and testware are uniquely identified, version controlled and related",
+"Replacing the test plan with a list of build versions approved by project management",
+"Re-running all automated tests every time a new version of the testware appears",
+"Setting defect priority based on the version reported by users"
 ]
 },
 "answer": 0,
@@ -3945,16 +3945,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Pencarian rusak",
-"Pencarian 'laptop' di halaman produk menghasilkan 0 hasil (harapan: 12). Build 2.4.1, Chrome 120. Langkah: 1) buka /products 2) ketik 'laptop' 3) tekan Enter",
-"Developer salah menulis query",
-"Tolong cek kenapa tidak jalan"
+"Pencarian rusak, tolong diperbaiki secepatnya karena sangat mengganggu kami semua",
+"Pencarian 'laptop' di /products: 0 hasil (harapan 12). Build 2.4.1, Chrome 120. Buka /products, ketik, Enter",
+"Developer salah menulis query pencarian, jadi sebaiknya dia memperbaikinya sendiri hari ini",
+"Tolong cek kenapa pencarian tidak jalan, saya sudah mencoba beberapa kali sejak pagi tadi"
 ],
 "en": [
-"Search is broken",
-"Searching 'laptop' on the products page returns 0 results (expected: 12). Build 2.4.1, Chrome 120. Steps: 1) open /products 2) type 'laptop' 3) press Enter",
-"Developer wrote a bad query",
-"Please check why it does not work"
+"Search is broken, please fix it as soon as possible because it annoys all of us",
+"Searching 'laptop' on /products: 0 results (expected 12). Build 2.4.1, Chrome 120. Open /products, type, Enter",
+"The developer wrote a bad search query, so they should fix it themselves today",
+"Please check why search does not work, I have tried several times since this morning"
 ]
 },
 "answer": 1,
@@ -4038,16 +4038,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Eksekusi lebih konsisten",
+"Eksekusi lebih konsisten karena langkah yang sama dijalankan persis setiap kali",
 "Usaha dan perawatan otomasi yang diremehkan",
-"Hemat waktu pada tes berulang",
-"Penilaian hasil lebih objektif"
+"Hemat waktu pada tes berulang, terutama untuk regression yang dijalankan tiap rilis",
+"Penilaian hasil lebih objektif karena tidak bergantung pada penilaian manusia"
 ],
 "en": [
-"More consistent execution",
+"More consistent execution because the same steps are run exactly every time",
 "Underestimated effort and maintenance of the automation",
-"Time saved on repeated tests",
-"More objective assessment of results"
+"Time saved on repeated tests, especially regression that runs for every release",
+"More objective assessment of results because it does not depend on human judgement"
 ]
 },
 "answer": 1,
@@ -4131,16 +4131,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Mengurangi testing pada modul itu",
-"Menambah testing, memakai tester berpengalaman, dan teknik yang lebih ketat",
-"Menghapus modul dari test plan",
-"Menunda semua testing ke akhir"
+"Mengurangi testing pada modul itu agar usaha tim beralih ke modul yang lebih aman",
+"Menambah testing, menugaskan tester berpengalaman, dan memakai teknik lebih ketat",
+"Menghapus modul dari test plan karena risikonya sudah diterima oleh manajemen",
+"Menunda semua testing ke akhir proyek ketika modul lain sudah selesai diuji"
 ],
 "en": [
-"Reduce testing on that module",
+"Reduce testing on that module so the team's effort shifts to safer modules",
 "Add more testing, assign experienced testers and use stricter techniques",
-"Remove the module from the test plan",
-"Postpone all testing to the end"
+"Remove the module from the test plan because management has already accepted the risk",
+"Postpone all testing to the end of the project when other modules have been tested"
 ]
 },
 "answer": 1,
@@ -4473,15 +4473,15 @@ QA.questions = [
 "options": {
 "id": [
 "Mencoba batal saat pesanan Shipped, lalu memeriksa permintaan ditolak dan state tetap Shipped",
-"Membatalkan pesanan saat masih Created",
-"Membayar pesanan lalu mengirimnya",
-"Memeriksa pesanan Delivered tidak bisa dibayar lagi"
+"Membatalkan pesanan yang masih berstatus Created, lalu memeriksa statusnya menjadi Cancelled",
+"Membayar pesanan lalu mengirimnya, kemudian memeriksa status akhirnya menjadi Shipped",
+"Memeriksa bahwa pesanan Delivered tidak bisa dibayar lagi setelah proses selesai"
 ],
 "en": [
 "Try to cancel while the order is Shipped, then check the request is rejected and the state stays Shipped",
-"Cancel an order while it is still Created",
-"Pay an order and then ship it",
-"Check that a Delivered order cannot be paid again"
+"Cancel an order still in Created, then check its status becomes Cancelled",
+"Pay an order and then ship it, then check that its final status becomes Shipped",
+"Check that a Delivered order cannot be paid again after the process is complete"
 ]
 },
 "answer": 0,
@@ -4627,16 +4627,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Checkout error, tolong dicek",
-"Checkout rusak di build 2.4.1 (Chrome 126, akun uji A). Langkah: tambah 2 item, pakai voucher X, klik Bayar. Aktual: HTTP 500, pesanan tidak terbentuk. Harapan: halaman konfirmasi. Log dan screenshot terlampir",
-"Checkout selalu gagal, sangat buruk, harus segera diperbaiki",
-"Mungkin voucher bermasalah karena dulu pernah error"
+"Checkout error, tolong dicek, sudah terjadi beberapa kali sejak kemarin sore sampai hari ini",
+"Checkout rusak di build 2.4.1 (Chrome 126). Langkah: tambah 2 item, pakai voucher X, Bayar. Aktual: HTTP 500. Harapan: halaman konfirmasi",
+"Checkout selalu gagal, sangat buruk, harus segera diperbaiki hari ini juga oleh developer yang bertugas",
+"Mungkin voucher bermasalah karena dulu pernah error, sebaiknya dicek oleh tim backend secepatnya"
 ],
 "en": [
-"Checkout error, please check",
-"Checkout broken on build 2.4.1 (Chrome 126, test account A). Steps: add 2 items, apply voucher X, click Pay. Actual: HTTP 500, no order created. Expected: confirmation page. Logs and screenshot attached",
-"Checkout always fails, very bad, must be fixed immediately",
-"Maybe the voucher is broken because it errored before"
+"Checkout error, please check, it has happened several times since yesterday afternoon until today",
+"Checkout broken on build 2.4.1 (Chrome 126). Steps: add 2 items, apply voucher X, Pay. Actual: HTTP 500. Expected: confirmation page",
+"Checkout always fails, very bad, must be fixed today by whichever developer is on duty",
+"Maybe the voucher is broken because it errored before, the backend team should check it soon"
 ]
 },
 "answer": 1,
@@ -4658,16 +4658,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Voucher harus bekerja dengan baik",
-"Given keranjang Rp200.000 dan voucher HEMAT10 (10%, min. Rp100.000), When saya menerapkan voucher, Then total menjadi Rp180.000",
-"Developer memeriksa kode fungsi diskon",
-"Tampilan voucher harus bagus"
+"Voucher harus bekerja dengan baik di semua kondisi keranjang pelanggan",
+"Given keranjang Rp200.000 dan voucher HEMAT10 (10%, min. Rp100.000), When voucher diterapkan, Then total Rp180.000",
+"Developer memeriksa kode fungsi diskon untuk memastikan rumusnya sudah benar",
+"Tampilan voucher harus bagus dan konsisten dengan desain aplikasi terbaru"
 ],
 "en": [
-"The voucher must work well",
-"Given a Rp200,000 cart and voucher SAVE10 (10%, min. Rp100,000), When I apply the voucher, Then the total becomes Rp180,000",
-"The developer reviews the discount function code",
-"The voucher UI must look good"
+"The voucher must work well under all conditions of the customer's cart",
+"Given a Rp200,000 cart and voucher SAVE10 (10%, min. Rp100,000), When applied, Then total is Rp180,000",
+"The developer reviews the discount function code to make sure the formula is correct",
+"The voucher UI must look good and match the latest application design"
 ]
 },
 "answer": 1,
@@ -4749,16 +4749,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Bug tersebar merata",
+"Bug tersebar merata di semua modul sehingga alokasi testing sebaiknya dibagi rata pula",
 "Sebagian kecil modul memuat sebagian besar defect",
-"Defect hanya ada di UI",
-"Defect hanya muncul saat produksi"
+"Defect hanya ada di lapisan UI karena logika bisnis di backend selalu terjaga",
+"Defect hanya muncul saat produksi karena lingkungan test tidak pernah sama dengan produksi"
 ],
 "en": [
-"Bugs are evenly spread",
+"Bugs are spread evenly across all modules so testing effort should be split evenly too",
 "A small number of modules contain most of the defects",
-"Defects only exist in the UI",
-"Defects only appear in production"
+"Defects exist only in the UI layer because the backend business logic is always safe",
+"Defects only appear in production because test environments are never the same as production"
 ]
 },
 "answer": 1,
@@ -5008,15 +5008,15 @@ QA.questions = [
 "options": {
 "id": [
 "Pengecekan awal luas dan dangkal untuk memastikan build layak diuji lebih lanjut",
-"Pengujian mendalam satu fitur",
-"Pengujian performa",
-"Pengujian keamanan"
+"Pengujian mendalam pada satu fitur sampai semua kombinasi inputnya terpenuhi",
+"Pengujian performa dengan banyak pengguna bersamaan pada lingkungan produksi",
+"Pengujian keamanan menyeluruh untuk mencari celah sebelum rilis ke pelanggan"
 ],
 "en": [
 "A broad, shallow initial check that a build is stable enough for further testing",
-"Deep testing of one feature",
-"Performance testing",
-"Security testing"
+"Deep testing of one feature until all its input combinations are covered",
+"Performance testing with many concurrent users on the production environment",
+"Thorough security testing to find vulnerabilities before release to customers"
 ]
 },
 "answer": 0,
@@ -5214,16 +5214,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Struktur kode internal",
+"Struktur kode internal dan arsitektur yang dibangun oleh tim pengembang",
 "Spesifikasi dan perilaku yang terlihat dari luar",
-"Hanya pengalaman",
-"Hasil review"
+"Hanya pengalaman dan intuisi penguji tanpa memakai dokumen apa pun sebagai acuan",
+"Hasil review kode yang dilakukan sesama developer sebelum perubahan digabungkan"
 ],
 "en": [
-"Internal code structure",
+"Internal code structure and architecture built by the development team",
 "Specification and externally observable behaviour",
-"Experience only",
-"Review results"
+"Only the tester's experience and intuition, without using any document as a reference",
+"Results of code reviews carried out by fellow developers before changes are merged"
 ]
 },
 "answer": 1,
@@ -5245,16 +5245,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Testing dimulai setelah coding selesai",
-"Aktivitas testing dimulai sedini mungkin karena defect lebih murah diperbaiki di awal",
-"Testing hanya di akhir sprint",
-"Testing tidak perlu requirement"
+"Testing dimulai setelah seluruh coding selesai agar tidak mengganggu pekerjaan developer",
+"Testing dimulai sedini mungkin karena defect lebih murah diperbaiki di awal",
+"Testing hanya dilakukan di akhir sprint ketika seluruh fitur sudah terintegrasi",
+"Testing tidak memerlukan requirement karena tester cukup mengandalkan intuisi"
 ],
 "en": [
-"Testing starts after coding is done",
-"Testing should start as early as possible because defects are cheaper to fix early",
-"Testing happens only at sprint end",
-"Testing needs no requirements"
+"Testing starts after all coding is finished so it does not disturb developers' work",
+"Testing starts as early as possible because defects are cheaper to fix early",
+"Testing happens only at the end of the sprint once every feature is integrated",
+"Testing needs no requirements since testers can simply rely on intuition"
 ]
 },
 "answer": 1,
@@ -5276,16 +5276,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Sistem tanpa defect pasti sukses",
-"Sistem tanpa defect tetap gagal jika tidak memenuhi kebutuhan user",
-"Tidak ada sistem tanpa defect",
-"Bug pasti ditemukan semua"
+"Sistem tanpa defect pasti sukses di pasar karena kualitas teknisnya sempurna",
+"Sistem tanpa defect tetap bisa gagal bila tidak memenuhi kebutuhan user",
+"Tidak ada satu pun sistem tanpa defect, jadi pengujian tidak pernah bisa dianggap selesai",
+"Semua bug pasti ditemukan bila tim melakukan testing cukup lama dengan teknik yang tepat"
 ],
 "en": [
-"A defect-free system is always a success",
+"A defect-free system is certain to succeed in the market because its technical quality is perfect",
 "A defect-free system can still fail if it does not meet user needs",
-"No system is defect-free",
-"All bugs will be found"
+"No system is ever defect-free, so testing can never be considered finished",
+"All bugs will certainly be found if the team tests long enough with the right techniques"
 ]
 },
 "answer": 1,
@@ -5308,15 +5308,15 @@ QA.questions = [
 "options": {
 "id": [
 "Scope, pendekatan, sumber daya, jadwal",
-"Hanya daftar bug",
-"Hanya kode test",
-"Hanya hasil eksekusi"
+"Hanya daftar bug yang ditemukan beserta tingkat keparahan masing-masing defect",
+"Hanya kode test otomasi yang akan dijalankan pada pipeline untuk iterasi berjalan",
+"Hanya hasil eksekusi test dari iterasi sebelumnya beserta tanggal dan nama penguji"
 ],
 "en": [
 "Scope, approach, resources, schedule",
-"Only a bug list",
-"Only test code",
-"Only execution results"
+"Only the list of bugs found along with the severity of each defect",
+"Only the automated test code to be run in the pipeline for the current iteration",
+"Only the test execution results from the previous iteration with date and tester name"
 ]
 },
 "answer": 0,
@@ -5551,15 +5551,15 @@ QA.questions = [
 "options": {
 "id": [
 "Melacak hubungan requirement dengan test case dan defect",
-"Mengukur kecepatan CPU",
-"Menjadwalkan sprint",
-"Menyimpan password"
+"Mengukur kecepatan CPU dan memori server selama tes berjalan di lingkungan staging",
+"Menjadwalkan sprint dan membagi tugas anggota tim berdasarkan kapasitas tiap orang",
+"Menyimpan password dan kredensial uji secara aman di repositori bersama"
 ],
 "en": [
 "Trace the relationship between requirements, test cases, and defects",
-"Measure CPU speed",
-"Schedule sprints",
-"Store passwords"
+"Measure server CPU and memory speed while tests run in staging",
+"Schedule sprints and split tasks among team members by each person's capacity",
+"Store test passwords and credentials safely in a shared repository"
 ]
 },
 "answer": 0,
@@ -5613,15 +5613,15 @@ QA.questions = [
 "options": {
 "id": [
 "Semua defect critical sudah ditutup dan coverage target tercapai",
-"Developer sudah pulang",
-"Build baru dibuat",
-"Sprint dimulai"
+"Developer sudah menyelesaikan seluruh pekerjaan pengembangan dan pulang untuk hari itu",
+"Build baru berhasil dibuat dan siap dipasang pada lingkungan pengujian berikutnya",
+"Sprint baru dimulai sehingga tim perlu segera menyiapkan test case untuk fitur baru"
 ],
 "en": [
 "All critical defects are closed and the coverage target is met",
-"The developer has gone home",
-"A new build was made",
-"The sprint has started"
+"The developer has finished all development work and gone home for the day",
+"A new build was created successfully and is ready to install in the next test environment",
+"A new sprint started so the team must quickly prepare test cases for the new features"
 ]
 },
 "answer": 0,
@@ -5923,15 +5923,15 @@ QA.questions = [
 "options": {
 "id": [
 "Menjalankan build dan test otomatis pada setiap perubahan untuk feedback cepat",
-"Menggantikan tester",
-"Menghapus kebutuhan code review",
-"Mempercepat internet"
+"Menggantikan tester sepenuhnya karena semua pengujian sudah dilakukan oleh pipeline",
+"Menghapus kebutuhan code review karena pipeline sudah memeriksa seluruh perubahan",
+"Mempercepat koneksi internet tim pengembang saat mengunduh dependensi proyek"
 ],
 "en": [
 "Run builds and tests automatically on every change for fast feedback",
-"Replace testers",
-"Remove the need for code review",
-"Speed up the internet"
+"Replace testers entirely because the pipeline already performs all the testing",
+"Remove the need for code review because the pipeline already checks every change",
+"Speed up the developers' internet connection when downloading project dependencies"
 ]
 },
 "answer": 0,
@@ -5952,15 +5952,15 @@ QA.questions = [
 "options": {
 "id": [
 "Kadang lolos kadang gagal tanpa perubahan kode",
-"Selalu gagal",
-"Selalu lolos",
-"Terlalu cepat"
+"Selalu gagal setelah deploy terbaru, walau kodenya tidak berubah",
+"Selalu lolos di lingkungan lokal tetapi tidak pernah dijalankan di CI",
+"Terlalu cepat selesai sehingga hasilnya sulit dipercaya"
 ],
 "en": [
 "Sometimes passes and sometimes fails without code changes",
-"Always fails",
-"Always passes",
-"Is too fast"
+"Always fails after the latest deploy, even though the code did not change",
+"Always passes locally but is never run in CI",
+"Finishes too quickly, so the result is hard to trust"
 ]
 },
 "answer": 0,
@@ -6074,15 +6074,15 @@ QA.questions = [
 "options": {
 "id": [
 "Menjalankan test yang sama dengan banyak set data",
-"Mengambil data dari database otomatis",
-"Membuat laporan",
-"Menghapus data test"
+"Mengambil data langsung dari database produksi secara otomatis sebelum setiap test dijalankan",
+"Membuat laporan ringkasan hasil test dalam format yang mudah dibaca oleh manajer proyek",
+"Menghapus seluruh data test setelah eksekusi selesai supaya lingkungan tetap bersih"
 ],
 "en": [
 "Run the same test with multiple data sets",
-"Automatically fetch DB data",
-"Generate reports",
-"Delete test data"
+"Automatically fetch data straight from the production database before each test runs",
+"Produce summary test result reports in a format that project managers can read easily",
+"Delete all test data after execution finishes so the environment stays clean"
 ]
 },
 "answer": 0,
@@ -6160,16 +6160,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Menguji sistem melampaui kapasitas normal untuk melihat titik patah dan pemulihan",
-"Menguji warna UI",
-"Menguji satu user",
-"Menguji terjemahan"
+"Menguji sistem melampaui kapasitas normal untuk mencari titik patah dan pemulihan",
+"Menguji tampilan antarmuka di berbagai warna, ukuran layar, dan tema yang berbeda",
+"Menguji perilaku sistem untuk satu pengguna saja dalam kondisi yang sangat ideal",
+"Menguji ketepatan terjemahan teks aplikasi ke beberapa bahasa yang didukung"
 ],
 "en": [
 "Push the system beyond normal capacity to find breaking point and recovery",
-"Test UI colours",
-"Test a single user",
-"Test translations"
+"Test the interface across various colours, screen sizes and themes",
+"Test system behaviour for a single user under very ideal conditions",
+"Test the accuracy of the app text translations in several supported languages"
 ]
 },
 "answer": 0,
@@ -6218,16 +6218,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Penyisipan script berbahaya yang dieksekusi di browser korban",
-"Serangan pada database saja",
-"Serangan DDoS",
-"Kegagalan CSS"
+"Menyisipkan script berbahaya yang dieksekusi di browser korban",
+"Serangan yang hanya menargetkan database melalui query yang dimanipulasi penyerang",
+"Serangan DDoS yang membanjiri server dengan lalu lintas hingga layanan tidak bisa diakses",
+"Kegagalan CSS yang membuat tampilan halaman rusak pada sebagian perangkat pengguna"
 ],
 "en": [
-"Injection of malicious script executed in a victim's browser",
-"An attack on the database only",
-"A DDoS attack",
-"A CSS failure"
+"Injecting malicious script that runs in a victim's browser",
+"An attack that targets only the database through queries manipulated by the attacker",
+"A DDoS attack that floods the server with traffic until the service becomes unreachable",
+"A CSS failure that breaks the page layout on some of the users' devices"
 ]
 },
 "answer": 0,
@@ -6247,16 +6247,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Menggantikan dependensi eksternal agar test terisolasi dan deterministik",
-"Mempercepat internet",
-"Menghapus bug",
-"Mengganti database produksi"
+"Mengganti dependensi eksternal agar test terisolasi dan deterministik",
+"Mempercepat koneksi internet dengan memblokir seluruh permintaan ke layanan eksternal",
+"Menghapus bug dari kode produksi sebelum test dijalankan oleh pipeline CI",
+"Mengganti database produksi dengan salinan lama yang sudah tidak dipakai pengguna"
 ],
 "en": [
 "Replace external dependencies so tests are isolated and deterministic",
-"Speed up the internet",
-"Remove bugs",
-"Replace the production database"
+"Speed up the internet connection by blocking every request to external services",
+"Remove bugs from production code before the CI pipeline runs the tests",
+"Replace the production database with an old copy that users no longer use"
 ]
 },
 "answer": 0,
@@ -6413,15 +6413,15 @@ QA.questions = [
 "options": {
 "id": [
 "Lingkungan test konsisten dan mudah diulang",
-"Menghilangkan kebutuhan test",
-"Membuat bug otomatis hilang",
-"Mengganti Git"
+"Menghilangkan kebutuhan test karena kontainer sudah memastikan aplikasi pasti berjalan benar",
+"Membuat bug otomatis hilang saat aplikasi dipaketkan ke dalam image yang baru",
+"Mengganti Git sebagai sistem version control untuk seluruh kode dan konfigurasi"
 ],
 "en": [
 "Consistent, reproducible test environments",
-"Eliminates the need for tests",
-"Makes bugs vanish",
-"Replaces Git"
+"Eliminates the need for tests because containers already make sure the app runs correctly",
+"Makes bugs vanish automatically when the app is packaged into a new image",
+"Replaces Git as the version control system for all code and configuration"
 ]
 },
 "answer": 0,
@@ -6485,16 +6485,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Scenario: gambaran tinggi apa yang diuji; test case: langkah, data, dan expected result detail",
-"Sama persis",
-"Test case lebih umum daripada scenario",
-"Scenario hanya untuk performa"
+"Scenario: gambaran tinggi apa yang diuji; test case: langkah, data, dan hasil yang diharapkan",
+"Keduanya sama persis dan hanya dibedakan oleh nama yang dipakai tiap tim berbeda-beda",
+"Test case lebih umum dan ringkas daripada scenario yang selalu memuat langkah rinci",
+"Scenario hanya dipakai pada pengujian performa, sedangkan test case dipakai untuk fungsional"
 ],
 "en": [
-"Scenario: high-level what to test; test case: detailed steps, data, and expected result",
-"Exactly the same",
-"A test case is more general than a scenario",
-"Scenarios are only for performance"
+"Scenario: high-level what to test; test case: steps, data and expected result",
+"They are exactly the same and differ only in the name each team happens to use",
+"A test case is more general and concise than a scenario, which always holds detailed steps",
+"Scenarios are used only in performance testing, while test cases are used for functional testing"
 ]
 },
 "answer": 0,
@@ -6799,16 +6799,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Request gagal",
+"Request gagal karena ada kesalahan pada sisi klien",
 "Request sukses dan tidak ada body di response",
-"Resource dipindahkan",
-"Server sibuk"
+"Resource dipindahkan permanen ke URL lain dan klien perlu mengikuti",
+"Server sedang sibuk dan klien diminta mencoba lagi nanti"
 ],
 "en": [
-"Request failed",
-"Request succeeded and the response has no body",
-"Resource moved",
-"Server busy"
+"The request failed because of an error on the client side",
+"The request succeeded and the response has no body",
+"The resource moved permanently to another URL and the client should follow it",
+"The server is busy and the client is asked to try again later"
 ]
 },
 "answer": 1,
@@ -6828,16 +6828,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"200",
+"200 OK",
 "400 Bad Request",
-"401",
-"500"
+"401 Unauthorized",
+"500 Internal Server Error"
 ],
 "en": [
-"200",
+"200 OK",
 "400 Bad Request",
-"401",
-"500"
+"401 Unauthorized",
+"500 Internal Server Error"
 ]
 },
 "answer": 1,
@@ -6994,15 +6994,15 @@ QA.questions = [
 "options": {
 "id": [
 "409 Conflict",
-"404",
-"401",
-"204"
+"404 Not Found",
+"401 Unauthorized",
+"204 No Content"
 ],
 "en": [
 "409 Conflict",
-"404",
-"401",
-"204"
+"404 Not Found",
+"401 Unauthorized",
+"204 No Content"
 ]
 },
 "answer": 0,
@@ -7022,16 +7022,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Sama saja",
+"Sama saja; keduanya berarti pengguna tidak boleh mengakses resource itu",
 "401 = belum terautentikasi/token invalid; 403 = terautentikasi tapi tidak berhak",
-"401 = server error; 403 = client error",
-"401 = resource tidak ada; 403 = resource ada"
+"401 = server error di sisi backend; 403 = client error karena permintaan salah format",
+"401 = resource tidak ada di server; 403 = resource ada tetapi sedang dipindahkan"
 ],
 "en": [
-"They are the same",
+"The same; both mean the user may not access that resource",
 "401 = unauthenticated/invalid token; 403 = authenticated but not permitted",
-"401 = server error; 403 = client error",
-"401 = resource missing; 403 = resource exists"
+"401 = server error on the backend; 403 = client error because the request was malformed",
+"401 = resource missing on the server; 403 = resource exists but is being relocated"
 ]
 },
 "answer": 1,
@@ -7077,16 +7077,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"DELETE /orders/{id}",
+"DELETE /orders/{id}, karena pembatalan berarti pesanan dihapus dari sistem",
 "PATCH /orders/{id} dengan status=cancelled, atau POST /orders/{id}/cancel",
-"GET /orders/{id}/cancel",
-"PUT /orders tanpa id"
+"GET /orders/{id}/cancel, karena cukup membuka URL pembatalan dari browser",
+"PUT /orders tanpa id, dengan seluruh daftar pesanan sebagai body request"
 ],
 "en": [
-"DELETE /orders/{id}",
+"DELETE /orders/{id}, since cancelling means the order is removed from the system",
 "PATCH /orders/{id} with status=cancelled, or POST /orders/{id}/cancel",
-"GET /orders/{id}/cancel",
-"PUT /orders without id"
+"GET /orders/{id}/cancel, since just opening the cancel URL in a browser is enough",
+"PUT /orders without an id, with the whole list of orders as the request body"
 ]
 },
 "answer": 1,
@@ -7107,15 +7107,15 @@ QA.questions = [
 "options": {
 "id": [
 "503 Service Unavailable",
-"400",
-"404",
-"201"
+"400 Bad Request",
+"404 Not Found",
+"201 Created"
 ],
 "en": [
 "503 Service Unavailable",
-"400",
-"404",
-"201"
+"400 Bad Request",
+"404 Not Found",
+"201 Created"
 ]
 },
 "answer": 0,
@@ -7347,15 +7347,15 @@ QA.questions = [
 "options": {
 "id": [
 "401 dengan pesan generik \"Email atau password salah\"",
-"200 dengan pesan \"Email tidak ada\"",
-"500",
-"403 dengan nama user"
+"200 dengan pesan \"Email tidak terdaftar di sistem kami\" agar pengguna segera mendaftar",
+"500 Internal Server Error karena data akun yang dicari tidak ditemukan di database",
+"403 dengan menyebutkan nama user yang ditemukan agar pengguna tahu akun mana yang benar"
 ],
 "en": [
 "401 with a generic message \"Email or password is incorrect\"",
-"200 with message \"Email not found\"",
-"500",
-"403 with the username"
+"200 with the message \"Email is not registered in our system\" so users sign up right away",
+"500 Internal Server Error because the requested account data was not found in the database",
+"403 naming the user that was found so people know which account is the right one"
 ]
 },
 "answer": 0,
@@ -7652,15 +7652,15 @@ QA.questions = [
 "options": {
 "id": [
 "Implicit berlaku global untuk pencarian elemen; explicit menunggu kondisi tertentu pada elemen tertentu",
-"Keduanya sama",
-"Explicit berlaku global; implicit per elemen",
-"Implicit hanya untuk alert"
+"Keduanya sama persis, hanya berbeda nama method pada binding bahasa yang dipakai",
+"Explicit berlaku global untuk semua elemen; implicit hanya untuk satu elemen tertentu",
+"Implicit hanya dipakai untuk menangani alert dan dialog JavaScript pada halaman"
 ],
 "en": [
 "Implicit applies globally to element lookups; explicit waits for a specific condition on a specific element",
-"They are the same",
-"Explicit is global; implicit is per element",
-"Implicit is only for alerts"
+"They are exactly the same, differing only in method name across language bindings",
+"Explicit applies globally to all elements; implicit is only for one specific element",
+"Implicit is used only to handle alerts and JavaScript dialogs on the page"
 ]
 },
 "answer": 0,
@@ -7680,16 +7680,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Menunggu waktu tetap: lambat jika elemen cepat siap, dan tetap bisa gagal jika lambat",
-"Tidak bisa dipakai di Python",
-"Menghapus cookie",
-"Menutup browser"
+"Menunggu waktu tetap: lambat jika elemen cepat siap, dan bisa gagal jika lebih lambat",
+"Tidak bisa dipakai di Python karena hanya tersedia pada binding Java",
+"Menghapus cookie dan sesi browser setiap kali sebelum menunggu elemen",
+"Menutup browser lalu membukanya lagi sampai elemen akhirnya muncul"
 ],
 "en": [
-"Fixed wait: slow if the element is ready early, and can still fail if slower",
-"Cannot be used in Python",
-"Deletes cookies",
-"Closes the browser"
+"Fixed wait: slow if the element is ready early, and can fail if it is slower",
+"Cannot be used in Python because it only exists in the Java bindings",
+"Deletes cookies and the browser session each time before waiting for the element",
+"Closes the browser and reopens it until the element finally appears"
 ]
 },
 "answer": 0,
@@ -7826,15 +7826,15 @@ QA.questions = [
 "options": {
 "id": [
 "Elemen lain (overlay/modal/loader) menutupi elemen target",
-"Elemen tidak ada di DOM",
-"Driver tidak terpasang",
-"Port salah"
+"Elemen target belum ada di DOM sehingga tidak bisa ditemukan oleh locator mana pun",
+"Driver browser belum terpasang atau versinya tidak cocok dengan versi browser",
+"Port server driver salah sehingga perintah tidak pernah sampai ke browser"
 ],
 "en": [
-"Another element (overlay/modal/loader) covering the target",
-"The element is not in the DOM",
-"The driver is not installed",
-"A wrong port"
+"Another element (overlay/modal/loader) covers the target element",
+"The target element is not in the DOM yet so no locator can find it",
+"The browser driver is not installed or its version does not match the browser",
+"The driver server port is wrong so the command never reaches the browser"
 ]
 },
 "answer": 0,
@@ -7854,16 +7854,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Elemen yang direferensikan sudah tidak valid karena DOM berubah/di-refresh",
-"Locator salah ketik",
-"Browser tidak mendukung",
-"Timeout koneksi"
+"Elemen yang direferensikan sudah tidak valid karena DOM berubah atau di-refresh",
+"Locator salah ketik sehingga Selenium tidak menemukan elemen sama sekali",
+"Browser yang dipakai tidak mendukung versi WebDriver yang terpasang saat ini",
+"Timeout koneksi ke server driver sebelum perintah sempat dijalankan"
 ],
 "en": [
-"The referenced element is no longer valid because the DOM changed/refreshed",
-"The locator has a typo",
-"The browser is unsupported",
-"Connection timeout"
+"The referenced element is no longer valid because the DOM changed or refreshed",
+"The locator has a typo so Selenium finds no element at all",
+"The browser in use does not support the installed WebDriver version",
+"A connection timeout to the driver server before the command could run"
 ]
 },
 "answer": 0,
@@ -7883,16 +7883,16 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Elemen tidak ditemukan dengan locator tersebut saat pencarian",
-"Elemen tidak bisa diklik",
-"Alert tidak muncul",
-"Driver crash"
+"Elemen tidak ditemukan dengan locator itu saat pencarian",
+"Elemen ditemukan tetapi tidak bisa diklik karena tertutup elemen lain di atasnya",
+"Alert yang ditunggu tidak muncul dalam batas waktu yang ditentukan oleh test",
+"Driver crash di tengah sesi sehingga seluruh perintah berikutnya ikut gagal"
 ],
 "en": [
 "The element was not found with that locator at lookup time",
-"The element cannot be clicked",
-"No alert appeared",
-"The driver crashed"
+"The element was found but cannot be clicked because another element covers it",
+"The alert being waited for did not appear within the time limit set by the test",
+"The driver crashed mid-session so all following commands failed as well"
 ]
 },
 "answer": 0,
@@ -8000,15 +8000,15 @@ QA.questions = [
 "options": {
 "id": [
 "close menutup jendela aktif; quit mengakhiri sesi dan semua jendela",
-"Sama saja",
-"close mengakhiri semua; quit hanya satu tab",
-"quit hanya membersihkan cache"
+"Keduanya sama saja dan bisa dipakai bergantian tanpa perbedaan hasil pada sesi driver",
+"close mengakhiri seluruh sesi dan semua jendela, sedangkan quit hanya menutup satu tab",
+"quit hanya membersihkan cache dan cookie browser tanpa menutup jendela apa pun"
 ],
 "en": [
 "close closes the current window; quit ends the session and all windows",
-"They are the same",
-"close ends everything; quit only one tab",
-"quit only clears cache"
+"They are the same and can be used interchangeably with no difference to the driver session",
+"close ends the whole session and all windows, while quit only closes one tab",
+"quit only clears the browser cache and cookies without closing any window"
 ]
 },
 "answer": 0,
@@ -8156,15 +8156,15 @@ QA.questions = [
 "options": {
 "id": [
 "Mengunduh dan mengelola browser driver secara otomatis",
-"Menjalankan Grid",
-"Membuat laporan",
-"Merekam video"
+"Menjalankan Selenium Grid untuk eksekusi test secara paralel di banyak mesin",
+"Membuat laporan hasil test dalam format HTML yang siap dibagikan",
+"Merekam video layar selama test berjalan untuk keperluan debugging"
 ],
 "en": [
 "Automatically download and manage browser drivers",
-"Run the Grid",
-"Generate reports",
-"Record video"
+"Run Selenium Grid to execute tests in parallel across many machines",
+"Generate test result reports in a ready-to-share HTML format",
+"Record screen video while tests run for debugging purposes"
 ]
 },
 "answer": 0,

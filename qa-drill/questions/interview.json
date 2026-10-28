@@ -11,15 +11,15 @@
   "options": {
    "id": [
     "Menunggu elemen visible, stabil, enabled, dan bisa menerima event (actionability checks)",
-    "Langsung klik tanpa menunggu apa pun",
-    "Selalu menunggu 30 detik tetap",
-    "Menunggu networkidle lalu klik"
+    "Langsung mengklik koordinat elemen tanpa menunggu apa pun agar test cepat",
+    "Selalu menunggu 30 detik tetap lalu mengklik walau elemen sudah siap lebih awal",
+    "Menunggu networkidle di seluruh halaman, baru kemudian mengklik elemen tersebut"
    ],
    "en": [
-    "Waits for the element to be visible, stable, enabled and able to receive events (actionability checks)",
-    "Clicks immediately without waiting",
-    "Always waits a fixed 30 seconds",
-    "Waits for networkidle then clicks"
+    "Waits for the element to be visible, stable, enabled and able to receive events",
+    "Clicks the element's coordinates immediately without waiting so the test is fast",
+    "Always waits a fixed 30 seconds and then clicks even if the element was ready earlier",
+    "Waits for networkidle on the whole page before finally clicking the element"
    ]
   },
   "answer": 0,
@@ -68,16 +68,16 @@
   },
   "options": {
    "id": [
-    "Web-first assertion mencoba ulang sampai timeout, sedangkan isVisible() hanya membaca sekali sehingga rawan flaky",
-    "Keduanya identik",
-    "toBeVisible() lebih cepat karena tidak menunggu",
-    "isVisible() tidak bisa dipakai di TypeScript"
+    "Web-first assertion mencoba ulang sampai timeout, sedangkan isVisible() membaca sekali sehingga rawan flaky",
+    "Keduanya identik karena isVisible() juga menunggu elemen tampil sebelum mengembalikan hasil",
+    "toBeVisible() lebih cepat karena tidak menunggu sama sekali dan langsung memberi hasil",
+    "isVisible() tidak bisa dipakai di TypeScript sehingga proyek TypeScript wajib memakai toBeVisible()"
    ],
    "en": [
     "The web-first assertion retries until timeout, while isVisible() reads once and is prone to flakiness",
-    "They are identical",
-    "toBeVisible() is faster because it does not wait",
-    "isVisible() cannot be used in TypeScript"
+    "They are identical because isVisible() also waits for the element to appear before returning",
+    "toBeVisible() is faster because it never waits and gives a result straight away",
+    "isVisible() cannot be used in TypeScript so TypeScript projects must use toBeVisible()"
    ]
   },
   "answer": 0,
@@ -97,16 +97,16 @@
   },
   "options": {
    "id": [
-    "Cookie, storage, dan sesi terisolasi antar test tanpa perlu membuka browser baru",
-    "Semua test berbagi login yang sama secara otomatis",
-    "Test otomatis berjalan berurutan",
-    "Browser tidak perlu dipasang"
+    "Cookie, storage, dan sesi terisolasi antar test tanpa membuka browser baru",
+    "Semua test otomatis berbagi sesi login yang sama sehingga tidak perlu login berulang kali",
+    "Test otomatis berjalan berurutan di satu halaman sehingga tidak mungkin berjalan paralel",
+    "Browser tidak perlu dipasang karena Playwright menjalankan semua test tanpa browser nyata"
    ],
    "en": [
     "Cookies, storage and sessions are isolated between tests without launching a new browser",
-    "All tests automatically share the same login",
-    "Tests automatically run sequentially",
-    "No browser needs to be installed"
+    "All tests automatically share the same login session so nobody has to log in repeatedly",
+    "Tests automatically run one after another on a single page so parallel runs are impossible",
+    "No browser needs to be installed because Playwright runs every test without a real browser"
    ]
   },
   "answer": 0,
@@ -156,15 +156,15 @@
   "options": {
    "id": [
     "page.route('**/api/products', route => route.fulfill({ status: 500 }))",
-    "Matikan server backend secara manual",
-    "Ubah kode aplikasi agar melempar error",
-    "Tidak bisa diuji di Playwright"
+    "Mematikan server backend secara manual lalu menjalankan test sebelum server dinyalakan lagi",
+    "Mengubah kode aplikasi supaya melempar error setiap kali memanggil API produk dalam test",
+    "Tidak bisa diuji di Playwright karena Playwright tidak dapat memanipulasi request jaringan"
    ],
    "en": [
     "page.route('**/api/products', route => route.fulfill({ status: 500 }))",
-    "Shut the backend server down manually",
-    "Change app code to throw an error",
-    "It cannot be tested in Playwright"
+    "Shutting the backend server down manually and running the test before turning it back on",
+    "Changing the app code to throw an error every time it calls the products API during tests",
+    "It cannot be tested in Playwright because Playwright cannot manipulate network requests"
    ]
   },
   "answer": 0,
@@ -184,16 +184,16 @@
   },
   "options": {
    "id": [
-    "Command Cypress dijalankan async dalam antrean dan mengembalikan chainable, bukan nilai; gunakan .then() atau alias",
-    "Karena cy.get hanya mendukung ID kelas",
-    "Karena Cypress tidak punya fungsi text()",
-    "Karena harus memakai await"
+    "Command Cypress async dalam antrean dan mengembalikan chainable, bukan nilai; pakai .then() atau alias",
+    "Karena cy.get hanya mendukung selector ID dan tidak bisa membaca teks elemen sama sekali",
+    "Karena Cypress memang tidak menyediakan fungsi untuk membaca teks dari sebuah elemen",
+    "Karena semua command Cypress wajib diawali dengan await agar nilai kembaliannya tersedia"
    ],
    "en": [
-    "Cypress commands are queued and asynchronous and return a chainable, not a value; use .then() or an alias",
-    "Because cy.get only supports class IDs",
-    "Because Cypress has no text() function",
-    "Because you must use await"
+    "Cypress commands are queued and async and return a chainable, not a value; use .then() or an alias",
+    "Because cy.get only supports ID selectors and cannot read element text at all",
+    "Because Cypress simply provides no function to read text from an element",
+    "Because every Cypress command must be prefixed with await for its return value to be available"
    ]
   },
   "answer": 0,
@@ -243,15 +243,15 @@
   "options": {
    "id": [
     "Query dan assertion diulang otomatis sampai lolos atau timeout (default 4 detik)",
-    "Seluruh test diulang jika gagal tanpa konfigurasi",
-    "Command yang mengubah state (mis. click) diulang berkali-kali",
-    "Cypress mengulang test sampai hijau"
+    "Seluruh test diulang jika gagal tanpa perlu konfigurasi apa pun oleh pengguna Cypress",
+    "Command yang mengubah state seperti click diulang berkali-kali sampai berhasil dijalankan",
+    "Cypress mengulang test terus-menerus sampai hasilnya hijau, berapa pun jumlah percobaannya"
    ],
    "en": [
     "Queries and assertions are retried automatically until they pass or time out (default 4 seconds)",
-    "The whole test is rerun on failure without configuration",
-    "State-changing commands (e.g. click) are retried repeatedly",
-    "Cypress reruns tests until green"
+    "The whole test is rerun on failure without any configuration from the Cypress user",
+    "State-changing commands such as click are retried repeatedly until they succeed",
+    "Cypress keeps rerunning the test until the result is green, however many attempts it takes"
    ]
   },
   "answer": 0,
@@ -271,16 +271,16 @@
   },
   "options": {
    "id": [
-    "cy.session() untuk menyimpan dan memulihkan sesi login (login lewat API bila memungkinkan)",
-    "Login manual lalu jalankan Cypress",
-    "Nonaktifkan autentikasi di aplikasi",
-    "Pakai cy.wait(10000) saat login"
+    "cy.session() untuk menyimpan dan memulihkan sesi login (login lewat API bila bisa)",
+    "Login manual dulu di browser lalu menjalankan Cypress tanpa pernah menutup browser itu",
+    "Menonaktifkan autentikasi di aplikasi sepenuhnya selama test berjalan di lingkungan apa pun",
+    "Memakai cy.wait(10000) setiap kali login supaya sesi sempat terbentuk dengan sempurna"
    ],
    "en": [
     "cy.session() to cache and restore the login session (log in via API where possible)",
-    "Log in manually and then run Cypress",
-    "Disable authentication in the app",
-    "Use cy.wait(10000) when logging in"
+    "Log in manually first in the browser and run Cypress without ever closing that browser",
+    "Disable authentication in the app entirely while tests run in any environment",
+    "Use cy.wait(10000) at every login so the session has time to form perfectly"
    ]
   },
   "answer": 0,
@@ -301,15 +301,15 @@
   "options": {
    "id": [
     "Gunakan cy.origin() untuk perintah di domain lain; Cypress tidak mendukung banyak tab",
-    "Tidak ada batasan apa pun",
-    "Cypress tidak bisa menguji aplikasi yang memakai SSO",
-    "Cukup ganti baseUrl di tengah test"
+    "Tidak ada batasan apa pun karena Cypress bebas berpindah antar domain di satu test",
+    "Cypress tidak bisa menguji aplikasi yang memakai SSO pihak ketiga dalam bentuk apa pun",
+    "Cukup mengganti baseUrl di tengah test lalu melanjutkan perintah seperti biasa"
    ],
    "en": [
     "Use cy.origin() for commands on another domain; Cypress does not support multiple tabs",
-    "There is no limitation",
-    "Cypress cannot test apps that use SSO",
-    "Just change baseUrl mid-test"
+    "There is no limitation because Cypress moves freely across domains within one test",
+    "Cypress cannot test apps that use third-party SSO in any form whatsoever",
+    "Just change baseUrl in the middle of the test and continue with commands as usual"
    ]
   },
   "answer": 0,
@@ -330,15 +330,15 @@
   "options": {
    "id": [
     "Execution Profile berisi variabel global (mis. baseUrl) yang dipilih saat eksekusi",
-    "Menyalin test case dan mengganti URL manual",
-    "Menulis URL langsung di tiap langkah",
-    "Dua project berbeda"
+    "Menyalin semua test case lalu mengganti URL secara manual di setiap langkah yang memakainya",
+    "Menulis URL langsung di tiap langkah test supaya setiap test bisa dibaca sendiri",
+    "Membuat dua project berbeda, satu untuk staging dan satu lagi untuk production"
    ],
    "en": [
     "An Execution Profile with global variables (e.g. baseUrl) selected at run time",
-    "Copying test cases and changing URLs manually",
-    "Hard-coding the URL in every step",
-    "Two separate projects"
+    "Copying every test case and changing the URL manually in each step that uses it",
+    "Hard-coding the URL in every test step so that each test can be read on its own",
+    "Creating two separate projects, one for staging and another one for production"
    ]
   },
   "answer": 0,
@@ -358,16 +358,16 @@
   },
   "options": {
    "id": [
-    "Menjalankan beberapa test suite sekaligus, mis. di beberapa browser atau profile, secara berurutan atau paralel",
-    "Menyimpan locator elemen",
-    "Menyimpan data uji CSV",
-    "Membuat laporan bug otomatis"
+    "Menjalankan beberapa test suite sekaligus, mis. lintas browser atau profile, berurutan atau paralel",
+    "Menyimpan locator elemen web secara terpusat untuk dipakai ulang oleh seluruh test case",
+    "Menyimpan data uji dalam file CSV yang dihubungkan ke langkah-langkah test case",
+    "Membuat laporan bug otomatis ke sistem tracker setiap kali sebuah test gagal"
    ],
    "en": [
     "Running several test suites together, e.g. across browsers or profiles, sequentially or in parallel",
-    "Storing element locators",
-    "Storing CSV test data",
-    "Creating bug reports automatically"
+    "Storing web element locators centrally for reuse by every test case",
+    "Storing test data in CSV files linked to the steps of test cases",
+    "Creating bug reports automatically in the tracker whenever a test fails"
    ]
   },
   "answer": 0,
@@ -388,15 +388,15 @@
   "options": {
    "id": [
     "Membuat custom keyword (Groovy) atau test case yang dipanggil ulang",
-    "Menyalin langkah login ke setiap test case",
-    "Merekam ulang tiap kali",
-    "Menghapus login dari test"
+    "Menyalin langkah login ke setiap test case supaya tiap test benar-benar berdiri sendiri",
+    "Merekam ulang langkah login tiap kali dibutuhkan lewat fitur recorder bawaan Katalon",
+    "Menghapus login dari semua test lalu menguji dalam kondisi sudah login dari awal"
    ],
    "en": [
     "Create a custom keyword (Groovy) or a reusable test case that is called",
-    "Copy the login steps into every test case",
-    "Re-record each time",
-    "Remove login from the tests"
+    "Copy the login steps into every test case so each test is fully self-contained",
+    "Re-record the login steps every time they are needed using Katalon's built-in recorder",
+    "Remove login from all tests and test from a state that is already logged in from the start"
    ]
   },
   "answer": 0,
@@ -416,16 +416,16 @@
   },
   "options": {
    "id": [
-    "Locator disimpan terpusat sehingga satu perubahan memperbaiki semua test yang memakainya; self-healing dapat memakai locator alternatif",
-    "Karena membuat test berjalan lebih cepat",
-    "Karena menghilangkan kebutuhan assertion",
-    "Karena otomatis menulis data uji"
+    "Locator disimpan terpusat sehingga satu perubahan memperbaiki semua test; ada self-healing",
+    "Karena membuat setiap test berjalan jauh lebih cepat dibanding menulis locator di langkah",
+    "Karena menghilangkan kebutuhan assertion pada hampir seluruh langkah verifikasi test",
+    "Karena otomatis menuliskan data uji yang dibutuhkan oleh setiap test case baru"
    ],
    "en": [
-    "Locators are kept centrally so one change fixes every test using them; self-healing can use alternative locators",
-    "Because it makes tests run faster",
-    "Because it removes the need for assertions",
-    "Because it writes test data automatically"
+    "Locators are kept centrally so one change fixes all tests; self-healing is available",
+    "Because it makes every test run far faster than writing locators inside the steps",
+    "Because it removes the need for assertions in nearly all verification steps of a test",
+    "Because it automatically writes the test data every new test case needs"
    ]
   },
   "answer": 0,
@@ -504,15 +504,15 @@
   "options": {
    "id": [
     "WHERE memfilter baris sebelum pengelompokan; HAVING memfilter grup hasil agregasi",
-    "Keduanya sama persis",
-    "WHERE hanya untuk angka; HAVING hanya untuk teks",
-    "HAVING dijalankan sebelum WHERE"
+    "Keduanya sama persis dan bisa saling menggantikan pada semua jenis query tanpa pengecualian",
+    "WHERE hanya dapat dipakai untuk kolom angka, sedangkan HAVING hanya dapat dipakai untuk teks",
+    "HAVING dijalankan lebih dulu daripada WHERE sehingga baris sudah terfilter sebelum dikelompokkan"
    ],
    "en": [
     "WHERE filters rows before grouping; HAVING filters groups after aggregation",
-    "They are exactly the same",
-    "WHERE is for numbers only; HAVING is for text only",
-    "HAVING runs before WHERE"
+    "They are exactly the same and can replace each other in every kind of query without exception",
+    "WHERE can only be used on numeric columns, whereas HAVING can only be used on text",
+    "HAVING runs before WHERE so rows are already filtered before they are grouped"
    ]
   },
   "answer": 0,
@@ -532,16 +532,16 @@
   },
   "options": {
    "id": [
-    "Beri ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY created_at DESC), lalu ambil yang bernomor 1",
-    "SELECT MAX(*) FROM orders",
-    "ORDER BY created_at lalu LIMIT 1 untuk semua user",
-    "GROUP BY user_id tanpa fungsi agregat"
+    "ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY created_at DESC), lalu ambil nomor 1",
+    "SELECT MAX(*) FROM orders GROUP BY user_id sehingga setiap user otomatis mendapat baris terbarunya",
+    "ORDER BY created_at DESC lalu LIMIT 1 yang dijalankan sekali untuk seluruh user sekaligus",
+    "GROUP BY user_id tanpa fungsi agregat, lalu SELECT * agar memperoleh pesanan paling baru"
    ],
    "en": [
-    "Use ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY created_at DESC), then keep row number 1",
-    "SELECT MAX(*) FROM orders",
-    "ORDER BY created_at then LIMIT 1 for all users",
-    "GROUP BY user_id without aggregate functions"
+    "ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY created_at DESC), then keep row number 1",
+    "SELECT MAX(*) FROM orders GROUP BY user_id so every user automatically gets their latest row",
+    "ORDER BY created_at DESC then LIMIT 1 run once for all users at the same time",
+    "GROUP BY user_id without aggregate functions, then SELECT * to obtain the newest order"
    ]
   },
   "answer": 0,
@@ -590,16 +590,16 @@
   },
   "options": {
    "id": [
-    "Perbandingan dengan NULL menghasilkan UNKNOWN, sehingga baris NULL terlewat; tambahkan OR status IS NULL",
-    "Operator <> tidak ada di SQL",
-    "Karena huruf kecil/besar selalu diabaikan",
-    "Tidak ada masalah"
+    "Perbandingan dengan NULL menghasilkan UNKNOWN, jadi baris NULL terlewat; tambahkan OR status IS NULL",
+    "Operator <> tidak tersedia di SQL standar sehingga harus diganti dengan NOT EQUAL",
+    "Karena huruf kecil dan besar selalu diabaikan sehingga 'PAID' dan 'paid' dianggap sama",
+    "Tidak ada masalah sama sekali karena baris NULL otomatis ikut terpilih oleh <>"
    ],
    "en": [
     "Comparison with NULL yields UNKNOWN, so NULL rows are missed; add OR status IS NULL",
-    "The <> operator does not exist in SQL",
-    "Because case is always ignored",
-    "There is no problem"
+    "The <> operator is not available in standard SQL so it must be replaced with NOT EQUAL",
+    "Because upper and lower case are always ignored so 'PAID' and 'paid' count as the same",
+    "There is no problem at all because NULL rows are automatically selected by <>"
    ]
   },
   "answer": 0,

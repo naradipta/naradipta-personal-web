@@ -159,8 +159,19 @@
     var start = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     var days = Math.round((exam - start) / QA.dayMs);
     if (days < 1) return null;
-    var studyDays = Math.max(QA.chapters.length, Math.floor(days * 0.65));
+    var n = QA.chapters.length;
+    var studyDays = Math.max(n, Math.floor(days * 0.65));
     if (studyDays > days - 1 && days > 1) studyDays = days - 1;
+    if (studyDays < n) {
+      // Waktu lebih pendek dari jumlah bab: beberapa bab digabung per hari, semua jatuh sebelum hari ujian.
+      var d = Math.max(1, studyDays), packed = [];
+      QA.chapters.forEach(function (c, i) {
+        var day = Math.floor(i * d / n);
+        packed.push({ from: addDays(start, day), to: addDays(start, day), kind: "study", ch: c });
+      });
+      if (days - d > 0) packed.push({ from: addDays(start, d), to: addDays(start, days - 1), kind: "review", mocks: Math.max(1, Math.floor((days - d) / 3)) });
+      return { days: days, rows: packed, studyDays: d, reviewDays: days - d };
+    }
     var totalMin = QA.chapters.reduce(function (a, c) { return a + c.min; }, 0);
     var alloc = QA.chapters.map(function (c) { return Math.max(1, Math.round(studyDays * c.min / totalMin)); });
     var sum = alloc.reduce(function (a, b) { return a + b; }, 0);

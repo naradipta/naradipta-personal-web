@@ -110,33 +110,53 @@
     var view;
     try { view = QA.routes[r.name](r.arg); }
     catch (e) { view = h("div", { class: "card error" }, "Error: " + e.message); if (window.console) console.error(e); }
+    if (QA.dataWarnings && QA.dataWarnings.length) {
+      app.appendChild(h("div", { class: "card warn small", role: "status" },
+        h("b", null, QA.t("Beberapa soal dilewati karena datanya bermasalah: ", "Some questions were skipped because their data is invalid: ")),
+        h("ul", null, QA.dataWarnings.slice(0, 10).map(function (e) { return h("li", null, e); }))));
+    }
     app.appendChild(view);
     window.scrollTo(0, keepScroll === true ? y : 0);
+    // Render ulang membangun DOM baru: kembalikan fokus keyboard ke elemen yang relevan.
+    var f = app.querySelector("[data-autofocus]");
+    if (f && QA.started) { try { f.focus({ preventScroll: true }); } catch (e) { f.focus(); } }
+  };
+
+  // Pengumuman untuk pembaca layar (aria-live) tanpa mengubah tampilan.
+  QA.announce = function (msg) {
+    var el = document.getElementById("live");
+    if (el) { el.textContent = ""; window.setTimeout(function () { el.textContent = msg; }, 30); }
   };
 
   // ---------- validasi data saat load ----------
   QA.validateData = function () {
     var ids = {}, errs = [];
-    QA.questions.forEach(function (q) {
-      if (ids[q.id]) errs.push("ID ganda: " + q.id);
+    QA.invalid = {};
+    QA.questions.forEach(function (q, i) {
+      function bad(msg) { errs.push(msg); QA.invalid[i] = true; }
+      if (ids[q.id]) bad("ID ganda: " + q.id);
       ids[q.id] = 1;
-      if (!q.q || !q.q.id || !q.q.en) errs.push("Teks soal kosong: " + q.id);
-      if (q.type === "mcq" && !(q.options && q.options.id.length === q.options.en.length && q.answer >= 0 && q.answer < q.options.id.length)) errs.push("Opsi/jawaban tidak valid: " + q.id);
-      if (q.type === "short" && !(q.keywords && q.keywords.length)) errs.push("Kata kunci kosong: " + q.id);
-      if (q.lo && !QA.byLo[q.lo]) errs.push("LO tidak dikenal: " + q.id + " -> " + q.lo);
+      if (!q.q || !q.q.id || !q.q.en) bad("Teks soal kosong: " + q.id);
+      if (q.type === "mcq" && !(q.options && q.options.id.length === q.options.en.length && q.answer >= 0 && q.answer < q.options.id.length)) bad("Opsi/jawaban tidak valid: " + q.id);
+      if (q.type === "short" && !(q.keywords && q.keywords.length)) bad("Kata kunci kosong: " + q.id);
+      if (q.lo && !QA.byLo[q.lo]) bad("LO tidak dikenal: " + q.id + " -> " + q.lo);
     });
+    return errs;
+  };
+
+  // Soal yang rusak dilewati dan diberi peringatan; aplikasi tetap bisa dipakai.
+  QA.sanitize = function () {
+    var errs = QA.validateData();
+    QA.dataWarnings = errs;
+    if (errs.length) QA.questions = QA.questions.filter(function (_, i) { return !QA.invalid[i]; });
     return errs;
   };
 
   window.addEventListener("hashchange", function () { QA.render(); });
   window.addEventListener("DOMContentLoaded", function () {
-    var errs = QA.validateData();
-    if (errs.length) {
-      var app = document.getElementById("app");
-      app.appendChild(h("div", { class: "card error" }, h("b", null, "Data soal bermasalah:"), h("ul", null, errs.slice(0, 20).map(function (e) { return h("li", null, e); }))));
-      return;
-    }
+    QA.sanitize();
     if (!window.location.hash) window.location.hash = "#/dashboard";
     QA.render();
+    QA.started = true;
   });
 })();

@@ -4,7 +4,7 @@ Aplikasi belajar QA dan persiapan ISTQB CTFL. Berjalan lokal di browser, progres
 
 ## Mulai
 1. Ekstrak folder ini.
-2. Klik dua kali `index.html` (Chrome/Edge/Firefox).
+2. Klik dua kali `public/learn/index.html` (dari folder induk) (Chrome/Edge/Firefox).
 3. Buka menu **Rencana**, isi tanggal ujian ISTQB dan menit belajar per hari.
 
 ## Cara belajar yang disarankan

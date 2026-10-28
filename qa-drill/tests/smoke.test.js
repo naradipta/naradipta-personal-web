@@ -3,7 +3,7 @@ const { JSDOM } = require("jsdom");
 const path = require("path");
 const assert = require("assert");
 
-const file = path.join(__dirname, "..", "index.html");
+const file = path.join(__dirname, "..", "..", "public", "learn", "index.html");
 JSDOM.fromFile(file, { runScripts: "dangerously", resources: "usable", pretendToBeVisual: true, url: "file://" + file })
   .then((dom) => new Promise((res) => dom.window.addEventListener("load", () => setTimeout(() => res(dom), 50))))
   .then((dom) => {
@@ -85,10 +85,24 @@ JSDOM.fromFile(file, { runScripts: "dangerously", resources: "usable", pretendTo
     St.record("t-guess", true, "guess");  assert.strictEqual(St.state.q["t-guess"].box, 0, "benar menebak tidak naik box");
     assert.ok(St.state.q["t-guess"].due > Date.now(), "benar menebak dijadwalkan >= 1 hari");
     St.record("t-unsure", true, "unsure"); assert.strictEqual(St.state.q["t-unsure"].box, 1);
-    St.record("t-unsure", true, "unsure"); assert.strictEqual(St.state.q["t-unsure"].box, 1, "ragu tidak naik dari box 1");
-    St.record("t-sure", true, "sure");     St.record("t-sure", true, "sure"); assert.strictEqual(St.state.q["t-sure"].box, 2);
-    St.record("t-sure", false, "sure");    assert.strictEqual(St.state.q["t-sure"].box, 0);
+    const makeDue = (id) => { St.state.q[id].due = Date.now() - 1000; };
+    makeDue("t-unsure"); St.record("t-unsure", true, "unsure"); assert.strictEqual(St.state.q["t-unsure"].box, 1, "ragu tidak naik dari box 1");
+    St.record("t-sure", true, "sure"); assert.strictEqual(St.state.q["t-sure"].box, 1);
+    St.record("t-sure", true, "sure"); assert.strictEqual(St.state.q["t-sure"].box, 1, "belum jatuh tempo: box tidak naik");
+    makeDue("t-sure"); St.record("t-sure", true, "sure"); assert.strictEqual(St.state.q["t-sure"].box, 2, "sudah jatuh tempo: naik");
+    St.record("t-sure", false, "sure");    assert.strictEqual(St.state.q["t-sure"].box, 0, "salah selalu reset");
     assert.strictEqual(St.state.q["t-sure"].hyper, 1, "salah tapi yakin tercatat");
+    // import: berkas rusak ditolak atau dibersihkan, bukan merusak aplikasi
+    assert.throws(() => St.importJSON('{"q":{},"cards":{},"history":null}'), /riwayat/);
+    assert.throws(() => St.importJSON('{"q":{},"cards":{},"mocks":"x"}'), /mock/);
+    assert.throws(() => St.importJSON('[1]'), /Format/);
+    St.importJSON(JSON.stringify({ q: { ok: { box: 2, due: 1, seen: 3, correct: 2, wrong: 1 }, bad: { box: 99 }, bad2: 5 }, cards: {}, history: [{ total: 2, correct: 1 }, "x"], mocks: [] }));
+    assert.deepStrictEqual(Object.keys(St.state.q), ["ok"], "rekaman rusak dibuang");
+    assert.strictEqual(St.state.history.length, 1);
+    St.addHistory({ t: 1, total: 1, correct: 1 }); St.addMock({ t: 1, score: 1, total: 1, byCh: {} });
+    // beberapa jawaban, satu kali simpan
+    St.recordMany([{ id: "m1", correct: true }, { id: "m2", correct: false }]);
+    assert.ok(St.state.q.m1 && St.state.q.m2);
     St.state = saved;
 
     // isian singkat
@@ -139,12 +153,28 @@ JSDOM.fromFile(file, { runScripts: "dangerously", resources: "usable", pretendTo
     assert.strictEqual(QA.buildPlan("2026-10-23", today), null);
     const short = QA.buildPlan("2026-10-28", today);
     assert.ok(short && short.rows.length >= 6, "jadwal pendek tetap valid");
+    for (let dd = 1; dd <= 9; dd++) { // tidak ada blok belajar setelah hari ujian
+      const ex = new Date(2026, 9, 23 + dd);
+      const pl = QA.buildPlan(ex.getFullYear() + "-" + String(ex.getMonth() + 1).padStart(2, "0") + "-" + String(ex.getDate()).padStart(2, "0"), today);
+      assert.strictEqual(pl.days, dd);
+      pl.rows.forEach((r) => assert.ok(Math.round((r.to - today) / 86400000) <= dd - 1 || dd === 1, "blok melewati ujian pada " + dd + " hari"));
+      assert.strictEqual(pl.rows.filter((r) => r.kind === "study").length, 6, "semua bab terjadwal pada " + dd + " hari");
+    }
 
     // ekspor dan impor progres
     const json = QA.store.exportJSON();
     QA.store.reset(); assert.strictEqual(Object.keys(QA.store.state.q).length, 0);
     QA.store.importJSON(json); assert.ok(Object.keys(QA.store.state.q).length > 0);
     assert.throws(() => QA.store.importJSON("{\"x\":1}"));
+
+    // satu soal rusak tidak mematikan aplikasi: dilewati dan diberi peringatan
+    const before = QA.questions.length;
+    QA.questions.push({ id: "bad-1", topic: "x", type: "mcq", q: { id: "", en: "" }, options: { id: ["a"], en: ["a", "b"] }, answer: 5 });
+    const bad = QA.sanitize();
+    assert.ok(bad.length >= 1 && QA.questions.length === before, "soal rusak dibuang");
+    go("dashboard"); QA.render();
+    assert.ok(/dilewati/.test(text()) && d.querySelector("nav.nav"), "peringatan tampil dan navigasi tetap ada");
+    QA.dataWarnings = [];
 
     assert.deepStrictEqual(errors, [], "tanpa error runtime: " + errors.join("; "));
     console.log("smoke.test.js: semua tes lulus (" + QA.questions.length + " soal, " + QA.los.length + " LO)");

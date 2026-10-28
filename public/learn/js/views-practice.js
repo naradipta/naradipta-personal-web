@@ -123,6 +123,7 @@
   var RETRY_GAP = 3;
   function finishItem(item, correct) {
     item.answered = true; item.correct = correct;
+    QA.announce(correct ? t("Benar", "Correct") : t("Salah. Jawaban benar: ", "Wrong. Correct answer: ") + answerText(item.q));
     if (item.retry) return;
     S.record(item.q.id, correct, item.conf);
     if (!correct && session && !item.retryQueued) {
@@ -136,7 +137,7 @@
   // Pilihan jawaban: bila mode keyakinan aktif, minta tingkat keyakinan dulu sebelum jawaban dibuka.
   function choose(item, pick, correct, onChange) {
     item.pick = pick;
-    if (S.state.confidence) { item.pending = true; item.pendingCorrect = correct; }
+    if (S.state.confidence) { item.pending = true; item.pendingCorrect = correct; QA.announce(t("Pilih tingkat keyakinan Anda", "Choose how sure you are")); }
     else finishItem(item, correct);
     onChange();
   }
@@ -147,7 +148,7 @@
       h("div", { class: "small muted" }, t("Seberapa yakin jawaban Anda?", "How sure are you?")),
       h("div", { class: "row gap" }, CONF.map(function (c) {
         return h("button", {
-          class: "btn conf-" + c[0], onclick: function () {
+          class: "btn conf-" + c[0], "data-autofocus": c[0] === "guess" ? "1" : null, onclick: function () {
             item.conf = c[0]; item.pending = false; finishItem(item, item.pendingCorrect); onChange();
           }
         }, t(c[1], c[2]));
@@ -237,11 +238,11 @@
     var card = h("div", { class: "card" });
     card.appendChild(QA.questionHeader(item.q));
     if (item.retry) card.appendChild(h("div", { class: "small warn card" }, t("Ulangan: soal ini salah tadi. Coba jawab lagi dari ingatan (tidak mengubah jadwal ulang).", "Retry: you missed this earlier. Try to recall it again (does not change the review schedule).")));
-    card.appendChild(h("h2", { class: "qtext" }, L(item.q.q)));
+    card.appendChild(h("h2", { class: "qtext", tabindex: "-1", "data-autofocus": item.answered || item.pending ? null : "1" }, L(item.q.q)));
     card.appendChild(questionBody(item, function () { QA.render(true); }));
     if (item.answered) {
       card.appendChild(h("button", {
-        class: "btn primary", onclick: function () { s.i++; QA.render(); }
+        class: "btn primary", "data-autofocus": "1", onclick: function () { s.i++; QA.render(); }
       }, s.i + 1 >= s.items.length ? t("Lihat ringkasan", "See summary") : t("Berikutnya", "Next")));
     }
     root.appendChild(card);

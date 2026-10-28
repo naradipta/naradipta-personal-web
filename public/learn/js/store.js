@@ -27,10 +27,17 @@
 
   // conf (opsional): "guess" | "unsure" | "sure". Benar karena menebak tidak menaikkan box (belum benar-benar dikuasai),
   // benar tapi ragu hanya menaikkan dari box 0, salah dengan yakin dicatat sebagai miskonsepsi (hyper).
+  // Box hanya naik bila soal memang sudah jatuh tempo: mengulang soal yang sama berkali-kali dalam satu sesi
+  // tidak membuktikan ingatan jangka panjang (spacing effect).
   function bump(rec, correct, now, conf) {
+    var wasDue = !rec || rec.due <= now;
     rec = rec || { box: 0, due: now, seen: 0, correct: 0, wrong: 0, last: null };
     rec.seen += 1;
     var minDays = 0;
+    if (correct && !wasDue) {
+      rec.correct += 1; rec.last = 1;
+      return rec;
+    }
     if (correct) {
       rec.correct += 1;
       if (conf === "guess") minDays = 1;
@@ -47,6 +54,12 @@
 
   S.record = function (qid, correct, conf) {
     S.state.q[qid] = bump(S.state.q[qid], correct, Date.now(), conf);
+    S.save();
+  };
+  // Beberapa jawaban sekaligus (mis. mock exam) dengan satu kali tulis ke localStorage.
+  S.recordMany = function (list) {
+    var now = Date.now();
+    list.forEach(function (e) { S.state.q[e.id] = bump(S.state.q[e.id], e.correct, now, e.conf); });
     S.save();
   };
   S.recordCard = function (key, know) {
@@ -68,12 +81,35 @@
   };
 
   S.exportJSON = function () { return JSON.stringify(S.state, null, 2); };
+  function isObj(x) { return !!x && typeof x === "object" && !Array.isArray(x); }
+  function num(x) { return typeof x === "number" && isFinite(x); }
+  // Ambil hanya rekaman yang bentuknya benar; sisanya dibuang agar state tersimpan tidak merusak aplikasi.
+  function cleanRecs(map) {
+    var out = {};
+    Object.keys(map).forEach(function (k) {
+      var r = map[k];
+      if (isObj(r) && num(r.box) && r.box >= 0 && r.box < INTERVALS.length && num(r.due) && num(r.seen) && num(r.correct) && num(r.wrong)) {
+        out[k] = { box: Math.floor(r.box), due: r.due, seen: r.seen, correct: r.correct, wrong: r.wrong, last: r.last === 1 ? 1 : r.last === 0 ? 0 : null, hyper: num(r.hyper) ? r.hyper : 0 };
+      }
+    });
+    return out;
+  }
   S.importJSON = function (text) {
     var obj = JSON.parse(text);
-    if (!obj || typeof obj !== "object" || typeof obj.q !== "object" || typeof obj.cards !== "object") {
-      throw new Error("Format berkas tidak dikenali");
-    }
-    S.state = Object.assign(defaults(), obj);
+    if (!isObj(obj) || !isObj(obj.q) || !isObj(obj.cards)) throw new Error("Format berkas tidak dikenali");
+    if (obj.history !== undefined && !Array.isArray(obj.history)) throw new Error("Format riwayat tidak valid");
+    if (obj.mocks !== undefined && !Array.isArray(obj.mocks)) throw new Error("Format mock tidak valid");
+    var next = defaults();
+    next.q = cleanRecs(obj.q);
+    next.cards = cleanRecs(obj.cards);
+    next.history = (obj.history || []).filter(function (e) { return isObj(e) && num(e.total) && num(e.correct); }).slice(-200);
+    next.mocks = (obj.mocks || []).filter(function (e) { return isObj(e) && num(e.score) && num(e.total) && isObj(e.byCh); }).slice(-50);
+    if (obj.lang === "id" || obj.lang === "en") next.lang = obj.lang;
+    if (typeof obj.examDate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(obj.examDate)) next.examDate = obj.examDate;
+    if (num(obj.dailyMin) && obj.dailyMin > 0 && obj.dailyMin <= 1440) next.dailyMin = obj.dailyMin;
+    if (typeof obj.extraTime === "boolean") next.extraTime = obj.extraTime;
+    if (typeof obj.confidence === "boolean") next.confidence = obj.confidence;
+    S.state = next;
     S.save();
   };
   S.reset = function () { S.state = defaults(); S.save(); };

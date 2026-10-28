@@ -51,7 +51,7 @@
 
   function finishMock() {
     if (!mock || mock.finished) return;
-    var score = 0, byCh = {};
+    var score = 0, byCh = {}, recs = [];
     mock.items.forEach(function (it) {
       var q = it.q, ch = QA.chapterOf(q);
       var ok = it.pick !== null && it.pick === q.answer;
@@ -59,8 +59,9 @@
       if (ok) score++;
       byCh[ch] = byCh[ch] || { c: 0, n: 0 };
       byCh[ch].n++; if (ok) byCh[ch].c++;
-      S.record(q.id, ok);
+      recs.push({ id: q.id, correct: ok });
     });
+    S.recordMany(recs);
     mock.finished = true;
     mock.result = { score: score, total: mock.items.length, byCh: byCh, secs: Math.round((Date.now() - mock.startedAt) / 1000) };
     S.addMock({ t: Date.now(), score: score, total: mock.items.length, byCh: byCh });
@@ -103,6 +104,8 @@
     it.order.forEach(function (orig, pos) {
       card.appendChild(h("button", {
         class: "opt" + (it.pick === orig ? " picked" : ""),
+        "aria-pressed": it.pick === orig ? "true" : "false",
+        "data-autofocus": it.pick === orig ? "1" : null,
         onclick: function () { it.pick = orig; QA.render(true); }
       }, String.fromCharCode(65 + pos) + ". " + QA.optionText(q, orig)));
     });

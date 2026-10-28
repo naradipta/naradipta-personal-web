@@ -12,16 +12,16 @@
   },
   "options": {
    "id": [
-    "Tester melakukan testing (menunjukkan failure); developer melakukan debugging (menemukan dan memperbaiki penyebab)",
-    "Keduanya melakukan debugging",
-    "Tester melakukan debugging; developer melakukan testing",
-    "Menemukan failure dan memperbaiki defect adalah aktivitas yang sama"
+    "Tester melakukan testing (memunculkan failure); developer melakukan debugging (memperbaiki penyebab)",
+    "Keduanya melakukan debugging karena menemukan failure dan memperbaikinya sama-sama debugging",
+    "Tester melakukan debugging untuk memperbaiki kode, sedangkan developer melakukan testing tambahan",
+    "Menemukan failure dan memperbaiki defect adalah satu aktivitas yang sama bernama testing"
    ],
    "en": [
-    "The tester does testing (showing the failure); the developer does debugging (finding and fixing the cause)",
-    "Both do debugging",
-    "The tester does debugging; the developer does testing",
-    "Finding a failure and fixing a defect are the same activity"
+    "The tester does testing (exposing the failure); the developer does debugging (fixing the cause)",
+    "Both do debugging because finding a failure and fixing it are both debugging",
+    "The tester does debugging to fix the code, while the developer does additional testing",
+    "Finding a failure and fixing a defect are one and the same activity called testing"
    ]
   },
   "answer": 0,
@@ -44,15 +44,15 @@
   "options": {
    "id": [
     "Kesalahpahaman aturan diskon oleh analis",
-    "Harga salah yang dilihat pelanggan",
-    "Rumus yang keliru di kode",
-    "Test case yang kurang"
+    "Harga salah yang akhirnya dilihat oleh pelanggan pada halaman pembayaran aplikasi",
+    "Rumus yang keliru pada kode program yang menghitung diskon untuk setiap pesanan",
+    "Jumlah test case yang kurang untuk mencakup semua kombinasi aturan diskon yang ada"
    ],
    "en": [
     "The analyst's misunderstanding of the discount rule",
-    "The wrong price the customer saw",
-    "The wrong formula in the code",
-    "Too few test cases"
+    "The wrong price the customer finally saw on the application's payment page",
+    "The wrong formula in the program code that calculates the discount for each order",
+    "Too few test cases to cover all the combinations of the existing discount rules"
    ]
   },
   "answer": 0,
@@ -106,15 +106,15 @@
   "options": {
    "id": [
     "Segera terlihat test case mana yang perlu ditinjau atau diubah (analisis dampak)",
-    "Test case otomatis ditulis ulang",
-    "Requirement tidak perlu diuji lagi",
-    "Defect otomatis diperbaiki"
+    "Seluruh test case otomatis ditulis ulang oleh sistem sesuai requirement yang berubah",
+    "Requirement itu tidak perlu diuji lagi karena sudah tercatat dalam matriks keterlacakan",
+    "Defect yang terkait dengan requirement tersebut otomatis diperbaiki oleh tool"
    ],
    "en": [
     "It is immediately visible which test cases must be reviewed or changed (impact analysis)",
-    "Test cases are rewritten automatically",
-    "The requirement no longer needs testing",
-    "Defects are fixed automatically"
+    "All test cases are rewritten automatically by the system to match the changed requirement",
+    "The requirement no longer needs testing since it is recorded in the traceability matrix",
+    "Defects tied to that requirement are fixed automatically by the tool"
    ]
   },
   "answer": 0,
@@ -136,16 +136,16 @@
   },
   "options": {
    "id": [
-    "Keuntungan: sudut pandang berbeda dan bebas bias penulis; risiko: terisolasi dan developer merasa tidak lagi bertanggung jawab atas kualitas",
-    "Keuntungan: tidak butuh komunikasi; risiko: tidak ada",
-    "Keuntungan: defect pasti nol; risiko: biaya tool",
-    "Keuntungan: developer tidak perlu menguji; risiko: tidak ada"
+    "Keuntungan: sudut pandang berbeda dan bebas bias penulis; risiko: terisolasi dan tanggung jawab kualitas memudar",
+    "Keuntungan: komunikasi tim tidak diperlukan lagi; risiko: hampir tidak ada risiko berarti",
+    "Keuntungan: defect dijamin nol setelah testing; risiko: biaya tool menjadi lebih besar",
+    "Keuntungan: developer tidak perlu menguji kodenya sendiri; risiko: tidak ada sama sekali"
    ],
    "en": [
-    "Benefit: different perspective and freedom from author bias; risk: isolation, and developers may stop feeling responsible for quality",
-    "Benefit: no communication needed; risk: none",
-    "Benefit: zero defects guaranteed; risk: tool cost",
-    "Benefit: developers need not test; risk: none"
+    "Benefit: different perspective and freedom from author bias; risk: isolation and fading ownership of quality",
+    "Benefit: team communication is no longer needed; risk: hardly any meaningful risk",
+    "Benefit: zero defects guaranteed after testing; risk: tool costs become larger",
+    "Benefit: developers need not test their own code; risk: none at all"
    ]
   },
   "answer": 0,
@@ -229,16 +229,16 @@
   },
   "options": {
    "id": [
-    "Memberi umpan balik cepat atas perubahan sehingga defect ditemukan segera setelah diperkenalkan",
-    "Menghilangkan kebutuhan test case",
-    "Menjamin tidak ada defect di produksi",
-    "Menggantikan semua testing manual"
+    "Memberi umpan balik cepat atas perubahan sehingga defect cepat terlihat",
+    "Menghilangkan kebutuhan test case karena pipeline sudah memeriksa semua perubahan kode",
+    "Menjamin tidak ada defect yang lolos ke produksi selama pipeline berwarna hijau",
+    "Menggantikan semua testing manual sehingga tester dapat dialihkan ke pekerjaan lain"
    ],
    "en": [
-    "It gives fast feedback on changes so defects are found soon after introduction",
-    "It removes the need for test cases",
-    "It guarantees no defects in production",
-    "It replaces all manual testing"
+    "Gives fast feedback on changes so defects show up quickly",
+    "Removes the need for test cases because the pipeline already checks every code change",
+    "Guarantees no defects reach production as long as the pipeline stays green",
+    "Replaces all manual testing so testers can be reassigned to other work"
    ]
   },
   "answer": 0,
@@ -260,16 +260,16 @@
   },
   "options": {
    "id": [
-    "Menyepakati tindakan perbaikan proses, mis. stabilisasi test dan aturan karantina, lalu meninjau hasilnya sprint berikutnya",
-    "Menyalahkan tester yang menulis test",
-    "Menghapus semua test otomasi",
-    "Menunda retrospective sampai rilis selesai"
+    "Menyepakati tindakan perbaikan proses, mis. stabilisasi test dan aturan karantina, lalu meninjaunya",
+    "Menyalahkan tester yang menulis test yang flaky agar kejadian serupa tidak terulang",
+    "Menghapus semua test otomasi supaya rilis tidak lagi terhambat oleh test yang gagal",
+    "Menunda pembahasan sampai rilis selesai agar tim tidak terganggu tekanan jadwal"
    ],
    "en": [
-    "Agreeing improvement actions, e.g. stabilising tests and a quarantine rule, and reviewing the result next sprint",
-    "Blaming the tester who wrote the tests",
-    "Deleting all automated tests",
-    "Postponing the retrospective until after release"
+    "Agreeing process improvement actions, e.g. stabilising tests and a quarantine rule, then reviewing them",
+    "Blaming the tester who wrote the flaky tests so a similar thing does not happen again",
+    "Deleting all automated tests so releases are no longer held up by failing tests",
+    "Postponing the discussion until the release is done so the team is not distracted by schedule pressure"
    ]
   },
   "answer": 0,
@@ -353,16 +353,16 @@
   },
   "options": {
    "id": [
-    "Maintenance testing: uji migrasi data, lingkungan baru, dan regression untuk memastikan fungsi tetap benar",
-    "Tidak perlu testing karena fitur tidak berubah",
-    "Hanya component testing satu fungsi",
-    "Hanya testing performa setahun setelahnya"
+    "Maintenance testing: uji migrasi data, lingkungan baru, dan regression agar fungsi tetap benar",
+    "Tidak perlu testing karena tidak ada fitur yang berubah selama proses migrasi berlangsung",
+    "Hanya component testing satu fungsi, karena perubahan terjadi di lapisan penyimpanan",
+    "Hanya testing performa yang dijalankan setahun setelah migrasi selesai dilakukan"
    ],
    "en": [
-    "Maintenance testing: test data migration, the new environment, and regression to confirm behaviour is unchanged",
-    "No testing needed since features did not change",
-    "Only component testing of one function",
-    "Only performance testing a year later"
+    "Maintenance testing: test data migration, the new environment, and regression to keep behaviour correct",
+    "No testing is needed because no feature changes while the migration is under way",
+    "Only component testing of one function, since the change is in the storage layer",
+    "Only performance testing run a year after the migration has been completed"
    ]
   },
   "answer": 0,
@@ -694,16 +694,16 @@
   },
   "options": {
    "id": [
-    "Setelah 5 kali password salah berturut-turut, akun dikunci 15 menit dan pengguna melihat pesan penguncian",
-    "Login harus aman dan nyaman",
-    "Sistem harus bagus",
-    "Developer menulis kode login dengan rapi"
+    "Setelah 5 kali password salah berturut-turut, akun dikunci 15 menit dan muncul pesan penguncian",
+    "Login harus aman, nyaman, dan cepat bagi seluruh jenis pengguna aplikasi",
+    "Sistem harus bagus dan berfungsi dengan baik dalam semua kondisi penggunaan",
+    "Developer menulis kode login dengan rapi serta mengikuti standar penulisan kode"
    ],
    "en": [
-    "After 5 consecutive wrong passwords the account is locked for 15 minutes and the user sees a lock message",
-    "Login must be secure and pleasant",
-    "The system must be good",
-    "The developer writes tidy login code"
+    "After 5 consecutive wrong passwords the account is locked for 15 minutes and a lock message shows",
+    "Login must be secure, pleasant and fast for every kind of application user",
+    "The system must be good and work well under all conditions of use",
+    "The developer writes tidy login code and follows the coding standard"
    ]
   },
   "answer": 0,
@@ -849,16 +849,16 @@
   },
   "options": {
    "id": [
-    "Pembulatan salah pada perhitungan cicilan yang merugikan pelanggan",
-    "Anggota tim kunci pindah di tengah proyek",
-    "Lingkungan test terlambat tersedia",
-    "Anggaran tool dipotong"
+    "Pembulatan salah pada hitungan cicilan yang merugikan pelanggan",
+    "Anggota tim kunci pindah ke perusahaan lain di tengah proyek yang sedang berjalan",
+    "Lingkungan test terlambat tersedia sehingga jadwal eksekusi tes bergeser dua minggu",
+    "Anggaran untuk tool testing dipotong oleh manajemen pada kuartal berikutnya"
    ],
    "en": [
     "A rounding error in instalment calculation that harms customers",
-    "A key team member leaves mid-project",
-    "The test environment arrives late",
-    "The tool budget is cut"
+    "A key team member leaves for another company in the middle of the running project",
+    "The test environment arrives late so the test execution schedule slips by two weeks",
+    "The budget for testing tools is cut by management in the following quarter"
    ]
   },
   "answer": 0,
@@ -912,15 +912,15 @@
   "options": {
    "id": [
     "Persentase test case yang sudah dieksekusi dari yang direncanakan",
-    "Gaji tester",
-    "Warna dashboard",
-    "Jumlah rapat per bulan"
+    "Gaji tester yang dihitung per orang untuk setiap bulan selama proyek berjalan",
+    "Warna dashboard yang dipilih tim untuk menampilkan hasil testing kepada stakeholder",
+    "Jumlah rapat yang diadakan setiap bulan oleh tim selama iterasi berlangsung"
    ],
    "en": [
     "Percentage of planned test cases executed",
-    "Tester salary",
-    "Dashboard colour",
-    "Number of meetings per month"
+    "Tester salaries calculated per person for each month while the project is running",
+    "The dashboard colour the team picked to present testing results to stakeholders",
+    "The number of meetings the team holds every month during the iteration"
    ]
   },
   "answer": 0,
@@ -942,16 +942,16 @@
   },
   "options": {
    "id": [
-    "Ringkasan testing, deviasi dari rencana, status terhadap exit criteria, metrik, dan risiko yang tersisa",
-    "Seluruh log eksekusi mentah",
-    "Hanya jumlah test lolos tanpa konteks",
-    "Kode sumber test"
+    "Ringkasan testing, deviasi dari rencana, status terhadap exit criteria, metrik, dan risiko tersisa",
+    "Seluruh log eksekusi mentah dari setiap test case yang dijalankan selama iterasi berlangsung",
+    "Hanya jumlah test yang lolos tanpa konteks apa pun tentang cakupan maupun risikonya",
+    "Kode sumber seluruh test otomasi beserta riwayat perubahannya di repositori"
    ],
    "en": [
     "A summary of testing, deviations from plan, status against exit criteria, metrics and remaining risks",
-    "All raw execution logs",
-    "Only the number of passed tests with no context",
-    "The test source code"
+    "All raw execution logs of every test case run during the iteration",
+    "Only the number of passed tests, with no context about coverage or risks",
+    "The source code of all automated tests together with their change history in the repository"
    ]
   },
   "answer": 0,
@@ -973,16 +973,16 @@
   },
   "options": {
    "id": [
-    "Mengidentifikasi dan mengendalikan versi testware dan test item agar hasil test dapat ditelusuri ke versi yang diuji",
-    "Menentukan prioritas bisnis fitur",
-    "Menulis test case baru",
-    "Menghitung estimasi usaha"
+    "Mengidentifikasi dan mengendalikan versi testware dan test item agar hasil test dapat ditelusuri",
+    "Menentukan prioritas bisnis fitur dan urutan pengerjaannya bagi tim pengembangan",
+    "Menulis test case baru secara otomatis dari perubahan kode yang di-commit hari ini",
+    "Menghitung estimasi usaha testing dari jumlah requirement pada iterasi berjalan"
    ],
    "en": [
-    "Identifying and controlling versions of testware and test items so results trace back to the version tested",
-    "Setting business priority of features",
-    "Writing new test cases",
-    "Calculating effort estimates"
+    "Identifying and controlling versions of testware and test items so results are traceable",
+    "Setting the business priority of features and the order in which the team builds them",
+    "Writing new test cases automatically from the code changes committed today",
+    "Calculating testing effort estimates from the number of requirements in the iteration"
    ]
   },
   "answer": 0,

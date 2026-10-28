@@ -153,11 +153,11 @@ di sana — semua komponen ikut terupdate.
 
 ## Memperbarui QA Drill (`/learn/`)
 
-QA Drill adalah aplikasi statis mandiri di `public/learn/` (HTML + CSS + JS klasik, tanpa build step). Astro hanya menyalinnya apa adanya ke `dist/learn/`.
+QA Drill adalah aplikasi statis mandiri di `public/learn/` (HTML + CSS + JS klasik, tanpa build step). Astro hanya menyalinnya apa adanya ke `dist/learn/`. Sumber soal, alat, dan tes ada di `qa-drill/` dan tidak ikut terbit.
 
-1. **Soal baru atau koreksi:** edit/tambah objek di `public/learn/questions/*.json` (skema ada di `public/learn/CLAUDE.md`; ID unik, `lo` harus ada di `data/lo.js`, teks ID dan EN setara).
-2. **Bangun ulang data:** `cd public/learn && python3 tools/build-data.py` (menghasilkan `data/questions.js`; jangan diedit tangan).
-3. **Tes:** `node tests/grade.test.js` dan, opsional, `npm i --no-save jsdom` lalu `node tests/smoke.test.js` (di luar repo atau jangan commit `package-lock.json`/`node_modules`).
+1. **Soal baru atau koreksi:** edit/tambah objek di `qa-drill/questions/*.json` (skema ada di `qa-drill/CLAUDE.md`; ID unik, `lo` harus ada di `public/learn/data/lo.js`, teks ID dan EN setara, pengecoh sama panjang dengan jawaban benar).
+2. **Bangun ulang data:** `cd qa-drill && python3 tools/build-data.py` (menghasilkan `public/learn/data/questions.js`; jangan diedit tangan; gagal bila ada bias panjang opsi atau K-level tak sesuai).
+3. **Tes:** `node tests/grade.test.js` dan, opsional, `npm i --no-save jsdom` lalu `node tests/smoke.test.js` (jangan commit `package-lock.json`/`node_modules` yang dihasilkan).
 4. **Cek situs:** `npm run build`, lalu `npm run preview` dan buka `/learn/`.
 5. **Deploy** seperti biasa lewat `./deploy.sh` (tidak ada langkah khusus).
 
