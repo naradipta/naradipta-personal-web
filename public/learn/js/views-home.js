@@ -77,7 +77,7 @@
         }, l.code.replace("FL-", "")));
       });
       grid.appendChild(h("div", { class: "card" },
-        h("div", { class: "row" }, h("h3", null, t("Bab ", "Chapter ") + ch.n + ". " + L(ch.title)),
+        h("div", { class: "row" }, h("h2", { class: "h3" }, t("Bab ", "Chapter ") + ch.n + ". " + L(ch.title)),
           h("span", { class: "badge" }, weightOf(ch) + t(" soal ujian", " exam Qs"))),
         h("div", { class: "muted small" }, ch.min + t(" menit belajar (silabus)", " min study (syllabus)") + (ch.check ? t(" - kode LO perlu dicek", " - verify LO codes") : "")),
         h("div", { class: "lbl" }, t("Dilihat ", "Seen ") + st.seen + "/" + st.total), bar(st.seen, st.total),
@@ -126,7 +126,7 @@
       QA.chapters.forEach(function (ch) {
         var los = QA.los.filter(function (l) { return l.ch === ch.n; });
         root.appendChild(h("a", { class: "card link", href: "#/study/ch" + ch.n },
-          h("div", { class: "row" }, h("h3", null, t("Bab ", "Chapter ") + ch.n + ". " + L(ch.title)), h("span", { class: "badge" }, los.length + " LO")),
+          h("div", { class: "row" }, h("h2", { class: "h3" }, t("Bab ", "Chapter ") + ch.n + ". " + L(ch.title)), h("span", { class: "badge" }, los.length + " LO")),
           h("div", { class: "muted small" }, ch.min + t(" menit", " min"))));
       });
       return root;
@@ -141,7 +141,7 @@
       var qn = (QA.qByLo[l.code] || []).length;
       root.appendChild(h("div", { class: "card" },
         h("div", { class: "row" },
-          h("h3", null, l.code + " " + L(l.title)),
+          h("h2", { class: "h3" }, l.code + " " + L(l.title)),
           h("span", { class: "badge k" + l.k }, "K" + l.k)),
         h("p", null, L(l.note)),
         h("div", { class: "row gap" },
@@ -233,6 +233,7 @@
   };
 
   // ===================== PENGATURAN =====================
+  var importNote = "";
   QA.routes.settings = function () {
     var root = h("div", { class: "page" });
     root.appendChild(h("h1", null, t("Pengaturan", "Settings")));
@@ -247,20 +248,21 @@
         h("button", { class: "btn", onclick: function () { S.state.lang = "id"; S.save(); QA.render(); } }, "Bahasa Indonesia"),
         h("button", { class: "btn", onclick: function () { S.state.lang = "en"; S.save(); QA.render(); } }, "English"))));
 
-    var msg = h("div", { class: "small muted" });
-    var file = h("input", { type: "file", accept: "application/json" });
+    var msg = h("div", { class: "small muted", role: "status" }, importNote);
+    importNote = "";
+    var file = h("input", { type: "file", accept: "application/json", "aria-label": t("Impor berkas progres (.json)", "Import progress file (.json)") });
     file.addEventListener("change", function () {
       var f = file.files && file.files[0];
       if (!f) return;
       var rd = new FileReader();
       rd.onload = function () {
-        try { S.importJSON(String(rd.result)); msg.textContent = t("Progres berhasil diimpor.", "Progress imported."); QA.render(); }
+        try { S.importJSON(String(rd.result)); importNote = t("Progres berhasil diimpor.", "Progress imported."); QA.announce(importNote); QA.render(); }
         catch (e) { msg.textContent = t("Gagal impor: ", "Import failed: ") + e.message; }
       };
       rd.readAsText(f);
     });
     root.appendChild(h("div", { class: "card" },
-      h("h3", null, t("Cadangan progres", "Progress backup")),
+      h("h2", { class: "h3" }, t("Cadangan progres", "Progress backup")),
       h("p", { class: "muted small" }, t("Progres tersimpan di browser ini saja. Ekspor secara berkala.", "Progress is stored in this browser only. Export regularly.")),
       h("div", { class: "row gap" },
         h("button", {
@@ -273,7 +275,7 @@
       msg));
 
     root.appendChild(h("div", { class: "card" },
-      h("h3", null, t("Hapus semua progres", "Reset all progress")),
+      h("h2", { class: "h3" }, t("Hapus semua progres", "Reset all progress")),
       h("button", {
         class: "btn danger", onclick: function () {
           if (window.confirm(t("Hapus semua progres? Tindakan ini tidak dapat dibatalkan.", "Delete all progress? This cannot be undone."))) { S.reset(); QA.render(); }

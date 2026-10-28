@@ -75,6 +75,7 @@ def main():
                     lo, k = OLD_ISTQB[q["id"]]
                     q["lo"] = lo
                     q["k"] = k
+                    q["level"] = k  # level mengikuti K-level untuk soal ISTQB (lihat CLAUDE.md)
                 out.append(q)
     check(out)
     data_dir = os.path.join(APP, "data")

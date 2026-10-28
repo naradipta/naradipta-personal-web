@@ -4679,7 +4679,7 @@ QA.questions = [
 {
 "id": "istqb-001",
 "topic": "istqb",
-"level": 1,
+"level": 2,
 "type": "mcq",
 "q": {
 "id": "Urutan yang benar: manusia berbuat salah, lalu muncul di kode, lalu terlihat saat dijalankan.",
@@ -4710,7 +4710,7 @@ QA.questions = [
 {
 "id": "istqb-002",
 "topic": "istqb",
-"level": 1,
+"level": 2,
 "type": "mcq",
 "q": {
 "id": "Prinsip testing yang menyatakan test yang sama berulang lama-lama tidak menemukan bug baru:",
@@ -4741,7 +4741,7 @@ QA.questions = [
 {
 "id": "istqb-003",
 "topic": "istqb",
-"level": 1,
+"level": 2,
 "type": "mcq",
 "q": {
 "id": "Defect clustering berarti...",
@@ -4772,7 +4772,7 @@ QA.questions = [
 {
 "id": "istqb-004",
 "topic": "istqb",
-"level": 1,
+"level": 2,
 "type": "mcq",
 "q": {
 "id": "\"Are we building the right product?\" adalah pertanyaan untuk...",
@@ -4803,7 +4803,7 @@ QA.questions = [
 {
 "id": "istqb-005",
 "topic": "istqb",
-"level": 1,
+"level": 2,
 "type": "short",
 "q": {
 "id": "Apa beda confirmation testing (re-test) dan regression testing?",
@@ -4844,7 +4844,7 @@ QA.questions = [
 {
 "id": "istqb-006",
 "topic": "istqb",
-"level": 2,
+"level": 3,
 "type": "mcq",
 "q": {
 "id": "Input umur valid 18-60. Nilai uji BVA (2-value) yang tepat adalah...",
@@ -4875,7 +4875,7 @@ QA.questions = [
 {
 "id": "istqb-007",
 "topic": "istqb",
-"level": 2,
+"level": 3,
 "type": "mcq",
 "q": {
 "id": "Input valid 1-100. Berapa partisi ekuivalen (valid + invalid)?",
@@ -4999,7 +4999,7 @@ QA.questions = [
 {
 "id": "istqb-011",
 "topic": "istqb",
-"level": 1,
+"level": 2,
 "type": "mcq",
 "q": {
 "id": "Smoke testing adalah...",
@@ -5030,7 +5030,7 @@ QA.questions = [
 {
 "id": "istqb-012",
 "topic": "istqb",
-"level": 1,
+"level": 2,
 "type": "mcq",
 "q": {
 "id": "Urutan test level dari terkecil ke terbesar:",
@@ -5061,7 +5061,7 @@ QA.questions = [
 {
 "id": "istqb-013",
 "topic": "istqb",
-"level": 1,
+"level": 2,
 "type": "mcq",
 "q": {
 "id": "Mana yang termasuk static testing?",
@@ -5123,7 +5123,7 @@ QA.questions = [
 {
 "id": "istqb-015",
 "topic": "istqb",
-"level": 3,
+"level": 2,
 "type": "tf",
 "q": {
 "id": "Branch (decision) coverage 100% menjamin statement coverage 100%.",
@@ -5175,7 +5175,7 @@ QA.questions = [
 {
 "id": "istqb-017",
 "topic": "istqb",
-"level": 1,
+"level": 2,
 "type": "mcq",
 "q": {
 "id": "Exploratory testing termasuk kategori...",
@@ -5206,7 +5206,7 @@ QA.questions = [
 {
 "id": "istqb-018",
 "topic": "istqb",
-"level": 1,
+"level": 2,
 "type": "mcq",
 "q": {
 "id": "Teknik black-box didasarkan pada...",
@@ -5237,7 +5237,7 @@ QA.questions = [
 {
 "id": "istqb-019",
 "topic": "istqb",
-"level": 1,
+"level": 2,
 "type": "mcq",
 "q": {
 "id": "Prinsip early testing menyatakan...",
@@ -5299,7 +5299,7 @@ QA.questions = [
 {
 "id": "istqb-021",
 "topic": "istqb",
-"level": 1,
+"level": 2,
 "type": "mcq",
 "q": {
 "id": "Test plan umumnya memuat...",
@@ -5361,7 +5361,7 @@ QA.questions = [
 {
 "id": "istqb-023",
 "topic": "istqb",
-"level": 1,
+"level": 2,
 "type": "mcq",
 "q": {
 "id": "Testing ulang bug yang sudah diperbaiki disebut...",
@@ -5423,7 +5423,7 @@ QA.questions = [
 {
 "id": "istqb-025",
 "topic": "istqb",
-"level": 1,
+"level": 2,
 "type": "mcq",
 "q": {
 "id": "Contoh non-functional testing:",
@@ -5494,7 +5494,7 @@ QA.questions = [
 {
 "id": "istqb-027",
 "topic": "istqb",
-"level": 1,
+"level": 2,
 "type": "tf",
 "q": {
 "id": "Exhaustive testing (menguji semua kombinasi) mungkin dilakukan pada hampir semua sistem.",
@@ -5511,7 +5511,7 @@ QA.questions = [
 {
 "id": "istqb-028",
 "topic": "istqb",
-"level": 1,
+"level": 2,
 "type": "mcq",
 "q": {
 "id": "Setelah perbaikan bug diverifikasi lolos, status defect menjadi...",
@@ -5635,7 +5635,7 @@ QA.questions = [
 {
 "id": "istqb-032",
 "topic": "istqb",
-"level": 2,
+"level": 1,
 "type": "short",
 "q": {
 "id": "Apa beda Quality Assurance (QA) dan Quality Control (QC)?",

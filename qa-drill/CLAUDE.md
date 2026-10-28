@@ -32,7 +32,7 @@ qa-drill/                        (sumber dan alat, tidak terbit)
 ## Alur kerja menambah/mengubah soal
 1. Edit atau tambah objek di `questions/<file>.json` (ID unik, lanjutkan nomor).
 2. `python3 tools/build-data.py`
-3. `node tests/grade.test.js` dan (opsional) `npm i --no-save jsdom && node tests/smoke.test.js`.
+3. `node tests/grade.test.js`, `node tests/data.test.js` (kualitas data soal, tanpa dependensi), dan (opsional) `npm i --no-save jsdom && node tests/smoke.test.js`.
 
 `build-data.py` menolak: ID ganda, LO tidak dikenal, K soal di atas K LO, dan jawaban benar yang terlalu sering jelas paling panjang (>30%). Buat pengecoh sama panjang dan sama masuk akalnya dengan jawaban benar.
 
