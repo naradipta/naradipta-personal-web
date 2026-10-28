@@ -49,6 +49,9 @@ Kalau sebuah fitur bisa dikerjakan dengan HTML statis, kerjakan dengan HTML stat
 ## Struktur Direktori
 
 ```
+public/
+└── learn/                   # QA Drill (app belajar mandiri, statis, tanpa build) → /learn/
+                             # Edit questions/*.json lalu `python3 tools/build-data.py`; tes: `node tests/grade.test.js`
 src/
 ├── config/
 │   └── site.ts              # nama, tagline, kontak, link sosial, daftar skills

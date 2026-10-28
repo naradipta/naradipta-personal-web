@@ -1,0 +1,529 @@
+[
+ {
+  "id": "ctfl-072",
+  "topic": "istqb",
+  "lo": "FL-4.2.1",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Field umur menerima bilangan bulat 0-120. Partisi valid: 0-12 (anak), 13-64 (dewasa), 65-120 (senior). Berapa jumlah partisi ekuivalen (valid dan tidak valid) yang harus diuji minimal satu kali?",
+   "en": "An age field accepts integers 0-120. Valid partitions: 0-12 (child), 13-64 (adult), 65-120 (senior). How many equivalence partitions (valid and invalid) must be tested at least once?"
+  },
+  "options": {
+   "id": [
+    "3",
+    "4",
+    "5",
+    "6"
+   ],
+   "en": [
+    "3",
+    "4",
+    "5",
+    "6"
+   ]
+  },
+  "answer": 2,
+  "exp": {
+   "id": "Tiga partisi valid, ditambah dua partisi tidak valid: di bawah 0 dan di atas 120. Total 5.",
+   "en": "Three valid partitions plus two invalid ones: below 0 and above 120. Total 5."
+  }
+ },
+ {
+  "id": "ctfl-073",
+  "topic": "istqb",
+  "lo": "FL-4.2.1",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Transfer diterima untuk nominal 10.000 sampai 50.000 (bilangan bulat). Himpunan nilai mana yang mencakup setiap partisi tepat satu kali?",
+   "en": "A transfer is accepted for amounts 10,000 to 50,000 (integers). Which set of values covers each partition exactly once?"
+  },
+  "options": {
+   "id": [
+    "{5.000, 25.000, 60.000}",
+    "{10.000, 25.000, 50.000}",
+    "{9.999, 10.000, 50.000}",
+    "{10.000, 20.000, 30.000}"
+   ],
+   "en": [
+    "{5,000, 25,000, 60,000}",
+    "{10,000, 25,000, 50,000}",
+    "{9,999, 10,000, 50,000}",
+    "{10,000, 20,000, 30,000}"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Ada tiga partisi: di bawah 10.000, 10.000-50.000, di atas 50.000. Satu wakil per partisi: 5.000, 25.000, 60.000. Opsi lain menguji partisi valid berulang dan melewatkan partisi tidak valid.",
+   "en": "There are three partitions: below 10,000, 10,000-50,000, above 50,000. One representative each: 5,000, 25,000, 60,000. The other sets repeat the valid partition and miss invalid ones."
+  }
+ },
+ {
+  "id": "ctfl-074",
+  "topic": "istqb",
+  "lo": "FL-4.2.2",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Jumlah voucher per pesanan valid untuk 1 sampai 10 (bilangan bulat). Nilai uji BVA dua nilai (2-value) yang tepat adalah...",
+   "en": "Vouchers per order are valid for 1 to 10 (integers). The correct two-value BVA test values are..."
+  },
+  "options": {
+   "id": [
+    "0, 1, 10, 11",
+    "1, 2, 9, 10",
+    "0, 1, 2, 9, 10, 11",
+    "1, 10"
+   ],
+   "en": [
+    "0, 1, 10, 11",
+    "1, 2, 9, 10",
+    "0, 1, 2, 9, 10, 11",
+    "1, 10"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "BVA dua nilai: tiap batas diuji bersama tetangganya di partisi sebelah. Batas bawah 1 dengan 0, batas atas 10 dengan 11. Opsi 3 adalah BVA tiga nilai.",
+   "en": "Two-value BVA tests each boundary with its neighbour in the adjacent partition: 1 with 0, 10 with 11. Option 3 is three-value BVA."
+  }
+ },
+ {
+  "id": "ctfl-075",
+  "topic": "istqb",
+  "lo": "FL-4.2.2",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Dengan BVA tiga nilai (3-value) pada rentang valid 1 sampai 10, berapa nilai uji yang dipakai?",
+   "en": "With three-value BVA on the valid range 1 to 10, how many test values are used?"
+  },
+  "options": {
+   "id": [
+    "3",
+    "4",
+    "6",
+    "8"
+   ],
+   "en": [
+    "3",
+    "4",
+    "6",
+    "8"
+   ]
+  },
+  "answer": 2,
+  "exp": {
+   "id": "Tiap batas menghasilkan tiga nilai: sebelum, pada, dan sesudah. Batas bawah 0, 1, 2; batas atas 9, 10, 11. Total 6.",
+   "en": "Each boundary gives three values: before, on, after. Lower: 0, 1, 2; upper: 9, 10, 11. Total 6."
+  }
+ },
+ {
+  "id": "ctfl-076",
+  "topic": "istqb",
+  "lo": "FL-4.2.2",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Field persentase menerima 0,0 sampai 100,0 dengan satu desimal. Nilai uji BVA dua nilai yang tepat adalah...",
+   "en": "A percentage field accepts 0.0 to 100.0 with one decimal. The correct two-value BVA test values are..."
+  },
+  "options": {
+   "id": [
+    "-0.1, 0.0, 100.0, 100.1",
+    "-1, 0, 100, 101",
+    "0.0, 0.1, 99.9, 100.0",
+    "0.0, 50.0, 100.0"
+   ],
+   "en": [
+    "-0.1, 0.0, 100.0, 100.1",
+    "-1, 0, 100, 101",
+    "0.0, 0.1, 99.9, 100.0",
+    "0.0, 50.0, 100.0"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Ketelitian satu desimal berarti nilai terdekat di luar batas adalah -0,1 dan 100,1, bukan -1 dan 101. Ketelitian field menentukan tetangga batas.",
+   "en": "One-decimal precision means the nearest values outside are -0.1 and 100.1, not -1 and 101. The field's precision defines the boundary neighbour."
+  }
+ },
+ {
+  "id": "ctfl-077",
+  "topic": "istqb",
+  "lo": "FL-4.2.3",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Sebuah decision table lengkap memiliki 3 kondisi biner (Ya/Tidak). Berapa jumlah rule (kolom) sebelum disederhanakan?",
+   "en": "A full decision table has 3 binary (Yes/No) conditions. How many rules (columns) are there before simplification?"
+  },
+  "options": {
+   "id": [
+    "3",
+    "6",
+    "8",
+    "9"
+   ],
+   "en": [
+    "3",
+    "6",
+    "8",
+    "9"
+   ]
+  },
+  "answer": 2,
+  "exp": {
+   "id": "Kombinasi kondisi biner: 2 pangkat 3 = 8.",
+   "en": "Combinations of binary conditions: 2 to the power of 3 = 8."
+  }
+ },
+ {
+  "id": "ctfl-078",
+  "topic": "istqb",
+  "lo": "FL-4.2.3",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Login: kondisi (a) username valid, (b) password valid, (c) akun terkunci. Jika akun terkunci, hasilnya selalu ditolak apa pun isian lain. Jika tidak terkunci, masuk berhasil hanya bila (a) dan (b) valid; selain itu pesan error. Berapa rule minimal setelah digabungkan?",
+   "en": "Login: conditions (a) valid username, (b) valid password, (c) account locked. If locked, the result is always denied regardless of the others. If not locked, login succeeds only when (a) and (b) are valid; otherwise an error message. How many rules remain after minimising?"
+  },
+  "options": {
+   "id": [
+    "2",
+    "3",
+    "4",
+    "8"
+   ],
+   "en": [
+    "2",
+    "3",
+    "4",
+    "8"
+   ]
+  },
+  "answer": 2,
+  "exp": {
+   "id": "Terkunci = Ya: satu rule (a dan b diabaikan). Terkunci = Tidak: (a Tidak), (a Ya dan b Tidak), (a Ya dan b Ya) = tiga rule, dengan nilai 'tidak peduli' dipakai. Total 4.",
+   "en": "Locked = Yes: one rule (a and b irrelevant). Locked = No: (a No), (a Yes and b No), (a Yes and b Yes) = three rules using don't-care values. Total 4."
+  }
+ },
+ {
+  "id": "ctfl-079",
+  "topic": "istqb",
+  "lo": "FL-4.2.3",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Decision table diskon: anggota+kupon = 20%; anggota tanpa kupon = 10%; bukan anggota+kupon = 5%; bukan anggota tanpa kupon = 0%. Pelanggan bukan anggota memakai kupon. Hasil yang diharapkan?",
+   "en": "Discount decision table: member+coupon = 20%; member without coupon = 10%; non-member+coupon = 5%; non-member without coupon = 0%. A non-member uses a coupon. Expected result?"
+  },
+  "options": {
+   "id": [
+    "0%",
+    "5%",
+    "10%",
+    "20%"
+   ],
+   "en": [
+    "0%",
+    "5%",
+    "10%",
+    "20%"
+   ]
+  },
+  "answer": 1,
+  "exp": {
+   "id": "Kombinasi kondisi bukan anggota dan kupon sama dengan rule 3: 5%.",
+   "en": "The combination non-member and coupon matches rule 3: 5%."
+  }
+ },
+ {
+  "id": "ctfl-080",
+  "topic": "istqb",
+  "lo": "FL-4.2.4",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "State pesanan: Created -> Paid (bayar) -> Shipped (kirim) -> Delivered (terima). Created -> Cancelled dan Paid -> Cancelled (batal). Berapa test case minimal agar semua state tercakup (all-states)?",
+   "en": "Order states: Created -> Paid (pay) -> Shipped (ship) -> Delivered (deliver). Created -> Cancelled and Paid -> Cancelled (cancel). Minimum number of test cases to cover all states?"
+  },
+  "options": {
+   "id": [
+    "1",
+    "2",
+    "3",
+    "5"
+   ],
+   "en": [
+    "1",
+    "2",
+    "3",
+    "5"
+   ]
+  },
+  "answer": 1,
+  "exp": {
+   "id": "Satu jalur Created, Paid, Shipped, Delivered mencakup empat state, tetapi Cancelled butuh jalur lain. Minimal 2.",
+   "en": "One path Created, Paid, Shipped, Delivered covers four states, but Cancelled needs another path. Minimum 2."
+  }
+ },
+ {
+  "id": "ctfl-081",
+  "topic": "istqb",
+  "lo": "FL-4.2.4",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Dengan model state pesanan yang sama (lima transisi: bayar, kirim, terima, batal-dari-Created, batal-dari-Paid), berapa test case minimal untuk mencakup semua transisi (all-transitions)?",
+   "en": "Using the same order state model (five transitions: pay, ship, deliver, cancel-from-Created, cancel-from-Paid), minimum test cases to cover all transitions?"
+  },
+  "options": {
+   "id": [
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "en": [
+    "2",
+    "3",
+    "4",
+    "5"
+   ]
+  },
+  "answer": 1,
+  "exp": {
+   "id": "Tes 1: bayar, kirim, terima. Tes 2: batal dari Created. Tes 3: bayar lalu batal dari Paid. Total 3.",
+   "en": "Test 1: pay, ship, deliver. Test 2: cancel from Created. Test 3: pay then cancel from Paid. Total 3."
+  }
+ },
+ {
+  "id": "ctfl-082",
+  "topic": "istqb",
+  "lo": "FL-4.2.4",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Pada model state pesanan, tidak ada transisi 'batal' dari state Shipped. Tes mana yang menguji transisi tidak valid ini?",
+   "en": "In the order state model there is no 'cancel' transition from Shipped. Which test exercises this invalid transition?"
+  },
+  "options": {
+   "id": [
+    "Mencoba batal saat pesanan Shipped, lalu memeriksa permintaan ditolak dan state tetap Shipped",
+    "Membatalkan pesanan saat masih Created",
+    "Membayar pesanan lalu mengirimnya",
+    "Memeriksa pesanan Delivered tidak bisa dibayar lagi"
+   ],
+   "en": [
+    "Try to cancel while the order is Shipped, then check the request is rejected and the state stays Shipped",
+    "Cancel an order while it is still Created",
+    "Pay an order and then ship it",
+    "Check that a Delivered order cannot be paid again"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Tes transisi tidak valid memicu event yang tidak diizinkan pada state tertentu dan memeriksa penolakan serta state tidak berubah. Opsi lain menguji transisi valid atau state/event lain.",
+   "en": "An invalid-transition test triggers an event not allowed in a given state and checks rejection and unchanged state. The others test valid transitions or other state/event pairs."
+  }
+ },
+ {
+  "id": "ctfl-083",
+  "topic": "istqb",
+  "lo": "FL-5.1.4",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Estimasi tiga titik: optimistis 2 hari, paling mungkin 5 hari, pesimistis 14 hari. Dengan rumus (a + 4m + b) / 6, estimasinya...",
+   "en": "Three-point estimate: optimistic 2 days, most likely 5 days, pessimistic 14 days. Using (a + 4m + b) / 6, the estimate is..."
+  },
+  "options": {
+   "id": [
+    "5 hari / 5 days",
+    "6 hari / 6 days",
+    "7 hari / 7 days",
+    "8 hari / 8 days"
+   ],
+   "en": [
+    "5 hari / 5 days",
+    "6 hari / 6 days",
+    "7 hari / 7 days",
+    "8 hari / 8 days"
+   ]
+  },
+  "answer": 1,
+  "exp": {
+   "id": "(2 + 4x5 + 14) / 6 = 36 / 6 = 6.",
+   "en": "(2 + 4x5 + 14) / 6 = 36 / 6 = 6."
+  }
+ },
+ {
+  "id": "ctfl-084",
+  "topic": "istqb",
+  "lo": "FL-5.1.4",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Data proyek lalu menunjukkan usaha testing sekitar 30% dari usaha pengembangan. Estimasi pengembangan proyek baru 40 person-day. Estimasi testing berbasis rasio?",
+   "en": "Past projects show test effort is about 30% of development effort. The new project's development estimate is 40 person-days. The ratio-based test estimate?"
+  },
+  "options": {
+   "id": [
+    "8",
+    "12",
+    "30",
+    "52"
+   ],
+   "en": [
+    "8",
+    "12",
+    "30",
+    "52"
+   ]
+  },
+  "answer": 1,
+  "exp": {
+   "id": "Estimasi berbasis rasio (metrik historis): 30% x 40 = 12 person-day. 52 adalah total dev + test, bukan usaha testing.",
+   "en": "Ratio-based estimation (historical metrics): 30% x 40 = 12 person-days. 52 is dev plus test, not test effort."
+  }
+ },
+ {
+  "id": "ctfl-085",
+  "topic": "istqb",
+  "lo": "FL-5.1.5",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "TC1: risiko tinggi, tanpa dependensi. TC2: risiko tinggi, butuh data hasil TC3. TC3: risiko sedang, tanpa dependensi. Urutan eksekusi yang paling masuk akal?",
+   "en": "TC1: high risk, no dependency. TC2: high risk, needs data produced by TC3. TC3: medium risk, no dependency. Most sensible execution order?"
+  },
+  "options": {
+   "id": [
+    "TC1, TC2, TC3",
+    "TC1, TC3, TC2",
+    "TC3, TC2, TC1",
+    "TC2, TC1, TC3"
+   ],
+   "en": [
+    "TC1, TC2, TC3",
+    "TC1, TC3, TC2",
+    "TC3, TC2, TC1",
+    "TC2, TC1, TC3"
+   ]
+  },
+  "answer": 1,
+  "exp": {
+   "id": "Prioritisasi berbasis risiko tetap harus menghormati dependensi. TC2 tidak bisa jalan sebelum TC3, jadi TC1, TC3, TC2.",
+   "en": "Risk-based prioritisation must still respect dependencies. TC2 cannot run before TC3, so TC1, TC3, TC2."
+  }
+ },
+ {
+  "id": "ctfl-086",
+  "topic": "istqb",
+  "lo": "FL-5.1.5",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Cakupan requirement: T1 = R1,R2,R3; T2 = R3,R4,R6; T3 = R1,R2; T4 = R5. Urutan prioritisasi 'additional coverage' (tiap langkah memilih yang menambah cakupan baru terbanyak)?",
+   "en": "Requirement coverage: T1 = R1,R2,R3; T2 = R3,R4,R6; T3 = R1,R2; T4 = R5. 'Additional coverage' prioritisation order (each step picks the test adding most new coverage)?"
+  },
+  "options": {
+   "id": [
+    "T1, T2, T4, T3",
+    "T1, T3, T2, T4",
+    "T2, T1, T4, T3",
+    "T4, T3, T2, T1"
+   ],
+   "en": [
+    "T1, T2, T4, T3",
+    "T1, T3, T2, T4",
+    "T2, T1, T4, T3",
+    "T4, T3, T2, T1"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "T1 menambah 3 (R1-R3). Lalu T2 menambah 2 baru (R4, R6), T4 menambah 1 (R5), dan T3 tidak menambah apa pun. Urutan T1, T2, T4, T3.",
+   "en": "T1 adds 3 (R1-R3). Then T2 adds 2 new (R4, R6), T4 adds 1 (R5), and T3 adds nothing. Order T1, T2, T4, T3."
+  }
+ },
+ {
+  "id": "ctfl-087",
+  "topic": "istqb",
+  "lo": "FL-5.5.1",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Laporan defect mana yang paling membantu developer mereproduksi masalah?",
+   "en": "Which defect report best helps a developer reproduce the problem?"
+  },
+  "options": {
+   "id": [
+    "Checkout error, tolong dicek",
+    "Checkout rusak di build 2.4.1 (Chrome 126, akun uji A). Langkah: tambah 2 item, pakai voucher X, klik Bayar. Aktual: HTTP 500, pesanan tidak terbentuk. Harapan: halaman konfirmasi. Log dan screenshot terlampir",
+    "Checkout selalu gagal, sangat buruk, harus segera diperbaiki",
+    "Mungkin voucher bermasalah karena dulu pernah error"
+   ],
+   "en": [
+    "Checkout error, please check",
+    "Checkout broken on build 2.4.1 (Chrome 126, test account A). Steps: add 2 items, apply voucher X, click Pay. Actual: HTTP 500, no order created. Expected: confirmation page. Logs and screenshot attached",
+    "Checkout always fails, very bad, must be fixed immediately",
+    "Maybe the voucher is broken because it errored before"
+   ]
+  },
+  "answer": 1,
+  "exp": {
+   "id": "Laporan yang baik memuat lingkungan/versi, langkah reproduksi, hasil aktual vs harapan, dan bukti. Opsi lain samar, emosional, atau berupa dugaan.",
+   "en": "A good report has environment/version, reproduction steps, actual vs expected results and evidence. The others are vague, emotional or speculative."
+  }
+ },
+ {
+  "id": "ctfl-088",
+  "topic": "istqb",
+  "lo": "FL-4.5.3",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "User story: 'Sebagai pelanggan, saya ingin memakai voucher agar membayar lebih murah.' Acceptance test ATDD mana yang paling baik?",
+   "en": "User story: 'As a customer, I want to apply a voucher so that I pay less.' Which ATDD acceptance test is best?"
+  },
+  "options": {
+   "id": [
+    "Voucher harus bekerja dengan baik",
+    "Given keranjang Rp200.000 dan voucher HEMAT10 (10%, min. Rp100.000), When saya menerapkan voucher, Then total menjadi Rp180.000",
+    "Developer memeriksa kode fungsi diskon",
+    "Tampilan voucher harus bagus"
+   ],
+   "en": [
+    "The voucher must work well",
+    "Given a Rp200,000 cart and voucher SAVE10 (10%, min. Rp100,000), When I apply the voucher, Then the total becomes Rp180,000",
+    "The developer reviews the discount function code",
+    "The voucher UI must look good"
+   ]
+  },
+  "answer": 1,
+  "exp": {
+   "id": "Acceptance test yang baik konkret, terukur, dan ditulis dari sudut pandang bisnis (Given/When/Then dengan data jelas), sebelum implementasi.",
+   "en": "A good acceptance test is concrete, measurable and business-facing (Given/When/Then with clear data), written before implementation."
+  }
+ }
+]
