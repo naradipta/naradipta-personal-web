@@ -117,6 +117,19 @@ for (const [w,scheme] of [[390,'light'],[390,'dark'],[1100,'light'],[1100,'dark'
  ok('only qa-drill key in localStorage', JSON.stringify(await p.evaluate(()=>Object.keys(localStorage)))==='["qa-drill-v1"]');
 }
 
+// ===== 3b. Pengingat cadangan =====
+{
+ const p=await newPage(390,'light'); await p.goto(B+'#/dashboard');
+ await p.evaluate(()=>{const st=QA.store.state; for(let i=0;i<20;i++) st.q['x'+i]={box:1,due:0,seen:1,correct:1,wrong:0,last:1,hyper:0}; QA.store.save();});
+ await p.reload(); await p.waitForSelector('h1');
+ ok('backup reminder shown when never exported', /belum dicadangkan/.test(await p.locator('#app').innerText()));
+ await p.evaluate(axeSrc); const v=await p.evaluate(async()=>(await axe.run('body',{runOnly:['wcag2a','wcag2aa']})).violations.map(a=>a.id));
+ ok('axe with backup reminder', v.length===0, JSON.stringify(v));
+ await p.goto(B+'#/settings'); const [dl]=await Promise.all([p.waitForEvent('download'),p.getByRole('button',{name:'Ekspor'}).click()]); await dl.path();
+ ok('export records last-exported note', /Terakhir diekspor/.test(await p.locator('#app').innerText()));
+ await p.goto(B+'#/dashboard'); ok('reminder hidden after export', !/belum dicadangkan/.test(await p.locator('#app').innerText()));
+}
+
 // ===== 4. Situs utama =====
 {
  const p=await newPage(1100,'light'); await p.goto(ORIGIN+'/'); 

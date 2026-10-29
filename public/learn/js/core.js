@@ -123,6 +123,13 @@
   };
 
   // Pengumuman untuk pembaca layar (aria-live) tanpa mengubah tampilan.
+  // Ingatkan ekspor bila sudah ada progres berarti dan cadangan terakhir lebih dari 7 hari (atau belum pernah).
+  QA.backupDue = function () {
+    var seen = Object.keys(QA.store.state.q).length;
+    var last = QA.store.state.lastExport;
+    return seen >= 20 && (!last || Date.now() - last > 7 * QA.dayMs);
+  };
+
   QA.announce = function (msg) {
     var el = document.getElementById("live");
     if (el) { el.textContent = ""; window.setTimeout(function () { el.textContent = msg; }, 30); }

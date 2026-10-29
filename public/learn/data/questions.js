@@ -833,6 +833,254 @@ QA.questions = [
 "pass": 0.5
 },
 {
+"id": "ctfl-125",
+"topic": "istqb",
+"lo": "FL-6.1.1",
+"k": 2,
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Tim ingin setiap commit otomatis dibangun dan dites sebelum digabung. Kategori tool apa yang paling sesuai?",
+"en": "A team wants every commit to be built and tested automatically before merging. Which tool category fits best?"
+},
+"options": {
+"id": [
+"Tool DevOps untuk CI/CD yang menjalankan build dan test otomatis",
+"Tool manajemen test yang menyimpan dan mengelola test case",
+"Tool static testing yang memeriksa kode tanpa menjalankannya",
+"Tool coverage yang mengukur bagian kode yang dieksekusi test"
+],
+"en": [
+"A DevOps tool for CI/CD that runs builds and tests automatically",
+"A test management tool that stores and manages test cases",
+"A static testing tool that checks code without executing it",
+"A coverage tool that measures which code the tests executed"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Pipeline build-dan-test otomatis pada tiap perubahan adalah peran tool DevOps (CI/CD). Kategori lain mendukung aktivitas berbeda.",
+"en": "Automatic build-and-test on every change is the role of DevOps (CI/CD) tools. The other categories support different activities."
+}
+},
+{
+"id": "ctfl-126",
+"topic": "istqb",
+"lo": "FL-6.1.1",
+"k": 2,
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Sebuah tool membaca kode sumber tanpa menjalankannya lalu melaporkan variabel yang tidak dipakai dan pelanggaran gaya kode. Tool ini termasuk kategori apa?",
+"en": "A tool reads source code without running it and reports unused variables and style violations. Which category is it?"
+},
+"options": {
+"id": [
+"Tool eksekusi test yang menjalankan skrip otomasi pada aplikasi",
+"Tool non-fungsional yang mengukur performa di bawah beban",
+"Tool static testing yang menganalisis kode tanpa eksekusi",
+"Tool manajemen test yang melacak hasil dan defect proyek"
+],
+"en": [
+"A test execution tool that runs automation scripts on the application",
+"A non-functional tool that measures performance under load",
+"A static testing tool that analyses code without executing it",
+"A test management tool that tracks project results and defects"
+]
+},
+"answer": 2,
+"exp": {
+"id": "Menganalisis kode tanpa mengeksekusinya adalah static testing; contohnya linter dan analyzer kode.",
+"en": "Analysing code without executing it is static testing; linters and code analysers are examples."
+}
+},
+{
+"id": "ctfl-127",
+"topic": "istqb",
+"lo": "FL-6.1.1",
+"k": 2,
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Tim ingin tahu waktu respons API ketika ribuan pengguna virtual mengaksesnya bersamaan. Tool kategori mana yang dibutuhkan?",
+"en": "A team wants to know API response times when thousands of virtual users access it at once. Which tool category is needed?"
+},
+"options": {
+"id": [
+"Tool kolaborasi yang membantu tim berbagi informasi dan komunikasi",
+"Tool non-fungsional untuk pengujian performa dan beban",
+"Tool static testing yang memeriksa kode sebelum dijalankan",
+"Tool desain test yang membantu menurunkan test case dari model"
+],
+"en": [
+"A collaboration tool that helps the team share information and communicate",
+"A non-functional tool for performance and load testing",
+"A static testing tool that checks code before it is run",
+"A test design tool that helps derive test cases from a model"
+]
+},
+"answer": 1,
+"exp": {
+"id": "Mensimulasikan banyak pengguna dan mengukur waktu respons adalah tool non-fungsional (performa/beban).",
+"en": "Simulating many users and measuring response time is the job of non-functional (performance/load) tools."
+}
+},
+{
+"id": "ctfl-128",
+"topic": "istqb",
+"lo": "FL-6.1.1",
+"k": 2,
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Tim butuh satu tempat untuk mencatat test case, menautkannya ke kebutuhan, dan melihat hasil eksekusi serta defect. Tool apa yang sesuai?",
+"en": "A team needs one place to record test cases, link them to requirements, and see execution results and defects. Which tool fits?"
+},
+"options": {
+"id": [
+"Tool eksekusi test yang menjalankan skrip secara otomatis",
+"Tool coverage yang menghitung persentase kode yang dites",
+"Tool performa yang mensimulasikan banyak pengguna virtual",
+"Tool manajemen test atau ALM yang menautkan artefak testing"
+],
+"en": [
+"A test execution tool that runs scripts automatically",
+"A coverage tool that computes the percentage of code tested",
+"A performance tool that simulates many virtual users",
+"A test management or ALM tool that links testing work products"
+]
+},
+"answer": 3,
+"exp": {
+"id": "Pencatatan test case, keterlacakan ke kebutuhan, hasil, dan defect adalah fungsi tool manajemen test/ALM.",
+"en": "Recording test cases, traceability to requirements, results and defects is what test management/ALM tools do."
+}
+},
+{
+"id": "ctfl-129",
+"topic": "istqb",
+"lo": "FL-6.2.1",
+"k": 1,
+"level": 1,
+"type": "mcq",
+"q": {
+"id": "Mana yang merupakan manfaat otomasi test?",
+"en": "Which is a benefit of test automation?"
+},
+"options": {
+"id": [
+"Test tidak lagi memerlukan perawatan setelah dibuat",
+"Semua defect pada aplikasi pasti ditemukan otomatis",
+"Eksekusi test berulang lebih konsisten dan tidak melewatkan langkah",
+"Tim tidak perlu lagi memahami perilaku aplikasi yang dites"
+],
+"en": [
+"Tests no longer need maintenance once they are created",
+"All defects in the application are found automatically",
+"Repeated test execution is more consistent and does not skip steps",
+"The team no longer needs to understand the application behaviour"
+]
+},
+"answer": 2,
+"exp": {
+"id": "Eksekusi yang konsisten dan berulang adalah manfaat otomasi. Tiga pilihan lain adalah ekspektasi tidak realistis.",
+"en": "Consistent, repeatable execution is a benefit of automation. The other three are unrealistic expectations."
+}
+},
+{
+"id": "ctfl-130",
+"topic": "istqb",
+"lo": "FL-6.2.1",
+"k": 1,
+"level": 1,
+"type": "mcq",
+"q": {
+"id": "Mana yang merupakan risiko otomasi test?",
+"en": "Which is a risk of test automation?"
+},
+"options": {
+"id": [
+"Ekspektasi yang tidak realistis terhadap kemampuan tool",
+"Eksekusi yang menjadi lebih konsisten dari waktu ke waktu",
+"Penilaian hasil test yang menjadi lebih objektif dan terukur",
+"Waktu yang terhemat pada pekerjaan regresi yang berulang"
+],
+"en": [
+"Unrealistic expectations of what the tool can do",
+"Execution becoming more consistent over time",
+"Assessment of test results becoming more objective and measurable",
+"Time saved on repetitive regression work"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Ekspektasi tidak realistis adalah risiko. Opsi lainnya adalah manfaat otomasi.",
+"en": "Unrealistic expectations are a risk. The other options are benefits of automation."
+}
+},
+{
+"id": "ctfl-131",
+"topic": "istqb",
+"lo": "FL-6.2.1",
+"k": 1,
+"level": 1,
+"type": "mcq",
+"q": {
+"id": "Tim menjalankan test regresi yang sama setiap rilis. Manfaat otomasi apa yang paling relevan?",
+"en": "A team runs the same regression tests every release. Which automation benefit is most relevant?"
+},
+"options": {
+"id": [
+"Tester tidak perlu lagi berpikir tentang risiko produk",
+"Skrip otomasi tidak pernah memerlukan pembaruan lagi",
+"Seluruh pengujian eksploratori dapat dihapus dari rencana",
+"Waktu terhemat karena pekerjaan berulang dijalankan tool"
+],
+"en": [
+"Testers no longer need to think about product risk",
+"Automation scripts never need updating again",
+"All exploratory testing can be dropped from the plan",
+"Time is saved because repetitive work is run by the tool"
+]
+},
+"answer": 3,
+"exp": {
+"id": "Pekerjaan berulang seperti regresi adalah kandidat utama otomasi; manfaatnya adalah penghematan waktu.",
+"en": "Repetitive work such as regression is a prime automation candidate; the benefit is time saved."
+}
+},
+{
+"id": "ctfl-132",
+"topic": "istqb",
+"lo": "FL-6.2.1",
+"k": 1,
+"level": 1,
+"type": "mcq",
+"q": {
+"id": "Tim mengotomasi UI lalu UI sering berubah dan skrip terus rusak. Risiko otomasi apa yang terjadi?",
+"en": "A team automates the UI, then the UI changes often and scripts keep breaking. Which automation risk occurred?"
+},
+"options": {
+"id": [
+"Informasi hasil test menjadi sulit diakses oleh seluruh tim",
+"Usaha perawatan skrip diremehkan saat otomasi direncanakan",
+"Penilaian hasil menjadi terlalu objektif untuk dipercaya orang",
+"Eksekusi test menjadi kurang konsisten dibanding cara manual"
+],
+"en": [
+"Test result information becomes hard for the whole team to access",
+"Script maintenance effort was underestimated when planning automation",
+"Result assessment becomes too objective for people to trust",
+"Test execution becomes less consistent than doing it manually"
+]
+},
+"answer": 1,
+"exp": {
+"id": "Meremehkan usaha pembuatan dan perawatan skrip adalah risiko otomasi yang umum.",
+"en": "Underestimating the effort of building and maintaining scripts is a common automation risk."
+}
+},
+{
 "id": "ctfl-089",
 "topic": "istqb",
 "lo": "FL-1.1.2",

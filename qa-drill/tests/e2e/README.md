@@ -20,3 +20,7 @@ npm test                               # BASE_URL=http://localhost:4399 (bisa di
 
 Exit code 1 bila ada cek gagal atau error console/halaman.
 Tidak menggantikan uji manual dengan pembaca layar sungguhan (VoiceOver/NVDA).
+
+Di CI, job `.github/workflows/qa-drill.yml` menjalankan urutan yang sama (plus cek
+`questions.js` sinkron dengan `questions/*.json`) pada PR/push yang menyentuh `public/learn/` atau `qa-drill/`.
+`smoke.test.js` tidak ikut CI karena butuh jsdom (pasang manual bila ingin menjalankannya).

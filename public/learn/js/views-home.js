@@ -65,6 +65,13 @@
         h("a", { class: "btn primary", href: "#/" + na.hash }, na.label)));
     }
 
+    if (QA.backupDue()) {
+      root.appendChild(h("div", { class: "card", role: "note" },
+        h("div", null, t("Progres Anda hanya tersimpan di browser ini dan belum dicadangkan dalam 7 hari terakhir.",
+          "Your progress lives only in this browser and has not been backed up in the last 7 days.")),
+        h("a", { class: "btn", href: "#/settings" }, t("Ekspor cadangan", "Export backup"))));
+    }
+
     root.appendChild(h("h2", null, t("Peta bab ISTQB", "ISTQB chapter map")));
     var grid = h("div", { class: "grid" });
     QA.chapters.forEach(function (ch) {
@@ -261,6 +268,12 @@
       };
       rd.readAsText(f);
     });
+    function exportNoteText() {
+      return S.state.lastExport
+        ? t("Terakhir diekspor: ", "Last exported: ") + new Date(S.state.lastExport).toLocaleString()
+        : t("Belum pernah diekspor.", "Never exported.");
+    }
+    var lastExportNote = h("p", { class: "small muted" }, exportNoteText());
     root.appendChild(h("div", { class: "card" },
       h("h2", { class: "h3" }, t("Cadangan progres", "Progress backup")),
       h("p", { class: "muted small" }, t("Progres tersimpan di browser ini saja. Ekspor secara berkala.", "Progress is stored in this browser only. Export regularly.")),
@@ -270,8 +283,11 @@
             var blob = new Blob([S.exportJSON()], { type: "application/json" });
             var a = h("a", { href: URL.createObjectURL(blob), download: "qa-drill-progress-" + QA.dateStr(new Date()) + ".json" });
             document.body.appendChild(a); a.click(); document.body.removeChild(a);
+            S.state.lastExport = Date.now(); S.save();
+            lastExportNote.textContent = exportNoteText();
           }
         }, t("Ekspor", "Export")), file),
+      lastExportNote,
       msg));
 
     root.appendChild(h("div", { class: "card" },

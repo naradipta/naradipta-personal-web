@@ -6,7 +6,7 @@
   var INTERVALS = [0, 1, 2, 4, 8, 16, 32]; // hari per box 0..6
 
   function defaults() {
-    return { lang: "id", examDate: null, dailyMin: 120, extraTime: true, confidence: true, q: {}, cards: {}, history: [], mocks: [] };
+    return { lang: "id", examDate: null, dailyMin: 120, extraTime: true, confidence: true, lastExport: null, q: {}, cards: {}, history: [], mocks: [] };
   }
 
   var memory = null;
@@ -109,6 +109,7 @@
     if (num(obj.dailyMin) && obj.dailyMin > 0 && obj.dailyMin <= 1440) next.dailyMin = obj.dailyMin;
     if (typeof obj.extraTime === "boolean") next.extraTime = obj.extraTime;
     if (typeof obj.confidence === "boolean") next.confidence = obj.confidence;
+    if (num(obj.lastExport)) next.lastExport = obj.lastExport;
     S.state = next;
     S.save();
   };

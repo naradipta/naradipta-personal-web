@@ -167,6 +167,20 @@ JSDOM.fromFile(file, { runScripts: "dangerously", resources: "usable", pretendTo
     QA.store.importJSON(json); assert.ok(Object.keys(QA.store.state.q).length > 0);
     assert.throws(() => QA.store.importJSON("{\"x\":1}"));
 
+    // pengingat cadangan: muncul bila progres >= 20 soal dan belum diekspor 7 hari
+    {
+      const st = QA.store.state;
+      const keep = { q: st.q, last: st.lastExport };
+      st.q = {}; for (let i = 0; i < 20; i++) st.q["x" + i] = { box: 1, due: 0, seen: 1, correct: 1, wrong: 0, last: 1, hyper: 0 };
+      st.lastExport = null; assert.ok(QA.backupDue(), "belum pernah ekspor -> diingatkan");
+      st.lastExport = Date.now() - 8 * 86400000; assert.ok(QA.backupDue(), "ekspor > 7 hari -> diingatkan");
+      st.lastExport = Date.now() - 86400000; assert.ok(!QA.backupDue(), "ekspor baru -> tidak diingatkan");
+      st.lastExport = null; st.q = {}; assert.ok(!QA.backupDue(), "progres sedikit -> tidak diingatkan");
+      st.q = keep.q; st.lastExport = keep.last;
+      const j = JSON.parse(QA.store.exportJSON()); j.lastExport = 12345;
+      QA.store.importJSON(JSON.stringify(j)); assert.strictEqual(QA.store.state.lastExport, 12345, "lastExport ikut diimpor");
+    }
+
     // satu soal rusak tidak mematikan aplikasi: dilewati dan diberi peringatan
     const before = QA.questions.length;
     QA.questions.push({ id: "bad-1", topic: "x", type: "mcq", q: { id: "", en: "" }, options: { id: ["a"], en: ["a", "b"] }, answer: 5 });
