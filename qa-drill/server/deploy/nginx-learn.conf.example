@@ -1,0 +1,45 @@
+# CONTOH konfigurasi Nginx untuk learn.naradipta.com. Tidak dipasang otomatis oleh deploy.sh;
+# salin dan sesuaikan secara manual (lihat qa-drill/server/README.md).
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name learn.naradipta.com;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name learn.naradipta.com;
+
+    # Sertifikat: mis. certbot --nginx -d learn.naradipta.com
+    ssl_certificate     /etc/letsencrypt/live/learn.naradipta.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/learn.naradipta.com/privkey.pem;
+
+    # Aplikasi statis = folder learn/ hasil build situs (deploy.sh menyalin dist/ ke WEB_ROOT).
+    root /var/www/naradipta/learn;
+    index index.html;
+
+    add_header X-Content-Type-Options nosniff always;
+    add_header Referrer-Policy strict-origin-when-cross-origin always;
+    add_header Strict-Transport-Security "max-age=31536000" always;
+
+    # Berkas statis selalu divalidasi ulang agar pembaruan soal langsung terlihat (ETag tetap menghemat bandwidth).
+    location / {
+        add_header Cache-Control "no-cache";
+        try_files $uri $uri/ =404;
+    }
+
+    # API login + sinkronisasi (proses Node di 127.0.0.1:4400).
+    location /api/ {
+        proxy_pass http://127.0.0.1:4400;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        client_max_body_size 1500k;
+    }
+}
+
+# Di blok server naradipta.com, arahkan alamat lama ke subdomain:
+#   location = /learn  { return 301 https://learn.naradipta.com/; }
+#   location /learn/   { return 301 https://learn.naradipta.com/; }

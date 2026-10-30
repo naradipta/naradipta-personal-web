@@ -5,17 +5,18 @@ terpisah dari situs: hanya terpasang di folder ini, tidak masuk `package.json` r
 
 Cakupan: pengumuman `aria-live` (urutan, bahasa, mode tanpa keyakinan, teks berulang),
 axe di 8 rute × 390/1100px × terang/gelap, sesi latihan sampai ringkasan, mock exam,
-ekspor/impor/reset, impor rusak, persistensi, deep link, dan cek situs (nav, 404 file dev, indexable).
+ekspor/impor/reset, impor rusak, akun (daftar, login, dua perangkat tergabung, keluar), persistensi, deep link, dan cek situs (nav, 404 file dev, indexable).
 
 ```bash
 # dari root repo
 npm run build
-npx astro preview --port 4399 &        # server statis hasil build
+npx astro preview --port 4399 &        # situs utama (cek nav, halaman project)
+PORT=4400 STATIC_DIR=public/learn DB_PATH=/tmp/qd-e2e.sqlite node qa-drill/server/server.js &   # QA Drill + API di akar
 
 cd qa-drill/tests/e2e
 npm install
 npx playwright install chromium        # sekali saja
-npm test                               # BASE_URL=http://localhost:4399 (bisa diganti)
+npm test                               # SITE_URL=http://localhost:4399, LEARN_URL=http://localhost:4400 (bisa diganti)
 ```
 
 Exit code 1 bila ada cek gagal atau error console/halaman.

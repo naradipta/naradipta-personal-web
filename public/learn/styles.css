@@ -86,7 +86,7 @@ main { max-width: 960px; margin: 0 auto; padding: 16px; }
 
 label { display: block; font-size: .9rem; color: var(--muted); }
 label.inline { display: flex; gap: 8px; align-items: center; color: var(--text); }
-select, input[type=date], input[type=number], textarea { display: block; width: 100%; margin-top: 4px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); font: inherit; }
+select, input[type=date], input[type=number], input[type=email], input[type=password], textarea { display: block; width: 100%; margin-top: 4px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); font: inherit; }
 label.inline input { width: auto; margin: 0; }
 textarea { resize: vertical; }
 

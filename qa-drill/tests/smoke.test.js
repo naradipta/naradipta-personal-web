@@ -181,6 +181,18 @@ JSDOM.fromFile(file, { runScripts: "dangerously", resources: "usable", pretendTo
       QA.store.importJSON(JSON.stringify(j)); assert.strictEqual(QA.store.state.lastExport, 12345, "lastExport ikut diimpor");
     }
 
+    // gabung data dari server: kemajuan dua perangkat tidak saling menimpa
+    {
+      const st = QA.store.state, keep = JSON.stringify(st);
+      st.q = { a: { box: 1, due: 1, seen: 2, correct: 1, wrong: 1, last: 1, hyper: 0 } }; st.history = [{ t: 1, total: 2, correct: 1 }]; st.updatedAt = 10; st.lang = "id";
+      QA.store.merge({ q: { a: { box: 3, due: 9, seen: 5, correct: 5, wrong: 0, last: 1 }, b: { box: 1, due: 1, seen: 1, correct: 1, wrong: 0, last: 1 } }, cards: {}, history: [{ t: 2, total: 1, correct: 1 }, { t: 1, total: 2, correct: 1 }], updatedAt: 99, lang: "en" });
+      const m = QA.store.state;
+      assert.strictEqual(m.q.a.seen, 5, "rekaman yang lebih sering dilihat menang"); assert.ok(m.q.b, "soal dari server ikut");
+      assert.strictEqual(m.history.length, 2, "riwayat digabung tanpa duplikat"); assert.strictEqual(m.lang, "en", "pengaturan mengikuti perangkat terbaru");
+      assert.throws(() => QA.store.merge({ q: 1 }), "data server rusak ditolak");
+      QA.store.state = JSON.parse(keep);
+    }
+
     // satu soal rusak tidak mematikan aplikasi: dilewati dan diberi peringatan
     const before = QA.questions.length;
     QA.questions.push({ id: "bad-1", topic: "x", type: "mcq", q: { id: "", en: "" }, options: { id: ["a"], en: ["a", "b"] }, answer: 5 });

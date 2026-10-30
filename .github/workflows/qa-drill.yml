@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
       - run: npm ci
       - name: Soal sinkron dengan data yang terbit
@@ -25,6 +25,7 @@ jobs:
         run: |
           node qa-drill/tests/grade.test.js
           node qa-drill/tests/data.test.js
+          node qa-drill/tests/server.test.js
       - name: Build situs
         run: npm run build
       - name: E2E dan aksesibilitas
@@ -33,5 +34,7 @@ jobs:
           npm ci
           npx playwright install --with-deps chromium
           (cd ../../.. && npx astro preview --port 4399 &)
-          curl --retry 30 --retry-delay 1 --retry-connrefused -sf http://localhost:4399/learn/ > /dev/null
+          (cd ../../.. && PORT=4400 STATIC_DIR=public/learn DB_PATH=$RUNNER_TEMP/qd.sqlite node qa-drill/server/server.js &)
+          curl --retry 30 --retry-delay 1 --retry-connrefused -sf http://localhost:4399/ > /dev/null
+          curl --retry 30 --retry-delay 1 --retry-connrefused -sf http://localhost:4400/ > /dev/null
           npm test

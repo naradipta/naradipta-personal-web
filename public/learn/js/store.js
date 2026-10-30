@@ -6,7 +6,7 @@
   var INTERVALS = [0, 1, 2, 4, 8, 16, 32]; // hari per box 0..6
 
   function defaults() {
-    return { lang: "id", examDate: null, dailyMin: 120, extraTime: true, confidence: true, lastExport: null, q: {}, cards: {}, history: [], mocks: [] };
+    return { lang: "id", examDate: null, dailyMin: 120, extraTime: true, confidence: true, lastExport: null, updatedAt: 0, q: {}, cards: {}, history: [], mocks: [] };
   }
 
   var memory = null;
@@ -21,8 +21,10 @@
   var S = { state: load() };
 
   S.save = function () {
+    S.state.updatedAt = Date.now();
     memory = S.state;
     try { window.localStorage.setItem(KEY, JSON.stringify(S.state)); } catch (e) { /* abaikan */ }
+    if (S.onSave) S.onSave();
   };
 
   // conf (opsional): "guess" | "unsure" | "sure". Benar karena menebak tidak menaikkan box (belum benar-benar dikuasai),
@@ -94,8 +96,8 @@
     });
     return out;
   }
-  S.importJSON = function (text) {
-    var obj = JSON.parse(text);
+  // Validasi dan bersihkan objek state dari sumber luar (berkas impor atau server). Melempar bila bentuknya salah.
+  function normalize(obj) {
     if (!isObj(obj) || !isObj(obj.q) || !isObj(obj.cards)) throw new Error("Format berkas tidak dikenali");
     if (obj.history !== undefined && !Array.isArray(obj.history)) throw new Error("Format riwayat tidak valid");
     if (obj.mocks !== undefined && !Array.isArray(obj.mocks)) throw new Error("Format mock tidak valid");
@@ -110,8 +112,40 @@
     if (typeof obj.extraTime === "boolean") next.extraTime = obj.extraTime;
     if (typeof obj.confidence === "boolean") next.confidence = obj.confidence;
     if (num(obj.lastExport)) next.lastExport = obj.lastExport;
-    S.state = next;
+    if (num(obj.updatedAt)) next.updatedAt = obj.updatedAt;
+    return next;
+  }
+  S.importJSON = function (text) {
+    S.state = normalize(JSON.parse(text));
     S.save();
+  };
+
+  // Gabungkan state dari server ke state lokal tanpa kehilangan kemajuan di salah satu perangkat:
+  // per soal/kartu pilih rekaman yang lebih sering dilihat; riwayat dan mock digabung per waktu;
+  // pengaturan mengikuti perangkat yang terakhir berubah. Tidak menyimpan; pemanggil yang memutuskan.
+  function mergeRecs(a, b) {
+    var out = {};
+    Object.keys(a).concat(Object.keys(b)).forEach(function (k) {
+      var x = a[k], y = b[k];
+      out[k] = !x ? y : !y ? x : (y.seen > x.seen ? y : x);
+    });
+    return out;
+  }
+  function mergeLists(a, b, cap) {
+    var seen = {};
+    return a.concat(b).filter(function (e) { return !seen[e.t] && (seen[e.t] = 1); })
+      .sort(function (x, y) { return x.t - y.t; }).slice(-cap);
+  }
+  S.merge = function (remote) {
+    var r = normalize(remote), l = S.state;
+    var newer = r.updatedAt > l.updatedAt ? r : l;
+    S.state = {
+      lang: newer.lang, examDate: newer.examDate, dailyMin: newer.dailyMin, extraTime: newer.extraTime, confidence: newer.confidence,
+      lastExport: Math.max(l.lastExport || 0, r.lastExport || 0) || null,
+      updatedAt: Math.max(l.updatedAt, r.updatedAt),
+      q: mergeRecs(l.q, r.q), cards: mergeRecs(l.cards, r.cards),
+      history: mergeLists(l.history, r.history, 200), mocks: mergeLists(l.mocks, r.mocks, 50)
+    };
   };
   S.reset = function () { S.state = defaults(); S.save(); };
 

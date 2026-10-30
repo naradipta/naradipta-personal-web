@@ -151,17 +151,17 @@ di sana — semua komponen ikut terupdate.
 
 ---
 
-## Memperbarui QA Drill (`/learn/`)
+## Memperbarui QA Drill (`learn.naradipta.com`)
 
-QA Drill adalah aplikasi statis mandiri di `public/learn/` (HTML + CSS + JS klasik, tanpa build step). Astro hanya menyalinnya apa adanya ke `dist/learn/`. Sumber soal, alat, dan tes ada di `qa-drill/` dan tidak ikut terbit.
+QA Drill adalah aplikasi mandiri di `public/learn/` (HTML + CSS + JS klasik, tanpa build step) yang disajikan di akar subdomain `learn.naradipta.com`. Astro hanya menyalinnya apa adanya ke `dist/learn/`. Akun opsional memakai API kecil di `qa-drill/server/`. Sumber soal, alat, dan tes ada di `qa-drill/` dan tidak ikut terbit.
 
 1. **Soal baru atau koreksi:** edit/tambah objek di `qa-drill/questions/*.json` (skema ada di `qa-drill/CLAUDE.md`; ID unik, `lo` harus ada di `public/learn/data/lo.js`, teks ID dan EN setara, pengecoh sama panjang dengan jawaban benar).
 2. **Bangun ulang data:** `cd qa-drill && python3 tools/build-data.py` (menghasilkan `public/learn/data/questions.js`; jangan diedit tangan; gagal bila ada bias panjang opsi atau K-level tak sesuai).
 3. **Tes:** `node tests/grade.test.js` dan, opsional, `npm i --no-save jsdom` lalu `node tests/smoke.test.js` (jangan commit `package-lock.json`/`node_modules` yang dihasilkan).
-4. **Cek situs:** `npm run build`, lalu `npm run preview` dan buka `/learn/`.
-5. **Deploy** seperti biasa lewat `./deploy.sh` (tidak ada langkah khusus).
+4. **Cek lokal:** `cd qa-drill/server && PORT=4400 STATIC_DIR=../../public/learn node server.js`, buka `http://localhost:4400/` (aplikasi + API akun). Situs utama: `npm run build` lalu `npm run preview`.
+5. **Deploy** aplikasi statis seperti biasa lewat `./deploy.sh` (tersaji di `learn.naradipta.com` dari `<WEB_ROOT>/learn`). API akun (`qa-drill/server/`) dan Nginx/DNS/TLS subdomain dipasang manual sekali; lihat `qa-drill/server/README.md`. Setelah mengubah kode server: `systemctl restart qa-drill`.
 
-Aturan: jangan menyalin teks silabus, glosarium, atau soal sampel ISTQB; progres pengguna hanya di localStorage (`qa-drill-v1`); teks dirender lewat `QA.h` (textContent), bukan `innerHTML`.
+Aturan: jangan menyalin teks silabus, glosarium, atau soal sampel ISTQB; progres pengguna di localStorage (`qa-drill-v1`) dan, bila masuk akun, disinkronkan ke server; teks dirender lewat `QA.h` (textContent), bukan `innerHTML`.
 
 ## Aturan Konten (kerahasiaan)
 

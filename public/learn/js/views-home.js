@@ -67,8 +67,8 @@
 
     if (QA.backupDue()) {
       root.appendChild(h("div", { class: "card", role: "note" },
-        h("div", null, t("Progres Anda hanya tersimpan di browser ini dan belum dicadangkan dalam 7 hari terakhir.",
-          "Your progress lives only in this browser and has not been backed up in the last 7 days.")),
+        h("div", null, t("Progres Anda hanya tersimpan di browser ini dan belum dicadangkan dalam 7 hari terakhir. Masuk ke akun agar tersinkron otomatis, atau ekspor cadangan.",
+          "Your progress lives only in this browser and has not been backed up in the last 7 days. Sign in to sync automatically, or export a backup.")),
         h("a", { class: "btn", href: "#/settings" }, t("Ekspor cadangan", "Export backup"))));
     }
 

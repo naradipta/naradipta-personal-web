@@ -5,14 +5,16 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { createRequire } from 'module';
-const ORIGIN=(process.env.BASE_URL||'http://localhost:4399').replace(/\/$/,'');
-const B=ORIGIN+'/learn/';
+// SITE_URL = situs utama (astro preview); LEARN_URL = QA Drill di akar subdomain (qa-drill/server dengan STATIC_DIR).
+const ORIGIN=(process.env.SITE_URL||'http://localhost:4399').replace(/\/$/,'');
+const LEARN=(process.env.LEARN_URL||'http://localhost:4400').replace(/\/$/,'');
+const B=LEARN+'/';
 const axeSrc=fs.readFileSync(createRequire(import.meta.url).resolve('axe-core/axe.min.js'),'utf8');
 const TMP=fs.mkdtempSync(path.join(os.tmpdir(),'qa-drill-e2e-'));
 const br=await chromium.launch(); const results=[]; const errs=[];
 const ok=(name,cond,extra='')=>{results.push([cond?'PASS':'FAIL',name,extra]);};
 async function newPage(w=390,scheme='light'){const c=await br.newContext({viewport:{width:w,height:900},colorScheme:scheme,acceptDownloads:true});const p=await c.newPage();
- p.on('pageerror',e=>errs.push(w+scheme+' '+e.message)); p.on('console',m=>{if(m.type()==='error')errs.push(w+scheme+' '+m.text())}); p.on('dialog',d=>d.accept()); return p;}
+ p.on('pageerror',e=>errs.push(w+scheme+' '+e.message)); p.on('console',m=>{if(m.type()==='error'&&!/Failed to load resource.*status of (400|401|409)/.test(m.text()))errs.push(w+scheme+' '+m.text())}); p.on('dialog',d=>d.accept()); return p;}
 
 // ===== 1. aria-live =====
 {
@@ -50,7 +52,7 @@ async function newPage(w=390,scheme='light'){const c=await br.newContext({viewpo
 // ===== 2. axe-core pada semua rute, terang/gelap, 390 & 1100 =====
 for (const [w,scheme] of [[390,'light'],[390,'dark'],[1100,'light'],[1100,'dark']]) {
  const p=await newPage(w,scheme);
- for (const r of ['dashboard','study','study/ch4','practice','mock','cards','plan','settings']) {
+ for (const r of ['dashboard','study','study/ch4','practice','mock','cards','plan','settings','account']) {
   await p.goto(B+'#/'+r); await p.waitForTimeout(200);
   await p.evaluate(axeSrc);
   const v=await p.evaluate(async()=>{const x=await axe.run('body',{runOnly:['wcag2a','wcag2aa','best-practice']});return x.violations.map(a=>({id:a.id,impact:a.impact,n:a.nodes.length,t:a.nodes[0].target.join(' ')}));});
@@ -82,8 +84,7 @@ for (const [w,scheme] of [[390,'light'],[390,'dark'],[1100,'light'],[1100,'dark'
  const before=await p.evaluate(()=>Object.keys(JSON.parse(localStorage.getItem('qa-drill-v1')).q).length);
  await p.reload(); await p.goto(B+'#/mock');
  ok('progress persists after reload', (await p.evaluate(()=>Object.keys(JSON.parse(localStorage.getItem('qa-drill-v1')).q).length))===before, String(before));
- ok('deep link /learn/#/mock renders', /Mock Exam/.test(await p.locator('#app').innerText()));
- ok('trailing-slash-less /learn redirects OK', (await p.request.get(ORIGIN+'/learn')).ok());
+ ok('deep link /#/mock renders', /Mock Exam/.test(await p.locator('#app').innerText()));
  // mock lengkap: jawab separuh, serahkan
  await p.getByRole('button',{name:/Mulai/i}).click(); await p.waitForTimeout(200);
  for(let i=0;i<20;i++){ await p.locator('#app .opt').nth(i%4).click(); await p.getByRole('button',{name:/Berikutnya/}).click(); }
@@ -112,7 +113,7 @@ for (const [w,scheme] of [[390,'light'],[390,'dark'],[1100,'light'],[1100,'dark'
  // kartu istilah
  await p.goto(B+'#/cards'); await p.waitForTimeout(200); ok('cards route', (await p.locator('#app').innerText()).length>30);
  // link kembali
- ok('back link to site', (await p.locator('a.back').getAttribute('href'))==='/');
+ ok('back link to site', (await p.locator('a.back').getAttribute('href'))==='https://naradipta.com/');
  // storage bentrok: key milik situs
  ok('only qa-drill key in localStorage', JSON.stringify(await p.evaluate(()=>Object.keys(localStorage)))==='["qa-drill-v1"]');
 }
@@ -130,15 +131,50 @@ for (const [w,scheme] of [[390,'light'],[390,'dark'],[1100,'light'],[1100,'dark'
  await p.goto(B+'#/dashboard'); ok('reminder hidden after export', !/belum dicadangkan/.test(await p.locator('#app').innerText()));
 }
 
+// ===== 3c. Akun + sinkronisasi lintas perangkat =====
+{
+ const email='e2e'+Date.now()+'@example.com', pass='kata-sandi-e2e-1';
+ const A=await newPage(390,'light'); await A.goto(B+'#/account'); await A.waitForSelector('#acct-email');
+ // salah password / email tidak valid
+ await A.fill('#acct-email',email); await A.fill('#acct-pw','x'); await A.getByRole('button',{name:'Masuk',exact:true}).click();
+ await A.waitForSelector('[role=alert]:not(:empty)'); ok('invalid password shows an alert', /8-200/.test(await A.locator('[role=alert]').innerText()));
+ await A.fill('#acct-pw','salah-salah-1'); await A.getByRole('button',{name:'Masuk',exact:true}).click();
+ await A.waitForFunction(()=>/salah/i.test(document.querySelector('[role=alert]').textContent)); ok('wrong credentials message', true);
+ await A.evaluate(axeSrc); ok('axe on account form', (await A.evaluate(async()=>(await axe.run('body',{runOnly:['wcag2a','wcag2aa']})).violations.length))===0);
+ // daftar (tanpa verifikasi) -> langsung masuk dan jawab beberapa soal di perangkat A
+ await A.getByRole('button',{name:'Buat akun baru'}).click(); await A.fill('#acct-email',email); await A.fill('#acct-pw',pass);
+ await A.getByRole('button',{name:'Daftar'}).click(); await A.waitForURL(/#\/dashboard/);
+ ok('register logs in without verification', await A.evaluate(()=>QA.account.status==='in'));
+ await A.evaluate(()=>{QA.store.recordMany([{id:QA.questions[0].id,correct:true,conf:'sure'},{id:QA.questions[1].id,correct:false,conf:'unsure'}]);});
+ await A.waitForFunction(()=>QA.account.lastSync&&!QA.account.dirty,null,{timeout:8000}); ok('progress pushed to server', true);
+ // perangkat B (konteks bersih): login -> progres muncul
+ const Bp=await newPage(390,'light'); await Bp.goto(B+'#/account'); await Bp.waitForSelector('#acct-email');
+ await Bp.fill('#acct-email',email.toUpperCase()); await Bp.fill('#acct-pw',pass); await Bp.getByRole('button',{name:'Masuk',exact:true}).click();
+ await Bp.waitForFunction(()=>QA.account.status==='in'&&Object.keys(QA.store.state.q).length>=2,null,{timeout:8000}); ok('second device receives progress after login', true);
+ // kedua perangkat bekerja bersamaan pada soal berbeda -> tergabung, tidak saling menimpa
+ await A.evaluate(()=>QA.store.recordMany([{id:QA.questions[2].id,correct:true,conf:'sure'}]));
+ await Bp.evaluate(()=>QA.store.recordMany([{id:QA.questions[3].id,correct:true,conf:'sure'}]));
+ await A.waitForFunction(()=>!QA.account.dirty&&!QA.account.syncing,null,{timeout:8000}); await Bp.waitForFunction(()=>!QA.account.dirty&&!QA.account.syncing,null,{timeout:8000});
+ await A.evaluate(()=>document.dispatchEvent(new Event('visibilitychange'))); await Bp.evaluate(()=>document.dispatchEvent(new Event('visibilitychange')));
+ const need=[2,3];
+ for (const pg of [A,Bp]) await pg.waitForFunction(ids=>ids.every(i=>QA.store.state.q[QA.questions[i].id]),need,{timeout:8000});
+ ok('concurrent progress from two devices is merged', true);
+ // keluar: salinan lokal dihapus (perangkat bersama), sesi dicabut di server
+ await Bp.goto(B+'#/account'); await Bp.getByRole('button',{name:'Keluar'}).click();
+ await Bp.waitForFunction(()=>QA.account.status==='out'); ok('logout clears local progress', await Bp.evaluate(()=>Object.keys(QA.store.state.q).length===0));
+ ok('server session revoked after logout', (await Bp.evaluate(()=>fetch('/api/me').then(r=>r.json())).then(j=>j.email))===null);
+ ok('cookie is HttpOnly (not readable from JS)', !(await A.evaluate(()=>document.cookie)).includes('qd_session'));
+}
+
 // ===== 4. Situs utama =====
 {
  const p=await newPage(1100,'light'); await p.goto(ORIGIN+'/'); 
- ok('site nav has QA Drill link', (await p.locator('.site-header__nav a',{hasText:'QA Drill'}).getAttribute('href'))==='/learn/');
+ ok('site nav has QA Drill link', (await p.locator('.site-header__nav a',{hasText:'QA Drill'}).getAttribute('href'))==='https://learn.naradipta.com/');
  await p.goto(ORIGIN+'/projects/qa-drill'); ok('project page renders', /QA Drill/.test(await p.title())||/QA Drill/.test(await p.locator('h1').innerText()));
  const dev=['CLAUDE.md','README.md','tests/smoke.test.js','tools/build-data.py','questions/istqb.json','package.json'];
- for(const f of dev) ok('not published: /learn/'+f,(await p.request.get(ORIGIN+'/learn/'+f)).status()===404);
- const h=await p.request.get(ORIGIN+'/learn/'); const body=await h.text();
- ok('learn is indexable (no noindex)', !/noindex/i.test(body)); ok('learn has canonical + description', /rel="canonical"/.test(body)&&/name="description"/.test(body));
+ for(const f of dev) ok('not published: /'+f,(await p.request.get(LEARN+'/'+f)).status()===404);
+ const h=await p.request.get(LEARN+'/'); const body=await h.text();
+ ok('learn is indexable (no noindex)', !/noindex/i.test(body)); ok('learn has canonical to subdomain + description', /rel="canonical" href="https:\/\/learn\.naradipta\.com\/"/.test(body)&&/name="description"/.test(body));
 }
 console.log(results.map(r=>r.join(' | ')).join('\n')); console.log('\nPASS',results.filter(r=>r[0]==='PASS').length,'FAIL',results.filter(r=>r[0]==='FAIL').length); console.log('console/page errors:',errs);
 await br.close();

@@ -86,7 +86,7 @@
   function buildHeader(active) {
     var head = document.getElementById("topbar");
     while (head.firstChild) head.removeChild(head.firstChild);
-    head.appendChild(h("a", { class: "back", href: "/" }, QA.t("\u2190 naradipta.com", "\u2190 naradipta.com")));
+    head.appendChild(h("a", { class: "back", href: "https://naradipta.com/" }, QA.t("\u2190 naradipta.com", "\u2190 naradipta.com")));
     head.appendChild(h("div", { class: "brand" }, "QA Drill"));
     var nav = h("nav", { class: "nav" });
     QA.nav.forEach(function (n) {
@@ -125,6 +125,7 @@
   // Pengumuman untuk pembaca layar (aria-live) tanpa mengubah tampilan.
   // Ingatkan ekspor bila sudah ada progres berarti dan cadangan terakhir lebih dari 7 hari (atau belum pernah).
   QA.backupDue = function () {
+    if (QA.account && QA.account.status === "in") return false; // sudah tersinkron ke akun
     var seen = Object.keys(QA.store.state.q).length;
     var last = QA.store.state.lastExport;
     return seen >= 20 && (!last || Date.now() - last > 7 * QA.dayMs);

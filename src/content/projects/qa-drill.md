@@ -5,7 +5,7 @@ status: "completed"
 featured: true
 order: 7
 tags: ["JavaScript", "ISTQB CTFL", "Spaced Repetition", "AI-Assisted"]
-demo: "https://naradipta.com/learn/"
+demo: "https://learn.naradipta.com/"
 showDemo: true
 ---
 
@@ -25,14 +25,16 @@ myself.
 
 ## Solution
 
-QA Drill is a static, dependency-free web app (plain HTML, CSS, and
-JavaScript) with no backend. It maps the CTFL learning objectives to
+QA Drill is a dependency-free web app (plain HTML, CSS, and JavaScript) served
+from its own subdomain. The learning app is static; an optional small Node API
+adds email-and-password accounts so progress syncs across devices. It maps the CTFL learning objectives to
 original notes and bilingual questions (multiple choice, true/false, short
 answer), and offers spaced-repetition practice, a timed 40-question mock
 exam with per-chapter distribution, a term flashcard deck, and a study plan
 counted back from the exam date. Short answers are graded by keyword
-matching with no AI, and the final judgment stays with the learner. All
-progress lives only in the learner's browser, with export and import.
+matching with no AI, and the final judgment stays with the learner. 
+Progress is stored in the browser and, for signed-in learners, merged across
+devices without losing work from either one; export and import remain available.
 All content is original and links to the official ISTQB syllabus.
 
 ## Impact

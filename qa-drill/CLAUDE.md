@@ -1,10 +1,10 @@
 # QA Drill — aplikasi belajar QA Engineer dan ISTQB CTFL
 
 ## Tujuan
-Membantu satu pengguna (QA Engineer, 5 tahun pengalaman, ingin lulus ISTQB CTFL dan siap interview QA/SDET) menutup celah pengetahuan teori dan praktik. **ISTQB didahulukan**, interview/praktik menyusul. Dwibahasa Indonesia/English. Berjalan lokal tanpa backend dan tanpa AI.
+Membantu satu pengguna (QA Engineer, 5 tahun pengalaman, ingin lulus ISTQB CTFL dan siap interview QA/SDET) menutup celah pengetahuan teori dan praktik. **ISTQB didahulukan**, interview/praktik menyusul. Dwibahasa Indonesia/English. Berjalan lokal tanpa AI; akun/sinkronisasi lintas perangkat bersifat opsional lewat `server/` (aplikasi tetap jalan tanpa server).
 
 ## Lokasi
-- **Aplikasi** (yang dilayani di `/learn/`): `public/learn/` — hanya `index.html`, `styles.css`, `js/`, `data/`.
+- **Aplikasi** (dilayani di akar `learn.naradipta.com`): `public/learn/` — hanya `index.html`, `styles.css`, `js/`, `data/`.
 - **Sumber dan alat pengembang** (tidak ikut terbit): folder ini (`qa-drill/`) — `questions/`, `tools/`, `tests/`, dokumen ini. Semua perintah di bawah dijalankan dari folder ini.
 
 ## Menjalankan
@@ -22,11 +22,13 @@ public/learn/                    (aplikasi, ikut terbit)
   js/grade.js        penilaian (fungsi murni, diuji dengan Node)
   js/store.js        localStorage + Leitner (naik box hanya bila jatuh tempo; dipengaruhi keyakinan) + impor tervalidasi
   js/core.js         bahasa, router hash, fokus/aria-live, validasi data (soal rusak dilewati + peringatan)
+  js/account.js      login + sinkronisasi (S.onSave -> PUT /api/progress; S.merge saat konflik); bebas server bila /api tak ada
   js/views-*.js      Beranda/Belajar/Rencana/Pengaturan, Latihan (keyakinan, relearn, interleaving), Mock Exam + Kartu
 qa-drill/                        (sumber dan alat, tidak terbit)
   questions/*.json   sumber soal (edit di sini)
   tools/build-data.py gabungkan questions/*.json -> public/learn/data/questions.js; memeriksa LO, K-level, bias panjang opsi
-  tests/             grade.test.js (Node murni), smoke.test.js (butuh jsdom)
+  server/            API login + sinkronisasi (Node >= 22.13, SQLite, tanpa dependency); lihat server/README.md
+  tests/             grade/data/server.test.js (Node murni), smoke.test.js (butuh jsdom), e2e/ (Playwright + axe)
 ```
 
 ## Alur kerja menambah/mengubah soal
