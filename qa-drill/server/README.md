@@ -45,3 +45,11 @@ PORT=4400 STATIC_DIR=../../public/learn node server.js   # buka http://localhost
 
 ## Tes
 `node tests/server.test.js` (dari `qa-drill/`) menguji pendaftaran, login, sesi, konflik versi, CSRF, dan pembatas laju.
+
+## Rencana berikutnya: verifikasi email (belum dikerjakan)
+Saat ini pendaftaran tanpa verifikasi (keputusan sementara). Bila nanti ditambahkan, yang dibutuhkan:
+- Pengiriman email lewat SMTP atau layanan transaksional (mis. Resend, Postmark, Amazon SES) dengan pengirim `no-reply@naradipta.com`.
+- Rekaman DNS `SPF`, `DKIM`, dan `DMARC` untuk `naradipta.com` agar email tidak masuk spam.
+- Kolom `verified_at` di tabel `users`, token verifikasi sekali pakai berkedaluwarsa, dan tautan reset password
+  (menggantikan reset manual lewat `admin.js`).
+- Kredensial layanan email disimpan sebagai variabel lingkungan di VPS, bukan di repo.
