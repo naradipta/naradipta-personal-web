@@ -257,6 +257,35 @@ Lihat `deploy.sh` untuk menyesuaikan `SRC_DIR`, `WEB_ROOT`, atau `BRANCH`.
   domainmu, lalu `sudo certbot --nginx` untuk HTTPS gratis (Let's Encrypt).
   Kode situs tidak berubah.
 
+### Deploy dengan Docker (alternatif `deploy.sh`, memudahkan pindah server)
+
+`compose.yaml` menjalankan semuanya sekaligus: situs statis (Nginx), admin, dan API QA Drill.
+Situs publik tetap HTML statis; admin hanya menulis ke volume `webroot` yang dibaca Nginx.
+
+| Service | Isi | Data |
+|---|---|---|
+| `web` | Nginx: `naradipta.com`, `/admin/`, `learn.naradipta.com` (konfigurasi: `docker/nginx-web.conf`) | membaca volume `webroot` |
+| `admin` | server admin + `astro build` | volume `admin-data` (**cadangkan**), menulis `webroot` |
+| `qa-drill` | API login + sinkronisasi | volume `qa-data` (**cadangkan**, berisi SQLite) |
+
+Hanya `admin-data` dan `qa-data` yang perlu dicadangkan; `webroot` dibangun ulang dari keduanya.
+
+```bash
+docker compose up -d --build                                                    # jalankan (pertama kali webroot dibangun otomatis)
+docker compose run --rm --no-deps admin node admin/cli.js set-admin <username>  # buat akun admin (sekali)
+docker compose run --rm --no-deps admin sh docker/rebuild.sh                    # bangun ulang situs setelah kode situs berubah
+```
+
+`web` hanya membuka `127.0.0.1:8080` (ubah dengan `WEB_PORT`). TLS tetap ditangani Nginx/Caddy di host:
+satu blok yang meneruskan ketiga domain ke port itu (contoh: `docker/host-nginx.conf.example`).
+
+**Pindah server:** pasang Docker, ambil repo, pulihkan volume `admin-data` dan `qa-data` dari cadangan, `docker compose up -d --build`,
+pasang konfigurasi Nginx/TLS host, lalu ubah DNS. Volume yang dipulihkan sudah berisi situs, jadi tidak dibangun ulang.
+
+Catatan: setelah kode situs (komponen/layout) berubah, jalankan `docker compose up -d --build` lalu `rebuild.sh` di atas;
+perubahan konten dari admin tidak perlu itu. Volume `admin-data` dipasang di `/app/.admin-data` (bukan `/data`) dengan sengaja,
+agar `astro build` tidak gagal dengan `EXDEV`; alasannya ada di komentar `Dockerfile` (target `admin`).
+
 ### Alternatif (kalau suatu saat mau lepas dari VPS)
 
 Karena outputnya statis, situs ini juga bisa dipindah ke **Vercel / Netlify**

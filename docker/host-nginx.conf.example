@@ -1,0 +1,22 @@
+# CONTOH konfigurasi Nginx di HOST untuk mode Docker (compose.yaml). Dipasang manual sekali di
+# /etc/nginx/sites-available/, lalu: certbot --nginx -d naradipta.com -d www.naradipta.com -d learn.naradipta.com
+#
+# Nginx host hanya menghentikan TLS dan meneruskan SEMUA domain ke satu port (WEB_PORT, bawaan 8080).
+# Pemisahan naradipta.com / /admin/ / learn.naradipta.com dilakukan oleh container `web` (docker/nginx-web.conf).
+# Header Host dan X-Real-IP wajib diteruskan: dipakai untuk memilih situs dan batas laju per IP.
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name naradipta.com www.naradipta.com learn.naradipta.com;
+
+    client_max_body_size 12m;   # unggahan foto/PDF di /admin/
+
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 120s;
+    }
+}
