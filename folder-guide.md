@@ -2,15 +2,18 @@
 
 > `dist/` is **generated output** from `npm run build`. Never edit it — it gets wiped every build. Everything below lives in `src/` or `public/`.
 
-## Want to change text/data? → `src/config/site.ts`
+## Want to change text/data? → the admin page (`/admin`), or `src/config/site.json` locally
 
 The single source of truth for everything personal: your name, role, tagline,
 About text, quote, "What I Do" cards, experience history, skills list, and
 contact/availability info. Almost every text edit you want to make (except
 project write-ups and gallery photos) happens here.
 
+In production, edit it through the admin page (draft → preview → publish). Once admin is in use,
+the repo files are only the starting values; see `admin/README.md`.
+
 ```
-src/config/site.ts
+src/config/site.json      (types and loader: site.ts)
 ```
 
 ## Want to add/edit a case study? → `src/content/projects/`
@@ -39,7 +42,7 @@ src/content/gallery/photo-01.md ... photo-09.md    ← one entry per photo
 
 ## Want to change your profile photo? → `public/profile/avatar.jpg`
 
-Replace the file (same name), or change the path in `site.ts`'s `avatar` field
+Replace the file (same name), or change the path in `site.json`'s `avatar` field (or upload a new photo in the admin page)
 if you rename it.
 
 ## Want to change how a section looks (not the words)? → `src/components/`
@@ -90,7 +93,7 @@ ever want a different section order on the landing page.
 
 | I want to... | Edit this |
 |---|---|
-| Change my bio, tagline, skills, experience text | `src/config/site.ts` |
+| Change my bio, tagline, skills, experience text | admin page, or `src/config/site.json` locally |
 | Add a new case study | new file in `src/content/projects/` |
 | Add a new gallery photo | image in `public/gallery/` + new `.md` in `src/content/gallery/` |
 | Change a section's colors/spacing/layout | the matching file in `src/components/` |

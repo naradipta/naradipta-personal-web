@@ -23,6 +23,7 @@ set -euo pipefail
 SRC_DIR="/var/www/naradipta-personal-web"   # lokasi clone repo
 WEB_ROOT="/var/www/naradipta"      # root yang disajikan Nginx
 BRANCH="main"                      # branch yang dideploy
+ADMIN_DATA="${ADMIN_DATA_DIR:-/var/lib/naradipta-admin}"   # data server admin (lihat admin/README.md)
 
 # --- Guard: SRC_DIR dan WEB_ROOT tidak boleh sama ---
 # Kalau sama, langkah rsync --delete di bawah akan menghapus repo Git itu
@@ -50,8 +51,19 @@ echo "==> npm ci"
 npm ci
 
 # 3. Build ke ./dist
+#    Bila admin sudah dipakai, konten yang TERBIT di admin (live/) adalah sumber kebenaran,
+#    bukan src/content: tanpa ini deploy akan menimpa hasil edit admin dengan isi repo.
+if [ -d "$ADMIN_DATA/live" ]; then
+  echo "==> memakai konten admin: $ADMIN_DATA/live"
+  export CONTENT_DIR="$ADMIN_DATA/live"
+fi
 echo "==> npm run build"
 npm run build
+
+# Foto/PDF unggahan admin bukan bagian repo; salin agar ikut terbit.
+if [ -d "$ADMIN_DATA/uploads" ]; then
+  cp -R "$ADMIN_DATA/uploads" dist/uploads
+fi
 
 # 4. Salin hasil build ke web root
 #    --delete agar file lama yang sudah tidak ada ikut terhapus.

@@ -13,9 +13,15 @@ dan AI-assisted QA.
 Situs utama (naradipta.com) **content-first dan statis**: tidak ada database, backend, atau
 autentikasi. Konten (studi kasus / project) adalah warga kelas satu.
 
-**Satu pengecualian terdokumentasi:** QA Drill di `learn.naradipta.com` punya akun email + password
-opsional dan sinkronisasi progres lewat API Node kecil + SQLite (`qa-drill/server/`). Pengecualian ini
-berlaku HANYA untuk QA Drill; situs utama tetap tanpa backend. Keputusan pemilik repo.
+**Dua pengecualian terdokumentasi (keputusan pemilik repo):**
+1. QA Drill di `learn.naradipta.com` punya akun email + password opsional dan sinkronisasi progres lewat
+   API Node kecil + SQLite (`qa-drill/server/`).
+2. **Admin** di `naradipta.com/admin` (`admin/`): server Node kecil tanpa dependency npm untuk mengedit
+   konten (foto, deskripsi, pengalaman, skills, project, galeri) lewat browser dengan alur draft → preview → publish.
+   Situs publik TETAP statis: admin hanya menulis konten ke `ADMIN_DATA_DIR` (di luar repo) lalu menjalankan
+   `astro build` dan menyalin hasilnya ke web root. Detail di `admin/README.md`.
+
+Selain dua itu, situs utama tetap tanpa backend/database.
 
 ## Tech Stack
 
@@ -34,6 +40,9 @@ Kalau sebuah fitur bisa dikerjakan dengan HTML statis, kerjakan dengan HTML stat
 1. **Data terpisah dari tampilan.** Konten ada di `src/content/`, konfigurasi
    situs (nama, link sosial, kontak, skills) ada di `src/config/site.ts`.
    Komponen tidak boleh hardcode data yang seharusnya ada di config atau content.
+   Build dengan env `CONTENT_DIR` (dipakai admin dan `deploy.sh`) membaca `site.json`, `projects/`, dan
+   `gallery/` dari folder itu, bukan dari repo. Setelah admin dipakai, folder `live/` di `ADMIN_DATA_DIR`
+   adalah sumber kebenaran konten di produksi; `src/content/` dan `site.json` hanya nilai awal/cadangan.
 
 2. **Nambah project = nambah satu file `.md`.** Jangan pernah membuat proses
    penambahan konten yang mengharuskan menyentuh komponen. Kalau menambah project
@@ -55,13 +64,16 @@ Kalau sebuah fitur bisa dikerjakan dengan HTML statis, kerjakan dengan HTML stat
 ```
 public/
 └── learn/                   # QA Drill: aplikasi belajar mandiri (HTML/CSS/JS klasik, tanpa build) → learn.naradipta.com (akar subdomain)
+admin/                       # server admin (Node, tanpa dependency npm): login, edit draft, preview, publish → naradipta.com/admin
+                             # data hasil edit disimpan di ADMIN_DATA_DIR (luar repo); detail di admin/README.md
 qa-drill/                    # sumber dan alat QA Drill (soal *.json, build-data.py, tes); TIDAK terbit
                              # server/ = API login + sinkronisasi (Node + SQLite, tanpa dependency npm), dijalankan manual di VPS
                              # Pengecualian terdokumentasi: QA Drill memakai JS vanilla sendiri (bukan Astro/React)
                              # karena berupa aplikasi interaktif mandiri; detail di qa-drill/CLAUDE.md
 src/
 ├── config/
-│   └── site.ts              # nama, tagline, kontak, link sosial, daftar skills
+│   ├── site.ts              # tipe + pemuat data situs
+│   └── site.json            # nilai bawaan: nama, tagline, kontak, link sosial, skills, pengalaman
 ├── content/
 │   ├── config.ts            # schema Content Collections (Zod)
 │   └── projects/            # SATU file .md per studi kasus
@@ -138,7 +150,8 @@ Jangan menaruh langkah konfigurasi server ke dalam kode aplikasi.
 
 ## Yang TIDAK boleh dilakukan
 
-- Menambahkan CMS, database, atau backend ke situs utama (satu-satunya pengecualian: `qa-drill/server/`, lihat atas)
+- Menambahkan CMS, database, atau backend ke situs utama (satu-satunya pengecualian: `qa-drill/server/` dan `admin/`, lihat atas)
+- Membuat halaman publik bergantung pada server admin (situs publik harus tetap HTML statis)
 - Hardcode daftar project di dalam komponen (harus dari Content Collection)
 - Membocorkan detail internal perusahaan
 - Mengubah struktur folder tanpa memperbarui file ini

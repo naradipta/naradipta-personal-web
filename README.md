@@ -70,7 +70,8 @@ npm run preview
 ├── public/                   # aset statis (gambar, GIF demo, favicon, CV.pdf)
 └── src/
     ├── config/
-    │   └── site.ts           # nama, tagline, kontak, link sosial, daftar skills
+    │   ├── site.ts           # tipe + pemuat data situs
+    │   └── site.json         # nilai bawaan: nama, tagline, kontak, link sosial, skills, pengalaman
     ├── content/
     │   ├── config.ts         # schema Content Collections (validasi frontmatter)
     │   └── projects/         # SATU file .md per studi kasus
@@ -93,7 +94,7 @@ npm run preview
 ```
 
 **Prinsip inti:** data terpisah dari tampilan. Konten ada di `src/content/`,
-konfigurasi situs di `src/config/site.ts`. Komponen hanya menampilkan, tidak
+konfigurasi situs di `src/config/site.json` (tipe di `site.ts`). Komponen hanya menampilkan, tidak
 menyimpan data.
 
 ---
@@ -145,9 +146,13 @@ Recruiter memindai dengan pola ini; konsistensi bikin situs terasa profesional.
 
 ## Mengubah Info Pribadi
 
-Semua data pribadi ada di satu tempat: `src/config/site.ts`.
+Semua data pribadi ada di satu tempat: `src/config/site.json`.
 Ganti nama, tagline, email, nomor WhatsApp, link LinkedIn/GitHub, dan daftar skills
 di sana — semua komponen ikut terupdate.
+
+**Di produksi, ubah lewat halaman admin** (`naradipta.com/admin`, lihat `admin/README.md`): draft → preview → publish.
+Setelah admin dipakai, `site.json` dan `src/content/` di repo hanya nilai awal; sumber kebenaran produksi
+ada di `/var/lib/naradipta-admin/live` dan `deploy.sh` membangun dari sana.
 
 ---
 

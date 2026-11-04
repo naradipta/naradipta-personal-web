@@ -1,0 +1,34 @@
+# CONTOH unit systemd: /etc/systemd/system/naradipta-admin.service
+# (pasang manual, lalu: systemctl enable --now naradipta-admin)
+#
+# User = pemilik folder repo (yang menjalankan deploy.sh). Admin menjalankan `astro build` di repo itu
+# (menulis .astro/ dan node_modules/.vite) dan menyalin hasilnya ke WEB_ROOT, jadi user ini harus
+# bisa menulis ke WEB_ROOT:  sudo chown -R <user>: /var/www/naradipta
+[Unit]
+Description=Admin naradipta.com (edit, preview, publish)
+After=network.target
+
+[Service]
+User=CHANGE_ME_DEPLOY_USER
+WorkingDirectory=/var/www/naradipta-personal-web/admin
+Environment=NODE_ENV=production
+Environment=PORT=4500
+Environment=HOST=127.0.0.1
+Environment=TRUST_PROXY=1
+Environment=ALLOWED_ORIGIN=https://naradipta.com
+Environment=PUBLIC_PATH=/admin
+Environment=ADMIN_DATA_DIR=/var/lib/naradipta-admin
+Environment=REPO_DIR=/var/www/naradipta-personal-web
+Environment=WEB_ROOT=/var/www/naradipta
+Environment=ASTRO_TELEMETRY_DISABLED=1
+Environment=XDG_CONFIG_HOME=/var/lib/naradipta-admin/.config
+ExecStart=/usr/bin/node server.js
+Restart=on-failure
+# Hardening dasar
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/naradipta-admin /var/www/naradipta /var/www/naradipta-personal-web
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

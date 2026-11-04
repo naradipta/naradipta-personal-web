@@ -13,7 +13,7 @@ QA/SDET yang kuat di automation, tracker validation, dan AI-assisted QA.
 
 **Batasan yang membentuk desain:**
 
-- Dirawat oleh satu orang lewat kode + Git (bukan lewat CMS/admin panel).
+- Dirawat oleh satu orang lewat kode + Git, dan sekarang juga lewat admin kecil di `/admin` (lihat `admin/README.md`). Admin hanya menghasilkan konten lalu membangun ulang situs statis; halaman publik tidak bergantung padanya.
 - Konten sering bertambah (project baru), tampilan jarang berubah.
 - Sebagian besar pekerjaan asli bersifat rahasia → yang dipamerkan adalah
   studi kasus + repo demo yang aman.
@@ -75,13 +75,13 @@ src/content/projects/*.md   →  getCollection('projects')  →  filter/sort
 ## 4. Lapisan Konfigurasi
 
 Data pribadi (nama, tagline, kontak, sosial, skills) TIDAK disebar di komponen.
-Semuanya di `src/config/site.ts` sebagai satu objek bertipe. Alasan: mengganti
+Semuanya di `src/config/site.json` (tipe dan pemuat di `site.ts`) sebagai satu objek bertipe. Di produksi isinya diedit lewat admin; build dengan env `CONTENT_DIR` membaca salinan di folder data admin. Alasan: mengganti
 nomor WhatsApp atau menambah skill = edit satu tempat, dan tidak ada risiko
 kelupaan meng-update salah satu komponen.
 
 Pembagian tanggung jawab:
 
-- `src/config/site.ts` → data tentang **orangnya** (jarang berubah).
+- `src/config/site.json` → data tentang **orangnya** (jarang berubah).
 - `src/content/projects/` → data tentang **karyanya** (sering bertambah).
 - `src/components/` → **cara menampilkan** data (jarang berubah).
 
