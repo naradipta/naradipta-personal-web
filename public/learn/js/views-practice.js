@@ -86,7 +86,13 @@
   function setupView(msg) {
     var root = h("div", { class: "page" });
     root.appendChild(h("h1", null, t("Latihan soal", "Practice")));
-    var scope = h("select", null, SCOPES.map(function (s) { return h("option", { value: s[0] }, t(s[1], s[2]) + " (" + poolFor({ scope: s[0] }).length + ")"); }));
+    function opt(s) { return h("option", { value: s[0] }, t(s[1], s[2]) + " (" + poolFor({ scope: s[0] }).length + ")"); }
+    function grp(label, list) { return h("optgroup", { label: label }, list.map(opt)); }
+    var isIstqb = function (s) { return s[0] === "istqb" || /^ch\d$/.test(s[0]); };
+    var scope = h("select", null,
+      opt(SCOPES[0]), opt(SCOPES[SCOPES.length - 1]),
+      grp(t("Jalur 1 \u00b7 ISTQB CTFL", "Path 1 \u00b7 ISTQB CTFL"), SCOPES.filter(isIstqb)),
+      grp(t("Jalur 2 \u00b7 Bekal karir QA", "Path 2 \u00b7 QA career toolkit"), SCOPES.filter(function (s) { return s[0].indexOf("topic:") === 0; })));
     var level = h("select", null, [["", "Semua level", "All levels"], ["1", "Level 1 (dasar)", "Level 1 (basic)"], ["2", "Level 2 (menengah)", "Level 2 (intermediate)"], ["3", "Level 3 (lanjut)", "Level 3 (advanced)"]].map(function (o) { return h("option", { value: o[0] }, t(o[1], o[2])); }));
     var type = h("select", null, [["", "Semua tipe", "All types"], ["mcq", "Pilihan ganda", "Multiple choice"], ["tf", "Benar/Salah", "True/False"], ["short", "Isian singkat", "Short answer"]].map(function (o) { return h("option", { value: o[0] }, t(o[1], o[2])); }));
     var order = h("select", null, [["smart", "Cerdas (jatuh tempo, belum dilihat, lalu sisanya; topik diselang-seling)", "Smart (due, unseen, then the rest; topics interleaved)"], ["random", "Acak", "Random"]].map(function (o) { return h("option", { value: o[0] }, t(o[1], o[2])); }));
@@ -232,7 +238,7 @@
     var item = s.items[s.i];
     var root = h("div", { class: "page" });
     root.appendChild(h("div", { class: "row" },
-      h("span", { class: "muted" }, t("Soal ", "Question ") + (s.i + 1) + "/" + s.items.length),
+      h("h1", { class: "sess-h" }, t("Soal ", "Question ") + (s.i + 1) + "/" + s.items.length),
       h("button", { class: "btn small", onclick: function () { session = null; QA.render(); } }, t("Akhiri", "End"))));
     root.appendChild(h("div", { class: "bar" }, h("span", { style: "width:" + QA.pct(s.i, s.items.length) + "%" })));
     var card = h("div", { class: "card" });

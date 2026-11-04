@@ -8,15 +8,18 @@
   QA.L = function (o) { return o ? (o[S.state.lang] || o.en || o.id || "") : ""; };
 
   QA.routes = {};
+  // [rute, label ID, label EN, ikon]. Sidebar (desktop) menampilkan semuanya; tab bar (mobile) hanya 4 utama + "Lainnya".
   QA.nav = [
-    ["dashboard", "Beranda", "Home"],
-    ["study", "Belajar", "Study"],
-    ["practice", "Latihan", "Practice"],
-    ["mock", "Mock Exam", "Mock Exam"],
-    ["cards", "Kartu Istilah", "Glossary Cards"],
-    ["plan", "Rencana", "Plan"],
-    ["settings", "Pengaturan", "Settings"]
+    ["dashboard", "Beranda", "Home", "home"],
+    ["study", "Materi", "Study material", "book", "Materi", "Material"],
+    ["practice", "Latihan", "Practice", "target"],
+    ["mock", "Mock Exam", "Mock Exam", "clock"],
+    ["cards", "Kartu Istilah", "Glossary Cards", "layers"],
+    ["plan", "Rencana", "Plan", "calendar"],
+    ["community", "Komunitas", "Community", "users"],
+    ["settings", "Pengaturan", "Settings", "sliders"]
   ];
+  QA.navMore = ["more", "cards", "plan", "community", "account", "settings"]; // rute yang menyalakan tab "Lainnya"
 
   QA.go = function (hash) {
     if (window.location.hash === "#/" + hash) QA.render();
@@ -61,6 +64,17 @@
     return "learning";
   };
 
+  // Hari beruntun (streak) dari riwayat lokal: sesi latihan dan mock exam. Hari ini yang belum belajar tidak memutus streak.
+  QA.streak = function () {
+    var days = {};
+    S.state.history.concat(S.state.mocks).forEach(function (e) { if (e && e.t) days[QA.dateStr(new Date(e.t))] = 1; });
+    S.state.days.forEach(function (d) { days[d] = 1; });
+    var n = 0, d = new Date();
+    if (!days[QA.dateStr(d)]) d.setDate(d.getDate() - 1);
+    while (days[QA.dateStr(d)]) { n++; d.setDate(d.getDate() - 1); }
+    return n;
+  };
+
   QA.dueQuestions = function () {
     return QA.questions.filter(function (q) { return S.isDue(S.state.q[q.id]); });
   };
@@ -83,27 +97,76 @@
     return { name: parts[0] || "dashboard", arg: parts.slice(1).join("/") };
   }
 
-  function buildHeader(active) {
-    var head = document.getElementById("topbar");
-    while (head.firstChild) head.removeChild(head.firstChild);
-    head.appendChild(h("a", { class: "back", href: "https://naradipta.com/" }, QA.t("\u2190 naradipta.com", "\u2190 naradipta.com")));
-    head.appendChild(h("div", { class: "brand" }, "QA Drill"));
-    var nav = h("nav", { class: "nav" });
-    QA.nav.forEach(function (n) {
-      nav.appendChild(h("a", { href: "#/" + n[0], class: n[0] === active ? "active" : "" }, QA.t(n[1], n[2])));
-    });
-    head.appendChild(nav);
-    head.appendChild(h("button", {
-      class: "lang", title: "Language",
+  function clear(el) { while (el.firstChild) el.removeChild(el.firstChild); return el; }
+  function langToggle(cls) {
+    return h("button", {
+      class: "lang " + (cls || ""), type: "button", "aria-label": QA.t("Ganti bahasa ke English", "Switch language to Indonesian"),
       onclick: function () { S.state.lang = S.state.lang === "id" ? "en" : "id"; S.save(); QA.render(); }
-    }, S.state.lang === "id" ? "ID | en" : "id | EN"));
+    }, h("b", null, S.state.lang === "id" ? "ID" : "EN"), h("span", { class: "lang-alt" }, S.state.lang === "id" ? " / EN" : " / ID"));
   }
+  QA.langToggle = langToggle;
+  QA.brandMark = function () { return h("span", { class: "mark", "aria-hidden": "true" }, "QA"); };
+
+  // Kerangka halaman: sidebar (>= 900px), top bar ringkas + tab bar bawah (mobile). Saat gerbang masuk aktif semuanya disembunyikan.
+  function buildShell(active, gated) {
+    document.body.classList.toggle("gated", !!gated);
+    var side = clear(document.getElementById("side")), top = clear(document.getElementById("topbar")), tab = clear(document.getElementById("tabbar"));
+    if (gated) return;
+
+    // Sidebar
+    side.appendChild(h("a", { class: "brand", href: "#/dashboard" }, QA.brandMark(), h("span", null, h("span", null, "QA Drill"), h("small", { class: "tagline" }, QA.t("Belajar QA bareng", "Learning QA together")))));
+    var nav = h("nav", { class: "side-nav", "aria-label": QA.t("Menu utama", "Main menu") });
+    QA.nav.forEach(function (n) {
+      nav.appendChild(h("a", { href: "#/" + n[0], class: n[0] === active ? "active" : "", "aria-current": n[0] === active ? "page" : null },
+        QA.icon(n[3]), h("span", null, QA.t(n[1], n[2]))));
+    });
+    side.appendChild(nav);
+    side.appendChild(h("div", { class: "side-foot" },
+      QA.accountBlock ? QA.accountBlock() : null,
+      h("div", { class: "side-row" }, langToggle(),
+        h("a", { class: "back", href: "https://naradipta.com/" }, QA.icon("back", 14), h("span", null, "naradipta.com")))));
+
+    // Top bar mobile
+    top.appendChild(h("a", { class: "brand", href: "#/dashboard" }, QA.brandMark(), h("span", null, "QA Drill")));
+    top.appendChild(h("div", { class: "top-actions" }, langToggle(),
+      QA.accountChip ? QA.accountChip() : null));
+
+    // Tab bar mobile (maksimal 5 item)
+    QA.nav.slice(0, 4).concat([["more", "Lainnya", "More", "more"]]).forEach(function (n) {
+      var on = n[0] === "more" ? QA.navMore.indexOf(active) >= 0 : n[0] === active;
+      tab.appendChild(h("a", { href: "#/" + n[0], class: on ? "active" : "", "aria-current": on ? "page" : null },
+        QA.icon(n[3], 22), h("span", null, QA.t(n[4] || n[1], n[5] || n[2]))));
+    });
+  }
+
+  // Halaman "Lainnya" (mobile): menu sekunder, akun, bahasa.
+  QA.routes.more = function () {
+    var root = h("div", { class: "page" });
+    root.appendChild(h("h1", null, QA.t("Lainnya", "More")));
+    var list = h("div", { class: "card list" });
+    [["cards", "Kartu Istilah", "Glossary Cards", "layers"], ["plan", "Rencana belajar", "Study plan", "calendar"], ["community", "Komunitas", "Community", "users"],
+     ["account", "Akun", "Account", "user"], ["settings", "Pengaturan", "Settings", "sliders"]].forEach(function (n) {
+      list.appendChild(h("a", { href: "#/" + n[0], class: "list-item" }, QA.icon(n[3]), h("span", null, QA.t(n[1], n[2]))));
+    });
+    list.appendChild(h("a", { href: "https://naradipta.com/", class: "list-item" }, QA.icon("back"), h("span", null, QA.t("Kembali ke naradipta.com", "Back to naradipta.com"))));
+    root.appendChild(list);
+    return root;
+  };
+
+  var TITLES = { dashboard: ["Beranda", "Home"], study: ["Materi", "Study material"], practice: ["Latihan", "Practice"], mock: ["Mock Exam", "Mock Exam"],
+    cards: ["Kartu Istilah", "Glossary Cards"], plan: ["Rencana", "Plan"], settings: ["Pengaturan", "Settings"], account: ["Akun", "Account"],
+    community: ["Komunitas", "Community"], more: ["Lainnya", "More"], career: ["Materi karir", "Career material"], welcome: ["Masuk", "Sign in"], loading: ["Memuat", "Loading"] };
+  QA.pageTitle = function (name) { var x = TITLES[name]; return x ? QA.t(x[0], x[1]) : "QA Drill"; };
 
   QA.render = function (keepScroll) {
     var y = window.pageYOffset || 0;
     var r = parse();
     if (!QA.routes[r.name]) r = { name: "dashboard", arg: "" };
-    buildHeader(r.name);
+    var gate = QA.gate ? QA.gate() : null; // layar masuk/daftar menggantikan halaman apa pun sampai login atau pilih tamu
+    if (gate) r = { name: gate, arg: r.name === gate ? r.arg : "" };
+    buildShell(r.name, !!gate);
+    document.documentElement.lang = S.state.lang;
+    document.title = QA.pageTitle(r.name) + " | QA Drill";
     if (QA.onRoute) QA.onRoute(r.name);
     var app = document.getElementById("app");
     while (app.firstChild) app.removeChild(app.firstChild);
@@ -161,6 +224,7 @@
   };
 
   window.addEventListener("hashchange", function () { QA.render(); });
+  document.getElementById("skip").addEventListener("click", function () { document.getElementById("app").focus(); });
   window.addEventListener("DOMContentLoaded", function () {
     QA.sanitize();
     if (!window.location.hash) window.location.hash = "#/dashboard";

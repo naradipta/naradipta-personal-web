@@ -1,31 +1,49 @@
 // Penyimpanan progres di localStorage + jadwal pengulangan berjarak (Leitner).
 (function () {
   window.QA = window.QA || {};
-  var KEY = "qa-drill-v1";
+  var GUEST_KEY = "qa-drill-v1";
+  var KEY = GUEST_KEY; // berganti ke "qa-drill-u<id>" saat masuk akun, supaya progres tiap akun terpisah di perangkat
   var DAY = 86400000;
   var INTERVALS = [0, 1, 2, 4, 8, 16, 32]; // hari per box 0..6
 
   function defaults() {
-    return { lang: "id", examDate: null, dailyMin: 120, extraTime: true, confidence: true, lastExport: null, updatedAt: 0, q: {}, cards: {}, history: [], mocks: [] };
+    return { lang: "id", examDate: null, dailyMin: 120, extraTime: true, confidence: true, lastExport: null, focus: null, updatedAt: 0, q: {}, cards: {}, history: [], mocks: [], days: [] };
   }
 
-  var memory = null;
-  function load() {
+  var memory = {};
+  function load(key) {
     try {
-      var raw = window.localStorage.getItem(KEY);
+      var raw = window.localStorage.getItem(key);
       if (raw) return Object.assign(defaults(), JSON.parse(raw));
     } catch (e) { /* storage tidak tersedia */ }
-    return memory || defaults();
+    return memory[key] || defaults();
   }
 
-  var S = { state: load() };
+  var S = { state: load(KEY) };
+
+  // Hari aktif: tiap jawaban (bukan hanya sesi yang selesai) menandai hari ini, dipakai streak dan papan komunitas.
+  function touchDay() {
+    var d = window.QA.dateStr(new Date()), days = S.state.days;
+    if (days[days.length - 1] !== d) { if (days.indexOf(d) < 0) days.push(d); if (days.length > 120) S.state.days = days.slice(-120); }
+  }
 
   S.save = function () {
     S.state.updatedAt = Date.now();
-    memory = S.state;
+    memory[KEY] = S.state;
     try { window.localStorage.setItem(KEY, JSON.stringify(S.state)); } catch (e) { /* abaikan */ }
     if (S.onSave) S.onSave();
   };
+
+  // Pindah ke ruang penyimpanan lain (tamu atau akun tertentu) dan muat state-nya. Tidak menyimpan apa pun.
+  S.guestKey = GUEST_KEY;
+  S.keyFor = function (userId) { return "qa-drill-u" + userId; };
+  S.useKey = function (key) { KEY = key; S.state = load(key); };
+  S.peek = function (key) { return load(key); };
+  S.drop = function (key) {
+    delete memory[key];
+    try { window.localStorage.removeItem(key); } catch (e) { /* abaikan */ }
+  };
+  S.hasProgress = function (st) { return !!st && (Object.keys(st.q).length > 0 || Object.keys(st.cards).length > 0 || st.history.length > 0 || st.mocks.length > 0); };
 
   // conf (opsional): "guess" | "unsure" | "sure". Benar karena menebak tidak menaikkan box (belum benar-benar dikuasai),
   // benar tapi ragu hanya menaikkan dari box 0, salah dengan yakin dicatat sebagai miskonsepsi (hyper).
@@ -55,16 +73,19 @@
   }
 
   S.record = function (qid, correct, conf) {
+    touchDay();
     S.state.q[qid] = bump(S.state.q[qid], correct, Date.now(), conf);
     S.save();
   };
   // Beberapa jawaban sekaligus (mis. mock exam) dengan satu kali tulis ke localStorage.
   S.recordMany = function (list) {
+    touchDay();
     var now = Date.now();
     list.forEach(function (e) { S.state.q[e.id] = bump(S.state.q[e.id], e.correct, now, e.conf); });
     S.save();
   };
   S.recordCard = function (key, know) {
+    touchDay();
     S.state.cards[key] = bump(S.state.cards[key], know, Date.now());
     S.save();
   };
@@ -106,6 +127,8 @@
     next.cards = cleanRecs(obj.cards);
     next.history = (obj.history || []).filter(function (e) { return isObj(e) && num(e.total) && num(e.correct); }).slice(-200);
     next.mocks = (obj.mocks || []).filter(function (e) { return isObj(e) && num(e.score) && num(e.total) && isObj(e.byCh); }).slice(-50);
+    if (Array.isArray(obj.days)) next.days = obj.days.filter(function (d) { return typeof d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d); }).sort().slice(-120);
+    if (obj.focus === "istqb" || obj.focus === "career" || obj.focus === "both") next.focus = obj.focus;
     if (obj.lang === "id" || obj.lang === "en") next.lang = obj.lang;
     if (typeof obj.examDate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(obj.examDate)) next.examDate = obj.examDate;
     if (num(obj.dailyMin) && obj.dailyMin > 0 && obj.dailyMin <= 1440) next.dailyMin = obj.dailyMin;
@@ -140,11 +163,12 @@
     var r = normalize(remote), l = S.state;
     var newer = r.updatedAt > l.updatedAt ? r : l;
     S.state = {
-      lang: newer.lang, examDate: newer.examDate, dailyMin: newer.dailyMin, extraTime: newer.extraTime, confidence: newer.confidence,
+      lang: newer.lang, focus: newer.focus, examDate: newer.examDate, dailyMin: newer.dailyMin, extraTime: newer.extraTime, confidence: newer.confidence,
       lastExport: Math.max(l.lastExport || 0, r.lastExport || 0) || null,
       updatedAt: Math.max(l.updatedAt, r.updatedAt),
       q: mergeRecs(l.q, r.q), cards: mergeRecs(l.cards, r.cards),
-      history: mergeLists(l.history, r.history, 200), mocks: mergeLists(l.mocks, r.mocks, 50)
+      history: mergeLists(l.history, r.history, 200), mocks: mergeLists(l.mocks, r.mocks, 50),
+      days: l.days.concat(r.days.filter(function (d) { return l.days.indexOf(d) < 0; })).sort().slice(-120)
     };
   };
   S.reset = function () { S.state = defaults(); S.save(); };
