@@ -3,13 +3,13 @@
 # Sertifikat Let's Encrypt yang sudah ada tetap dipakai; jalur berkas sama dengan yang dibuat certbot.
 #
 # Nginx host hanya menghentikan TLS dan meneruskan SEMUA domain ke satu port (WEB_PORT, bawaan 8080).
-# Pemisahan naradipta.com / /admin/ / learn.naradipta.com dilakukan container `web` (docker/nginx-web.conf).
+# Pemisahan naradipta.com / learn.naradipta.com dilakukan container `web` (docker/nginx-web.conf).
 # Header Host dan X-Real-IP wajib diteruskan: dipakai untuk memilih situs dan batas laju per IP.
 #
 # Cutover: cadangkan berkas lama, ganti isi, `sudo nginx -t && sudo systemctl reload nginx`.
 # Rollback: kembalikan berkas lama lalu reload.
 
-# --- naradipta.com (+ /admin/) ---
+# --- naradipta.com ---
 server {
     listen 80;
     listen [::]:80;
@@ -28,14 +28,11 @@ server {
     include /etc/letsencrypt/options-ssl-nginx.conf;
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
-    client_max_body_size 12m;   # unggahan foto/PDF di /admin/
-
     location / {
         proxy_pass http://127.0.0.1:8080;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_read_timeout 120s;   # Publish menjalankan astro build
     }
 }
 
