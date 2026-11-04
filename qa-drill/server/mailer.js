@@ -1,10 +1,24 @@
 'use strict';
-// Pengirim email. Tanpa dependency: layanan HTTP (Resend) lewat fetch, atau mode 'log' untuk dev (link dicetak ke konsol).
-// Env: MAIL_PROVIDER = resend | log (kosong = email dimatikan), MAIL_FROM (mis. "QA Drill <no-reply@naradipta.com>"), RESEND_API_KEY.
+// Pengirim email. Tanpa dependency: SMTP (smtp.js, mis. Brevo), layanan HTTP (Resend) lewat fetch, atau mode 'log' untuk dev.
+// Env: MAIL_PROVIDER = smtp | resend | log (kosong = email dimatikan), MAIL_FROM (mis. "QA Drill <no-reply@naradipta.com>").
+//   smtp:   MAIL_SMTP_USER, MAIL_SMTP_KEY, opsional MAIL_SMTP_HOST (smtp-relay.brevo.com), MAIL_SMTP_PORT (465, TLS langsung).
+//   resend: RESEND_API_KEY.
 // Kredensial hanya lewat environment di server, tidak pernah di repo.
+const { sendMail } = require('./smtp');
+
 function createMailer(env = process.env) {
   const provider = (env.MAIL_PROVIDER || '').toLowerCase();
   const from = env.MAIL_FROM || '';
+  if (provider === 'smtp') {
+    const user = env.MAIL_SMTP_USER, pass = env.MAIL_SMTP_KEY;
+    if (!user || !pass || !from) throw new Error('MAIL_PROVIDER=smtp butuh MAIL_SMTP_USER, MAIL_SMTP_KEY, dan MAIL_FROM');
+    const host = env.MAIL_SMTP_HOST || 'smtp-relay.brevo.com';
+    const port = Number(env.MAIL_SMTP_PORT) || 465;
+    return {
+      enabled: true,
+      send: ({ to, subject, text, html }) => sendMail({ host, port, user, pass, from, to, subject, text, html }),
+    };
+  }
   if (provider === 'resend') {
     if (!env.RESEND_API_KEY || !from) throw new Error('MAIL_PROVIDER=resend butuh RESEND_API_KEY dan MAIL_FROM');
     return {
