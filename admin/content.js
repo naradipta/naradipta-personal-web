@@ -46,6 +46,7 @@ function cleanSite(d) {
     role: str(d.role, 'role', { max: 150 }),
     avatar: assetPath(d.avatar, 'avatar', true),
     resumeUrl: assetPath(d.resumeUrl, 'resumeUrl', true),
+    qaDrillUrl: httpUrl(d.qaDrillUrl, 'qaDrillUrl'),
     tagline: str(d.tagline, 'tagline', { max: 2000 }),
     valueProposition: str(d.valueProposition, 'valueProposition', { max: 4000 }),
   };

@@ -51,17 +51,22 @@
     acct.syncing = true; acct.dirty = false;
     return api("PUT", "/api/progress", { data: S.state, baseVersion: acct.version }).then(function (r) {
       if (r.status === 200) { acct.version = r.body.version; acct.lastSync = Date.now(); acct.error = ""; }
-      else if (r.status === 409 && !retry) {
-        // Perangkat lain menyimpan lebih dulu: gabungkan lalu coba sekali lagi.
+      else if (r.status === 409) {
+        // Perangkat lain menyimpan lebih dulu: gabungkan data server ke lokal dan perbarui versi dasar.
         acct.version = r.body.version;
         if (r.body.data) S.merge(r.body.data);
         S.state.updatedAt = Date.now(); saveQuiet();
-        acct.syncing = false;
-        return push(true);
+        if (!retry) { acct.syncing = false; return push(true); } // coba sekali lagi segera
+        acct.dirty = true; // konflik lagi: hasil gabungan belum terkirim; dijadwalkan ulang di akhir (tanpa error)
       } else if (r.status === 401) { expire(); }
-      else acct.error = "push";
+      else { acct.error = "push"; acct.dirty = true; } // error server lain: tetap belum terkirim; dikirim saat edit berikutnya atau saat online
     }).catch(function () { acct.dirty = true; acct.error = "network"; })
-      .then(function () { acct.syncing = false; refresh(); });
+      .then(function () {
+        acct.syncing = false;
+        // Edit yang datang saat push berjalan hanya menandai dirty; kirim setelah push selesai (tanpa error, supaya tidak berulang tanpa henti).
+        if (acct.dirty && acct.status === "in" && !acct.error) schedulePush();
+        refresh();
+      });
   }
 
   function schedulePush() {

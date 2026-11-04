@@ -73,7 +73,11 @@ function createServer(opts = {}) {
   }
   async function readJson(req) {
     const buf = await readRaw(req, MAX_JSON);
-    try { return JSON.parse(buf.toString('utf8') || '{}'); } catch { throw Object.assign(new Error('bad_json'), { status: 400 }); }
+    let v;
+    try { v = JSON.parse(buf.toString('utf8') || '{}'); } catch { throw Object.assign(new Error('bad_json'), { status: 400 }); }
+    // `null`, angka, atau array membuat body.password / body.data melempar TypeError (500); tolak sebagai 400.
+    if (v === null || typeof v !== 'object' || Array.isArray(v)) throw Object.assign(new Error('bad_json'), { status: 400 });
+    return v;
   }
 
   const cookieValue = (req) => { const m = new RegExp('(?:^|;\\s*)' + COOKIE + '=([^;]+)').exec(req.headers.cookie || ''); return m ? m[1] : ''; };
@@ -183,6 +187,15 @@ function createServer(opts = {}) {
     fs.createReadStream(file).pipe(res);
   }
 
+  // Link absolut di HTML preview diberi awalan: atribut href/src/action/poster (kutip ganda atau tunggal), srcset,
+  // dan url(/...) pada CSS. `//host` (protocol-relative) dibiarkan.
+  function rewritePreviewHtml(html, prefix) {
+    return html
+      .replace(/\b(href|src|action|poster)=(["'])\/(?!\/)/g, (_, a, q) => `${a}=${q}${prefix}`)
+      .replace(/\bsrcset=(["'])([^"']*)\1/g, (_, q, v) => `srcset=${q}${v.replace(/(^|,\s*)\/(?!\/)/g, (__, sep) => sep + prefix)}${q}`)
+      .replace(/url\(\s*(["']?)\/(?!\/)/g, (_, q) => `url(${q}${prefix}`);
+  }
+
   const server = http.createServer(async (req, res) => {
     try {
       const url = new URL(req.url, 'http://localhost');
@@ -194,7 +207,7 @@ function createServer(opts = {}) {
         // Situs memakai link absolut (/projects, /_astro/...); di preview semuanya diberi awalan /admin/preview.
         const prefix = publicPath + '/preview/';
         return serveFiles(previewDir, req, res, url, { 'X-Robots-Tag': 'noindex', 'Referrer-Policy': 'same-origin' },
-          (html) => html.replace(/\b(href|src|action|poster)="\/(?!\/)/g, `$1="${prefix}`));
+          (html) => rewritePreviewHtml(html, prefix));
       }
       if (url.pathname.startsWith('/api/')) return await handleApi(req, res, url);
       if (url.pathname === '/') url.pathname = '/index.html';
