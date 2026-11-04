@@ -70,6 +70,8 @@ qa-drill/                    # sumber dan alat QA Drill (soal *.json, build-data
                              # server/ = API login + sinkronisasi (Node + SQLite, tanpa dependency npm), dijalankan manual di VPS
                              # Pengecualian terdokumentasi: QA Drill memakai JS vanilla sendiri (bukan Astro/React)
                              # karena berupa aplikasi interaktif mandiri; detail di qa-drill/CLAUDE.md
+compose.yaml                 # alternatif deploy: web (Nginx) + admin + qa-drill dalam Docker; target-nya ada di Dockerfile
+docker/                      # nginx-web.conf (pintu masuk), admin-start.sh + rebuild.sh (admin), host-nginx.conf.example
 src/
 ├── config/
 │   ├── site.ts              # tipe + pemuat data situs
@@ -138,6 +140,10 @@ Deploy ke VPS GCP (Nginx) dilakukan lewat `./deploy.sh` yang dijalankan di serve
 (git pull → npm ci → build → salin ke web root). Skrip itu tidak menyentuh
 konfigurasi sistem/Nginx; setup server dilakukan manual sekali (lihat README).
 Jangan menaruh langkah konfigurasi server ke dalam kode aplikasi.
+
+Alternatif: `docker compose up -d --build` (lihat README, "Deploy dengan Docker"). Situs publik tetap statis yang
+disajikan Nginx; hanya volume `admin-data` dan `qa-data` yang berisi data dan perlu dicadangkan. Dua jalur deploy ini
+tidak dipakai bersamaan di server yang sama: pilih salah satu.
 
 ## Definition of Done untuk perubahan
 

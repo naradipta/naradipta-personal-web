@@ -1,0 +1,50 @@
+# Seluruh naradipta.com dalam satu compose: situs statis + admin + QA Drill API.
+# Situs publik tetap HTML statis yang disajikan Nginx; admin hanya menulis ke volume `webroot`.
+# Detail, migrasi server, dan cadangan: README bagian "Deploy dengan Docker".
+#
+#   docker compose up -d --build      # pertama kali / setelah kode berubah
+#   docker compose run --rm --no-deps admin node admin/cli.js set-admin <username>   # buat akun admin (sekali)
+#
+# Semua data yang harus dicadangkan ada di 2 volume: admin-data dan qa-data (webroot bisa dibangun ulang).
+name: naradipta
+
+services:
+  web:
+    build: { context: ., target: web }
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${WEB_PORT:-8080}:80"   # hanya loopback; Nginx/Caddy di host yang membuka 80/443
+    volumes:
+      - webroot:/srv/site:ro
+
+  admin:
+    build: { context: ., target: admin }
+    restart: unless-stopped
+    environment:
+      ALLOWED_ORIGIN: ${SITE_ORIGIN:-https://naradipta.com}
+      PUBLIC_PATH: /admin
+    volumes:
+      - admin-data:/app/.admin-data   # di dalam /app: lihat catatan di Dockerfile (target admin)
+      - webroot:/webroot
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:4500/api/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 120s   # build awal situs saat webroot masih kosong
+
+  qa-drill:
+    build: { context: ., target: qa-drill }
+    restart: unless-stopped
+    environment:
+      ALLOWED_ORIGIN: ${LEARN_ORIGIN:-https://learn.naradipta.com}
+    volumes:
+      - qa-data:/data
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:4400/api/health"]
+      interval: 30s
+      timeout: 5s
+
+volumes:
+  webroot:
+  admin-data:
+  qa-data:
