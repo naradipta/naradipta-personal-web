@@ -34,6 +34,25 @@ JSDOM.fromFile(file, { runScripts: "dangerously", resources: "usable", pretendTo
       assert.ok(!/Error:/.test(text()), "rute error " + r + ": " + text().slice(0, 120));
     });
 
+    // semua topik Jalur 2: materi, sumber belajar bertautan aman, dan latihan per topik dapat dirender
+    ["rest-api", "selenium", "qa-general", "sql", "playwright", "cypress", "katalon", "interview", "fundamentals", "nonfunctional", "tooling", "coding"].forEach((tp) => {
+      go("career/" + tp); QA.render();
+      assert.ok(!/Topik tidak ditemukan|Topic not found/.test(text()), "topik terdaftar di Beranda: " + tp);
+      assert.ok(d.querySelectorAll("#app details").length >= 1, "materi tampil: " + tp);
+      const links = Array.from(d.querySelectorAll("#app ul.linklist a"));
+      assert.ok(links.length >= 1, "sumber belajar tampil: " + tp);
+      links.forEach((a) => assert.ok(/^https:\/\//.test(a.href) && /noopener/.test(a.rel) && a.target === "_blank", "tautan sumber aman: " + a.href));
+      assert.ok(/\((resmi|rujukan|komunitas)\)/.test(text()), "label jenis sumber: " + tp);
+      go("practice/topic:" + tp); QA.render();
+      assert.ok(!/Error:/.test(text()), "latihan topik " + tp);
+    });
+
+    // soal membaca kode: field `code` tampil sebagai teks polos di <pre> (bukan HTML)
+    const cq = QA.questions.filter((q) => q.code);
+    assert.ok(cq.length >= 10, "soal berkode tersedia");
+    cq.forEach((q) => { const pre = QA.codeBlock(q); assert.ok(pre && pre.tagName === "PRE" && pre.textContent === q.code && pre.children.length === 0, "kode aman: " + q.id); });
+
+    go("settings"); QA.render();
     // pengaturan bahasa
     QA.store.state.lang = "en"; QA.render(); assert.ok(/Settings|Reset/.test(text()));
     QA.store.state.lang = "id"; QA.render();

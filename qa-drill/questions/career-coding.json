@@ -1,0 +1,638 @@
+[
+ {
+  "id": "code-001",
+  "topic": "coding",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Apa keluaran kode JavaScript ini?",
+   "en": "What does this JavaScript print?"
+  },
+  "code": "console.log([1, 2, 3].map(parseInt));",
+  "options": {
+   "id": [
+    "[1, NaN, NaN]",
+    "[1, 2, 3]",
+    "[0, 1, 2]",
+    "[1, 2, NaN]"
+   ],
+   "en": [
+    "[1, NaN, NaN]",
+    "[1, 2, 3]",
+    "[0, 1, 2]",
+    "[1, 2, NaN]"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "map memberi parseInt tiga argumen (nilai, indeks, array). Indeks dipakai sebagai radix: parseInt(2, 1) dan parseInt(3, 2) menghasilkan NaN. Pakai map(Number) atau map(x => parseInt(x, 10)).",
+   "en": "map passes parseInt three arguments (value, index, array). The index is used as the radix: parseInt(2, 1) and parseInt(3, 2) give NaN. Use map(Number) or map(x => parseInt(x, 10))."
+  }
+ },
+ {
+  "id": "code-002",
+  "topic": "coding",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Mengapa assertion ini sebaiknya tidak ditulis seperti itu?",
+   "en": "Why should this assertion not be written this way?"
+  },
+  "code": "const total = 0.1 + 0.2;\nexpect(total).toBe(0.3);   // gagal",
+  "options": {
+   "id": [
+    "Pecahan biner tidak tepat; pakai toBeCloseTo atau satuan bulat",
+    "toBe hanya bisa dipakai untuk membandingkan string saja",
+    "0.1 + 0.2 selalu persis 0.3, jadi tes ini salah ketik",
+    "JavaScript tidak mendukung bilangan desimal sama sekali"
+   ],
+   "en": [
+    "Binary fractions are inexact; use toBeCloseTo or integer units",
+    "toBe can only be used for comparing strings and nothing else",
+    "0.1 + 0.2 is always exactly 0.3, so this test has a typo",
+    "JavaScript does not support decimal numbers at all"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "0.1 + 0.2 bernilai 0.30000000000000004. Untuk uang, simpan dalam satuan terkecil (sen) sebagai bilangan bulat; untuk perbandingan lain gunakan toleransi.",
+   "en": "0.1 + 0.2 is 0.30000000000000004. For money, store the smallest unit (cents) as integers; for other comparisons use a tolerance."
+  }
+ },
+ {
+  "id": "code-003",
+  "topic": "coding",
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Apa keluaran kode ini?",
+   "en": "What does this print?"
+  },
+  "code": "for (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 0);\n}",
+  "options": {
+   "id": [
+    "3 3 3",
+    "0 1 2",
+    "2 2 2",
+    "0 0 0"
+   ],
+   "en": [
+    "3 3 3",
+    "0 1 2",
+    "2 2 2",
+    "0 0 0"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "var berlingkup fungsi sehingga ketiga callback berbagi satu i yang sudah bernilai 3 saat callback berjalan. Dengan let, tiap iterasi punya salinan sendiri dan hasilnya 0 1 2.",
+   "en": "var is function-scoped, so all three callbacks share one i that is already 3 when they run. With let, each iteration has its own copy and the output is 0 1 2."
+  }
+ },
+ {
+  "id": "code-004",
+  "topic": "coding",
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Urutan keluaran kode ini?",
+   "en": "What is the output order?"
+  },
+  "code": "console.log('A');\nsetTimeout(() => console.log('B'));\nPromise.resolve().then(() => console.log('C'));\nconsole.log('D');",
+  "options": {
+   "id": [
+    "A D C B",
+    "A B C D",
+    "A C D B",
+    "A D B C"
+   ],
+   "en": [
+    "A D C B",
+    "A B C D",
+    "A C D B",
+    "A D B C"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Kode sinkron jalan dulu (A, D). Callback promise (microtask) berjalan sebelum setTimeout (macrotask), sehingga C lalu B.",
+   "en": "Synchronous code runs first (A, D). Promise callbacks (microtasks) run before setTimeout (macrotasks), so C then B."
+  }
+ },
+ {
+  "id": "code-005",
+  "topic": "coding",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Apa masalah pada kode test Playwright ini?",
+   "en": "What is wrong with this Playwright test?"
+  },
+  "code": "test('login', async ({ page }) => {\n  page.goto('/login');\n  await page.fill('#email', 'a@b.c');\n  await page.click('#submit');\n});",
+  "options": {
+   "id": [
+    "goto tidak di-await, langkah berikutnya jalan lebih dulu",
+    "fill tidak boleh dipakai pada elemen input teks",
+    "fungsi test tidak boleh dideklarasikan sebagai async",
+    "click wajib dipanggil lebih dulu daripada fill"
+   ],
+   "en": [
+    "goto is not awaited, so later steps run too early",
+    "fill must not be used on plain text input elements",
+    "a test function must not be declared as async",
+    "click is required to be called before fill happens"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Promise yang tidak di-await membuat test berlanjut tanpa menunggu dan menghasilkan flaky test atau unhandled rejection. Aktifkan lint rule no-floating-promises.",
+   "en": "An un-awaited promise lets the test continue without waiting, causing flakiness or unhandled rejections. Enable the no-floating-promises lint rule."
+  }
+ },
+ {
+  "id": "code-006",
+  "topic": "coding",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Mengapa test Selenium (Python) ini flaky?",
+   "en": "Why is this Selenium (Python) test flaky?"
+  },
+  "code": "driver.find_element(By.ID, 'save').click()\nassert driver.find_element(By.ID, 'msg').text == 'Saved'",
+  "options": {
+   "id": [
+    "Teks dibaca tepat setelah klik tanpa jeda; pakai explicit wait",
+    "find_element tidak bisa dipanggil dua kali berturut-turut",
+    "assert tidak berfungsi untuk membandingkan teks string",
+    "By.ID sudah tidak didukung lagi di Selenium 4 ke atas"
+   ],
+   "en": [
+    "Text is read right after the click, no wait; use an explicit wait",
+    "find_element cannot be called twice in a row in a single test",
+    "assert does not work for comparing text strings of any kind",
+    "By.ID is no longer supported in Selenium 4 or later versions"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Pesan muncul setelah request selesai. Gunakan WebDriverWait dengan expected_conditions, mis. text_to_be_present_in_element, bukan sleep.",
+   "en": "The message appears after a request finishes. Use WebDriverWait with expected_conditions, e.g. text_to_be_present_in_element, not sleep."
+  }
+ },
+ {
+  "id": "code-007",
+  "topic": "coding",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Test API ini tidak pernah gagal bahkan saat status 500. Mengapa?",
+   "en": "This API test never fails even on a 500. Why?"
+  },
+  "code": "def test_create_user():\n    r = client.post('/users', json=payload)\n    assert r.status_code == 200 or 201",
+  "options": {
+   "id": [
+    "'or 201' selalu truthy; pakai status_code in (200, 201)",
+    "client.post tidak mengembalikan atribut status_code",
+    "assert hanya akan memeriksa kode HTTP berawalan 2xx",
+    "payload tidak pernah dikirim ke endpoint tersebut"
+   ],
+   "en": [
+    "'or 201' is always truthy; use status_code in (200, 201)",
+    "client.post does not return a status_code attribute",
+    "assert only ever checks HTTP codes that start with 2xx",
+    "the payload is never actually sent to that endpoint"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Python membaca (status_code == 200) or 201; angka 201 selalu truthy. Ini kesalahan klasik yang membuat test hijau palsu.",
+   "en": "Python reads (status_code == 200) or 201; the number 201 is always truthy. A classic mistake that creates false-green tests."
+  }
+ },
+ {
+  "id": "code-008",
+  "topic": "coding",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Apa keluaran kode Python ini?",
+   "en": "What does this Python print?"
+  },
+  "code": "def add(x, items=[]):\n    items.append(x)\n    return items\n\nadd(1)\nprint(add(2))",
+  "options": {
+   "id": [
+    "[1, 2]",
+    "[2]",
+    "[1]",
+    "[]"
+   ],
+   "en": [
+    "[1, 2]",
+    "[2]",
+    "[1]",
+    "[]"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Nilai default dibuat sekali saat fungsi didefinisikan sehingga list dipakai bersama antar pemanggilan. Pakai items=None lalu buat list baru di dalam fungsi. Efek serupa bisa membuat test saling bergantung.",
+   "en": "The default is created once at definition time, so the list is shared across calls. Use items=None and create a new list inside. A similar effect can make tests depend on each other."
+  }
+ },
+ {
+  "id": "code-009",
+  "topic": "coding",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Apa keluaran kode Python ini?",
+   "en": "What does this Python print?"
+  },
+  "code": "print(10 // 3, -10 // 3, 10 % 3)",
+  "options": {
+   "id": [
+    "3 -4 1",
+    "3 -3 1",
+    "3 -4 -1",
+    "3.33 -3.33 1"
+   ],
+   "en": [
+    "3 -4 1",
+    "3 -3 1",
+    "3 -4 -1",
+    "3.33 -3.33 1"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "// adalah pembagian lantai: -10 // 3 = -4 (dibulatkan ke bawah, bukan ke nol). 10 % 3 = 1.",
+   "en": "// is floor division: -10 // 3 = -4 (rounded down, not toward zero). 10 % 3 = 1."
+  }
+ },
+ {
+  "id": "code-010",
+  "topic": "coding",
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Apa keluaran kode Python ini?",
+   "en": "What does this Python print?"
+  },
+  "code": "print(round(2.5), round(3.5))",
+  "options": {
+   "id": [
+    "2 4",
+    "3 4",
+    "2 3",
+    "3 3"
+   ],
+   "en": [
+    "2 4",
+    "3 4",
+    "2 3",
+    "3 3"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Python 3 memakai pembulatan ke genap terdekat (banker's rounding) untuk nilai .5. Penting saat memverifikasi perhitungan uang atau persentase.",
+   "en": "Python 3 rounds .5 values to the nearest even number (banker's rounding). Important when verifying money or percentage calculations."
+  }
+ },
+ {
+  "id": "code-011",
+  "topic": "coding",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Berapa panjang a setelah kode ini dijalankan?",
+   "en": "What is the length of a after this runs?"
+  },
+  "code": "a = [1, 2, 3]\nb = a[:]\nb.append(4)\nprint(len(a))",
+  "options": {
+   "id": [
+    "3",
+    "4",
+    "7",
+    "Error"
+   ],
+   "en": [
+    "3",
+    "4",
+    "7",
+    "Error"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "a[:] membuat salinan dangkal sehingga menambah elemen ke b tidak mengubah a. Bila b = a, panjang a menjadi 4 karena keduanya menunjuk list yang sama.",
+   "en": "a[:] makes a shallow copy so appending to b does not change a. With b = a the length would be 4 because both names point to the same list."
+  }
+ },
+ {
+  "id": "code-012",
+  "topic": "coding",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Apa hasil query ini?",
+   "en": "What does this query return?"
+  },
+  "code": "-- users: 5 baris, 2 di antaranya email = NULL\nSELECT COUNT(*), COUNT(email) FROM users;",
+  "options": {
+   "id": [
+    "5 dan 3",
+    "5 dan 5",
+    "3 dan 3",
+    "3 dan 5"
+   ],
+   "en": [
+    "5 dan 3",
+    "5 dan 5",
+    "3 dan 3",
+    "3 dan 5"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "COUNT(*) menghitung semua baris; COUNT(kolom) melewati NULL. Berguna untuk memeriksa kelengkapan data.",
+   "en": "COUNT(*) counts all rows; COUNT(column) skips NULLs. Useful for checking data completeness."
+  }
+ },
+ {
+  "id": "code-013",
+  "topic": "coding",
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "User u2 dan u3 tidak muncul di hasil. Mengapa?",
+   "en": "Users u2 and u3 are missing from the result. Why?"
+  },
+  "code": "-- users: u1,u2,u3; orders: (o1,u1,'paid'), (o2,u1,'cancelled')\nSELECT u.id, COUNT(o.id)\nFROM users u LEFT JOIN orders o ON o.user_id = u.id\nWHERE o.status = 'paid'\nGROUP BY u.id;",
+  "options": {
+   "id": [
+    "WHERE di tabel kanan membuang NULL, LEFT JOIN jadi seperti INNER",
+    "LEFT JOIN memang selalu menghapus user tanpa pesanan",
+    "GROUP BY tidak boleh dipakai bersama fungsi COUNT",
+    "Status 'paid' sama sekali tidak ada di tabel orders"
+   ],
+   "en": [
+    "WHERE on the right table drops NULLs, so LEFT JOIN acts like INNER",
+    "LEFT JOIN always removes users that have no orders at all",
+    "GROUP BY must not be used together with the COUNT function",
+    "The 'paid' status does not exist in the orders table at all"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Untuk u2 dan u3, o.status bernilai NULL sehingga ditolak oleh WHERE. Pindahkan syaratnya ke ON (AND o.status = 'paid') agar semua user tetap tampil dengan hitungan 0.",
+   "en": "For u2 and u3, o.status is NULL and is rejected by WHERE. Move the condition into ON (AND o.status = 'paid') so every user stays with a count of 0."
+  }
+ },
+ {
+  "id": "code-014",
+  "topic": "coding",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Mengapa test ini rapuh dan bagaimana memperbaikinya?",
+   "en": "Why is this test brittle and how do you fix it?"
+  },
+  "code": "const r = await api.get('/products');\nexpect(r.body.items).toEqual(['pen', 'book', 'bag']);",
+  "options": {
+   "id": [
+    "Bergantung pada urutan dan isi data; siapkan data sendiri",
+    "toEqual tidak mampu membandingkan array sama sekali",
+    "await tidak boleh dipakai pada permintaan GET biasa",
+    "items seharusnya berupa objek, bukan sebuah array"
+   ],
+   "en": [
+    "It depends on data order and content; seed own data",
+    "toEqual is not able to compare arrays at all",
+    "await must not be used on a plain GET request",
+    "items should be an object rather than an array"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Mengandalkan data bersama atau urutan yang tidak dijamin membuat test gagal acak. Buat test data di dalam test atau pakai pencocokan yang tidak peka urutan.",
+   "en": "Relying on shared data or unguaranteed order makes tests fail randomly. Create test data inside the test or use order-insensitive matching."
+  }
+ },
+ {
+  "id": "code-015",
+  "topic": "coding",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Hasil dari regex ini?",
+   "en": "What does this regex return?"
+  },
+  "code": "import re\nprint(re.findall(r'\\d+', 'order 123 and 45'))",
+  "options": {
+   "id": [
+    "['123', '45']",
+    "['1', '2', '3', '4', '5']",
+    "['123 and 45']",
+    "[123, 45]"
+   ],
+   "en": [
+    "['123', '45']",
+    "['1', '2', '3', '4', '5']",
+    "['123 and 45']",
+    "[123, 45]"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "\\d+ mencocokkan satu atau lebih digit berurutan, dan findall mengembalikan list string. Berguna untuk mengambil ID dari log.",
+   "en": "\\d+ matches one or more consecutive digits and findall returns a list of strings. Useful for extracting IDs from logs."
+  }
+ },
+ {
+  "id": "code-016",
+  "topic": "coding",
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Berapa hasil kode ini dan apa fungsinya?",
+   "en": "What does this return and what is it for?"
+  },
+  "code": "lines = ['INFO start', 'ERROR db', 'WARN slow', 'ERROR timeout']\nprint(sum(1 for l in lines if 'ERROR' in l))",
+  "options": {
+   "id": [
+    "2, menghitung baris log berlevel ERROR",
+    "4, menghitung semua baris",
+    "0, karena sum tidak menerima generator",
+    "1, hanya baris ERROR pertama"
+   ],
+   "en": [
+    "2, counting log lines at ERROR level",
+    "4, counting all lines",
+    "0, because sum does not accept generators",
+    "1, only the first ERROR line"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Generator menghasilkan 1 untuk tiap baris yang memuat ERROR lalu dijumlahkan. Pola ini sering dipakai untuk menganalisis log hasil test.",
+   "en": "The generator yields 1 for each line containing ERROR, then sums them. This pattern is common when analysing test logs."
+  }
+ },
+ {
+  "id": "code-017",
+  "topic": "coding",
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Mengapa JavaScript mencetak 'undefined' pada kode ini?",
+   "en": "Why does JavaScript print 'undefined' here?"
+  },
+  "code": "async function getUser() { return { id: 1 }; }\nconst u = getUser();\nconsole.log(u.id);",
+  "options": {
+   "id": [
+    "getUser mengembalikan Promise; perlu await untuk membacanya",
+    "Properti id memang tidak ada pada objek yang dikembalikan",
+    "Fungsi async dilarang mengembalikan nilai berupa objek",
+    "console.log tidak mampu mencetak nilai berupa angka"
+   ],
+   "en": [
+    "getUser returns a Promise; it needs await to be read",
+    "The id property does not exist on the returned object",
+    "An async function is forbidden from returning an object",
+    "console.log is not able to print a numeric value"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Fungsi async selalu mengembalikan Promise. Tanpa await, u.id dibaca dari Promise (undefined). Lupa await adalah penyebab umum test otomasi aneh.",
+   "en": "An async function always returns a Promise. Without await, u.id is read from the Promise (undefined). A forgotten await is a common cause of odd automation tests."
+  }
+ },
+ {
+  "id": "code-018",
+  "topic": "coding",
+  "level": 2,
+  "type": "short",
+  "q": {
+   "id": "Tulis (atau jelaskan) cara menemukan elemen duplikat dalam sebuah list dan kompleksitasnya.",
+   "en": "Write (or explain) how to find duplicate elements in a list, and its complexity."
+  },
+  "model": {
+   "id": "Telusuri list sekali sambil menyimpan elemen yang sudah terlihat di set atau dictionary. Bila elemen sudah ada di set, itu duplikat. Waktu O(n) dengan memori tambahan O(n); membandingkan semua pasangan O(n^2). Bahas juga kasus list kosong dan tipe data campuran.",
+   "en": "Walk the list once while storing seen elements in a set or dictionary. If an element is already in the set it is a duplicate. Time O(n) with O(n) extra memory; comparing all pairs is O(n^2). Also mention the empty list and mixed types."
+  },
+  "keywords": [
+   [
+    "set",
+    "dictionary",
+    "hash",
+    "dict"
+   ],
+   [
+    "o(n)",
+    "linear",
+    "sekali",
+    "once"
+   ],
+   [
+    "duplikat",
+    "duplicate"
+   ],
+   [
+    "kosong",
+    "empty",
+    "kasus",
+    "edge",
+    "memori",
+    "memory"
+   ]
+  ],
+  "pass": 0.6
+ },
+ {
+  "id": "code-019",
+  "topic": "coding",
+  "level": 3,
+  "type": "short",
+  "q": {
+   "id": "Bagaimana memeriksa apakah tanda kurung dalam sebuah string seimbang, misalnya \"{[()]}\"?",
+   "en": "How do you check whether brackets in a string are balanced, e.g. \"{[()]}\"?"
+  },
+  "model": {
+   "id": "Pakai stack: dorong kurung buka; tiap kurung tutup harus cocok dengan puncak stack lalu pop. Di akhir stack harus kosong. Test case: string kosong, hanya kurung tutup, urutan salah seperti \"([)]\", dan kurung tidak berpasangan. Kompleksitas O(n).",
+   "en": "Use a stack: push opening brackets; each closing bracket must match the top of the stack, then pop. At the end the stack must be empty. Test cases: empty string, only closing bracket, wrong order like \"([)]\", unmatched brackets. Complexity O(n)."
+  },
+  "keywords": [
+   [
+    "stack",
+    "tumpukan"
+   ],
+   [
+    "push",
+    "pop",
+    "dorong",
+    "buka",
+    "open"
+   ],
+   [
+    "kosong",
+    "empty",
+    "akhir",
+    "end"
+   ],
+   [
+    "kasus",
+    "case",
+    "uji",
+    "test",
+    "edge",
+    "o(n)"
+   ]
+  ],
+  "pass": 0.6
+ },
+ {
+  "id": "code-020",
+  "topic": "coding",
+  "level": 2,
+  "type": "short",
+  "q": {
+   "id": "Anda diberi file log besar. Bagaimana menghitung jumlah error per jenis dengan script?",
+   "en": "You are given a large log file. How would you script counting errors by type?"
+  },
+  "model": {
+   "id": "Baca file baris demi baris (streaming) agar tidak memuat semuanya ke memori, ekstrak level atau kode error dengan split atau regex, lalu hitung dengan dictionary atau Counter. Tampilkan urutan terbanyak dan tangani baris yang formatnya rusak.",
+   "en": "Read the file line by line (streaming) so it is not loaded into memory, extract the level or error code with split or regex, then count with a dictionary or Counter. Show the most frequent first and handle malformed lines."
+  },
+  "keywords": [
+   [
+    "baris",
+    "line",
+    "stream"
+   ],
+   [
+    "regex",
+    "split",
+    "ekstrak",
+    "extract",
+    "parse"
+   ],
+   [
+    "dictionary",
+    "counter",
+    "hitung",
+    "count"
+   ],
+   [
+    "rusak",
+    "malformed",
+    "memori",
+    "memory",
+    "urut",
+    "sort"
+   ]
+  ],
+  "pass": 0.6
+ }
+]

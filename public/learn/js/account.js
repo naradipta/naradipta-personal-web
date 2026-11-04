@@ -5,7 +5,7 @@
   var acct = QA.account = { status: "unknown", email: null, id: null, verified: false, emailEnabled: false, version: 0, syncing: false, dirty: false, lastSync: null, error: "" };
   var pushTimer = null;
 
-  // Pilihan "lanjut sebagai tamu" hanya berlaku selama tab ini terbuka (perangkat bersama: orang berikutnya ditanya lagi).
+  // Pilihan "lanjut sebagai guest" hanya berlaku selama tab ini terbuka (perangkat bersama: orang berikutnya ditanya lagi).
   var guestMemo = false;
   function guestChosen() {
     try { return window.sessionStorage.getItem("qa-drill-guest") === "1"; } catch (e) { return guestMemo; }
@@ -15,9 +15,9 @@
     try { if (on) window.sessionStorage.setItem("qa-drill-guest", "1"); else window.sessionStorage.removeItem("qa-drill-guest"); } catch (e) { /* abaikan */ }
   }
 
-  // Gerbang: saat server akun tersedia dan belum masuk, tampilkan layar selamat datang (masuk / daftar / tamu).
+  // Gerbang: saat server akun tersedia dan belum masuk, tampilkan layar selamat datang (masuk / daftar / guest).
   QA.gate = function () {
-    // Tautan dari email (#/verify/<token>, #/reset/<token>) harus bisa dibuka tanpa login, dengan kerangka menu disembunyikan.
+    // Link dari email (#/verify/<token>, #/reset/<token>) harus bisa dibuka tanpa login, dengan kerangka menu disembunyikan.
     var m = /^#\/(verify|reset)\/./.exec(window.location.hash || "");
     if (m) return m[1];
     if (acct.status === "unknown") return "loading";
@@ -39,7 +39,7 @@
   QA.api = api;
   function refresh() { if (QA.started) QA.render(true); }
 
-  // Sesi habis di server: kembali ke ruang tamu. Salinan lokal akun dibiarkan agar perubahan yang belum terkirim tidak hilang.
+  // Sesi habis di server: kembali ke penyimpanan guest. Salinan lokal akun dibiarkan agar perubahan yang belum terkirim tidak hilang.
   function expire() {
     acct.status = "out"; acct.email = null; acct.id = null; acct.displayName = ""; acct.share = false; acct.error = "session";
     S.useKey(S.guestKey);
@@ -101,7 +101,7 @@
 
   // ---------- sesi ----------
   // Progres tiap akun punya ruang penyimpanan sendiri di perangkat, jadi dua akun di satu browser tidak bercampur.
-  // Progres tamu hanya ditawarkan untuk diimpor ke akun yang masih kosong (akun baru).
+  // Progres guest hanya ditawarkan untuk diimpor ke akun yang masih kosong (akun baru).
   function activate(me) {
     var guest = S.peek(S.guestKey);
     acct.status = "in"; acct.email = me.email; acct.id = me.id; acct.displayName = me.displayName || ""; acct.share = !!me.share; acct.nameLocked = !!me.nameLocked; acct.verified = !!me.verified; acct.emailEnabled = !!me.emailEnabled; acct.error = "";
@@ -161,7 +161,7 @@
     email_taken: ["Email sudah terdaftar. Silakan masuk.", "Email already registered. Please sign in."],
     invalid_credentials: ["Email atau password salah.", "Wrong email or password."],
     too_many_requests: ["Terlalu banyak percobaan. Coba lagi dalam 15 menit.", "Too many attempts. Try again in 15 minutes."],
-    invalid_token: ["Tautan tidak valid atau sudah kedaluwarsa. Minta tautan baru.", "The link is invalid or has expired. Request a new one."],
+    invalid_token: ["Link tidak valid atau sudah kedaluwarsa. Minta link baru.", "The link is invalid or has expired. Request a new one."],
     registration_closed: ["Pendaftaran sedang ditutup.", "Registration is closed."]
   };
   var mode = "login";
@@ -182,7 +182,7 @@
     if (acct.status === "offline" || acct.status === "unknown") {
       root.appendChild(h("div", { class: "card" }, h("p", { class: "muted" }, acct.status === "unknown"
         ? t("Memeriksa server...", "Checking server...")
-        : t("Server akun tidak tersedia (mungkin halaman dibuka dari berkas lokal). Aplikasi tetap bekerja, progres tersimpan di browser ini.",
+        : t("Server akun tidak tersedia (mungkin halaman dibuka dari file lokal). Aplikasi tetap bekerja, progres tersimpan di browser ini.",
             "The account server is unavailable (the page may be opened from a local file). The app still works; progress stays in this browser."))));
       return root;
     }
@@ -256,16 +256,16 @@
     var email = h("input", { type: "email", id: "acct-email", autocomplete: "email", required: "", maxlength: "254", inputmode: "email", "data-autofocus": autofocus ? "" : null });
     var msg = h("p", { class: "small", role: "status" }, "");
     var err = h("p", { class: "form-err", role: "alert" }, "");
-    var btn = h("button", { class: "btn primary block", type: "submit" }, t("Kirim tautan reset", "Send reset link"));
+    var btn = h("button", { class: "btn primary block", type: "submit" }, t("Kirim link reset", "Send reset link"));
     var form = h("form", { class: "card auth-card", novalidate: "" },
       h("h2", { class: "h3" }, t("Lupa password", "Forgot password")),
-      h("p", { class: "muted small" }, t("Masukkan email akun Anda. Kami kirim tautan untuk membuat password baru (berlaku 1 jam).", "Enter your account email. We will send a link to create a new password (valid for 1 hour).")),
+      h("p", { class: "muted small" }, t("Masukkan email akun Anda. Kami kirim link untuk membuat password baru (berlaku 1 jam).", "Enter your account email. We will send a link to create a new password (valid for 1 hour).")),
       h("div", { class: "field" }, h("label", { for: "acct-email" }, "Email"), email), msg, err, btn,
       h("button", { class: "linkbtn", type: "button", onclick: function () { mode = "login"; QA.render(); } }, t("Kembali ke Masuk", "Back to sign in")));
     form.addEventListener("submit", function (ev) {
       ev.preventDefault(); err.textContent = ""; msg.textContent = ""; btn.disabled = true;
       api("POST", "/api/password/forgot", { email: email.value }).then(function (r) {
-        if (r.status === 200) msg.textContent = t("Jika email itu terdaftar, tautan reset sudah dikirim. Periksa juga folder spam.", "If that email is registered, a reset link has been sent. Check your spam folder too.");
+        if (r.status === 200) msg.textContent = t("Jika email itu terdaftar, link reset sudah dikirim. Periksa juga folder spam.", "If that email is registered, a reset link has been sent. Check your spam folder too.");
         else { var m = ERR[r.body && r.body.error]; err.textContent = m ? t(m[0], m[1]) : r.status === 429 ? t("Terlalu banyak permintaan. Coba lagi nanti.", "Too many requests. Try again later.") : t("Terjadi kesalahan. Coba lagi.", "Something went wrong. Try again."); }
         btn.disabled = false;
       }).catch(function () { err.textContent = t("Tidak dapat terhubung ke server.", "Cannot reach the server."); btn.disabled = false; });
@@ -291,7 +291,7 @@
     var s = verifyState.status;
     var body = s === "working" ? h("p", { class: "muted", role: "status" }, t("Memverifikasi email...", "Verifying your email..."))
       : s === "ok" ? h("div", { class: "card okbox", role: "status" }, h("h1", null, t("Email terverifikasi", "Email verified")), h("p", null, t("Terima kasih! Email Anda sudah terverifikasi.", "Thank you! Your email is now verified.")))
-      : h("div", { class: "card badbox", role: "alert" }, h("h1", null, t("Tautan tidak berlaku", "Link not valid")), h("p", null, s === "net" ? t("Tidak dapat terhubung ke server.", "Cannot reach the server.") : t("Tautan salah atau sudah kedaluwarsa. Masuk lalu minta email verifikasi baru dari Beranda.", "The link is wrong or expired. Sign in and request a new verification email from Home.")));
+      : h("div", { class: "card badbox", role: "alert" }, h("h1", null, t("Link tidak berlaku", "Link not valid")), h("p", null, s === "net" ? t("Tidak dapat terhubung ke server.", "Cannot reach the server.") : t("Link salah atau sudah kedaluwarsa. Masuk lalu minta email verifikasi baru dari Beranda.", "The link is wrong or expired. Sign in and request a new verification email from Home.")));
     return plainPage([body, h("a", { class: "btn primary", href: "#/dashboard", onclick: function () { verifyState = { token: "", status: "idle" }; } }, t("Lanjut ke QA Drill", "Continue to QA Drill"))]);
   };
 
@@ -368,7 +368,7 @@
       h("p", { class: "small muted center" }, t("Dibuat oleh Muhammad Arrafi untuk belajar bersama. ", "Built by Muhammad Arrafi for learning together. "), h("a", { href: "https://naradipta.com/" }, "naradipta.com")));
   };
 
-  // Akun di sidebar: avatar + email + Keluar, atau ajakan Masuk untuk tamu.
+  // Akun di sidebar: avatar + email + Keluar, atau ajakan Masuk untuk guest.
   QA.accountBlock = function () {
     if (acct.status === "in") {
       return h("div", { class: "acct" },
@@ -378,7 +378,7 @@
     }
     if (acct.status === "out") {
       return h("div", { class: "acct" },
-        h("p", { class: "small muted" }, t("Mode tamu: progres hanya di browser ini.", "Guest mode: progress only in this browser.")),
+        h("p", { class: "small muted" }, t("Mode guest: progres hanya di browser ini.", "Guest mode: progress only in this browser.")),
         h("a", { href: "#/account", class: "btn primary small block" }, QA.icon("login", 16), t("Masuk / Daftar", "Sign in / Register")));
     }
     return null;

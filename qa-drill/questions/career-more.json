@@ -198,7 +198,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Worker menjalankan file berbeda secara paralel; test dalam satu file berurutan kecuali fullyParallel diaktifkan. Karena itu data uji antar worker tidak boleh bertabrakan.",
+   "id": "Worker menjalankan file berbeda secara paralel; test dalam satu file berurutan kecuali fullyParallel diaktifkan. Karena itu test data antar worker tidak boleh bertabrakan.",
    "en": "Workers run different files in parallel; tests within a file run in order unless fullyParallel is enabled. So test data must not collide across workers."
   }
  },
@@ -213,10 +213,10 @@
   },
   "options": {
    "id": [
-    "Menyiapkan dan membersihkan dependensi test (halaman login, data uji) secara terisolasi dan dapat dipakai ulang",
-    "Mengunci versi browser di proyek supaya tidak pernah ikut diperbarui oleh rilis Playwright",
+    "Menyiapkan dan membersihkan dependensi test (halaman login, test data) secara terisolasi dan dapat dipakai ulang",
+    "Mengunci versi browser di proyek supaya tidak pernah ikut diperbarui oleh release Playwright",
     "Menerjemahkan test secara otomatis ke bahasa pemrograman lain ketika tim memintanya",
-    "Menggantikan kebutuhan assertion dengan menyimpan tangkapan layar di akhir setiap test"
+    "Menggantikan kebutuhan assertion dengan menyimpan screenshot di akhir setiap test"
    ],
    "en": [
     "Setting up and tearing down test dependencies (signed-in page, test data) in an isolated, reusable way",
@@ -272,9 +272,9 @@
   "options": {
    "id": [
     "Merekam interaksi di browser dan menghasilkan kode test awal yang perlu dirapikan",
-    "Membuat laporan bug rinci ke Jira secara otomatis tanpa campur tangan manusia sama sekali",
+    "Membuat bug report rinci ke Jira secara otomatis tanpa campur tangan manusia sama sekali",
     "Mengompilasi aplikasi yang diuji menjadi paket instalasi untuk setiap platform",
-    "Menghapus seluruh cache browser milik semua pengguna yang pernah mengunjungi situs"
+    "Menghapus seluruh cache browser milik semua user yang pernah mengunjungi situs"
    ],
    "en": [
     "Recording browser interactions and generating starter test code that needs tidying",
@@ -285,7 +285,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Codegen membantu memulai skrip dengan cepat, tetapi hasilnya tetap perlu ditinjau: locator, assertion, dan struktur.",
+   "id": "Codegen membantu memulai script dengan cepat, tetapi hasilnya tetap perlu ditinjau: locator, assertion, dan struktur.",
    "en": "Codegen helps start scripts quickly, but the output still needs review: locators, assertions and structure."
   }
  },
@@ -314,7 +314,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Cypress menyusun antrean perintah asinkron; cy.get tidak mengembalikan elemen sebagai nilai biasa dan jQuery text() tidak tersedia di chain Cypress. Ambil nilai lewat .then(($el) => ...).",
+   "id": "Cypress menyusun queue perintah asinkron; cy.get tidak mengembalikan elemen sebagai nilai biasa dan jQuery text() tidak tersedia di chain Cypress. Ambil nilai lewat .then(($el) => ...).",
    "en": "Cypress builds an async command queue; cy.get does not return the element as a plain value, and jQuery's text() is not on the Cypress chain. Read values via .then(($el) => ...)."
   }
  },
@@ -360,7 +360,7 @@
    "id": [
     "Query seperti cy.get dan assertion yang mengikutinya diulang otomatis sampai berhasil atau timeout",
     "Seluruh file test diulang tanpa batas sampai setiap test di dalamnya akhirnya berhasil lulus",
-    "Cypress otomatis mengirim ulang laporan bug ke tracker yang sebelumnya gagal terkirim",
+    "Cypress otomatis mengirim ulang bug report ke tracker yang sebelumnya gagal terkirim",
     "Aksi seperti click dijalankan berulang kali sampai halaman akhirnya berubah state-nya"
    ],
    "en": [
@@ -401,7 +401,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "cy.origin() memungkinkan alur lintas origin dalam satu test (dengan batasan cakupan callback). Ini bagian dari batasan same-origin yang perlu diketahui.",
+   "id": "cy.origin() memungkinkan alur lintas origin dalam satu test (dengan batasan coverage callback). Ini bagian dari batasan same-origin yang perlu diketahui.",
    "en": "cy.origin() enables cross-origin flows in one test (with callback scope limits). It is part of the same-origin constraint you should know about."
   }
  },
@@ -504,7 +504,7 @@
   "options": {
    "id": [
     "Menyimpan dan memulihkan cookie, local storage sesi login antar test agar tidak login berulang",
-    "Menambah jumlah sesi pengguna bersamaan yang dapat dilayani aplikasi di lingkungan produksi",
+    "Menambah jumlah sesi user bersamaan yang dapat dilayani aplikasi di production environment",
     "Mengatur batas waktu global yang berlaku untuk seluruh eksekusi Cypress di mesin tersebut",
     "Merekam video seluruh layar komputer selama test sedang berjalan di mesin tersebut"
    ],
@@ -533,7 +533,7 @@
   "options": {
    "id": [
     "Memasang dan menguji satu komponen UI secara terpisah tanpa menjalankan seluruh aplikasi",
-    "Menguji koneksi antar server database secara langsung tanpa antarmuka pengguna",
+    "Menguji koneksi antar server database secara langsung tanpa user interface",
     "Menghitung jumlah baris kode dan melaporkan totalnya untuk setiap folder repositori",
     "Menggantikan setiap test end-to-end di proyek tanpa terkecuali sama sekali"
    ],
@@ -591,8 +591,8 @@
   "options": {
    "id": [
     "Menyimpan test object (locator) terpusat sehingga perubahan UI cukup diperbaiki di satu tempat",
-    "Menyimpan seluruh kode sumber aplikasi yang diuji untuk setiap rilis yang ada",
-    "Menyimpan password semua pengguna aplikasi secara polos untuk keperluan test",
+    "Menyimpan seluruh kode sumber aplikasi yang diuji untuk setiap release yang ada",
+    "Menyimpan password semua user aplikasi secara polos untuk keperluan test",
     "Menjalankan test dengan sendirinya tanpa memerlukan test case sama sekali"
    ],
    "en": [
@@ -633,7 +633,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Collection berguna untuk eksekusi lintas browser atau lingkungan: tiap suite dijalankan dengan konfigurasinya sendiri.",
+   "id": "Collection berguna untuk eksekusi lintas browser atau environment: tiap suite dijalankan dengan konfigurasinya sendiri.",
    "en": "A Collection is useful for cross-browser or cross-environment runs: each suite runs with its own configuration."
   }
  },
@@ -680,7 +680,7 @@
     "Menghubungkan Test Data (Excel, CSV, database) ke variabel test case sehingga test berjalan per baris data",
     "Menulis ulang test case yang sama sekali lagi untuk setiap baris data yang ada",
     "Memasukkan semua baris data langsung ke Object Repository sebagai test object",
-    "Menunggu pengguna sungguhan mengetik data ke formulir satu per satu selama run"
+    "Menunggu user sungguhan mengetik data ke formulir satu per satu selama run"
    ],
    "en": [
     "Binding Test Data (Excel, CSV, database) to test case variables so the test runs once per data row",
@@ -720,7 +720,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Self-healing mengurangi kegagalan karena perubahan locator, tetapi hasilnya tetap perlu ditinjau agar locator yang \"disembuhkan\" tidak menunjuk elemen yang salah.",
+   "id": "Self-healing mengurangi failure karena perubahan locator, tetapi hasilnya tetap perlu ditinjau agar locator yang \"disembuhkan\" tidak menunjuk elemen yang salah.",
    "en": "Self-healing reduces failures from locator changes, but the result should still be reviewed so a healed locator does not point to the wrong element."
   }
  },
@@ -730,7 +730,7 @@
   "level": 1,
   "type": "mcq",
   "q": {
-   "id": "Bahasa apa yang dipakai untuk custom keyword dan skrip di Katalon Studio?",
+   "id": "Bahasa apa yang dipakai untuk custom keyword dan script di Katalon Studio?",
    "en": "Which language is used for custom keywords and scripts in Katalon Studio?"
   },
   "options": {
@@ -749,7 +749,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Katalon Studio berbasis Groovy/Java sehingga library Java dapat dipakai di skrip.",
+   "id": "Katalon Studio berbasis Groovy/Java sehingga library Java dapat dipakai di script.",
    "en": "Katalon Studio is Groovy/Java based, so Java libraries can be used in scripts."
   }
  },
@@ -764,8 +764,8 @@
   },
   "options": {
    "id": [
-    "Mencatat kegagalan tetapi melanjutkan langkah berikutnya, dan test case akhirnya ditandai gagal",
-    "Mengabaikan kegagalan sepenuhnya, seolah verifikasi itu tidak pernah dijalankan",
+    "Mencatat failure tetapi melanjutkan langkah berikutnya, dan test case akhirnya ditandai gagal",
+    "Mengabaikan failure sepenuhnya, seolah verifikasi itu tidak pernah dijalankan",
     "Menghentikan seluruh eksekusi seketika dan menghapus semua hasil sejauh ini",
     "Mengulang keyword tanpa batas sampai akhirnya berhasil dengan sendirinya"
    ],
@@ -788,7 +788,7 @@
   "level": 2,
   "type": "mcq",
   "q": {
-   "id": "Bagaimana test Katalon dijalankan di pipeline CI tanpa membuka antarmuka Studio?",
+   "id": "Bagaimana test Katalon dijalankan di pipeline CI tanpa membuka interface Studio?",
    "en": "How do you run Katalon tests in a CI pipeline without opening the Studio UI?"
   },
   "options": {
@@ -875,7 +875,7 @@
   "level": 3,
   "type": "mcq",
   "q": {
-   "id": "Cara mengambil pesanan terbaru milik tiap pelanggan (satu baris per pelanggan)?",
+   "id": "Cara mengambil pesanan terbaru milik tiap customer (satu baris per customer)?",
    "en": "How do you get each customer's latest order (one row per customer)?"
   },
   "options": {
@@ -894,7 +894,7 @@
   },
   "answer": 1,
   "exp": {
-   "id": "ROW_NUMBER() dengan PARTITION BY menomori pesanan per pelanggan; rn = 1 adalah yang terbaru. Opsi pertama hanya mengembalikan satu baris total, bukan per pelanggan.",
+   "id": "ROW_NUMBER() dengan PARTITION BY menomori pesanan per customer; rn = 1 adalah yang terbaru. Opsi pertama hanya mengembalikan satu baris total, bukan per customer.",
    "en": "ROW_NUMBER() with PARTITION BY numbers orders per customer; rn = 1 is the latest. The first option returns a single row overall, not one per customer."
   }
  },
@@ -991,15 +991,15 @@
   "level": 3,
   "type": "mcq",
   "q": {
-   "id": "LEFT JOIN orders o ON ... WHERE o.status = 'PAID' ternyata menghilangkan pelanggan tanpa pesanan. Mengapa?",
+   "id": "LEFT JOIN orders o ON ... WHERE o.status = 'PAID' ternyata menghilangkan customer tanpa pesanan. Mengapa?",
    "en": "LEFT JOIN orders o ON ... WHERE o.status = 'PAID' drops customers with no orders. Why?"
   },
   "options": {
    "id": [
     "Kondisi di WHERE pada tabel kanan menyaring baris NULL sehingga efeknya seperti INNER JOIN; pindahkan ke ON",
     "LEFT JOIN tidak boleh digabung dengan kolom status, sehingga query diam-diam berubah menjadi scan biasa",
-    "PAID adalah kata terlarang di SQL, sehingga database membuang pelanggan yang tidak punya pesanan",
-    "Database menghapus pelanggan tanpa pesanan dari tabel aslinya secara fisik setelah query dijalankan"
+    "PAID adalah kata terlarang di SQL, sehingga database membuang customer yang tidak punya pesanan",
+    "Database menghapus customer tanpa pesanan dari tabel aslinya secara fisik setelah query dijalankan"
    ],
    "en": [
     "A WHERE condition on the right table filters out the NULL rows so it behaves like an INNER JOIN; move it to ON",
@@ -1010,7 +1010,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Baris tanpa pesanan memiliki o.status NULL, yang tidak memenuhi o.status = 'PAID'. Menaruh kondisi di ON mempertahankan pelanggan tanpa pesanan.",
+   "id": "Baris tanpa pesanan memiliki o.status NULL, yang tidak memenuhi o.status = 'PAID'. Menaruh kondisi di ON mempertahankan customer tanpa pesanan.",
    "en": "Rows without orders have o.status NULL, which fails o.status = 'PAID'. Putting the condition in ON keeps customers without orders."
   }
  },
@@ -1020,7 +1020,7 @@
   "level": 2,
   "type": "mcq",
   "q": {
-   "id": "Anda perlu membersihkan data uji milik satu user saja. Pernyataan mana yang tepat?",
+   "id": "Anda perlu membersihkan test data milik satu user saja. Pernyataan mana yang tepat?",
    "en": "You need to clean up test data for one user only. Which statement is right?"
   },
   "options": {
@@ -1114,7 +1114,7 @@
    "id": [
     "Atomicity (transaksi harus tuntas seluruhnya atau tidak sama sekali)",
     "Durability (data hilang begitu aliran listrik server dimatikan)",
-    "Isolation (dua pengguna yang bekerja bersamaan melihat kumpulan data yang berbeda)",
+    "Isolation (dua user yang bekerja bersamaan melihat kumpulan data yang berbeda)",
     "Consistency saja, yang sama sekali tidak berhubungan dengan penanganan transaksi"
    ],
    "en": [
@@ -1169,7 +1169,7 @@
    "en": "Tell me about the hardest bug you found and how you handled it."
   },
   "model": {
-   "id": "Gunakan STAR: konteks singkat, langkah reproduksi dan penyempitan penyebab (log, data, environment), kerja sama dengan developer sampai root cause, dampak bisnis, lalu pelajaran atau pencegahan (test regresi baru, perbaikan proses). Hindari menyebut data internal perusahaan.",
+   "id": "Gunakan STAR: konteks singkat, langkah reproduksi dan penyempitan penyebab (log, data, environment), kerja sama dengan developer sampai root cause, dampak bisnis, lalu pelajaran atau pencegahan (regression test baru, perbaikan proses). Hindari menyebut data internal perusahaan.",
    "en": "Use STAR: brief context, reproduction and narrowing down the cause (logs, data, environment), working with developers to the root cause, business impact, then the lesson or prevention (new regression test, process fix). Avoid naming internal company data."
   },
   "keywords": [
@@ -1254,7 +1254,7 @@
    "en": "How would you test a login feature?"
   },
   "model": {
-   "id": "Klarifikasi requirement lalu rancang test: kredensial valid dan tidak valid, nilai batas panjang input, karakter khusus, akun terkunci setelah percobaan gagal, sesi dan logout, \"ingat saya\", keamanan (brute force, SQL injection, pesan error yang tidak membocorkan keberadaan akun), aksesibilitas, dan performa. Putuskan mana yang diotomasi.",
+   "id": "Klarifikasi requirement lalu rancang test: kredensial valid dan tidak valid, nilai batas panjang input, karakter khusus, akun terkunci setelah percobaan gagal, sesi dan logout, \"ingat saya\", security (brute force, SQL injection, pesan error yang tidak membocorkan keberadaan akun), accessibility, dan performance. Putuskan mana yang diotomasi.",
    "en": "Clarify requirements, then design tests: valid and invalid credentials, input length boundaries, special characters, lockout after failed attempts, session and logout, \"remember me\", security (brute force, SQL injection, error messages that do not reveal account existence), accessibility and performance. Decide what to automate."
   },
   "keywords": [
@@ -1294,7 +1294,7 @@
   "level": 3,
   "type": "short",
   "q": {
-   "id": "Bagaimana Anda memutuskan bahwa sebuah rilis aman untuk dirilis (go/no-go)?",
+   "id": "Bagaimana Anda memutuskan bahwa sebuah release aman untuk dirilis (go/no-go)?",
    "en": "How do you decide that a release is safe to ship (go/no-go)?"
   },
   "model": {
@@ -1337,7 +1337,7 @@
    "en": "Your automated test sometimes passes and sometimes fails (flaky). How do you handle it?"
   },
   "model": {
-   "id": "Cari akar masalah dulu: wait yang salah, data bersama antar test, ketergantungan urutan, environment tidak stabil, atau race condition di aplikasi. Kumpulkan bukti (log, trace, video), perbaiki penyebabnya, karantina sementara test yang mengganggu pipeline, dan pakai retry hanya sebagai jaring pengaman, bukan solusi.",
+   "id": "Cari root cause dulu: wait yang salah, data bersama antar test, ketergantungan urutan, environment tidak stabil, atau race condition di aplikasi. Kumpulkan bukti (log, trace, video), perbaiki penyebabnya, karantina sementara test yang mengganggu pipeline, dan pakai retry hanya sebagai jaring pengaman, bukan solusi.",
    "en": "Find the root cause first: wrong waits, data shared between tests, order dependence, an unstable environment or a race condition in the app. Gather evidence (logs, traces, video), fix the cause, quarantine the test temporarily if it blocks the pipeline, and use retries only as a safety net, not a solution."
   },
   "keywords": [
@@ -1379,7 +1379,7 @@
    "en": "You are asked to test an API with no documentation. What are your steps?"
   },
   "model": {
-   "id": "Cari sumber informasi: tanya developer, baca kode atau OpenAPI/Swagger bila ada, amati lalu lintas dari aplikasi klien. Jelajahi endpoint secara eksploratori (method, status, header, error), catat temuan sebagai kontrak sementara, konfirmasi ke developer, lalu ubah menjadi test otomatis yang mencakup positif, negatif, autentikasi, dan batas.",
+   "id": "Cari sumber informasi: tanya developer, baca kode atau OpenAPI/Swagger bila ada, amati lalu lintas dari aplikasi client. Jelajahi endpoint secara eksploratori (method, status, header, error), catat temuan sebagai kontrak sementara, konfirmasi ke developer, lalu ubah menjadi test otomatis yang mencakup positif, negatif, autentikasi, dan batas.",
    "en": "Find information sources: ask developers, read the code or OpenAPI/Swagger if available, observe traffic from the client app. Explore endpoints exploratively (methods, status, headers, errors), record findings as a provisional contract, confirm with developers, then turn it into automated tests covering positive, negative, authentication and boundaries."
   },
   "keywords": [

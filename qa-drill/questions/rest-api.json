@@ -146,7 +146,7 @@
   },
   "answer": 1,
   "exp": {
-   "id": "Resource tidak ditemukan = 404. 500 hanya untuk kegagalan server yang tidak terduga.",
+   "id": "Resource tidak ditemukan = 404. 500 hanya untuk failure server yang tidak terduga.",
    "en": "Resource not found = 404. 500 is only for unexpected server failures."
   }
  },
@@ -229,10 +229,10 @@
   },
   "options": {
    "id": [
-    "Request gagal karena ada kesalahan pada sisi klien",
+    "Request gagal karena ada kesalahan pada sisi client",
     "Request sukses dan tidak ada body di response",
-    "Resource dipindahkan permanen ke URL lain dan klien perlu mengikuti",
-    "Server sedang sibuk dan klien diminta mencoba lagi nanti"
+    "Resource dipindahkan permanen ke URL lain dan client perlu mengikuti",
+    "Server sedang sibuk dan client diminta mencoba lagi nanti"
    ],
    "en": [
     "The request failed because of an error on the client side",
@@ -452,7 +452,7 @@
   },
   "options": {
    "id": [
-    "Sama saja; keduanya berarti pengguna tidak boleh mengakses resource itu",
+    "Sama saja; keduanya berarti user tidak boleh mengakses resource itu",
     "401 = belum terautentikasi/token invalid; 403 = terautentikasi tapi tidak berhak",
     "401 = server error di sisi backend; 403 = client error karena permintaan salah format",
     "401 = resource tidak ada di server; 403 = resource ada tetapi sedang dipindahkan"
@@ -531,7 +531,7 @@
   "level": 1,
   "type": "mcq",
   "q": {
-   "id": "Server sedang maintenance atau kelebihan beban. Status code yang tepat?",
+   "id": "Server sedang maintenance atau kelebihan load. Status code yang tepat?",
    "en": "The server is under maintenance or overloaded. The correct status code?"
   },
   "options": {
@@ -761,7 +761,7 @@
   },
   "answer": 1,
   "exp": {
-   "id": "Tanpa autentikasi = 401. Ini kasus uji negatif wajib untuk endpoint terproteksi.",
+   "id": "Tanpa autentikasi = 401. Ini test case negatif wajib untuk endpoint terproteksi.",
    "en": "No authentication = 401. A mandatory negative test for protected endpoints."
   }
  },
@@ -777,9 +777,9 @@
   "options": {
    "id": [
     "401 dengan pesan generik \"Email atau password salah\"",
-    "200 dengan pesan \"Email tidak terdaftar di sistem kami\" agar pengguna segera mendaftar",
+    "200 dengan pesan \"Email tidak terdaftar di sistem kami\" agar user segera mendaftar",
     "500 Internal Server Error karena data akun yang dicari tidak ditemukan di database",
-    "403 dengan menyebutkan nama user yang ditemukan agar pengguna tahu akun mana yang benar"
+    "403 dengan menyebutkan nama user yang ditemukan agar user tahu akun mana yang benar"
    ],
    "en": [
     "401 with a generic message \"Email or password is incorrect\"",

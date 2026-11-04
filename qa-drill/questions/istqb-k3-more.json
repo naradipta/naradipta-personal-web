@@ -1,0 +1,529 @@
+[
+ {
+  "id": "ctfl-133",
+  "topic": "istqb",
+  "lo": "FL-4.2.1",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Ongkir menurut berat (kg, bilangan bulat): 1-5 = Rp10.000, 6-20 = Rp25.000, 21-50 = Rp60.000. Berat di bawah 1 atau di atas 50 ditolak. Berapa test minimal agar setiap partisi (valid dan tidak valid) tercakup sekali?",
+   "en": "Shipping fee by weight (kg, integers): 1-5 = 10,000, 6-20 = 25,000, 21-50 = 60,000. Weights below 1 or above 50 are rejected. What is the minimum number of tests to cover each partition (valid and invalid) once?"
+  },
+  "options": {
+   "id": [
+    "5",
+    "3",
+    "4",
+    "7"
+   ],
+   "en": [
+    "5",
+    "3",
+    "4",
+    "7"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Ada tiga partisi valid dan dua partisi tidak valid (di bawah 1, di atas 50), total lima. Satu nilai wakil per partisi: misalnya 0, 3, 10, 30, 51.",
+   "en": "There are three valid and two invalid partitions (below 1, above 50), five in total. One representative per partition, e.g. 0, 3, 10, 30, 51."
+  }
+ },
+ {
+  "id": "ctfl-134",
+  "topic": "istqb",
+  "lo": "FL-4.2.1",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Panjang password valid 8 sampai 16 karakter. Kumpulan nilai panjang mana yang mencakup semua partisi dengan EP?",
+   "en": "A password is valid with 8 to 16 characters. Which set of lengths covers all partitions using EP?"
+  },
+  "options": {
+   "id": [
+    "5, 10, 20",
+    "8, 10, 16",
+    "7, 8, 9",
+    "1, 2, 3"
+   ],
+   "en": [
+    "5, 10, 20",
+    "8, 10, 16",
+    "7, 8, 9",
+    "1, 2, 3"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Ada tiga partisi: di bawah 8 (tidak valid), 8-16 (valid), di atas 16 (tidak valid). Nilai 5, 10, 20 masing-masing mewakili satu partisi. Set lain hanya menyentuh satu atau dua partisi.",
+   "en": "There are three partitions: below 8 (invalid), 8-16 (valid), above 16 (invalid). The values 5, 10, 20 each represent one partition. The other sets touch only one or two partitions."
+  }
+ },
+ {
+  "id": "ctfl-135",
+  "topic": "istqb",
+  "lo": "FL-4.2.1",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Diskon belanja (Rupiah, bilangan bulat): total < 100.000 = 0%, 100.000-499.999 = 5%, >= 500.000 = 10%. Total negatif tidak valid. Set input mana yang mencakup semua partisi dengan jumlah test paling sedikit?",
+   "en": "Shopping discount (Rupiah, integers): total < 100,000 = 0%, 100,000-499,999 = 5%, >= 500,000 = 10%. A negative total is invalid. Which input set covers all partitions with the fewest tests?"
+  },
+  "options": {
+   "id": [
+    "-1, 50.000, 250.000, 600.000",
+    "50.000, 250.000, 600.000",
+    "0, 100.000, 500.000, 1.000.000",
+    "-1, 0, 99.999, 100.000, 500.000"
+   ],
+   "en": [
+    "-1, 50,000, 250,000, 600,000",
+    "50,000, 250,000, 600,000",
+    "0, 100,000, 500,000, 1,000,000",
+    "-1, 0, 99,999, 100,000, 500,000"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Partisinya: negatif (tidak valid), 0-99.999, 100.000-499.999, dan >= 500.000, jadi empat nilai wakil sudah cukup. Opsi kedua melewatkan partisi tidak valid; opsi ketiga mengandung dua nilai pada partisi yang sama dan tidak ada yang negatif; opsi keempat memakai lima nilai.",
+   "en": "The partitions are negative (invalid), 0-99,999, 100,000-499,999 and >= 500,000, so four representatives suffice. The second option misses the invalid partition; the third has no negative value; the fourth uses five values."
+  }
+ },
+ {
+  "id": "ctfl-136",
+  "topic": "istqb",
+  "lo": "FL-4.2.1",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Partisi usia untuk tarif tiket: 0-17, 17-64, 65 ke atas. Apa kelemahan pembagian ini?",
+   "en": "Age partitions for ticket prices: 0-17, 17-64, 65 and above. What is wrong with this split?"
+  },
+  "options": {
+   "id": [
+    "Usia 17 masuk dua partisi: partisinya tumpang tindih",
+    "Jumlah partisinya terlalu sedikit untuk tarif tiket",
+    "Usia 65 sama sekali tidak tercakup oleh partisi",
+    "Partisi ekuivalen dilarang memuat rentang nilai"
+   ],
+   "en": [
+    "Age 17 is in two partitions: they overlap",
+    "The number of partitions is too few for ticket pricing",
+    "Age 65 is not covered by any partition at all",
+    "Equivalence partitions are forbidden from holding ranges"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Partisi ekuivalen harus saling lepas (tidak tumpang tindih) dan lengkap. Nilai 17 ambigu: masuk 0-17 atau 17-64? Perbaiki menjadi 0-17, 18-64, 65 ke atas.",
+   "en": "Equivalence partitions must be disjoint (no overlap) and complete. The value 17 is ambiguous: 0-17 or 17-64? Fix as 0-17, 18-64, 65 and above."
+  }
+ },
+ {
+  "id": "ctfl-137",
+  "topic": "istqb",
+  "lo": "FL-4.2.2",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Syarat: usia harus lebih dari 17 dan kurang dari 66 (bilangan bulat). Nilai uji BVA dua nilai yang benar?",
+   "en": "Rule: age must be greater than 17 and less than 66 (integers). Which are the correct two-value BVA test values?"
+  },
+  "options": {
+   "id": [
+    "17, 18, 65, 66",
+    "17, 18, 66, 67",
+    "16, 17, 65, 66",
+    "18, 19, 64, 65"
+   ],
+   "en": [
+    "17, 18, 65, 66",
+    "17, 18, 66, 67",
+    "16, 17, 65, 66",
+    "18, 19, 64, 65"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Rentang valid bilangan bulat adalah 18-65. Dua-nilai BVA: batas dan tetangga di luar rentang, yaitu 17, 18 dan 65, 66. Kesalahan umum adalah memakai angka dalam kalimat (17 dan 66) sebagai batas valid.",
+   "en": "The valid integer range is 18-65. Two-value BVA: each boundary and its neighbour outside the range, i.e. 17, 18 and 65, 66. A common slip is treating the numbers in the sentence (17 and 66) as the valid boundaries."
+  }
+ },
+ {
+  "id": "ctfl-138",
+  "topic": "istqb",
+  "lo": "FL-4.2.2",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Tarif jarak (km, bilangan bulat): 0-10, 11-25, 26-100; di luar itu tidak valid. Berapa nilai berbeda yang diperlukan untuk BVA dua nilai di seluruh partisi?",
+   "en": "Distance fee (km, integers): 0-10, 11-25, 26-100; anything else is invalid. How many distinct values are needed for two-value BVA across all partitions?"
+  },
+  "options": {
+   "id": [
+    "8",
+    "6",
+    "10",
+    "12"
+   ],
+   "en": [
+    "8",
+    "6",
+    "10",
+    "12"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Nilai: -1, 0, 10, 11, 25, 26, 100, 101. Batas yang bersebelahan (10|11 dan 25|26) berbagi nilai sehingga totalnya 8, bukan 12.",
+   "en": "Values: -1, 0, 10, 11, 25, 26, 100, 101. Adjacent boundaries (10|11 and 25|26) share values, so the total is 8, not 12."
+  }
+ },
+ {
+  "id": "ctfl-139",
+  "topic": "istqb",
+  "lo": "FL-4.2.2",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Kolom harga menerima 0,01 sampai 999,99 (dua desimal). Nilai uji BVA dua nilai yang benar?",
+   "en": "A price field accepts 0.01 to 999.99 (two decimals). Which are the correct two-value BVA test values?"
+  },
+  "options": {
+   "id": [
+    "0,00; 0,01; 999,99; 1000,00",
+    "0; 1; 999; 1000",
+    "0,01; 0,02; 999,98; 999,99",
+    "0,00; 0,01; 999,99; 1000,99"
+   ],
+   "en": [
+    "0.00; 0.01; 999.99; 1000.00",
+    "0; 1; 999; 1000",
+    "0.01; 0.02; 999.98; 999.99",
+    "0.00; 0.01; 999.99; 1000.99"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Tetangga ditentukan oleh presisi (dua desimal), jadi tetangga 0,01 adalah 0,00 dan tetangga 999,99 adalah 1000,00. Memakai bilangan bulat mengabaikan presisi kolom.",
+   "en": "Neighbours are set by precision (two decimals), so the neighbour of 0.01 is 0.00 and of 999.99 is 1000.00. Using integers ignores the field's precision."
+  }
+ },
+ {
+  "id": "ctfl-140",
+  "topic": "istqb",
+  "lo": "FL-4.2.2",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Spesifikasi: 'user berusia 18 tahun atau lebih boleh mendaftar'. Developer menulis if (usia > 18). Nilai uji mana yang mendeteksi defect ini?",
+   "en": "Spec: 'users aged 18 or older may register'. The developer wrote if (age > 18). Which test value detects this defect?"
+  },
+  "options": {
+   "id": [
+    "18",
+    "17",
+    "19",
+    "40"
+   ],
+   "en": [
+    "18",
+    "17",
+    "19",
+    "40"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Defect off-by-one: 18 seharusnya diterima tetapi ditolak. BVA menargetkan tepat jenis defect ini. Nilai 17, 19, dan 40 berperilaku sama pada kode benar maupun salah.",
+   "en": "An off-by-one defect: 18 should be accepted but is rejected. BVA targets exactly this kind of defect. 17, 19 and 40 behave the same on correct and faulty code."
+  }
+ },
+ {
+  "id": "ctfl-141",
+  "topic": "istqb",
+  "lo": "FL-4.2.3",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Persetujuan pinjaman: tiga kondisi (kredit baik, pendapatan cukup, punya utang lain), semua Ya/Tidak. Bila kredit tidak baik, hasil selalu 'tolak' apa pun kondisi lain. Berapa kolom aturan setelah kolom digabung?",
+   "en": "Loan approval: three conditions (good credit, enough income, other debt), all Yes/No. If credit is not good, the outcome is always 'reject' whatever the other conditions. How many rule columns remain after collapsing?"
+  },
+  "options": {
+   "id": [
+    "5",
+    "8",
+    "4",
+    "6"
+   ],
+   "en": [
+    "5",
+    "8",
+    "4",
+    "6"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Kredit tidak baik digabung menjadi satu kolom (kondisi lain 'tidak peduli'). Kredit baik memakai 2 x 2 = 4 kolom. Total 1 + 4 = 5, bukan 8.",
+   "en": "Bad credit collapses into a single column (the others are 'don't care'). Good credit uses 2 x 2 = 4 columns. Total 1 + 4 = 5, not 8."
+  }
+ },
+ {
+  "id": "ctfl-142",
+  "topic": "istqb",
+  "lo": "FL-4.2.3",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Decision table memakai dua kondisi: 'pesanan sudah dibayar' dan 'pesanan sudah dikirim'. Kombinasi 'dikirim tetapi belum dibayar' mustahil menurut aturan bisnis. Berapa test case untuk coverage semua aturan yang layak?",
+   "en": "A decision table uses two conditions: 'order is paid' and 'order is shipped'. The combination 'shipped but unpaid' is impossible by business rules. How many test cases cover all feasible rules?"
+  },
+  "options": {
+   "id": [
+    "3",
+    "4",
+    "2",
+    "1"
+   ],
+   "en": [
+    "3",
+    "4",
+    "2",
+    "1"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Tabel penuh punya 4 kolom, satu di antaranya tidak mungkin terjadi sehingga dikeluarkan. Sisa 3 aturan layak, masing-masing diuji.",
+   "en": "The full table has 4 columns, one of which cannot occur and is dropped. The remaining 3 feasible rules are each tested."
+  }
+ },
+ {
+  "id": "ctfl-143",
+  "topic": "istqb",
+  "lo": "FL-4.2.3",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Premi asuransi: pengemudi di bawah 25 tahun dan punya riwayat kecelakaan = +50%; hanya salah satu dari keduanya = +25%; tidak keduanya = tarif dasar. Seorang pengemudi 30 tahun punya riwayat kecelakaan. Hasil yang diharapkan?",
+   "en": "Insurance premium: a driver under 25 with an accident history = +50%; only one of the two = +25%; neither = base rate. A 30-year-old driver has an accident history. Expected result?"
+  },
+  "options": {
+   "id": [
+    "+25%",
+    "+50%",
+    "Tarif dasar",
+    "Ditolak"
+   ],
+   "en": [
+    "+25%",
+    "+50%",
+    "Base rate",
+    "Rejected"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Usia 30 berarti kondisi 'di bawah 25' tidak terpenuhi, sedangkan riwayat kecelakaan terpenuhi. Tepat satu kondisi benar sehingga +25%.",
+   "en": "Age 30 means 'under 25' is not met while the accident history is. Exactly one condition is true, so +25%."
+  }
+ },
+ {
+  "id": "ctfl-144",
+  "topic": "istqb",
+  "lo": "FL-4.2.3",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Sebuah decision table dengan tiga kondisi Ya/Tidak hanya punya tujuh kolom: YYY, YYN, YNY, YNN, NYY, NYN, NNY. Apa masalahnya?",
+   "en": "A decision table with three Yes/No conditions has only seven columns: YYY, YYN, YNY, YNN, NYY, NYN, NNY. What is the problem?"
+  },
+  "options": {
+   "id": [
+    "NNN hilang, jadi tabel tidak lengkap",
+    "Ada satu kolom yang muncul sebagai duplikat",
+    "Tabel seharusnya hanya memiliki enam kolom saja",
+    "Tidak ada masalah; tabel itu sudah lengkap"
+   ],
+   "en": [
+    "NNN is missing, so the table is incomplete",
+    "One column appears as a duplicate of another",
+    "The table should only have six columns in total",
+    "No problem; the table is already complete"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Tiga kondisi biner menghasilkan 2^3 = 8 kombinasi. Yang hilang adalah NNN; kombinasi yang terlewat berarti perilaku tidak terdefinisi dan tidak teruji.",
+   "en": "Three binary conditions give 2^3 = 8 combinations. NNN is missing; a missing combination means undefined, untested behaviour."
+  }
+ },
+ {
+  "id": "ctfl-145",
+  "topic": "istqb",
+  "lo": "FL-4.2.4",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Akun: Active -(3x gagal login)-> Locked; Locked -(unlock)-> Active; Active -(close)-> Closed; Locked -(close)-> Closed. Closed tidak punya transisi keluar. Ada 3 state dan 3 event. Berapa pasangan (state, event) yang tidak valid?",
+   "en": "Account: Active -(3 failed logins)-> Locked; Locked -(unlock)-> Active; Active -(close)-> Closed; Locked -(close)-> Closed. Closed has no outgoing transitions. There are 3 states and 3 events. How many (state, event) pairs are invalid?"
+  },
+  "options": {
+   "id": [
+    "5",
+    "4",
+    "9",
+    "3"
+   ],
+   "en": [
+    "5",
+    "4",
+    "9",
+    "3"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Total pasangan 3 x 3 = 9; transisi valid ada 4, sehingga 5 tidak valid (mis. unlock saat Active, gagal login saat Locked, semua event saat Closed). Pasangan tidak valid ini diuji sebagai negative test.",
+   "en": "Total pairs 3 x 3 = 9; there are 4 valid transitions, so 5 are invalid (e.g. unlock while Active, failed login while Locked, every event while Closed). These invalid pairs are tested as negative tests."
+  }
+ },
+ {
+  "id": "ctfl-146",
+  "topic": "istqb",
+  "lo": "FL-4.2.4",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Artikel: Draft -(submit)-> Submitted; Submitted -(approve)-> Approved; Approved -(publish)-> Published; Submitted -(reject)-> Rejected; Rejected -(edit)-> Draft. Setiap urutan dimulai dari Draft. Berapa urutan test minimal agar semua transisi valid tercakup?",
+   "en": "Article: Draft -(submit)-> Submitted; Submitted -(approve)-> Approved; Approved -(publish)-> Published; Submitted -(reject)-> Rejected; Rejected -(edit)-> Draft. Every sequence starts at Draft. What is the minimum number of test sequences to cover all valid transitions?"
+  },
+  "options": {
+   "id": [
+    "2",
+    "1",
+    "3",
+    "5"
+   ],
+   "en": [
+    "2",
+    "1",
+    "3",
+    "5"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Urutan 1: submit, approve, publish. Urutan 2: submit, reject, edit. Keduanya bersama menutup kelima transisi. Satu urutan tidak cukup karena reject dan approve keluar dari state yang sama.",
+   "en": "Sequence 1: submit, approve, publish. Sequence 2: submit, reject, edit. Together they cover all five transitions. One sequence is not enough because reject and approve leave the same state."
+  }
+ },
+ {
+  "id": "ctfl-147",
+  "topic": "istqb",
+  "lo": "FL-4.2.4",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Pada model artikel di atas, sebuah test menjalankan: Draft, Submitted, Rejected, Draft, Submitted, Approved. Berapa transisi berbeda yang tercakup?",
+   "en": "In the article model above, a test runs: Draft, Submitted, Rejected, Draft, Submitted, Approved. How many distinct transitions does it cover?"
+  },
+  "options": {
+   "id": [
+    "4",
+    "5",
+    "6",
+    "3"
+   ],
+   "en": [
+    "4",
+    "5",
+    "6",
+    "3"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Ada 5 langkah, tetapi submit dari Draft ke Submitted terjadi dua kali. Transisi berbeda: submit, reject, edit, approve = 4.",
+   "en": "There are 5 steps, but submit from Draft to Submitted occurs twice. Distinct transitions: submit, reject, edit, approve = 4."
+  }
+ },
+ {
+  "id": "ctfl-148",
+  "topic": "istqb",
+  "lo": "FL-4.2.4",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Model pesanan: Pending -(pay)-> Paid; Paid -(refund)-> Refunded; Pending -(cancel)-> Cancelled. Test mengirim event pay, refund, lalu pay lagi. Perilaku yang benar untuk event pay terakhir?",
+   "en": "Order model: Pending -(pay)-> Paid; Paid -(refund)-> Refunded; Pending -(cancel)-> Cancelled. A test sends pay, refund, then pay again. What is the correct behaviour for the last pay event?"
+  },
+  "options": {
+   "id": [
+    "Ditolak: Refunded tidak punya transisi pay",
+    "Diterima, lalu pesanan kembali ke state Paid",
+    "Diterima, lalu pesanan masuk ke state Pending",
+    "Event itu menghapus seluruh data pesanan"
+   ],
+   "en": [
+    "Rejected: Refunded has no pay transition",
+    "Accepted, and the order returns to the Paid state",
+    "Accepted, and the order moves to the Pending state",
+    "The event deletes the whole order record"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Model tidak punya transisi pay dari Refunded, jadi event itu harus ditolak dan state tetap Refunded. Ini negative test klasik untuk transisi tidak valid.",
+   "en": "The model has no pay transition from Refunded, so the event must be rejected and the state stay Refunded. A classic negative test for an invalid transition."
+  }
+ },
+ {
+  "id": "ctfl-149",
+  "topic": "istqb",
+  "lo": "FL-4.3.2",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Kode: if (A) { s1 } lalu if (B) { s2 } (tanpa else). Satu test dijalankan dengan A = benar dan B = benar. Berapa statement coverage dan branch coverage?",
+   "en": "Code: if (A) { s1 } then if (B) { s2 } (no else). One test runs with A = true and B = true. What are the statement and branch coverage?"
+  },
+  "options": {
+   "id": [
+    "Statement 100%, branch 50%",
+    "Statement 100%, branch 100%",
+    "Statement 50%, branch 50%",
+    "Statement 50%, branch 100%"
+   ],
+   "en": [
+    "Statement 100%, branch 50%",
+    "Statement 100%, branch 100%",
+    "Statement 50%, branch 50%",
+    "Statement 50%, branch 100%"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Kedua statement dieksekusi (100%). Ada dua keputusan, masing-masing dua cabang (benar/salah) = 4 cabang; test hanya menjalankan dua cabang 'benar' = 50%. Perlu test kedua dengan A dan B salah.",
+   "en": "Both statements run (100%). There are two decisions with two branches each (true/false) = 4 branches; the test only takes the two 'true' branches = 50%. A second test with A and B false is needed."
+  }
+ }
+]

@@ -224,7 +224,7 @@
   "level": 3,
   "type": "mcq",
   "q": {
-   "id": "Decision table diskon: anggota+kupon = 20%; anggota tanpa kupon = 10%; bukan anggota+kupon = 5%; bukan anggota tanpa kupon = 0%. Pelanggan bukan anggota memakai kupon. Hasil yang diharapkan?",
+   "id": "Decision table diskon: anggota+kupon = 20%; anggota tanpa kupon = 10%; bukan anggota+kupon = 5%; bukan anggota tanpa kupon = 0%. Customer bukan anggota memakai kupon. Hasil yang diharapkan?",
    "en": "Discount decision table: member+coupon = 20%; member without coupon = 10%; non-member+coupon = 5%; non-member without coupon = 0%. A non-member uses a coupon. Expected result?"
   },
   "options": {
@@ -441,7 +441,7 @@
   "level": 3,
   "type": "mcq",
   "q": {
-   "id": "Cakupan requirement: T1 = R1,R2,R3; T2 = R3,R4,R6; T3 = R1,R2; T4 = R5. Urutan prioritisasi 'additional coverage' (tiap langkah memilih yang menambah cakupan baru terbanyak)?",
+   "id": "Requirement coverage: T1 = R1,R2,R3; T2 = R3,R4,R6; T3 = R1,R2; T4 = R5. Urutan prioritisasi 'additional coverage' (tiap langkah memilih yang menambah coverage baru terbanyak)?",
    "en": "Requirement coverage: T1 = R1,R2,R3; T2 = R3,R4,R6; T3 = R1,R2; T4 = R5. 'Additional coverage' prioritisation order (each step picks the test adding most new coverage)?"
   },
   "options": {
@@ -491,7 +491,7 @@
   },
   "answer": 1,
   "exp": {
-   "id": "Laporan yang baik memuat lingkungan/versi, langkah reproduksi, hasil aktual vs harapan, dan bukti. Opsi lain samar, emosional, atau berupa dugaan.",
+   "id": "Laporan yang baik memuat environment/versi, langkah reproduksi, hasil aktual vs harapan, dan bukti. Opsi lain samar, emosional, atau berupa dugaan.",
    "en": "A good report has environment/version, reproduction steps, actual vs expected results and evidence. The others are vague, emotional or speculative."
   }
  },
@@ -503,12 +503,12 @@
   "level": 3,
   "type": "mcq",
   "q": {
-   "id": "User story: 'Sebagai pelanggan, saya ingin memakai voucher agar membayar lebih murah.' Acceptance test ATDD mana yang paling baik?",
+   "id": "User story: 'Sebagai customer, saya ingin memakai voucher agar membayar lebih murah.' Acceptance test ATDD mana yang paling baik?",
    "en": "User story: 'As a customer, I want to apply a voucher so that I pay less.' Which ATDD acceptance test is best?"
   },
   "options": {
    "id": [
-    "Voucher harus bekerja dengan baik di semua kondisi keranjang pelanggan",
+    "Voucher harus bekerja dengan baik di semua kondisi keranjang customer",
     "Given keranjang Rp200.000 dan voucher HEMAT10 (10%, min. Rp100.000), When voucher diterapkan, Then total Rp180.000",
     "Developer memeriksa kode fungsi diskon untuk memastikan rumusnya sudah benar",
     "Tampilan voucher harus bagus dan konsisten dengan desain aplikasi terbaru"

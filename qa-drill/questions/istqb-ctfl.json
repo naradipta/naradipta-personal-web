@@ -46,7 +46,7 @@
     "Testing memperbaiki defect, sedangkan debugging menemukan failure pada saat sistem berjalan",
     "Testing memicu failure akibat defect; debugging menemukan dan memperbaiki penyebabnya",
     "Keduanya sama-sama selalu dilakukan oleh tester karena tujuan dan hasilnya identik",
-    "Debugging hanya dilakukan setelah rilis, ketika pengguna sudah melaporkan masalah di produksi"
+    "Debugging hanya dilakukan setelah release, ketika user sudah melaporkan masalah di produksi"
    ],
    "en": [
     "Testing fixes defects, while debugging finds failures while the system is running",
@@ -76,7 +76,7 @@
    "id": [
     "Menjamin sistem bebas defect sehingga tidak ada failure yang akan terjadi di produksi",
     "Mengurangi risiko failure saat beroperasi dengan menemukan defect lebih dulu",
-    "Menghilangkan kebutuhan review karena semua masalah pasti ditemukan oleh pengujian",
+    "Menghilangkan kebutuhan review karena semua masalah pasti ditemukan oleh testing",
     "Menggantikan requirement karena test case sudah menjelaskan perilaku yang diharapkan"
    ],
    "en": [
@@ -325,7 +325,7 @@
     "Mendesain test case berdasarkan kondisi test yang sudah dianalisis",
     "Menjalankan test case dan membandingkan hasil aktual dengan hasil yang diharapkan",
     "Memantau kemajuan dan mengontrol aktivitas test",
-    "Menyiapkan data tes dan lingkungan yang dibutuhkan untuk eksekusi"
+    "Menyiapkan data tes dan environment yang dibutuhkan untuk eksekusi"
    ],
    "en": [
     "Designing test cases from the test conditions that were analysed",
@@ -387,7 +387,7 @@
     "Hanya tester yang bertanggung jawab atas kualitas, sedangkan anggota tim lain fokus pada fitur",
     "Siapa pun dengan keahlian yang dibutuhkan bisa mengerjakan tugas; seluruh tim bertanggung jawab atas kualitas",
     "Semua orang di tim harus menjadi tester bersertifikat sebelum boleh ikut mengerjakan tugas",
-    "Developer dilarang menguji agar pekerjaan pengujian tetap independen dari pengembangan"
+    "Developer dilarang menguji agar pekerjaan testing tetap independen dari pengembangan"
    ],
    "en": [
     "Only testers are responsible for quality, while other team members focus on features",
@@ -478,7 +478,7 @@
   "options": {
    "id": [
     "Setiap aktivitas pengembangan punya aktivitas test yang sepadan",
-    "Testing hanya dimulai setelah rilis",
+    "Testing hanya dimulai setelah release",
     "Satu test level cukup untuk semua tujuan",
     "Tester tidak ikut membahas requirement"
    ],
@@ -539,8 +539,8 @@
   },
   "options": {
    "id": [
-    "Menghilangkan semua manual testing karena pipeline menjalankan semua jenis pengujian",
-    "Umpan balik kualitas cepat lewat pipeline CI/CD yang menjalankan tes otomatis",
+    "Menghilangkan semua manual testing karena pipeline menjalankan semua jenis testing",
+    "Feedback kualitas cepat lewat pipeline CI/CD yang menjalankan tes otomatis",
     "Tidak perlu lagi merawat otomasi karena pipeline memperbaiki test yang rusak sendiri",
     "Test environment tidak lagi dibutuhkan karena semua tes berjalan di mesin developer"
    ],
@@ -572,7 +572,7 @@
    "id": [
     "Menunda test sampai tahap akhir proyek ketika semua fitur sudah selesai dibuat",
     "Mereview user story dan acceptance criteria sebelum coding dimulai",
-    "Menambah jumlah tester setelah rilis agar defect produksi bisa diperbaiki lebih cepat",
+    "Menambah jumlah tester setelah release agar defect produksi bisa diperbaiki lebih cepat",
     "Menghapus static analysis dari pipeline supaya proses build berjalan lebih singkat"
    ],
    "en": [
@@ -604,7 +604,7 @@
     "Sebelum proyek dimulai untuk menetapkan jadwal dan pembagian tugas seluruh anggota tim",
     "Di akhir proyek atau iterasi untuk membahas keberhasilan dan perbaikan",
     "Hanya ketika produksi gagal total, sebagai bagian dari analisis insiden yang formal",
-    "Setiap kuartal untuk menilai kinerja individu dan menentukan kenaikan gaji anggota tim"
+    "Setiap kuartal untuk menilai performance individu dan menentukan kenaikan gaji anggota tim"
    ],
    "en": [
     "Before the project starts to set the schedule and the division of tasks for all team members",
@@ -658,7 +658,7 @@
   "level": 2,
   "type": "mcq",
   "q": {
-   "id": "Pengujian oleh administrator untuk backup/restore dan disaster recovery termasuk...",
+   "id": "Testing oleh administrator untuk backup/restore dan disaster recovery termasuk...",
    "en": "Testing by administrators for backup/restore and disaster recovery is..."
   },
   "options": {
@@ -677,7 +677,7 @@
   },
   "answer": 1,
   "exp": {
-   "id": "Operational acceptance testing menguji kesiapan operasional: backup, recovery, pemeliharaan, keamanan.",
+   "id": "Operational acceptance testing menguji kesiapan operasional: backup, recovery, pemeliharaan, security.",
    "en": "Operational acceptance testing checks operational readiness: backup, recovery, maintenance, security."
   }
  },
@@ -695,7 +695,7 @@
   "options": {
    "id": [
     "Didasarkan pada struktur internal sistem seperti kode atau arsitektur",
-    "Hanya dilakukan pada acceptance level oleh pengguna bisnis sebelum rilis dilakukan",
+    "Hanya dilakukan pada acceptance level oleh user bisnis sebelum release dilakukan",
     "Didasarkan hanya pada spesifikasi tanpa melihat bagaimana sistem dibangun di dalamnya",
     "Tidak mengukur coverage apa pun karena fokusnya hanya pada perilaku dari luar"
    ],
@@ -751,7 +751,7 @@
   "level": 2,
   "type": "mcq",
   "q": {
-   "id": "Pemindahan aplikasi ke platform atau database baru adalah pemicu maintenance testing berupa...",
+   "id": "Pemindahan aplikasi ke platform atau database baru adalah trigger maintenance testing berupa...",
    "en": "Moving an application to a new platform or database is a maintenance testing trigger of type..."
   },
   "options": {
@@ -770,7 +770,7 @@
   },
   "answer": 1,
   "exp": {
-   "id": "Pemicu: modification (perubahan fitur/perbaikan), migration (pindah platform/data), retirement (pensiun sistem).",
+   "id": "Trigger: modification (perubahan fitur/perbaikan), migration (pindah platform/data), retirement (pensiun sistem).",
    "en": "Triggers: modification (changes/fixes), migration (platform/data move), retirement (system decommissioning)."
   }
  },
@@ -819,9 +819,9 @@
   "options": {
    "id": [
     "Menemukan defect lebih awal sehingga lebih murah diperbaiki",
-    "Menjamin kode bebas bug sebelum masuk ke tahap pengujian dinamis maupun rilis",
+    "Menjamin kode bebas bug sebelum masuk ke tahap testing dinamis maupun release",
     "Menggantikan dynamic testing sepenuhnya sehingga eksekusi kode tidak lagi diperlukan",
-    "Mengukur performa aplikasi di bawah beban nyata dengan banyak pengguna sekaligus"
+    "Mengukur performance aplikasi di bawah load nyata dengan banyak user sekaligus"
    ],
    "en": [
     "Finding defects early so they are cheaper to fix",
@@ -852,7 +852,7 @@
     "Memory leak",
     "Waktu respons lambat",
     "Ambiguitas pada requirement",
-    "Crash saat beban tinggi"
+    "Crash saat load tinggi"
    ],
    "en": [
     "Memory leak",
@@ -875,7 +875,7 @@
   "level": 1,
   "type": "mcq",
   "q": {
-   "id": "Manfaat umpan balik awal dan sering dari stakeholder adalah...",
+   "id": "Manfaat feedback awal dan sering dari stakeholder adalah...",
    "en": "A benefit of early and frequent stakeholder feedback is..."
   },
   "options": {
@@ -894,7 +894,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Umpan balik dini mengurangi salah paham dan pengerjaan ulang mahal.",
+   "id": "Feedback dini mengurangi salah paham dan pengerjaan ulang mahal.",
    "en": "Early feedback reduces misunderstanding and costly rework."
   }
  },
@@ -968,7 +968,7 @@
   "level": 2,
   "type": "mcq",
   "q": {
-   "id": "Jenis review mana yang dipimpin author dengan tujuan edukasi dan meminta umpan balik?",
+   "id": "Jenis review mana yang dipimpin author dengan tujuan edukasi dan meminta feedback?",
    "en": "Which review type is led by the author to educate and gather feedback?"
   },
   "options": {
@@ -1004,7 +1004,7 @@
   },
   "options": {
    "id": [
-    "Hasil review dipakai untuk menilai kinerja author",
+    "Hasil review dipakai untuk menilai performance author",
     "Peserta punya waktu cukup dan tujuan review jelas",
     "Review dilakukan atas seluruh dokumen sekaligus",
     "Hanya manajer yang menjadi reviewer"
@@ -1018,7 +1018,7 @@
   },
   "answer": 1,
   "exp": {
-   "id": "Tujuan jelas, waktu cukup, potongan kecil, budaya konstruktif. Menilai kinerja author merusak budaya review.",
+   "id": "Tujuan jelas, waktu cukup, potongan kecil, budaya konstruktif. Menilai performance author merusak budaya review.",
    "en": "Clear objectives, enough time, small chunks, constructive culture. Judging authors damages review culture."
   }
  },
@@ -1409,7 +1409,7 @@
    "id": [
     "Desain dan eksekusi tes dipisah jauh dan didokumentasikan penuh sebelum dijalankan",
     "Desain, eksekusi, dan pembelajaran dilakukan bersamaan, dipandu test charter dan sering dibatasi waktu",
-    "Tes hanya dijalankan oleh tool otomatis berdasarkan skrip yang ditulis jauh sebelumnya",
+    "Tes hanya dijalankan oleh tool otomatis berdasarkan script yang ditulis jauh sebelumnya",
     "Hanya dipakai pada unit level oleh developer yang menulis kode yang sedang diuji"
    ],
    "en": [
@@ -1526,7 +1526,7 @@
   "level": 3,
   "type": "mcq",
   "q": {
-   "id": "Story: \"Sebagai pelanggan, saya ingin ongkir gratis untuk pesanan minimal $50.\" Test case acceptance mana yang diturunkan dengan benar?",
+   "id": "Story: \"Sebagai customer, saya ingin ongkir gratis untuk pesanan minimal $50.\" Test case acceptance mana yang diturunkan dengan benar?",
    "en": "Story: \"As a customer I want free shipping for orders of at least $50.\" Which acceptance test case is derived correctly?"
   },
   "options": {
@@ -1565,7 +1565,7 @@
     "Pendekatan test dan jadwal",
     "Kode sumber aplikasi",
     "Hasil eksekusi tiap test case",
-    "Daftar password pengguna"
+    "Daftar password user"
    ],
    "en": [
     "Test approach and schedule",
@@ -1731,7 +1731,7 @@
   },
   "answer": 1,
   "exp": {
-   "id": "Semakin ke atas, cakupan lebih luas tetapi tes lebih sedikit, lambat, dan rapuh.",
+   "id": "Semakin ke atas, coverage lebih luas tetapi tes lebih sedikit, lambat, dan rapuh.",
    "en": "Higher up, scope is broader but tests should be fewer, slower and more brittle."
   }
  },
@@ -1762,7 +1762,7 @@
   },
   "answer": 2,
   "exp": {
-   "id": "Q1 component/integration; Q2 fungsional; Q3 exploratory/usability/UAT; Q4 performa dan keamanan.",
+   "id": "Q1 component/integration; Q2 fungsional; Q3 exploratory/usability/UAT; Q4 performance dan security.",
    "en": "Q1 component/integration; Q2 functional; Q3 exploratory/usability/UAT; Q4 performance and security."
   }
  },
@@ -1824,7 +1824,7 @@
   },
   "answer": 1,
   "exp": {
-   "id": "Project risk menyangkut jalannya proyek (jadwal, sumber daya, lingkungan). Tiga opsi lain adalah product risk.",
+   "id": "Project risk menyangkut jalannya proyek (jadwal, sumber daya, environment). Tiga opsi lain adalah product risk.",
    "en": "Project risks concern how the project runs (schedule, resources, environment). The other three are product risks."
   }
  },
@@ -1841,7 +1841,7 @@
   },
   "options": {
    "id": [
-    "Menentukan cakupan, teknik, dan usaha testing serta prioritas tes",
+    "Menentukan coverage, teknik, dan usaha testing serta prioritas tes",
     "Menggantikan semua test case dengan satu dokumen ringkasan yang disetujui manajer",
     "Menghapus test plan lama setelah setiap iterasi supaya tidak membingungkan tim",
     "Menentukan gaji dan jenjang karier tester berdasarkan jumlah defect yang ditemukan"
@@ -1968,7 +1968,7 @@
     "Memastikan item test dan testware teridentifikasi unik, terkontrol versinya, dan saling terhubung",
     "Menggantikan test plan dengan daftar versi build yang disetujui manajemen proyek",
     "Menjalankan ulang seluruh tes otomatis setiap kali ada versi baru dari testware",
-    "Menentukan prioritas defect berdasarkan versi yang dilaporkan oleh pengguna"
+    "Menentukan prioritas defect berdasarkan versi yang dilaporkan oleh user"
    ],
    "en": [
     "Ensuring test items and testware are uniquely identified, version controlled and related",
@@ -2010,7 +2010,7 @@
   },
   "answer": 1,
   "exp": {
-   "id": "Laporan baik memuat langkah reproduksi, expected vs actual, dan lingkungan. Opsi lain samar atau menyalahkan orang.",
+   "id": "Laporan baik memuat langkah reproduksi, expected vs actual, dan environment. Opsi lain samar atau menyalahkan orang.",
    "en": "A good report has steps to reproduce, expected vs actual, and environment. The others are vague or blame people."
   }
  },
@@ -2022,7 +2022,7 @@
   "level": 2,
   "type": "mcq",
   "q": {
-   "id": "Tool yang mendukung manajemen test case, pelacakan requirement, dan pelaporan tergolong...",
+   "id": "Tool yang mendukung manajemen test case, pelacakan requirement, dan reporting tergolong...",
    "en": "A tool supporting test case management, requirement tracking and reporting is classified as..."
   },
   "options": {
@@ -2091,7 +2091,7 @@
    "id": [
     "Eksekusi lebih konsisten karena langkah yang sama dijalankan persis setiap kali",
     "Usaha dan perawatan otomasi yang diremehkan",
-    "Hemat waktu pada tes berulang, terutama untuk regression yang dijalankan tiap rilis",
+    "Hemat waktu pada tes berulang, terutama untuk regression yang dijalankan tiap release",
     "Penilaian hasil lebih objektif karena tidak bergantung pada penilaian manusia"
    ],
    "en": [
@@ -2121,7 +2121,7 @@
   "options": {
    "id": [
     "Mengurangi pekerjaan manual berulang dan eksekusi lebih konsisten",
-    "Tidak memerlukan perawatan skrip",
+    "Tidak memerlukan perawatan script",
     "Menggantikan kebutuhan exploratory testing",
     "Selalu menemukan lebih banyak defect"
    ],
