@@ -271,10 +271,15 @@ Situs publik tetap HTML statis; admin hanya menulis ke volume `webroot` yang dib
 Hanya `admin-data` dan `qa-data` yang perlu dicadangkan; `webroot` dibangun ulang dari keduanya.
 
 ```bash
-docker compose up -d --build                                                    # jalankan (pertama kali webroot dibangun otomatis)
+docker compose pull && docker compose up -d                                     # produksi: image dari GHCR (dibangun workflow `docker`)
+docker compose up -d --build                                                    # lokal: bangun dari source (pertama kali webroot dibangun otomatis)
 docker compose run --rm --no-deps admin node admin/cli.js set-admin <username>  # buat akun admin (sekali)
 docker compose run --rm --no-deps admin sh docker/rebuild.sh                    # bangun ulang situs setelah kode situs berubah
 ```
+
+Server produksi hanya butuh `compose.yaml` (dan `qa-drill.env` bila memakai email; contoh: `docker/qa-drill.env.example`),
+tanpa clone repo. Image dibangun di GitHub Actions karena VPS kecil (±1 GB RAM) dan berbagi dengan aplikasi lain.
+Memori tiap container dibatasi (`mem_limit`) agar yang kehabisan memori hanya container itu.
 
 `web` hanya membuka `127.0.0.1:8080` (ubah dengan `WEB_PORT`). TLS tetap ditangani Nginx/Caddy di host:
 satu blok yang meneruskan ketiga domain ke port itu (contoh: `docker/host-nginx.conf.example`).
@@ -282,9 +287,39 @@ satu blok yang meneruskan ketiga domain ke port itu (contoh: `docker/host-nginx.
 **Pindah server:** pasang Docker, ambil repo, pulihkan volume `admin-data` dan `qa-data` dari cadangan, `docker compose up -d --build`,
 pasang konfigurasi Nginx/TLS host, lalu ubah DNS. Volume yang dipulihkan sudah berisi situs, jadi tidak dibangun ulang.
 
-Catatan: setelah kode situs (komponen/layout) berubah, jalankan `docker compose up -d --build` lalu `rebuild.sh` di atas;
+Catatan: setelah kode situs (komponen/layout) berubah, tarik image baru (`docker compose pull && up -d`) lalu jalankan `rebuild.sh` di atas;
 perubahan konten dari admin tidak perlu itu. Volume `admin-data` dipasang di `/app/.admin-data` (bukan `/data`) dengan sengaja,
 agar `astro build` tidak gagal dengan `EXDEV`; alasannya ada di komentar `Dockerfile` (target `admin`).
+
+#### Cutover dari `deploy.sh` + Nginx + systemd ke Docker (sekali saja)
+
+Situs lama tidak disentuh sampai langkah 5, jadi langkah 1-4 aman dikerjakan kapan saja.
+
+1. Pastikan workflow `docker` sudah berjalan di `main` (image ada di `ghcr.io/naradipta/naradipta-personal-web-{web,admin,qa-drill}`).
+   Server perlu `docker login ghcr.io` (token dengan `read:packages`) bila package-nya privat.
+2. Di VPS: `mkdir -p ~/apps/naradipta`, taruh `compose.yaml` di sana, lalu `docker compose pull && docker compose up -d`.
+   `web` hanya mendengarkan `127.0.0.1:8080`; situs publik belum berubah.
+3. Uji tanpa mengubah Nginx: `curl -H 'Host: naradipta.com' 127.0.0.1:8080/`, `curl -H 'Host: learn.naradipta.com' 127.0.0.1:8080/api/health`,
+   dan `curl -H 'Host: naradipta.com' 127.0.0.1:8080/admin/api/health`.
+4. Buat akun admin (perintah di atas). Isi `qa-drill.env` bila memakai email, lalu `docker compose up -d qa-drill`.
+5. **Salin database QA Drill** (di VPS, tidak ada CLI `sqlite3`; `VACUUM INTO` memberi salinan konsisten walau service sedang jalan):
+   ```bash
+   sudo -u www-data node -e "const {DatabaseSync}=require('node:sqlite'); new DatabaseSync('/var/lib/qa-drill/qa-drill.sqlite').exec(\"VACUUM INTO '/tmp/qa-drill.sqlite'\")"
+   docker compose stop qa-drill
+   docker run --rm -v naradipta_qa-data:/data -v /tmp:/in:ro alpine sh -c 'cp /in/qa-drill.sqlite /data/qa-drill.sqlite && chown 1000:1000 /data/qa-drill.sqlite && rm -f /data/qa-drill.sqlite-wal /data/qa-drill.sqlite-shm'
+   docker compose start qa-drill && rm /tmp/qa-drill.sqlite     # berkas /tmp berisi hash password: hapus
+   ```
+   Lakukan tepat sebelum langkah 6 supaya akun yang daftar di antaranya tidak hilang.
+6. **Pindahkan trafik:** cadangkan `/etc/nginx/sites-available/{naradipta.com,learn}`, ganti isinya dengan `docker/host-nginx.conf.example`,
+   lalu `sudo nginx -t && sudo systemctl reload nginx`.
+7. Cek `https://naradipta.com/`, `https://naradipta.com/admin/`, `https://learn.naradipta.com/`, dan login QA Drill.
+   Bila baik: `sudo systemctl disable --now qa-drill` (service lama).
+8. Simpan `/var/www/naradipta` dan unit lama seminggu untuk rollback, lalu hapus. `deploy.sh` tidak dipakai lagi.
+
+**Rollback** (selama langkah 8 belum dikerjakan): kembalikan berkas Nginx dari cadangan, `sudo systemctl reload nginx`, dan `sudo systemctl start qa-drill`.
+Akun QA Drill yang terdaftar sesudah langkah 6 hanya ada di volume Docker, jadi salin ulang database-nya bila perlu rollback.
+
+Setelah itu, update kode = push ke `main` → workflow `docker` membangun image → `docker compose pull && docker compose up -d` di VPS.
 
 ### Alternatif (kalau suatu saat mau lepas dari VPS)
 
