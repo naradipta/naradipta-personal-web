@@ -1,11 +1,15 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
+// Build dari admin menaruh konten di CONTENT_DIR; tanpa env ini dipakai src/content/.
+const contentBase = (name: string) =>
+  process.env.CONTENT_DIR ? `${process.env.CONTENT_DIR}/${name}` : `./src/content/${name}`;
+
 // Schema studi kasus project. Field & aturan mengikuti "Content Collection:
 // schema `projects`" di CLAUDE.md — build akan gagal kalau frontmatter file
 // .md di src/content/projects/ tidak sesuai.
 const projects = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/projects" }),
+  loader: glob({ pattern: "**/*.md", base: contentBase("projects") }),
   schema: z.object({
     title: z.string(),
     summary: z.string(),
@@ -25,7 +29,7 @@ const projects = defineCollection({
 // mengikuti pola yang sama seperti `projects`. Caption WAJIB mengikuti
 // aturan kerahasiaan di CLAUDE.md — tidak menyebut nama event/proyek internal.
 const gallery = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/gallery" }),
+  loader: glob({ pattern: "**/*.md", base: contentBase("gallery") }),
   schema: z.object({
     image: z.string(),
     alt: z.string(),

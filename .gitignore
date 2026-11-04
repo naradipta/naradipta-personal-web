@@ -17,3 +17,6 @@ raw-photos/
 
 # QA Drill: basis data lokal server login
 qa-drill/server/data/
+
+# Admin: data lokal (akun, draft, unggahan) saat dev
+admin/data/

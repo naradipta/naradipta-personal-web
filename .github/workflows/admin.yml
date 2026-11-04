@@ -1,0 +1,23 @@
+name: Admin
+
+on:
+  pull_request:
+    paths: ['admin/**', 'src/config/**', 'src/content.config.ts', '.github/workflows/admin.yml']
+  push:
+    branches: [main]
+    paths: ['admin/**', 'src/config/**', 'src/content.config.ts', '.github/workflows/admin.yml']
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Tes server admin
+        run: node admin/tests/server.test.js
+      - name: Build situs
+        run: npm run build
