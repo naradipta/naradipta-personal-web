@@ -2,6 +2,1424 @@
 window.QA = window.QA || {};
 QA.questions = [
 {
+"id": "pw-007",
+"topic": "playwright",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Locator mana yang paling dianjurkan Playwright untuk tombol \"Masuk\"?",
+"en": "Which locator does Playwright recommend most for a \"Sign in\" button?"
+},
+"options": {
+"id": [
+"page.getByRole('button', { name: 'Masuk' })",
+"page.locator('div > div:nth-child(3) > button')",
+"page.locator('.btn.btn-primary.mt-4')",
+"page.locator('xpath=/html/body/div[2]/button')"
+],
+"en": [
+"page.getByRole('button', { name: 'Masuk' })",
+"page.locator('div > div:nth-child(3) > button')",
+"page.locator('.btn.btn-primary.mt-4')",
+"page.locator('xpath=/html/body/div[2]/button')"
+]
+},
+"answer": 0,
+"exp": {
+"id": "getByRole mencerminkan cara user dan teknologi bantu melihat halaman, sehingga tahan terhadap perubahan struktur DOM atau class CSS. Ketiga lainnya bergantung pada struktur atau styling yang mudah berubah.",
+"en": "getByRole mirrors how users and assistive technology see the page, so it survives DOM or CSS class changes. The others depend on structure or styling that changes easily."
+}
+},
+{
+"id": "pw-008",
+"topic": "playwright",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Mana assertion yang memakai mekanisme retry otomatis (web-first assertion)?",
+"en": "Which assertion uses automatic retrying (a web-first assertion)?"
+},
+"options": {
+"id": [
+"expect(await locator.isVisible()).toBe(true)",
+"await expect(locator).toBeVisible()",
+"expect(await locator.textContent()).toBeTruthy()",
+"if (await locator.count() > 0) { /* lanjut */ }"
+],
+"en": [
+"expect(await locator.isVisible()).toBe(true)",
+"await expect(locator).toBeVisible()",
+"expect(await locator.textContent()).toBeTruthy()",
+"if (await locator.count() > 0) { /* continue */ }"
+]
+},
+"answer": 1,
+"exp": {
+"id": "expect(locator) mengulang pemeriksaan sampai terpenuhi atau timeout. Pola lain membaca nilai sekali lalu membandingkannya, sehingga rawan flaky bila UI belum siap.",
+"en": "expect(locator) re-checks until the condition holds or times out. The other patterns read a value once and compare it, which is flaky when the UI is not ready yet."
+}
+},
+{
+"id": "pw-009",
+"topic": "playwright",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Mengapa test Playwright dijalankan di browser context yang baru per test?",
+"en": "Why does Playwright run each test in a fresh browser context?"
+},
+"options": {
+"id": [
+"Context baru mengunduh ulang seluruh browser sehingga hasilnya lebih akurat",
+"Context memberi isolasi seperti profil browser bersih (cookie, storage) dengan biaya kecil",
+"Context diperlukan supaya test bisa berjalan di lebih dari satu bahasa pemrograman",
+"Context membuat test otomatis lulus walaupun aplikasi sedang bermasalah"
+],
+"en": [
+"A fresh context downloads the whole browser again so results are more accurate",
+"A context gives clean-profile isolation (cookies, storage) at low cost",
+"A context is needed so tests can run in more than one programming language",
+"A context makes tests pass automatically even when the app has problems"
+]
+},
+"answer": 1,
+"exp": {
+"id": "Context itu ringan dan terisolasi, jadi test tidak saling mewariskan state tanpa harus membuka browser baru. Ia tidak mengunduh browser dan tidak memengaruhi hasil lulus atau gagal.",
+"en": "A context is lightweight and isolated, so tests do not inherit each other's state without launching a new browser. It does not download browsers or influence pass/fail results."
+}
+},
+{
+"id": "pw-010",
+"topic": "playwright",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Bagaimana cara menghindari login lewat UI di setiap test Playwright?",
+"en": "How do you avoid logging in through the UI in every Playwright test?"
+},
+"options": {
+"id": [
+"Login sekali, simpan storageState, lalu pakai ulang di context test lain",
+"Menaruh password di URL halaman supaya otomatis masuk",
+"Menjalankan seluruh test dalam satu test panjang tanpa pemisahan",
+"Menonaktifkan autentikasi di aplikasi selama semua test berjalan"
+],
+"en": [
+"Log in once, save the storageState and reuse it in other test contexts",
+"Putting the password in the page URL so you are signed in automatically",
+"Running all checks inside one very long test with no separation",
+"Turning authentication off in the app while every test runs"
+]
+},
+"answer": 0,
+"exp": {
+"id": "storageState menyimpan cookie dan local storage hasil login sehingga test berikutnya langsung berstatus masuk, cepat dan tetap terisolasi. Opsi lain tidak aman atau merusak independensi test.",
+"en": "storageState keeps the login cookies and local storage so later tests start signed in, fast and still isolated. The other options are unsafe or break test independence."
+}
+},
+{
+"id": "pw-011",
+"topic": "playwright",
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Anda ingin menguji tampilan error saat API mengembalikan 500 tanpa mengubah backend. Apa yang dipakai?",
+"en": "You want to test the UI error state when the API returns 500 without changing the backend. What do you use?"
+},
+"options": {
+"id": [
+"page.route() untuk mencegat request dan memberi respons 500 palsu",
+"page.pause() agar Anda mematikan server secara manual",
+"page.setViewportSize() untuk mengubah ukuran layar",
+"test.skip() supaya skenario error tidak perlu diuji"
+],
+"en": [
+"page.route() to intercept the request and fulfil it with a fake 500 response",
+"page.pause() so you switch the server off by hand",
+"page.setViewportSize() to change the screen size",
+"test.skip() so the error scenario need not be tested"
+]
+},
+"answer": 0,
+"exp": {
+"id": "page.route menyadap request jaringan dan memungkinkan stub respons (status, body), cocok untuk menguji state error dan loading secara deterministik.",
+"en": "page.route intercepts network requests and lets you stub the response (status, body), which suits deterministic error and loading states."
+}
+},
+{
+"id": "pw-012",
+"topic": "playwright",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Test gagal hanya di CI dan Anda tidak bisa mereproduksinya lokal. Fitur Playwright apa yang paling membantu?",
+"en": "A test fails only in CI and you cannot reproduce it locally. Which Playwright feature helps most?"
+},
+"options": {
+"id": [
+"Trace viewer: rekaman langkah, snapshot DOM, dan jaringan dari run yang gagal",
+"Mengganti semua locator dengan XPath absolut supaya terlihat lebih presisi dan pasti",
+"Menambah page.waitForTimeout(10000) di awal setiap test supaya semuanya lebih lambat",
+"Menghapus assertion yang gagal dari test supaya pipeline CI kembali berwarna hijau"
+],
+"en": [
+"Trace viewer: recorded steps, DOM snapshots and network from the failed run",
+"Replacing every locator with absolute XPath expressions to make them more precise",
+"Adding page.waitForTimeout(10000) at the start of every test to slow things down",
+"Deleting the failing assertion from the test so the CI pipeline turns green again"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Trace (misalnya trace: 'on-first-retry') merekam apa yang terjadi saat test gagal sehingga bisa diputar ulang. Sleep tetap dan menghapus assertion menyembunyikan masalah, bukan menemukannya.",
+"en": "A trace (e.g. trace: 'on-first-retry') records what happened during the failure so it can be replayed. Fixed sleeps and deleting assertions hide the problem instead of finding it."
+}
+},
+{
+"id": "pw-013",
+"topic": "playwright",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Secara default, bagaimana Playwright Test menjalankan test secara paralel?",
+"en": "By default, how does Playwright Test run tests in parallel?"
+},
+"options": {
+"id": [
+"Antar file test berjalan paralel lewat beberapa worker; test dalam satu file berurutan",
+"Semua test dalam satu file berjalan paralel tetapi antar file berurutan",
+"Semua test selalu berurutan di satu proses tanpa pengecualian",
+"Paralel hanya bila memakai Selenium Grid bersama Playwright"
+],
+"en": [
+"Test files run in parallel across workers; tests inside one file run in order",
+"All tests in one file run in parallel but files run one after another",
+"All tests always run sequentially in one process with no exceptions",
+"Parallelism works only when using Selenium Grid together with Playwright"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Worker menjalankan file berbeda secara paralel; test dalam satu file berurutan kecuali fullyParallel diaktifkan. Karena itu data uji antar worker tidak boleh bertabrakan.",
+"en": "Workers run different files in parallel; tests within a file run in order unless fullyParallel is enabled. So test data must not collide across workers."
+}
+},
+{
+"id": "pw-014",
+"topic": "playwright",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Apa fungsi fixture di Playwright Test?",
+"en": "What are fixtures for in Playwright Test?"
+},
+"options": {
+"id": [
+"Menyiapkan dan membersihkan dependensi test (halaman login, data uji) secara terisolasi dan dapat dipakai ulang",
+"Mengunci versi browser di proyek supaya tidak pernah ikut diperbarui oleh rilis Playwright",
+"Menerjemahkan test secara otomatis ke bahasa pemrograman lain ketika tim memintanya",
+"Menggantikan kebutuhan assertion dengan menyimpan tangkapan layar di akhir setiap test"
+],
+"en": [
+"Setting up and tearing down test dependencies (signed-in page, test data) in an isolated, reusable way",
+"Pinning the browser version in the project so that it is never updated by Playwright releases",
+"Automatically translating the tests into another programming language when the team asks",
+"Replacing the need for assertions by saving a screenshot at the end of every test"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Fixture mendeklarasikan apa yang dibutuhkan test (misalnya authedPage) dan Playwright menyiapkan serta membersihkannya per test.",
+"en": "A fixture declares what a test needs (e.g. an authed page) and Playwright sets it up and cleans it per test."
+}
+},
+{
+"id": "pw-015",
+"topic": "playwright",
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Klik tombol membuka tab baru (popup). Bagaimana pendekatan yang tepat di Playwright?",
+"en": "Clicking a button opens a new tab (popup). What is the right approach in Playwright?"
+},
+"options": {
+"id": [
+"Mulai menunggu event popup, klik tombol, lalu gunakan page popup yang dihasilkan",
+"Mustahil, karena Playwright hanya mendukung satu tab per test dan mengabaikan jendela baru",
+"Pakai Thread.sleep(5000) setelah klik lalu tebak tab mana yang sedang aktif saat itu",
+"Muat ulang halaman awal berulang kali sampai tab baru tidak muncul lagi setelah klik"
+],
+"en": [
+"Start waiting for the popup event, click the button, then use the resulting popup page",
+"Impossible, because Playwright supports only one tab per test and ignores new windows",
+"Use Thread.sleep(5000) after the click and then guess which of the tabs is active now",
+"Reload the original page repeatedly until the new tab stops appearing after each click"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Pola const popupPromise = page.waitForEvent('popup'); klik; const popup = await popupPromise menangani tab baru tanpa race. Playwright mendukung banyak page dalam satu context.",
+"en": "The pattern const popupPromise = page.waitForEvent('popup'); click; const popup = await popupPromise handles new tabs without a race. Playwright supports many pages in one context."
+}
+},
+{
+"id": "pw-016",
+"topic": "playwright",
+"level": 1,
+"type": "mcq",
+"q": {
+"id": "Apa kegunaan perintah codegen Playwright?",
+"en": "What is Playwright's codegen command for?"
+},
+"options": {
+"id": [
+"Merekam interaksi di browser dan menghasilkan kode test awal yang perlu dirapikan",
+"Membuat laporan bug rinci ke Jira secara otomatis tanpa campur tangan manusia sama sekali",
+"Mengompilasi aplikasi yang diuji menjadi paket instalasi untuk setiap platform",
+"Menghapus seluruh cache browser milik semua pengguna yang pernah mengunjungi situs"
+],
+"en": [
+"Recording browser interactions and generating starter test code that needs tidying",
+"Automatically filing detailed bug reports in Jira without any human involvement at all",
+"Compiling the application under test into an installer package for every platform",
+"Clearing the whole browser cache of every user who has ever visited the website"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Codegen membantu memulai skrip dengan cepat, tetapi hasilnya tetap perlu ditinjau: locator, assertion, dan struktur.",
+"en": "Codegen helps start scripts quickly, but the output still needs review: locators, assertions and structure."
+}
+},
+{
+"id": "cy-006",
+"topic": "cypress",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Mengapa kode ini keliru? const nama = cy.get('#nama').text();",
+"en": "Why is this code wrong? const name = cy.get('#name').text();"
+},
+"options": {
+"id": [
+"Perintah cy.* diantrikan dan tidak mengembalikan nilai langsung; gunakan .then() atau alias",
+"Cypress sama sekali tidak bisa membaca elemen lewat atribut id, hanya lewat class atau teks",
+"Variabel const dilarang di setiap file test Cypress, sehingga harus selalu memakai let",
+"Metode text() memang ada tetapi hanya berjalan ketika test dieksekusi di browser Firefox"
+],
+"en": [
+"cy.* commands are queued and do not return values directly; use .then() or an alias",
+"Cypress cannot read elements by their id attribute at all, only by class name or text",
+"const variables are forbidden in every Cypress test file, so let must always be used",
+"The text() method exists but it only runs when the tests are executed in Firefox"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Cypress menyusun antrean perintah asinkron; cy.get tidak mengembalikan elemen sebagai nilai biasa dan jQuery text() tidak tersedia di chain Cypress. Ambil nilai lewat .then(($el) => ...).",
+"en": "Cypress builds an async command queue; cy.get does not return the element as a plain value, and jQuery's text() is not on the Cypress chain. Read values via .then(($el) => ...)."
+}
+},
+{
+"id": "cy-007",
+"topic": "cypress",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Untuk menunggu request tertentu selesai sebelum assertion, apa yang dianjurkan?",
+"en": "To wait for a specific request to finish before asserting, what is recommended?"
+},
+"options": {
+"id": [
+"cy.intercept() dengan alias, lalu cy.wait('@alias')",
+"cy.wait(5000) supaya dianggap \"cukup lama\" untuk request apa pun",
+"Memanggil Date.now() berulang di dalam loop while sampai nilainya berubah",
+"Menutup browser lalu membukanya lagi sebelum setiap assertion dijalankan"
+],
+"en": [
+"cy.intercept() with an alias, then cy.wait('@alias')",
+"cy.wait(5000) so that it is \"long enough\" for any request",
+"Calling Date.now() repeatedly inside a while loop until its value changes",
+"Closing the browser and opening it again before every assertion is run"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Menunggu alias request bergantung pada kejadian nyata, bukan tebakan waktu. Sleep tetap membuat test lambat sekaligus tetap rawan flaky.",
+"en": "Waiting on a request alias depends on a real event, not a time guess. Fixed sleeps make tests slow and still flaky."
+}
+},
+{
+"id": "cy-008",
+"topic": "cypress",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Apa arti retry-ability di Cypress?",
+"en": "What does retry-ability mean in Cypress?"
+},
+"options": {
+"id": [
+"Query seperti cy.get dan assertion yang mengikutinya diulang otomatis sampai berhasil atau timeout",
+"Seluruh file test diulang tanpa batas sampai setiap test di dalamnya akhirnya berhasil lulus",
+"Cypress otomatis mengirim ulang laporan bug ke tracker yang sebelumnya gagal terkirim",
+"Aksi seperti click dijalankan berulang kali sampai halaman akhirnya berubah state-nya"
+],
+"en": [
+"Queries like cy.get and the assertions after them are retried automatically until they pass or time out",
+"The whole test file is repeated without any limit until every single test inside it passes",
+"Cypress automatically resends bug reports to the tracker that failed to be delivered earlier",
+"Actions such as click are executed again and again until the page finally changes state"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Retry berlaku pada query dan assertion, sehingga menunggu elemen muncul tidak butuh sleep. Aksi seperti click tidak diulang begitu saja.",
+"en": "Retrying applies to queries and assertions, so waiting for an element needs no sleep. Actions such as click are not simply repeated."
+}
+},
+{
+"id": "cy-009",
+"topic": "cypress",
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Test Anda harus berpindah dari app.example.com ke login.partner.com di tengah skenario. Apa yang dipakai?",
+"en": "Your test must go from app.example.com to login.partner.com mid-scenario. What do you use?"
+},
+"options": {
+"id": [
+"cy.origin() untuk menjalankan perintah di origin kedua",
+"Tidak mungkin; Cypress selalu gagal pada domain berbeda",
+"cy.wait() sampai domain pertama berubah menjadi domain kedua sendiri",
+"Menjalankan dua test terpisah dan menggabungkan hasilnya manual"
+],
+"en": [
+"cy.origin() to run commands in the second origin",
+"Impossible; Cypress always fails on a different domain",
+"cy.wait() until the first domain turns into the second by itself",
+"Running two separate tests and merging the results by hand"
+]
+},
+"answer": 0,
+"exp": {
+"id": "cy.origin() memungkinkan alur lintas origin dalam satu test (dengan batasan cakupan callback). Ini bagian dari batasan same-origin yang perlu diketahui.",
+"en": "cy.origin() enables cross-origin flows in one test (with callback scope limits). It is part of the same-origin constraint you should know about."
+}
+},
+{
+"id": "cy-010",
+"topic": "cypress",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Apa yang dilakukan Cypress terhadap cookie dan local storage di antara test (test isolation)?",
+"en": "What does Cypress do with cookies and local storage between tests (test isolation)?"
+},
+"options": {
+"id": [
+"Membersihkannya secara default agar tiap test mulai dari state bersih",
+"Mengumpulkannya sepanjang seluruh run agar semua test saling berbagi sesi",
+"Mengirimkannya ke server Cypress untuk dianalisis",
+"Mengenkripsinya lalu menyimpannya selamanya"
+],
+"en": [
+"Clears them by default so each test starts from a clean state",
+"Accumulates them across the whole run so all tests share a session",
+"Sends them to a Cypress server for analysis",
+"Encrypts them and stores them forever"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Test isolation membuat test independen. Untuk menghemat login yang berulang, pakai cy.session() yang menyimpan dan memulihkan sesi secara sengaja.",
+"en": "Test isolation keeps tests independent. To avoid repeating logins, use cy.session(), which saves and restores a session deliberately."
+}
+},
+{
+"id": "cy-011",
+"topic": "cypress",
+"level": 1,
+"type": "mcq",
+"q": {
+"id": "Untuk apa Cypress.Commands.add()?",
+"en": "What is Cypress.Commands.add() for?"
+},
+"options": {
+"id": [
+"Membuat custom command yang dapat dipakai ulang di banyak test",
+"Menambah anggota baru ke tim Cypress Cloud",
+"Menginstal browser tambahan secara otomatis",
+"Mengubah versi aplikasi yang sedang diuji"
+],
+"en": [
+"Creating a custom command reusable across many tests",
+"Adding new members to a Cypress Cloud team",
+"Installing extra browsers automatically",
+"Changing the version of the application under test"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Custom command membungkus langkah berulang (misalnya login) menjadi satu perintah sehingga test lebih ringkas.",
+"en": "A custom command wraps repeated steps (e.g. login) into one command so tests stay short."
+}
+},
+{
+"id": "cy-012",
+"topic": "cypress",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Selector mana yang paling stabil untuk elemen yang akan sering berubah tampilannya?",
+"en": "Which selector is most stable for an element whose look will change often?"
+},
+"options": {
+"id": [
+"[data-cy=submit] (atribut khusus test)",
+".btn.btn-lg.btn-blue",
+"div:nth-child(4) > span",
+"Teks tombol \"Kirim Sekarang!\" yang sering diganti tim marketing"
+],
+"en": [
+"[data-cy=submit] (a test-dedicated attribute)",
+".btn.btn-lg.btn-blue",
+"div:nth-child(4) > span",
+"The button text \"Send Now!\" that marketing keeps changing"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Atribut data-cy hanya berubah bila tim test memang mengubahnya, sedangkan class, urutan, dan teks berubah mengikuti desain atau copywriting.",
+"en": "A data-cy attribute only changes when the test owners change it, whereas classes, order and text change with design or copywriting."
+}
+},
+{
+"id": "cy-013",
+"topic": "cypress",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Apa fungsi cy.session()?",
+"en": "What is cy.session() for?"
+},
+"options": {
+"id": [
+"Menyimpan dan memulihkan cookie, local storage sesi login antar test agar tidak login berulang",
+"Menambah jumlah sesi pengguna bersamaan yang dapat dilayani aplikasi di lingkungan produksi",
+"Mengatur batas waktu global yang berlaku untuk seluruh eksekusi Cypress di mesin tersebut",
+"Merekam video seluruh layar komputer selama test sedang berjalan di mesin tersebut"
+],
+"en": [
+"Saving and restoring login cookies and local storage between tests to avoid repeated logins",
+"Increasing the number of concurrent user sessions that the production application can serve",
+"Setting the global timeout that applies to the whole Cypress run on the machine",
+"Recording a video of the complete computer screen while the tests are running"
+]
+},
+"answer": 0,
+"exp": {
+"id": "cy.session menjaga isolasi tetapi menghemat waktu: login dijalankan sekali per kunci sesi lalu dipulihkan.",
+"en": "cy.session keeps isolation while saving time: login runs once per session key and is then restored."
+}
+},
+{
+"id": "cy-014",
+"topic": "cypress",
+"level": 1,
+"type": "mcq",
+"q": {
+"id": "Apa kegunaan component testing di Cypress?",
+"en": "What is component testing in Cypress for?"
+},
+"options": {
+"id": [
+"Memasang dan menguji satu komponen UI secara terpisah tanpa menjalankan seluruh aplikasi",
+"Menguji koneksi antar server database secara langsung tanpa antarmuka pengguna",
+"Menghitung jumlah baris kode dan melaporkan totalnya untuk setiap folder repositori",
+"Menggantikan setiap test end-to-end di proyek tanpa terkecuali sama sekali"
+],
+"en": [
+"Mounting and testing a single UI component in isolation without running the whole app",
+"Testing the connections between database servers directly without a user interface",
+"Counting the lines of code and reporting the totals for each folder of the repository",
+"Replacing every single end-to-end test in the project without any exception at all"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Component testing lebih cepat dan fokus; ia melengkapi, bukan menggantikan, test end-to-end.",
+"en": "Component testing is faster and focused; it complements, not replaces, end-to-end tests."
+}
+},
+{
+"id": "cy-015",
+"topic": "cypress",
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Manajer meminta satu test Cypress yang membuka dua tab browser dan berpindah di antaranya. Respons terbaik?",
+"en": "A manager asks for one Cypress test that opens two browser tabs and switches between them. Best response?"
+},
+"options": {
+"id": [
+"Jelaskan batasan multi-tab Cypress; sarankan memisahkan skenario atau memakai tool lain (misalnya Playwright) untuk kasus itu",
+"Setujui dan tulis test yang mungkin berhasil tanpa memverifikasi bahwa tab kedua benar-benar terkendali",
+"Tolak seluruh otomasi UI di proyek karena satu skenario tidak didukung oleh tool tersebut",
+"Ganti seluruh suite ke tool lain sekarang juga tanpa analisis biaya atau usaha migrasinya"
+],
+"en": [
+"Explain Cypress's multi-tab limitation; suggest splitting the scenario or using another tool (e.g. Playwright) for that case",
+"Agree and write a test that might work without verifying that the second tab is really controlled",
+"Reject all UI automation for the project because one single scenario is not supported by the tool",
+"Switch the entire suite to another tool immediately without any analysis of cost or migration effort"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Jawaban yang matang menyebut batasan, menawarkan alternatif, dan mempertimbangkan biaya. Memilih tool adalah keputusan berdasarkan kebutuhan, bukan kesetiaan.",
+"en": "A mature answer states the limitation, offers alternatives and weighs cost. Tool choice follows needs, not loyalty."
+}
+},
+{
+"id": "kt-005",
+"topic": "katalon",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Apa manfaat utama Object Repository di Katalon Studio?",
+"en": "What is the main benefit of the Object Repository in Katalon Studio?"
+},
+"options": {
+"id": [
+"Menyimpan test object (locator) terpusat sehingga perubahan UI cukup diperbaiki di satu tempat",
+"Menyimpan seluruh kode sumber aplikasi yang diuji untuk setiap rilis yang ada",
+"Menyimpan password semua pengguna aplikasi secara polos untuk keperluan test",
+"Menjalankan test dengan sendirinya tanpa memerlukan test case sama sekali"
+],
+"en": [
+"Keeps test objects (locators) in one place so a UI change is fixed once",
+"Stores the complete source code of the application under test for every release",
+"Stores the passwords of all application users in plain text for the test runs",
+"Runs tests automatically on its own without the need for any test case at all"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Konsepnya mirip Page Object Model: locator dikelola terpusat dan dipakai ulang oleh banyak test case.",
+"en": "The idea is close to the Page Object Model: locators are managed centrally and reused by many test cases."
+}
+},
+{
+"id": "kt-006",
+"topic": "katalon",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Apa beda Test Suite dan Test Suite Collection di Katalon?",
+"en": "What is the difference between a Test Suite and a Test Suite Collection in Katalon?"
+},
+"options": {
+"id": [
+"Test Suite mengelompokkan test case; Collection menjalankan beberapa test suite (misalnya di beberapa browser atau profil)",
+"Keduanya fitur yang identik, dan satu-satunya perbedaan hanya nama folder tempatnya berada",
+"Test Suite hanya untuk aplikasi mobile sedangkan Collection hanya untuk aplikasi web",
+"Collection hanya boleh berisi satu test case dan tidak boleh berisi apa pun lainnya"
+],
+"en": [
+"A Test Suite groups test cases; a Collection runs several test suites (e.g. across browsers or profiles)",
+"They are identical features, and the only difference is the name of the folder they live in",
+"A Test Suite is meant for mobile apps only while a Collection is meant for web apps only",
+"A Collection can contain exactly one test case and nothing else, unlike a normal suite"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Collection berguna untuk eksekusi lintas browser atau lingkungan: tiap suite dijalankan dengan konfigurasinya sendiri.",
+"en": "A Collection is useful for cross-browser or cross-environment runs: each suite runs with its own configuration."
+}
+},
+{
+"id": "kt-007",
+"topic": "katalon",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Anda ingin test yang sama berjalan di environment staging dan production-like tanpa mengubah test case. Apa yang dipakai?",
+"en": "You want the same test to run on staging and a production-like environment without editing test cases. What do you use?"
+},
+"options": {
+"id": [
+"Execution Profile dengan variabel per environment (URL, akun uji)",
+"Menyalin test case lalu mengubah URL secara manual di dalam setiap salinannya",
+"Menulis URL langsung ke dalam setiap langkah pada test case tersebut",
+"Menonaktifkan environment yang sedang tidak dipakai oleh seluruh tim"
+],
+"en": [
+"An Execution Profile with per-environment variables (URL, test accounts)",
+"Copying the test case and editing the URL by hand inside each of the copies",
+"Hard-coding the URL directly into every single step of the test case",
+"Disabling the environment that is not currently being used by the whole team"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Profil memisahkan konfigurasi dari test sehingga satu test case dipakai untuk banyak environment.",
+"en": "Profiles separate configuration from the test so one test case serves many environments."
+}
+},
+{
+"id": "kt-008",
+"topic": "katalon",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Bagaimana data-driven testing dilakukan di Katalon?",
+"en": "How is data-driven testing done in Katalon?"
+},
+"options": {
+"id": [
+"Menghubungkan Test Data (Excel, CSV, database) ke variabel test case sehingga test berjalan per baris data",
+"Menulis ulang test case yang sama sekali lagi untuk setiap baris data yang ada",
+"Memasukkan semua baris data langsung ke Object Repository sebagai test object",
+"Menunggu pengguna sungguhan mengetik data ke formulir satu per satu selama run"
+],
+"en": [
+"Binding Test Data (Excel, CSV, database) to test case variables so the test runs once per data row",
+"Rewriting the same test case again once for every single row of data that exists",
+"Putting all the data rows directly into the Object Repository as test objects",
+"Waiting for real users to type the data into the form one by one during the run"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Binding Test Data pada test suite membuat satu test case dieksekusi berulang dengan data berbeda.",
+"en": "Binding Test Data in a test suite makes one test case execute repeatedly with different data."
+}
+},
+{
+"id": "kt-009",
+"topic": "katalon",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Apa itu self-healing di Katalon Studio?",
+"en": "What is self-healing in Katalon Studio?"
+},
+"options": {
+"id": [
+"Mencoba locator alternatif secara otomatis saat locator utama gagal menemukan elemen",
+"Memperbaiki bug aplikasi secara otomatis sehingga developer tidak perlu lagi",
+"Menghapus test yang gagal dari proyek sehingga laporan hanya menampilkan yang lulus",
+"Mengganti sistem operasi mesin supaya test dapat lulus dengan sendirinya"
+],
+"en": [
+"Automatically trying alternative locators when the primary locator fails to find the element",
+"Fixing the bugs in the application automatically so developers no longer have to",
+"Deleting failed tests from the project so that the report shows only passes",
+"Replacing the operating system of the machine so that the tests can pass"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Self-healing mengurangi kegagalan karena perubahan locator, tetapi hasilnya tetap perlu ditinjau agar locator yang \"disembuhkan\" tidak menunjuk elemen yang salah.",
+"en": "Self-healing reduces failures from locator changes, but the result should still be reviewed so a healed locator does not point to the wrong element."
+}
+},
+{
+"id": "kt-010",
+"topic": "katalon",
+"level": 1,
+"type": "mcq",
+"q": {
+"id": "Bahasa apa yang dipakai untuk custom keyword dan skrip di Katalon Studio?",
+"en": "Which language is used for custom keywords and scripts in Katalon Studio?"
+},
+"options": {
+"id": [
+"Groovy",
+"COBOL",
+"Assembly",
+"Fortran"
+],
+"en": [
+"Groovy",
+"COBOL",
+"Assembly",
+"Fortran"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Katalon Studio berbasis Groovy/Java sehingga library Java dapat dipakai di skrip.",
+"en": "Katalon Studio is Groovy/Java based, so Java libraries can be used in scripts."
+}
+},
+{
+"id": "kt-011",
+"topic": "katalon",
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Pada keyword WebUI.verifyElementPresent, apa fungsi FailureHandling.CONTINUE_ON_FAILURE?",
+"en": "On a WebUI.verifyElementPresent keyword, what does FailureHandling.CONTINUE_ON_FAILURE do?"
+},
+"options": {
+"id": [
+"Mencatat kegagalan tetapi melanjutkan langkah berikutnya, dan test case akhirnya ditandai gagal",
+"Mengabaikan kegagalan sepenuhnya, seolah verifikasi itu tidak pernah dijalankan",
+"Menghentikan seluruh eksekusi seketika dan menghapus semua hasil sejauh ini",
+"Mengulang keyword tanpa batas sampai akhirnya berhasil dengan sendirinya"
+],
+"en": [
+"Logs the failure but continues with the next steps, and the test case is finally marked failed",
+"Ignores the failure completely, as if the verification had never been executed",
+"Stops the whole execution immediately and deletes all of the results so far",
+"Repeats the keyword without any limit until it finally succeeds on its own"
+]
+},
+"answer": 0,
+"exp": {
+"id": "STOP_ON_FAILURE menghentikan test, CONTINUE_ON_FAILURE melanjutkan tetapi status akhir gagal, OPTIONAL hanya memberi peringatan. Pilih sesuai pentingnya langkah.",
+"en": "STOP_ON_FAILURE halts the test, CONTINUE_ON_FAILURE continues but the final status is failed, OPTIONAL only warns. Choose by how critical the step is."
+}
+},
+{
+"id": "kt-012",
+"topic": "katalon",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Bagaimana test Katalon dijalankan di pipeline CI tanpa membuka antarmuka Studio?",
+"en": "How do you run Katalon tests in a CI pipeline without opening the Studio UI?"
+},
+"options": {
+"id": [
+"Lewat Katalon Runtime Engine / command line dengan parameter proyek dan test suite",
+"Mengirim email berisi seluruh proyek ke tim QA tiap malam agar ada yang menjalankannya",
+"Meminta setiap developer menjalankan test manual di laptop masing-masing per commit",
+"Tidak mungkin, karena test Katalon hanya berjalan di dalam jendela Studio yang terbuka"
+],
+"en": [
+"Through Katalon Runtime Engine / the command line with project and test suite parameters",
+"Emailing the whole project to the QA team every night so that someone runs it",
+"Asking each developer to run the tests manually on their own laptop per commit",
+"It is not possible, because Katalon tests run only inside an opened Studio window"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Mode command line (Runtime Engine) memungkinkan eksekusi headless di CI, lalu hasilnya dikirim ke laporan atau platform seperti TestOps.",
+"en": "Command-line mode (Runtime Engine) allows headless execution in CI, with results sent to reports or a platform such as TestOps."
+}
+},
+{
+"id": "kt-013",
+"topic": "katalon",
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Tim Anda terdiri dari tester non-programmer yang butuh otomasi web, API, dan mobile dalam satu tool. Pertimbangan paling seimbang?",
+"en": "Your team is non-programmer testers who need web, API and mobile automation in one tool. What is the most balanced consideration?"
+},
+"options": {
+"id": [
+"Katalon cocok untuk kebutuhan itu, dengan catatan soal lisensi, keterikatan tool, dan keterbatasan integrasi dibanding framework kode",
+"Katalon selalu pilihan terbaik, dan framework kode tidak pernah dibutuhkan tim mana pun",
+"Framework kode selalu pilihan terbaik, dan tool low-code tidak pernah layak dipakai",
+"Pilih tool apa pun yang paling populer di media sosial bulan ini, apa pun kondisi tim"
+],
+"en": [
+"Katalon fits that need, noting licensing, tool lock-in and integration limits compared with code frameworks",
+"Katalon is always the best choice, and code frameworks are never needed by any team",
+"Code frameworks are always the best choice, and low-code tools are never a viable option",
+"Choose whichever tool is the most popular on social media this month, whatever the team is"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Jawaban interview yang baik menimbang kecocokan tim, biaya, dan batasan, bukan fanatisme pada satu pendekatan.",
+"en": "A good interview answer weighs team fit, cost and limits, not zeal for a single approach."
+}
+},
+{
+"id": "kt-014",
+"topic": "katalon",
+"level": 1,
+"type": "mcq",
+"q": {
+"id": "Apa kegunaan Web Recorder / Spy Web di Katalon Studio?",
+"en": "What are Web Recorder / Spy Web used for in Katalon Studio?"
+},
+"options": {
+"id": [
+"Menangkap elemen halaman sebagai test object dan merekam interaksi sebagai langkah awal test",
+"Mengunci halaman web supaya developer tidak lagi dapat mengubah elemen-elemennya",
+"Menghitung jumlah pengunjung yang membuka situs produksi sepanjang minggu ini",
+"Menerjemahkan aplikasi yang diuji ke bahasa lain untuk pemeriksaan lokalisasi"
+],
+"en": [
+"Capturing page elements as test objects and recording interactions as starting test steps",
+"Locking the web page so that developers are no longer able to change its elements",
+"Counting the number of visitors who have opened the production website this week",
+"Translating the application under test into other languages for localisation checks"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Hasil rekaman cepat untuk memulai tetapi perlu dirapikan: locator stabil, wait, dan assertion yang bermakna.",
+"en": "Recordings are a quick start but need tidying: stable locators, waits and meaningful assertions."
+}
+},
+{
+"id": "sql-007",
+"topic": "sql",
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Cara mengambil pesanan terbaru milik tiap pelanggan (satu baris per pelanggan)?",
+"en": "How do you get each customer's latest order (one row per customer)?"
+},
+"options": {
+"id": [
+"SELECT * FROM orders ORDER BY created_at DESC LIMIT 1;",
+"SELECT * FROM (SELECT o.*, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY created_at DESC) rn FROM orders o) x WHERE rn = 1;",
+"SELECT customer_id, MAX(id) FROM orders GROUP BY created_at;",
+"SELECT DISTINCT * FROM orders WHERE created_at = NOW();"
+],
+"en": [
+"SELECT * FROM orders ORDER BY created_at DESC LIMIT 1;",
+"SELECT * FROM (SELECT o.*, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY created_at DESC) rn FROM orders o) x WHERE rn = 1;",
+"SELECT customer_id, MAX(id) FROM orders GROUP BY created_at;",
+"SELECT DISTINCT * FROM orders WHERE created_at = NOW();"
+]
+},
+"answer": 1,
+"exp": {
+"id": "ROW_NUMBER() dengan PARTITION BY menomori pesanan per pelanggan; rn = 1 adalah yang terbaru. Opsi pertama hanya mengembalikan satu baris total, bukan per pelanggan.",
+"en": "ROW_NUMBER() with PARTITION BY numbers orders per customer; rn = 1 is the latest. The first option returns a single row overall, not one per customer."
+}
+},
+{
+"id": "sql-008",
+"topic": "sql",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Query mana yang menemukan email yang terdaftar lebih dari sekali?",
+"en": "Which query finds emails registered more than once?"
+},
+"options": {
+"id": [
+"SELECT email FROM users GROUP BY email HAVING COUNT(*) > 1;",
+"SELECT email FROM users WHERE COUNT(*) > 1;",
+"SELECT DISTINCT email FROM users HAVING email > 1;",
+"SELECT email FROM users ORDER BY COUNT(email);"
+],
+"en": [
+"SELECT email FROM users GROUP BY email HAVING COUNT(*) > 1;",
+"SELECT email FROM users WHERE COUNT(*) > 1;",
+"SELECT DISTINCT email FROM users HAVING email > 1;",
+"SELECT email FROM users ORDER BY COUNT(email);"
+]
+},
+"answer": 0,
+"exp": {
+"id": "HAVING memfilter hasil kelompok setelah GROUP BY. COUNT(*) tidak boleh berada di WHERE karena WHERE bekerja sebelum pengelompokan.",
+"en": "HAVING filters groups after GROUP BY. COUNT(*) cannot go in WHERE because WHERE runs before grouping."
+}
+},
+{
+"id": "sql-009",
+"topic": "sql",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Kolom phone berisi 100 baris, 40 di antaranya NULL. Apa hasil COUNT(phone) dan COUNT(*)?",
+"en": "The phone column has 100 rows, 40 of them NULL. What do COUNT(phone) and COUNT(*) return?"
+},
+"options": {
+"id": [
+"COUNT(phone)=100 dan COUNT(*)=60",
+"COUNT(phone)=60 dan COUNT(*)=100",
+"Keduanya 100",
+"Keduanya 60"
+],
+"en": [
+"COUNT(phone)=100 and COUNT(*)=60",
+"COUNT(phone)=60 and COUNT(*)=100",
+"Both are 100",
+"Both are 60"
+]
+},
+"answer": 1,
+"exp": {
+"id": "COUNT(kolom) mengabaikan NULL sehingga 60; COUNT(*) menghitung semua baris sehingga 100.",
+"en": "COUNT(column) ignores NULLs so it is 60; COUNT(*) counts all rows so it is 100."
+}
+},
+{
+"id": "sql-010",
+"topic": "sql",
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Mengapa SELECT * FROM a WHERE id NOT IN (SELECT a_id FROM b) bisa mengembalikan nol baris padahal ada data yatim?",
+"en": "Why can SELECT * FROM a WHERE id NOT IN (SELECT a_id FROM b) return zero rows even though orphans exist?"
+},
+"options": {
+"id": [
+"Bila subquery berisi NULL, perbandingan NOT IN menjadi tidak diketahui sehingga tidak ada baris lolos",
+"NOT IN hanya bekerja pada tabel dengan satu baris, sehingga tabel besar tak mengembalikan apa pun",
+"Subquery selalu dijalankan sebelum tabel luar sempat dibuat di dalam memori",
+"Database diam-diam membuang setiap baris yang id-nya kebetulan berupa angka genap"
+],
+"en": [
+"If the subquery contains NULL, NOT IN becomes unknown so no row passes",
+"NOT IN only works on tables that contain a single row, so larger tables return nothing",
+"The subquery is always executed before the outer table has been created in memory",
+"The database silently drops every row whose id happens to be an even number"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Logika tiga nilai SQL: x NOT IN (..., NULL) tidak pernah benar. Gunakan NOT EXISTS atau LEFT JOIN ... IS NULL untuk mencari data yatim.",
+"en": "SQL's three-valued logic: x NOT IN (..., NULL) is never true. Use NOT EXISTS or LEFT JOIN ... IS NULL to find orphans."
+}
+},
+{
+"id": "sql-011",
+"topic": "sql",
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "LEFT JOIN orders o ON ... WHERE o.status = 'PAID' ternyata menghilangkan pelanggan tanpa pesanan. Mengapa?",
+"en": "LEFT JOIN orders o ON ... WHERE o.status = 'PAID' drops customers with no orders. Why?"
+},
+"options": {
+"id": [
+"Kondisi di WHERE pada tabel kanan menyaring baris NULL sehingga efeknya seperti INNER JOIN; pindahkan ke ON",
+"LEFT JOIN tidak boleh digabung dengan kolom status, sehingga query diam-diam berubah menjadi scan biasa",
+"PAID adalah kata terlarang di SQL, sehingga database membuang pelanggan yang tidak punya pesanan",
+"Database menghapus pelanggan tanpa pesanan dari tabel aslinya secara fisik setelah query dijalankan"
+],
+"en": [
+"A WHERE condition on the right table filters out the NULL rows so it behaves like an INNER JOIN; move it to ON",
+"LEFT JOIN cannot be combined with a status column, so the query silently falls back to a plain scan",
+"PAID is a reserved word in SQL, which makes the database discard the customers that have no orders",
+"The database physically deletes customers without orders from the underlying table after the query"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Baris tanpa pesanan memiliki o.status NULL, yang tidak memenuhi o.status = 'PAID'. Menaruh kondisi di ON mempertahankan pelanggan tanpa pesanan.",
+"en": "Rows without orders have o.status NULL, which fails o.status = 'PAID'. Putting the condition in ON keeps customers without orders."
+}
+},
+{
+"id": "sql-012",
+"topic": "sql",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Anda perlu membersihkan data uji milik satu user saja. Pernyataan mana yang tepat?",
+"en": "You need to clean up test data for one user only. Which statement is right?"
+},
+"options": {
+"id": [
+"DELETE FROM orders WHERE user_id = 42;",
+"TRUNCATE TABLE orders RESTART IDENTITY;",
+"DROP TABLE orders CASCADE;",
+"UPDATE orders SET status = 'x';"
+],
+"en": [
+"DELETE FROM orders WHERE user_id = 42;",
+"TRUNCATE TABLE orders RESTART IDENTITY;",
+"DROP TABLE orders CASCADE;",
+"UPDATE orders SET status = 'x';"
+]
+},
+"answer": 0,
+"exp": {
+"id": "DELETE dengan WHERE menghapus baris tertentu saja dan bisa dibatalkan dalam transaksi. TRUNCATE mengosongkan seluruh tabel dan DROP menghapus tabelnya.",
+"en": "DELETE with WHERE removes only the chosen rows and can be rolled back in a transaction. TRUNCATE empties the whole table and DROP removes the table itself."
+}
+},
+{
+"id": "sql-013",
+"topic": "sql",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Query mana yang paling mungkin tidak bisa memakai indeks pada kolom name?",
+"en": "Which query is least likely to use an index on the name column?"
+},
+"options": {
+"id": [
+"WHERE name LIKE '%budi'",
+"WHERE name = 'budi'",
+"WHERE name LIKE 'budi%'",
+"WHERE name IN ('budi','sari')"
+],
+"en": [
+"WHERE name LIKE '%budi'",
+"WHERE name = 'budi'",
+"WHERE name LIKE 'budi%'",
+"WHERE name IN ('budi','sari')"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Wildcard di awal membuat pencarian tidak bisa memanfaatkan urutan indeks sehingga cenderung table scan. Pola awalan 'budi%' masih bisa memakai indeks.",
+"en": "A leading wildcard cannot use the index ordering, so it tends to scan the table. A prefix pattern like 'budi%' can still use the index."
+}
+},
+{
+"id": "sql-014",
+"topic": "sql",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Apa beda UNION dan UNION ALL?",
+"en": "What is the difference between UNION and UNION ALL?"
+},
+"options": {
+"id": [
+"UNION menghapus baris duplikat; UNION ALL mempertahankan semuanya dan umumnya lebih cepat",
+"UNION ALL menghapus baris duplikat, sedangkan UNION mempertahankan semua baris yang ditemukan",
+"Keduanya berperilaku persis sama, dan hanya kata kunci yang ditulis yang berbeda",
+"UNION bekerja untuk paling banyak dua tabel, UNION ALL dipakai untuk tiga tabel atau lebih"
+],
+"en": [
+"UNION removes duplicate rows; UNION ALL keeps all of them and is usually faster",
+"UNION ALL removes duplicate rows, while UNION keeps all of the rows that it finds",
+"They behave exactly the same, and only the keyword that is written differs between them",
+"UNION works for two tables at most, and UNION ALL is used for three tables or more"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Penghapusan duplikat butuh pengurutan atau hashing tambahan, jadi UNION ALL lebih murah bila duplikat tidak masalah atau mustahil.",
+"en": "Removing duplicates needs extra sorting or hashing, so UNION ALL is cheaper when duplicates do not matter or cannot occur."
+}
+},
+{
+"id": "sql-015",
+"topic": "sql",
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Transfer saldo gagal di tengah jalan: saldo pengirim sudah berkurang tetapi penerima belum bertambah. Properti ACID mana yang dilanggar?",
+"en": "A balance transfer fails midway: the sender was debited but the receiver not credited. Which ACID property is violated?"
+},
+"options": {
+"id": [
+"Atomicity (transaksi harus tuntas seluruhnya atau tidak sama sekali)",
+"Durability (data hilang begitu aliran listrik server dimatikan)",
+"Isolation (dua pengguna yang bekerja bersamaan melihat kumpulan data yang berbeda)",
+"Consistency saja, yang sama sekali tidak berhubungan dengan penanganan transaksi"
+],
+"en": [
+"Atomicity (a transaction must complete entirely or not at all)",
+"Durability (data is lost once the power supply of the server is switched off)",
+"Isolation (two users working at the same moment see a different set of data)",
+"Consistency only, which has no relation at all with how transactions are handled"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Atomicity menjamin dua langkah transfer diperlakukan sebagai satu kesatuan; bila salah satu gagal, seluruhnya dibatalkan (rollback).",
+"en": "Atomicity guarantees the two transfer steps are treated as one unit; if one fails everything is rolled back."
+}
+},
+{
+"id": "sql-016",
+"topic": "sql",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Query mana yang menemukan pesanan yang customer_id-nya tidak ada di tabel customers?",
+"en": "Which query finds orders whose customer_id does not exist in customers?"
+},
+"options": {
+"id": [
+"SELECT o.* FROM orders o LEFT JOIN customers c ON c.id = o.customer_id WHERE c.id IS NULL;",
+"SELECT o.* FROM orders o INNER JOIN customers c ON c.id = o.customer_id WHERE c.id > 0;",
+"SELECT o.* FROM orders o WHERE o.customer_id IS NOT NULL AND o.customer_id > 0;",
+"SELECT c.* FROM customers c LEFT JOIN orders o ON o.customer_id = c.id WHERE o.id IS NULL;"
+],
+"en": [
+"SELECT o.* FROM orders o LEFT JOIN customers c ON c.id = o.customer_id WHERE c.id IS NULL;",
+"SELECT o.* FROM orders o INNER JOIN customers c ON c.id = o.customer_id WHERE c.id > 0;",
+"SELECT o.* FROM orders o WHERE o.customer_id IS NOT NULL AND o.customer_id > 0;",
+"SELECT c.* FROM customers c LEFT JOIN orders o ON o.customer_id = c.id WHERE o.id IS NULL;"
+]
+},
+"answer": 0,
+"exp": {
+"id": "LEFT JOIN lalu c.id IS NULL menampilkan baris yang tidak punya pasangan: cara standar memeriksa integritas referensial. INNER JOIN justru hanya menampilkan yang cocok.",
+"en": "LEFT JOIN then c.id IS NULL shows rows with no match: the standard referential-integrity check. INNER JOIN shows only matching rows."
+}
+},
+{
+"id": "int-007",
+"topic": "interview",
+"level": 2,
+"type": "short",
+"q": {
+"id": "Ceritakan bug tersulit yang pernah Anda temukan dan bagaimana Anda menanganinya.",
+"en": "Tell me about the hardest bug you found and how you handled it."
+},
+"model": {
+"id": "Gunakan STAR: konteks singkat, langkah reproduksi dan penyempitan penyebab (log, data, environment), kerja sama dengan developer sampai root cause, dampak bisnis, lalu pelajaran atau pencegahan (test regresi baru, perbaikan proses). Hindari menyebut data internal perusahaan.",
+"en": "Use STAR: brief context, reproduction and narrowing down the cause (logs, data, environment), working with developers to the root cause, business impact, then the lesson or prevention (new regression test, process fix). Avoid naming internal company data."
+},
+"keywords": [
+[
+"reproduksi",
+"reproduce",
+"langkah",
+"steps"
+],
+[
+"root cause",
+"akar",
+"penyebab",
+"log"
+],
+[
+"dampak",
+"impact",
+"risiko",
+"risk"
+],
+[
+"pelajaran",
+"lesson",
+"cegah",
+"prevent",
+"regression",
+"regresi"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-008",
+"topic": "interview",
+"level": 2,
+"type": "short",
+"q": {
+"id": "Developer menolak bug yang Anda laporkan dengan alasan \"itu bukan bug\". Apa yang Anda lakukan?",
+"en": "A developer rejects a bug you reported saying \"that's not a bug\". What do you do?"
+},
+"model": {
+"id": "Cek ulang bukti dan reproduksi, rujuk requirement atau acceptance criteria, diskusikan langsung (bukan hanya lewat komentar), jelaskan dampak ke user, dan bila tetap berbeda libatkan product owner untuk memutuskan. Pertahankan sikap konstruktif, bukan menyalahkan.",
+"en": "Re-check evidence and reproduction, refer to the requirement or acceptance criteria, discuss directly (not only via comments), explain the user impact, and if opinions still differ involve the product owner to decide. Stay constructive, not blaming."
+},
+"keywords": [
+[
+"bukti",
+"evidence",
+"reproduksi",
+"reproduce"
+],
+[
+"requirement",
+"acceptance",
+"kriteria",
+"spesifikasi"
+],
+[
+"diskusi",
+"discuss",
+"bicara",
+"talk"
+],
+[
+"product owner",
+"po",
+"stakeholder",
+"eskalasi",
+"escalate"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-009",
+"topic": "interview",
+"level": 2,
+"type": "short",
+"q": {
+"id": "Bagaimana Anda menguji fitur login?",
+"en": "How would you test a login feature?"
+},
+"model": {
+"id": "Klarifikasi requirement lalu rancang test: kredensial valid dan tidak valid, nilai batas panjang input, karakter khusus, akun terkunci setelah percobaan gagal, sesi dan logout, \"ingat saya\", keamanan (brute force, SQL injection, pesan error yang tidak membocorkan keberadaan akun), aksesibilitas, dan performa. Putuskan mana yang diotomasi.",
+"en": "Clarify requirements, then design tests: valid and invalid credentials, input length boundaries, special characters, lockout after failed attempts, session and logout, \"remember me\", security (brute force, SQL injection, error messages that do not reveal account existence), accessibility and performance. Decide what to automate."
+},
+"keywords": [
+[
+"valid",
+"invalid",
+"tidak valid"
+],
+[
+"batas",
+"boundary",
+"bva",
+"panjang",
+"length"
+],
+[
+"keamanan",
+"security",
+"brute",
+"lock",
+"terkunci",
+"injection"
+],
+[
+"sesi",
+"session",
+"logout",
+"pesan error",
+"error message"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-010",
+"topic": "interview",
+"level": 3,
+"type": "short",
+"q": {
+"id": "Bagaimana Anda memutuskan bahwa sebuah rilis aman untuk dirilis (go/no-go)?",
+"en": "How do you decide that a release is safe to ship (go/no-go)?"
+},
+"model": {
+"id": "Berdasarkan bukti, bukan perasaan: exit criteria terpenuhi (coverage, test kritis lulus), defect terbuka beserta severity dan workaround, risiko residual, hasil regression dan smoke di environment mirip produksi, rencana rollback, lalu keputusan bersama stakeholder yang menerima risikonya.",
+"en": "Based on evidence, not feeling: exit criteria met (coverage, critical tests pass), open defects with severity and workarounds, residual risk, regression and smoke results on a production-like environment, a rollback plan, then a joint decision with stakeholders who accept the risk."
+},
+"keywords": [
+[
+"exit criteria",
+"kriteria",
+"coverage",
+"cakupan"
+],
+[
+"defect",
+"bug",
+"severity"
+],
+[
+"risiko",
+"risk",
+"residual"
+],
+[
+"stakeholder",
+"rollback",
+"keputusan",
+"decision"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-011",
+"topic": "interview",
+"level": 3,
+"type": "short",
+"q": {
+"id": "Test otomatis Anda kadang lulus kadang gagal (flaky). Bagaimana Anda menanganinya?",
+"en": "Your automated test sometimes passes and sometimes fails (flaky). How do you handle it?"
+},
+"model": {
+"id": "Cari akar masalah dulu: wait yang salah, data bersama antar test, ketergantungan urutan, environment tidak stabil, atau race condition di aplikasi. Kumpulkan bukti (log, trace, video), perbaiki penyebabnya, karantina sementara test yang mengganggu pipeline, dan pakai retry hanya sebagai jaring pengaman, bukan solusi.",
+"en": "Find the root cause first: wrong waits, data shared between tests, order dependence, an unstable environment or a race condition in the app. Gather evidence (logs, traces, video), fix the cause, quarantine the test temporarily if it blocks the pipeline, and use retries only as a safety net, not a solution."
+},
+"keywords": [
+[
+"akar",
+"root cause",
+"penyebab"
+],
+[
+"wait",
+"tunggu",
+"data",
+"isolasi",
+"isolation",
+"race"
+],
+[
+"bukti",
+"log",
+"trace",
+"video",
+"evidence"
+],
+[
+"retry",
+"karantina",
+"quarantine"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-012",
+"topic": "interview",
+"level": 3,
+"type": "short",
+"q": {
+"id": "Anda diminta menguji sebuah API tanpa dokumentasi. Bagaimana langkah Anda?",
+"en": "You are asked to test an API with no documentation. What are your steps?"
+},
+"model": {
+"id": "Cari sumber informasi: tanya developer, baca kode atau OpenAPI/Swagger bila ada, amati lalu lintas dari aplikasi klien. Jelajahi endpoint secara eksploratori (method, status, header, error), catat temuan sebagai kontrak sementara, konfirmasi ke developer, lalu ubah menjadi test otomatis yang mencakup positif, negatif, autentikasi, dan batas.",
+"en": "Find information sources: ask developers, read the code or OpenAPI/Swagger if available, observe traffic from the client app. Explore endpoints exploratively (methods, status, headers, errors), record findings as a provisional contract, confirm with developers, then turn it into automated tests covering positive, negative, authentication and boundaries."
+},
+"keywords": [
+[
+"developer",
+"tanya",
+"ask",
+"swagger",
+"openapi",
+"kode",
+"code"
+],
+[
+"eksploratori",
+"exploratory",
+"explore",
+"postman",
+"traffic",
+"lalu lintas"
+],
+[
+"kontrak",
+"contract",
+"catat",
+"document"
+],
+[
+"negatif",
+"negative",
+"autentikasi",
+"authentication",
+"batas",
+"boundary"
+]
+],
+"pass": 0.6
+},
+{
 "id": "pw-001",
 "topic": "playwright",
 "level": 2,

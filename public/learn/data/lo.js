@@ -2,6 +2,10 @@
 // Seluruh 64 kode LO dan K-level sudah dicocokkan dengan silabus resmi CTFL v4.0.1 (termasuk bab 5).
 window.QA = window.QA || {};
 QA.syllabusUrl = "https://www.istqb.org/wp-content/uploads/2024/11/ISTQB_CTFL_Syllabus_v4.0.1.pdf";
+// Halaman resmi unduhan CTFL v4.0 di istqb.org (silabus, sample exam, aturan ujian, daftar terjemahan).
+QA.syllabusPageUrl = "https://www.istqb.org/certifications/certified-tester-foundation-level-ctfl-v4-0/";
+// Isi dengan tautan langsung silabus Bahasa Indonesia resmi (IDSTB) bila sudah ada; kosong = hanya teks petunjuk.
+QA.syllabusUrlId = "";
 
 // Struktur ujian CTFL v4.0 (ISTQB Exam Structure and Rules Tables): 40 soal, lulus 26, 60 menit (75 menit non-native).
 QA.exam = { total: 40, pass: 26, minutes: 60, extraMinutes: 75 };
