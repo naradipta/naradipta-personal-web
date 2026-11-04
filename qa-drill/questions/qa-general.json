@@ -252,7 +252,7 @@
   "options": {
    "id": [
     "Menjalankan build dan test otomatis pada setiap perubahan untuk feedback cepat",
-    "Menggantikan tester sepenuhnya karena semua pengujian sudah dilakukan oleh pipeline",
+    "Menggantikan tester sepenuhnya karena semua testing sudah dilakukan oleh pipeline",
     "Menghapus kebutuhan code review karena pipeline sudah memeriksa seluruh perubahan",
     "Mempercepat koneksi internet tim pengembang saat mengunduh dependensi proyek"
    ],
@@ -282,7 +282,7 @@
    "id": [
     "Kadang lolos kadang gagal tanpa perubahan kode",
     "Selalu gagal setelah deploy terbaru, walau kodenya tidak berubah",
-    "Selalu lolos di lingkungan lokal tetapi tidak pernah dijalankan di CI",
+    "Selalu lolos di environment lokal tetapi tidak pernah dijalankan di CI",
     "Terlalu cepat selesai sehingga hasilnya sulit dipercaya"
    ],
    "en": [
@@ -294,7 +294,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Penyebab: timing/wait buruk, data bersama, ketergantungan antar test, lingkungan tidak stabil.",
+   "id": "Penyebab: timing/wait buruk, data bersama, ketergantungan antar test, environment tidak stabil.",
    "en": "Causes: poor timing/waits, shared data, test inter-dependence, unstable environments."
   }
  },
@@ -308,7 +308,7 @@
    "en": "What are common causes of flaky tests and how do you fix them?"
   },
   "model": {
-   "id": "Penyebab: sinkronisasi/wait buruk, data test bersama atau tidak terisolasi, lingkungan/dependensi eksternal tidak stabil. Solusi: explicit wait, data terisolasi, mock dependensi, stabilkan environment.",
+   "id": "Penyebab: sinkronisasi/wait buruk, data test bersama atau tidak terisolasi, environment/dependensi eksternal tidak stabil. Solusi: explicit wait, data terisolasi, mock dependensi, stabilkan environment.",
    "en": "Causes: poor synchronisation/waits, shared or non-isolated test data, unstable environment/external dependencies. Fixes: explicit waits, isolated data, mock dependencies, stabilise environment."
   },
   "keywords": [
@@ -405,7 +405,7 @@
     "Menjalankan test yang sama dengan banyak set data",
     "Mengambil data langsung dari database produksi secara otomatis sebelum setiap test dijalankan",
     "Membuat laporan ringkasan hasil test dalam format yang mudah dibaca oleh manajer proyek",
-    "Menghapus seluruh data test setelah eksekusi selesai supaya lingkungan tetap bersih"
+    "Menghapus seluruh data test setelah eksekusi selesai supaya environment tetap bersih"
    ],
    "en": [
     "Run the same test with multiple data sets",
@@ -490,8 +490,8 @@
   "options": {
    "id": [
     "Menguji sistem melampaui kapasitas normal untuk mencari titik patah dan pemulihan",
-    "Menguji tampilan antarmuka di berbagai warna, ukuran layar, dan tema yang berbeda",
-    "Menguji perilaku sistem untuk satu pengguna saja dalam kondisi yang sangat ideal",
+    "Menguji tampilan UI di berbagai warna, ukuran layar, dan tema yang berbeda",
+    "Menguji perilaku sistem untuk satu user saja dalam kondisi yang sangat ideal",
     "Menguji ketepatan terjemahan teks aplikasi ke beberapa bahasa yang didukung"
    ],
    "en": [
@@ -503,7 +503,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Load testing: beban yang diharapkan. Spike: lonjakan mendadak. Soak: beban lama.",
+   "id": "Load testing: load yang diharapkan. Spike: lonjakan mendadak. Soak: load lama.",
    "en": "Load testing: expected load. Spike: sudden surge. Soak: prolonged load."
   }
  },
@@ -532,7 +532,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Aplikasi yang aman memakai parameterized query. Lakukan hanya di lingkungan yang Anda berwenang untuk menguji.",
+   "id": "Aplikasi yang aman memakai parameterized query. Lakukan hanya di environment yang Anda berwenang untuk menguji.",
    "en": "A secure application uses parameterized queries. Only test in environments you are authorised to test."
   }
  },
@@ -550,7 +550,7 @@
     "Menyisipkan script berbahaya yang dieksekusi di browser korban",
     "Serangan yang hanya menargetkan database melalui query yang dimanipulasi penyerang",
     "Serangan DDoS yang membanjiri server dengan lalu lintas hingga layanan tidak bisa diakses",
-    "Kegagalan CSS yang membuat tampilan halaman rusak pada sebagian perangkat pengguna"
+    "Failure CSS yang membuat tampilan halaman rusak pada sebagian perangkat user"
    ],
    "en": [
     "Injecting malicious script that runs in a victim's browser",
@@ -579,7 +579,7 @@
     "Mengganti dependensi eksternal agar test terisolasi dan deterministik",
     "Mempercepat koneksi internet dengan memblokir seluruh permintaan ke layanan eksternal",
     "Menghapus bug dari kode produksi sebelum test dijalankan oleh pipeline CI",
-    "Mengganti database produksi dengan salinan lama yang sudah tidak dipakai pengguna"
+    "Mengganti database produksi dengan salinan lama yang sudah tidak dipakai user"
    ],
    "en": [
     "Replace external dependencies so tests are isolated and deterministic",
@@ -741,7 +741,7 @@
   },
   "options": {
    "id": [
-    "Lingkungan test konsisten dan mudah diulang",
+    "Test environment konsisten dan mudah diulang",
     "Menghilangkan kebutuhan test karena kontainer sudah memastikan aplikasi pasti berjalan benar",
     "Membuat bug otomatis hilang saat aplikasi dipaketkan ke dalam image yang baru",
     "Mengganti Git sebagai sistem version control untuk seluruh kode dan konfigurasi"
@@ -817,7 +817,7 @@
     "Scenario: gambaran tinggi apa yang diuji; test case: langkah, data, dan hasil yang diharapkan",
     "Keduanya sama persis dan hanya dibedakan oleh nama yang dipakai tiap tim berbeda-beda",
     "Test case lebih umum dan ringkas daripada scenario yang selalu memuat langkah rinci",
-    "Scenario hanya dipakai pada pengujian performa, sedangkan test case dipakai untuk fungsional"
+    "Scenario hanya dipakai pada performance testing, sedangkan test case dipakai untuk fungsional"
    ],
    "en": [
     "Scenario: high-level what to test; test case: steps, data and expected result",

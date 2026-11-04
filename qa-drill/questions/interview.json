@@ -53,7 +53,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Locator berbasis role, label, atau test id mencerminkan cara pengguna melihat halaman dan jarang patah. Selector posisi dan kelas gaya rapuh terhadap perubahan struktur.",
+   "id": "Locator berbasis role, label, atau test id mencerminkan cara user melihat halaman dan jarang patah. Selector posisi dan kelas gaya rapuh terhadap perubahan struktur.",
    "en": "Role, label or test-id locators mirror how users see the page and rarely break. Position and styling-class selectors are brittle against structure changes."
   }
  },
@@ -184,7 +184,7 @@
   },
   "options": {
    "id": [
-    "Command Cypress async dalam antrean dan mengembalikan chainable, bukan nilai; pakai .then() atau alias",
+    "Command Cypress async dalam queue dan mengembalikan chainable, bukan nilai; pakai .then() atau alias",
     "Karena cy.get hanya mendukung selector ID dan tidak bisa membaca teks elemen sama sekali",
     "Karena Cypress memang tidak menyediakan fungsi untuk membaca teks dari sebuah elemen",
     "Karena semua command Cypress wajib diawali dengan await agar nilai kembaliannya tersedia"
@@ -243,7 +243,7 @@
   "options": {
    "id": [
     "Query dan assertion diulang otomatis sampai lolos atau timeout (default 4 detik)",
-    "Seluruh test diulang jika gagal tanpa perlu konfigurasi apa pun oleh pengguna Cypress",
+    "Seluruh test diulang jika gagal tanpa perlu konfigurasi apa pun oleh user Cypress",
     "Command yang mengubah state seperti click diulang berkali-kali sampai berhasil dijalankan",
     "Cypress mengulang test terus-menerus sampai hasilnya hijau, berapa pun jumlah percobaannya"
    ],
@@ -273,7 +273,7 @@
    "id": [
     "cy.session() untuk menyimpan dan memulihkan sesi login (login lewat API bila bisa)",
     "Login manual dulu di browser lalu menjalankan Cypress tanpa pernah menutup browser itu",
-    "Menonaktifkan autentikasi di aplikasi sepenuhnya selama test berjalan di lingkungan apa pun",
+    "Menonaktifkan autentikasi di aplikasi sepenuhnya selama test berjalan di environment apa pun",
     "Memakai cy.wait(10000) setiap kali login supaya sesi sempat terbentuk dengan sempurna"
    ],
    "en": [
@@ -360,8 +360,8 @@
    "id": [
     "Menjalankan beberapa test suite sekaligus, mis. lintas browser atau profile, berurutan atau paralel",
     "Menyimpan locator elemen web secara terpusat untuk dipakai ulang oleh seluruh test case",
-    "Menyimpan data uji dalam file CSV yang dihubungkan ke langkah-langkah test case",
-    "Membuat laporan bug otomatis ke sistem tracker setiap kali sebuah test gagal"
+    "Menyimpan test data dalam file CSV yang dihubungkan ke langkah-langkah test case",
+    "Membuat bug report otomatis ke sistem tracker setiap kali sebuah test gagal"
    ],
    "en": [
     "Running several test suites together, e.g. across browsers or profiles, sequentially or in parallel",
@@ -419,7 +419,7 @@
     "Locator disimpan terpusat sehingga satu perubahan memperbaiki semua test; ada self-healing",
     "Karena membuat setiap test berjalan jauh lebih cepat dibanding menulis locator di langkah",
     "Karena menghilangkan kebutuhan assertion pada hampir seluruh langkah verifikasi test",
-    "Karena otomatis menuliskan data uji yang dibutuhkan oleh setiap test case baru"
+    "Karena otomatis menuliskan test data yang dibutuhkan oleh setiap test case baru"
    ],
    "en": [
     "Locators are kept centrally so one change fixes all tests; self-healing is available",
@@ -469,7 +469,7 @@
   "level": 2,
   "type": "mcq",
   "q": {
-   "id": "Query mana yang menemukan pelanggan yang belum pernah membuat pesanan?",
+   "id": "Query mana yang menemukan customer yang belum pernah membuat pesanan?",
    "en": "Which query finds customers who have never placed an order?"
   },
   "options": {
@@ -488,7 +488,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "LEFT JOIN mempertahankan semua pelanggan; yang tidak punya pesanan memiliki kolom o.id NULL. NOT EXISTS juga valid. '= NULL' tidak pernah benar.",
+   "id": "LEFT JOIN mempertahankan semua customer; yang tidak punya pesanan memiliki kolom o.id NULL. NOT EXISTS juga valid. '= NULL' tidak pernah benar.",
    "en": "LEFT JOIN keeps all customers; those without orders have o.id NULL. NOT EXISTS is also valid. '= NULL' is never true."
   }
  },
@@ -661,7 +661,7 @@
    "en": "Your automated test is flaky (sometimes passes, sometimes fails). How do you handle it?"
   },
   "model": {
-   "id": "Reproduksi dan cari akar masalah: timing/waiting, data uji yang saling mengganggu, lingkungan tidak stabil, atau locator rapuh. Perbaiki dengan wait berbasis kondisi, isolasi data, mock dependensi tak stabil; karantina sementara agar tidak menghalangi pipeline, dan jangan sekadar menambah retry.",
+   "id": "Reproduksi dan cari root cause: timing/waiting, test data yang saling mengganggu, environment tidak stabil, atau locator rapuh. Perbaiki dengan wait berbasis kondisi, isolasi data, mock dependensi tak stabil; karantina sementara agar tidak menghalangi pipeline, dan jangan sekadar menambah retry.",
    "en": "Reproduce and find the root cause: timing/waiting, test data interference, unstable environment or brittle locators. Fix with condition-based waits, data isolation, mocking unstable dependencies; quarantine temporarily so the pipeline is not blocked, and don't just add retries."
   },
   "keywords": [
@@ -743,11 +743,11 @@
   "level": 3,
   "type": "short",
   "q": {
-   "id": "Bagaimana Anda melaporkan risiko rilis kepada stakeholder non-teknis?",
+   "id": "Bagaimana Anda melaporkan risiko release kepada stakeholder non-teknis?",
    "en": "How do you report release risk to non-technical stakeholders?"
   },
   "model": {
-   "id": "Gunakan bahasa dampak bisnis, bukan istilah teknis: apa yang sudah diuji, apa yang belum, defect terbuka beserta tingkat keparahan dan dampak pengguna, serta rekomendasi (rilis, rilis dengan mitigasi, tunda). Sajikan ringkas dengan data seperti status pass/fail dan cakupan area berisiko.",
+   "id": "Gunakan bahasa dampak bisnis, bukan istilah teknis: apa yang sudah diuji, apa yang belum, defect terbuka beserta tingkat keparahan dan dampak user, serta rekomendasi (release, release dengan mitigasi, tunda). Sajikan ringkas dengan data seperti status pass/fail dan coverage area berisiko.",
    "en": "Use business-impact language, not technical jargon: what was tested, what was not, open defects with severity and user impact, and a recommendation (release, release with mitigation, delay). Keep it concise with data such as pass/fail status and coverage of risky areas."
   },
   "keywords": [
@@ -795,7 +795,7 @@
    "en": "Describe a hard bug you found using the STAR format (without confidential company data)."
   },
   "model": {
-   "id": "Situasi: konteks umum fitur dan masalahnya. Tugas: peran saya. Aksi: bagaimana saya mereproduksi, mempersempit penyebab, berkolaborasi dengan developer, dan menambah pengamanan. Hasil: bug diperbaiki dan dampak terukur, mis. regresi yang dicegah atau pelajaran proses.",
+   "id": "Situasi: konteks umum fitur dan masalahnya. Tugas: peran saya. Aksi: bagaimana saya mereproduksi, mempersempit penyebab, berkolaborasi dengan developer, dan menambah pengamanan. Hasil: bug diperbaiki dan dampak terukur, mis. regression yang dicegah atau pelajaran proses.",
    "en": "Situation: general context of the feature and the problem. Task: my role. Action: how I reproduced, narrowed down the cause, collaborated with developers and added safeguards. Result: the bug fixed and a measurable effect, e.g. regression prevented or process learning."
   },
   "keywords": [

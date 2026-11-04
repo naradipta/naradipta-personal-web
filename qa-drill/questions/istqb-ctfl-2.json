@@ -38,13 +38,13 @@
   "level": 2,
   "type": "mcq",
   "q": {
-   "id": "Analis salah memahami aturan diskon (error), sehingga kode memakai rumus yang keliru (defect), dan pelanggan melihat harga salah (failure). Apa root cause paling awal dalam rantai ini?",
+   "id": "Analis salah memahami aturan diskon (error), sehingga kode memakai rumus yang keliru (defect), dan customer melihat harga salah (failure). Apa root cause paling awal dalam rantai ini?",
    "en": "An analyst misunderstood the discount rule (error), so the code used a wrong formula (defect), and a customer saw a wrong price (failure). What is the earliest root cause in this chain?"
   },
   "options": {
    "id": [
     "Kesalahpahaman aturan diskon oleh analis",
-    "Harga salah yang akhirnya dilihat oleh pelanggan pada halaman pembayaran aplikasi",
+    "Harga salah yang akhirnya dilihat oleh customer pada halaman pembayaran aplikasi",
     "Rumus yang keliru pada kode program yang menghitung diskon untuk setiap pesanan",
     "Jumlah test case yang kurang untuk mencakup semua kombinasi aturan diskon yang ada"
    ],
@@ -57,7 +57,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Root cause adalah penyebab awal yang jika dihilangkan mencegah defect: di sini kesalahpahaman (error). Defect ada di kode; failure yang terlihat pengguna.",
+   "id": "Root cause adalah penyebab awal yang jika dihilangkan mencegah defect: di sini kesalahpahaman (error). Defect ada di kode; failure yang terlihat user.",
    "en": "A root cause is the earliest cause which, if removed, prevents the defect: here the misunderstanding (error). The defect is in the code; the failure is what users see."
   }
  },
@@ -69,14 +69,14 @@
   "level": 2,
   "type": "mcq",
   "q": {
-   "id": "Sekitar 70% defect rilis lalu ditemukan di modul pembayaran, sementara modul lain hampir bersih. Prinsip testing mana yang paling menjelaskan ini, dan apa tindakannya?",
+   "id": "Sekitar 70% defect release lalu ditemukan di modul pembayaran, sementara modul lain hampir bersih. Prinsip testing mana yang paling menjelaskan ini, dan apa tindakannya?",
    "en": "About 70% of the last release's defects were found in the payment module while other modules were almost clean. Which testing principle best explains this, and what follows?"
   },
   "options": {
    "id": [
     "Defect clustering: fokuskan lebih banyak testing pada modul pembayaran",
     "Absence-of-defects fallacy: berhenti menguji modul lain",
-    "Testing shows presence of defects: rilis ditunda selamanya",
+    "Testing shows presence of defects: release ditunda selamanya",
     "Exhaustive testing: uji semua kombinasi modul pembayaran"
    ],
    "en": [
@@ -119,7 +119,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Traceability mendukung analisis dampak perubahan, penilaian cakupan, dan pelaporan status terhadap requirement.",
+   "id": "Traceability mendukung analisis dampak perubahan, penilaian coverage, dan reporting status terhadap requirement.",
    "en": "Traceability supports change impact analysis, coverage assessment and status reporting against requirements."
   }
  },
@@ -229,7 +229,7 @@
   },
   "options": {
    "id": [
-    "Memberi umpan balik cepat atas perubahan sehingga defect cepat terlihat",
+    "Memberi feedback cepat atas perubahan sehingga defect cepat terlihat",
     "Menghilangkan kebutuhan test case karena pipeline sudah memeriksa semua perubahan kode",
     "Menjamin tidak ada defect yang lolos ke produksi selama pipeline berwarna hijau",
     "Menggantikan semua testing manual sehingga tester dapat dialihkan ke pekerjaan lain"
@@ -243,7 +243,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "DevOps menekankan umpan balik cepat dan otomasi. Pipeline mengurangi risiko tetapi tidak menjamin bebas defect dan tidak menggantikan eksploratori.",
+   "id": "DevOps menekankan feedback cepat dan otomasi. Pipeline mengurangi risiko tetapi tidak menjamin bebas defect dan tidak menggantikan eksploratori.",
    "en": "DevOps stresses fast feedback and automation. A pipeline lowers risk but does not guarantee zero defects or replace exploratory testing."
   }
  },
@@ -255,15 +255,15 @@
   "level": 2,
   "type": "mcq",
   "q": {
-   "id": "Di retrospective sprint, tim menemukan banyak test otomasi flaky yang memperlambat rilis. Hasil retrospective yang paling sesuai tujuannya adalah...",
+   "id": "Di retrospective sprint, tim menemukan banyak test otomasi flaky yang memperlambat release. Hasil retrospective yang paling sesuai tujuannya adalah...",
    "en": "In a sprint retrospective the team finds many flaky automated tests slowing releases. The outcome that best fits a retrospective's purpose is..."
   },
   "options": {
    "id": [
     "Menyepakati tindakan perbaikan proses, mis. stabilisasi test dan aturan karantina, lalu meninjaunya",
     "Menyalahkan tester yang menulis test yang flaky agar kejadian serupa tidak terulang",
-    "Menghapus semua test otomasi supaya rilis tidak lagi terhambat oleh test yang gagal",
-    "Menunda pembahasan sampai rilis selesai agar tim tidak terganggu tekanan jadwal"
+    "Menghapus semua test otomasi supaya release tidak lagi terhambat oleh test yang gagal",
+    "Menunda pembahasan sampai release selesai agar tim tidak terganggu tekanan jadwal"
    ],
    "en": [
     "Agreeing process improvement actions, e.g. stabilising tests and a quarantine rule, then reviewing them",
@@ -305,7 +305,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Integration testing berfokus pada interaksi antar komponen atau sistem. Component testing menguji satu unit terisolasi; acceptance menilai kesiapan dari sisi bisnis; maintenance testing bukan level, melainkan pengujian saat sistem berubah.",
+   "id": "Integration testing berfokus pada interaksi antar komponen atau sistem. Component testing menguji satu unit terisolasi; acceptance menilai kesiapan dari sisi bisnis; maintenance testing bukan level, melainkan testing saat sistem berubah.",
    "en": "Integration testing focuses on interactions between components or systems. Component testing checks one isolated unit; acceptance judges business readiness; maintenance testing is not a level but testing during system change."
   }
  },
@@ -323,8 +323,8 @@
   "options": {
    "id": [
     "Memeriksa perhitungan pajak pada invoice",
-    "Mengukur waktu respons dengan 1.000 pengguna bersamaan",
-    "Memeriksa kemudahan dipelajari antarmuka baru",
+    "Mengukur waktu respons dengan 1.000 user bersamaan",
+    "Memeriksa kemudahan dipelajari UI baru",
     "Memeriksa data tetap aman saat serangan injeksi"
    ],
    "en": [
@@ -336,7 +336,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Functional testing menilai apa yang dilakukan sistem. Performa, usability, dan keamanan adalah karakteristik non-fungsional.",
+   "id": "Functional testing menilai apa yang dilakukan sistem. Performance, usability, dan security adalah karakteristik non-fungsional.",
    "en": "Functional testing evaluates what the system does. Performance, usability and security are non-functional characteristics."
   }
  },
@@ -348,15 +348,15 @@
   "level": 2,
   "type": "mcq",
   "q": {
-   "id": "Basis data produksi akan dimigrasikan ke platform baru tanpa perubahan fitur. Testing yang tepat?",
+   "id": "Database produksi akan dimigrasikan ke platform baru tanpa perubahan fitur. Testing yang tepat?",
    "en": "The production database will be migrated to a new platform with no feature change. What testing fits?"
   },
   "options": {
    "id": [
-    "Maintenance testing: uji migrasi data, lingkungan baru, dan regression agar fungsi tetap benar",
+    "Maintenance testing: uji migrasi data, environment baru, dan regression agar fungsi tetap benar",
     "Tidak perlu testing karena tidak ada fitur yang berubah selama proses migrasi berlangsung",
     "Hanya component testing satu fungsi, karena perubahan terjadi di lapisan penyimpanan",
-    "Hanya testing performa yang dijalankan setahun setelah migrasi selesai dilakukan"
+    "Hanya testing performance yang dijalankan setahun setelah migrasi selesai dilakukan"
    ],
    "en": [
     "Maintenance testing: test data migration, the new environment, and regression to keep behaviour correct",
@@ -367,7 +367,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Migrasi adalah pemicu maintenance testing, dengan analisis dampak untuk menentukan cakupan regression.",
+   "id": "Migrasi adalah trigger maintenance testing, dengan analisis dampak untuk menentukan coverage regression.",
    "en": "Migration is a trigger for maintenance testing, with impact analysis to scope regression."
   }
  },
@@ -385,7 +385,7 @@
   "options": {
    "id": [
     "Requirement yang ambigu atau saling bertentangan",
-    "Kebocoran memori saat beban tinggi",
+    "Kebocoran memori saat load tinggi",
     "Lonjakan waktu respons pada jam sibuk",
     "Crash pada perangkat tertentu"
    ],
@@ -398,7 +398,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Static testing memeriksa work product tanpa menjalankan kode. Masalah runtime seperti memori, performa, dan perangkat butuh dynamic testing.",
+   "id": "Static testing memeriksa work product tanpa menjalankan kode. Masalah runtime seperti memori, performance, dan perangkat butuh dynamic testing.",
    "en": "Static testing examines work products without running code. Runtime issues such as memory, performance and devices need dynamic testing."
   }
  },
@@ -416,7 +416,7 @@
   "options": {
    "id": [
     "Kode yang tidak pernah dijangkau (unreachable) dan pelanggaran standar penulisan kode",
-    "Waktu respons lambat pada beban tinggi",
+    "Waktu respons lambat pada load tinggi",
     "Layout rusak di browser tertentu",
     "Salah hitung hanya pada input tertentu saat runtime"
    ],
@@ -460,7 +460,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Mulai dari perencanaan, memulai review, review individual, diskusi dan analisis temuan, lalu perbaikan dan pelaporan.",
+   "id": "Mulai dari perencanaan, memulai review, review individual, diskusi dan analisis temuan, lalu perbaikan dan reporting.",
    "en": "Start with planning, initiate the review, individual review, discuss and analyse findings, then fix and report."
   }
  },
@@ -472,7 +472,7 @@
   "level": 2,
   "type": "mcq",
   "q": {
-   "id": "Review yang dipimpin penulis untuk menjelaskan work product kepada peserta dan mengumpulkan umpan balik, tanpa proses formal ketat, disebut...",
+   "id": "Review yang dipimpin penulis untuk menjelaskan work product kepada peserta dan mengumpulkan feedback, tanpa proses formal ketat, disebut...",
    "en": "A review led by the author to explain the work product to participants and gather feedback, without a strict formal process, is called a..."
   },
   "options": {
@@ -695,7 +695,7 @@
   "options": {
    "id": [
     "Setelah 5 kali password salah berturut-turut, akun dikunci 15 menit dan muncul pesan penguncian",
-    "Login harus aman, nyaman, dan cepat bagi seluruh jenis pengguna aplikasi",
+    "Login harus aman, nyaman, dan cepat bagi seluruh jenis user aplikasi",
     "Sistem harus bagus dan berfungsi dengan baik dalam semua kondisi penggunaan",
     "Developer menulis kode login dengan rapi serta mengikuti standar penulisan kode"
    ],
@@ -726,8 +726,8 @@
   "options": {
    "id": [
     "Semua test kritis lolos dan tidak ada defect kritis yang masih terbuka",
-    "Lingkungan test sudah siap dan dapat diakses",
-    "Data uji sudah tersedia",
+    "Test environment sudah siap dan dapat diakses",
+    "Test data sudah tersedia",
     "Build sudah lolos smoke test"
    ],
    "en": [
@@ -751,7 +751,7 @@
   "level": 3,
   "type": "mcq",
   "q": {
-   "id": "Tiga sprint lalu, tim menyelesaikan pengujian 20, 24, dan 22 test case per sprint. Masih ada 66 test case yang harus diuji. Dengan ekstrapolasi dari rata-rata, perkiraan jumlah sprint?",
+   "id": "Tiga sprint lalu, tim menyelesaikan testing 20, 24, dan 22 test case per sprint. Masih ada 66 test case yang harus diuji. Dengan ekstrapolasi dari rata-rata, perkiraan jumlah sprint?",
    "en": "In the last three sprints the team finished testing 20, 24 and 22 test cases per sprint. 66 test cases remain. Extrapolating from the average, about how many sprints are needed?"
   },
   "options": {
@@ -832,7 +832,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Q1: component/integration; Q2: functional examples dan story tests; Q3: eksploratori, usability, UAT; Q4: performa, keamanan, dan karakteristik non-fungsional lain.",
+   "id": "Q1: component/integration; Q2: functional examples dan story tests; Q3: eksploratori, usability, UAT; Q4: performance, security, dan karakteristik non-fungsional lain.",
    "en": "Q1: component/integration; Q2: functional examples and story tests; Q3: exploratory, usability, UAT; Q4: performance, security and other non-functional characteristics."
   }
  },
@@ -849,9 +849,9 @@
   },
   "options": {
    "id": [
-    "Pembulatan salah pada hitungan cicilan yang merugikan pelanggan",
+    "Pembulatan salah pada hitungan cicilan yang merugikan customer",
     "Anggota tim kunci pindah ke perusahaan lain di tengah proyek yang sedang berjalan",
-    "Lingkungan test terlambat tersedia sehingga jadwal eksekusi tes bergeser dua minggu",
+    "Test environment terlambat tersedia sehingga jadwal eksekusi tes bergeser dua minggu",
     "Anggaran untuk tool testing dipotong oleh manajemen pada kuartal berikutnya"
    ],
    "en": [
@@ -863,7 +863,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Product risk menyangkut kualitas produk; project risk menyangkut manajemen dan kontrol proyek (orang, jadwal, anggaran, lingkungan).",
+   "id": "Product risk menyangkut kualitas produk; project risk menyangkut manajemen dan kontrol proyek (orang, jadwal, anggaran, environment).",
    "en": "Product risks concern product quality; project risks concern project management and control (people, schedule, budget, environment)."
   }
  },
@@ -925,7 +925,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Metrik umum: kemajuan eksekusi test, defect ditemukan dan diperbaiki, cakupan requirement atau kode, usaha dan biaya.",
+   "id": "Metrik umum: kemajuan eksekusi test, defect ditemukan dan diperbaiki, requirement coverage atau kode, usaha dan biaya.",
    "en": "Common metrics: test execution progress, defects found and fixed, requirement or code coverage, effort and cost."
   }
  },
@@ -944,7 +944,7 @@
    "id": [
     "Ringkasan testing, deviasi dari rencana, status terhadap exit criteria, metrik, dan risiko tersisa",
     "Seluruh log eksekusi mentah dari setiap test case yang dijalankan selama iterasi berlangsung",
-    "Hanya jumlah test yang lolos tanpa konteks apa pun tentang cakupan maupun risikonya",
+    "Hanya jumlah test yang lolos tanpa konteks apa pun tentang coverage maupun risikonya",
     "Kode sumber seluruh test otomasi beserta riwayat perubahannya di repositori"
    ],
    "en": [

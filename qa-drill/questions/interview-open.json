@@ -1,0 +1,652 @@
+[
+ {
+  "id": "int-019",
+  "topic": "interview",
+  "level": 2,
+  "type": "short",
+  "q": {
+   "id": "Ceritakan saat Anda berselisih pendapat dengan developer soal sebuah bug. Bagaimana akhirnya?",
+   "en": "Tell me about a time you disagreed with a developer about a bug. How did it end?"
+  },
+  "model": {
+   "id": "Gunakan STAR. Tunjukkan Anda memisahkan fakta dari opini: langkah reproduksi, log atau rekaman, dan dampak ke user. Dengarkan sudut pandang developer, cari titik temu (mungkin perilaku sesuai spesifikasi tetapi spesifikasinya yang bermasalah), libatkan product owner bila perlu, dan sebut hasilnya serta hubungan kerja sesudahnya. Hindari menyalahkan orang.",
+   "en": "Use STAR. Show you separated facts from opinion: reproduction steps, logs or a recording, and user impact. Listen to the developer's view, find common ground (maybe the behaviour matches the spec but the spec is the problem), involve the product owner when needed, and state the result and the working relationship afterwards. Avoid blaming people."
+  },
+  "keywords": [
+   [
+    "fakta",
+    "bukti",
+    "evidence",
+    "reproduksi",
+    "reproduce",
+    "log"
+   ],
+   [
+    "dengar",
+    "listen",
+    "sudut pandang",
+    "perspective",
+    "kolaborasi",
+    "collaborat"
+   ],
+   [
+    "product owner",
+    "stakeholder",
+    "spesifikasi",
+    "spec",
+    "requirement"
+   ],
+   [
+    "hasil",
+    "result",
+    "outcome",
+    "pelajaran",
+    "lesson"
+   ]
+  ],
+  "pass": 0.6
+ },
+ {
+  "id": "int-020",
+  "topic": "interview",
+  "level": 2,
+  "type": "short",
+  "q": {
+   "id": "Ceritakan kesalahan yang pernah Anda buat sebagai QA dan apa yang Anda ubah sesudahnya.",
+   "en": "Tell me about a mistake you made as a QA and what you changed afterwards."
+  },
+  "model": {
+   "id": "Pilih kesalahan nyata yang tidak fatal. Jelaskan situasi, akui tanggung jawab tanpa membela diri, sebutkan dampaknya, tindakan perbaikan yang segera dilakukan, dan perubahan jangka panjang (mis. checklist, regression test baru, review). Tutup dengan pelajaran yang bisa diterapkan lagi.",
+   "en": "Choose a real, non-fatal mistake. Describe the situation, own it without defensiveness, state the impact, the immediate fix, and the long-term change (e.g. a checklist, a new regression test, a review). Close with a lesson you can reuse."
+  },
+  "keywords": [
+   [
+    "akui",
+    "own",
+    "tanggung jawab",
+    "responsib",
+    "admit"
+   ],
+   [
+    "dampak",
+    "impact",
+    "akibat"
+   ],
+   [
+    "perbaik",
+    "fix",
+    "checklist",
+    "regression",
+    "proses",
+    "process"
+   ],
+   [
+    "pelajaran",
+    "lesson",
+    "belajar",
+    "learn"
+   ]
+  ],
+  "pass": 0.6
+ },
+ {
+  "id": "int-021",
+  "topic": "interview",
+  "level": 2,
+  "type": "short",
+  "q": {
+   "id": "Anda punya lima tugas penting dan waktu hanya cukup untuk dua. Bagaimana memutuskan?",
+   "en": "You have five important tasks and time for only two. How do you decide?"
+  },
+  "model": {
+   "id": "Nilai berdasarkan risiko dan dampak bisnis (kemungkinan x dampak), tenggat, dan ketergantungan. Konfirmasi prioritas dengan product owner atau atasan alih-alih menebak. Komunikasikan secara terbuka apa yang ditunda beserta risikonya, dan cari cara mendelegasikan atau mengotomasi sebagian.",
+   "en": "Assess by risk and business impact (likelihood x impact), deadlines and dependencies. Confirm priorities with the product owner or manager instead of guessing. Communicate openly what is deferred and its risk, and look for ways to delegate or automate part of it."
+  },
+  "keywords": [
+   [
+    "risiko",
+    "risk",
+    "dampak",
+    "impact"
+   ],
+   [
+    "tenggat",
+    "deadline",
+    "prioritas",
+    "priorit"
+   ],
+   [
+    "konfirmasi",
+    "confirm",
+    "product owner",
+    "atasan",
+    "manager",
+    "komunikasi",
+    "communicat"
+   ],
+   [
+    "tunda",
+    "defer",
+    "delegasi",
+    "delegate",
+    "otomasi",
+    "automat"
+   ]
+  ],
+  "pass": 0.6
+ },
+ {
+  "id": "int-022",
+  "topic": "interview",
+  "level": 3,
+  "type": "short",
+  "q": {
+   "id": "Product owner menganggap bug yang Anda temukan 'tidak penting', Anda yakin sebaliknya. Apa yang Anda lakukan?",
+   "en": "The product owner says a bug you found 'does not matter', but you disagree. What do you do?"
+  },
+  "model": {
+   "id": "Siapkan data, bukan opini: seberapa banyak user terdampak, seberapa sering, dampak ke uang, reputasi, atau security, dan apakah ada workaround. Presentasikan singkat, tawarkan opsi (perbaiki sekarang, workaround, jadwalkan), lalu hormati keputusan yang diambil sambil mencatat risiko residual di tiket.",
+   "en": "Bring data, not opinions: how many users are affected, how often, the impact on money, reputation or security, and whether a workaround exists. Present briefly, offer options (fix now, workaround, schedule), then respect the decision while recording the residual risk in the ticket."
+  },
+  "keywords": [
+   [
+    "data",
+    "bukti",
+    "evidence",
+    "pengguna",
+    "user",
+    "frekuensi",
+    "frequency"
+   ],
+   [
+    "dampak",
+    "impact",
+    "risiko",
+    "risk"
+   ],
+   [
+    "opsi",
+    "option",
+    "workaround",
+    "jadwal",
+    "schedule"
+   ],
+   [
+    "catat",
+    "record",
+    "dokumen",
+    "document",
+    "keputusan",
+    "decision",
+    "hormati",
+    "respect"
+   ]
+  ],
+  "pass": 0.6
+ },
+ {
+  "id": "int-023",
+  "topic": "interview",
+  "level": 2,
+  "type": "short",
+  "q": {
+   "id": "Anda bergabung ke tim yang belum punya test otomasi. Apa yang Anda lakukan di 90 hari pertama?",
+   "en": "You join a team with no test automation. What do you do in your first 90 days?"
+  },
+  "model": {
+   "id": "Bulan pertama: pahami produk, alur kritis, risiko, dan proses release; bangun hubungan dengan developer dan product owner. Lalu mulai kecil: smoke test otomatis untuk alur paling penting dan jalankan di CI. Bulan berikutnya perluas ke test API dan regression berisiko tinggi, tetapkan konvensi dan test data, serta ukur hasilnya (waktu regression, bug yang tertangkap).",
+   "en": "Month one: learn the product, critical flows, risks and the release process; build relationships with developers and the product owner. Then start small: automated smoke tests for the most important flow, run in CI. In later months expand to API tests and high-risk regression, set conventions and test data, and measure results (regression time, bugs caught)."
+  },
+  "keywords": [
+   [
+    "pahami",
+    "understand",
+    "risiko",
+    "risk",
+    "alur kritis",
+    "critical"
+   ],
+   [
+    "smoke",
+    "kecil",
+    "small"
+   ],
+   [
+    "ci",
+    "pipeline"
+   ],
+   [
+    "ukur",
+    "measure",
+    "api",
+    "regression",
+    "konvensi",
+    "convention"
+   ]
+  ],
+  "pass": 0.6
+ },
+ {
+  "id": "int-024",
+  "topic": "interview",
+  "level": 2,
+  "type": "short",
+  "q": {
+   "id": "Bagaimana Anda menguji fitur login?",
+   "en": "How would you test a login feature?"
+  },
+  "model": {
+   "id": "Positif: kredensial valid, ingat saya, logout. Negatif: password salah, email tidak terdaftar (pesan generik), kolom kosong, spasi di ujung, huruf besar-kecil. Batas dan security: panjang maksimum, rate limit atau penguncian akun, masa berlaku sesi dan token, injection, HTTPS. Lain-lain: accessibility, tombol back, banyak perangkat. Otomasi di level API dan beberapa E2E.",
+   "en": "Positive: valid credentials, remember me, logout. Negative: wrong password, unregistered email (generic message), empty fields, trailing spaces, letter case. Limits and security: maximum length, rate limiting or account lockout, session and token expiry, injection, HTTPS. Other: accessibility, back button, multiple devices. Automate at API level plus a few E2E."
+  },
+  "keywords": [
+   [
+    "positif",
+    "positive",
+    "valid"
+   ],
+   [
+    "negatif",
+    "negative",
+    "salah",
+    "wrong",
+    "kosong",
+    "empty"
+   ],
+   [
+    "keamanan",
+    "security",
+    "rate limit",
+    "kunci",
+    "lock",
+    "token",
+    "sesi",
+    "session"
+   ],
+   [
+    "batas",
+    "boundary",
+    "aksesibilitas",
+    "accessib",
+    "otomasi",
+    "automat"
+   ]
+  ],
+  "pass": 0.6
+ },
+ {
+  "id": "int-025",
+  "topic": "interview",
+  "level": 2,
+  "type": "short",
+  "q": {
+   "id": "Bagaimana Anda menguji fitur pencarian pada toko online?",
+   "en": "How would you test the search feature of an online shop?"
+  },
+  "model": {
+   "id": "Fungsional: kata kunci cocok persis, sebagian, huruf besar-kecil, salah ketik, kosong, tidak ada hasil. Relevansi dan pengurutan, filter, serta pagination yang konsisten saat data berubah. Input khusus (karakter spesial, emoji, string sangat panjang, injection). Performance pada data besar dan kecepatan respons, plus tampilan di mobile dan accessibility.",
+   "en": "Functional: exact and partial keyword matches, letter case, typos, empty, no results. Relevance and sorting, filters, and pagination that stays consistent as data changes. Special input (special characters, emoji, very long strings, injection). Performance on large data and response time, plus mobile display and accessibility."
+  },
+  "keywords": [
+   [
+    "kata kunci",
+    "keyword",
+    "cocok",
+    "match",
+    "kosong",
+    "empty",
+    "tidak ada hasil",
+    "no result"
+   ],
+   [
+    "relevan",
+    "urut",
+    "sort",
+    "filter",
+    "pagination"
+   ],
+   [
+    "karakter",
+    "special",
+    "injection",
+    "panjang",
+    "long"
+   ],
+   [
+    "performa",
+    "performance",
+    "mobile",
+    "aksesibilitas",
+    "accessib"
+   ]
+  ],
+  "pass": 0.6
+ },
+ {
+  "id": "int-026",
+  "topic": "interview",
+  "level": 2,
+  "type": "short",
+  "q": {
+   "id": "Bagaimana Anda menguji fitur upload file (upload)?",
+   "en": "How would you test a file upload feature?"
+  },
+  "model": {
+   "id": "Tipe dan ekstensi yang diizinkan atau ditolak (termasuk ekstensi ganda dan tipe palsu), ukuran minimum dan maksimum, nama file dengan spasi atau karakter khusus, file kosong atau rusak, upload banyak file sekaligus, koneksi putus di tengah, pembatalan, dan upload ulang. Security: file berbahaya, path traversal, dan pemeriksaan di server, bukan hanya di client.",
+   "en": "Allowed and rejected types and extensions (including double extensions and spoofed types), minimum and maximum size, file names with spaces or special characters, empty or corrupt files, multiple files at once, connection drop midway, cancel, and re-upload. Security: malicious files, path traversal, and checks on the server, not only on the client."
+  },
+  "keywords": [
+   [
+    "tipe",
+    "type",
+    "ekstensi",
+    "extension",
+    "format"
+   ],
+   [
+    "ukuran",
+    "size",
+    "batas",
+    "limit",
+    "kosong",
+    "empty",
+    "rusak",
+    "corrupt"
+   ],
+   [
+    "putus",
+    "interrupt",
+    "batal",
+    "cancel",
+    "jaringan",
+    "network",
+    "banyak",
+    "multiple"
+   ],
+   [
+    "keamanan",
+    "security",
+    "server",
+    "berbahaya",
+    "malicious",
+    "traversal"
+   ]
+  ],
+  "pass": 0.6
+ },
+ {
+  "id": "int-027",
+  "topic": "interview",
+  "level": 3,
+  "type": "short",
+  "q": {
+   "id": "Bagaimana Anda menguji fitur transfer uang atau pembayaran?",
+   "en": "How would you test a money transfer or payment feature?"
+  },
+  "model": {
+   "id": "Happy path dan semua negative path (saldo kurang, nominal nol atau negatif, batas harian). Integritas: transaksi atomik dengan rollback, tidak ada pembayaran ganda saat retry (idempotency), konkurensi pada saldo yang sama, rekonsiliasi saldo dan ledger. Security: otorisasi, verifikasi tambahan, pengelolaan data kartu. Juga failure pihak ketiga, timeout, audit log, dan kepatuhan.",
+   "en": "Happy path and all negative paths (insufficient balance, zero or negative amount, daily limit). Integrity: atomic transactions with rollback, no double payment on retry (idempotency), concurrency on the same balance, reconciliation of balance and ledger. Security: authorisation, extra verification, handling of card data. Also third-party failures, timeouts, audit logs and compliance."
+  },
+  "keywords": [
+   [
+    "saldo",
+    "balance",
+    "negatif",
+    "negative",
+    "batas",
+    "limit"
+   ],
+   [
+    "atomik",
+    "atomic",
+    "rollback",
+    "idempoten",
+    "konkuren",
+    "concurren",
+    "ganda",
+    "double"
+   ],
+   [
+    "rekonsiliasi",
+    "reconcil",
+    "ledger",
+    "audit"
+   ],
+   [
+    "keamanan",
+    "security",
+    "otorisasi",
+    "authoris",
+    "authoriz",
+    "timeout",
+    "pihak ketiga",
+    "third"
+   ]
+  ],
+  "pass": 0.6
+ },
+ {
+  "id": "int-028",
+  "topic": "interview",
+  "level": 3,
+  "type": "short",
+  "q": {
+   "id": "Bagaimana Anda menguji integrasi dengan API pembayaran pihak ketiga yang tidak stabil di environment test?",
+   "en": "How do you test an integration with an unstable third-party payment API in the test environment?"
+  },
+  "model": {
+   "id": "Pisahkan: gunakan mock atau stub untuk test harian agar deterministik dan bisa mensimulasikan error, timeout, dan respons lambat; pakai sandbox resmi untuk test integrasi terbatas; tambahkan contract test supaya perubahan kontrak terdeteksi. Uji juga sisi kita: retry dengan backoff, idempotency, penanganan status tidak pasti, dan alert saat vendor bermasalah.",
+   "en": "Separate concerns: use mocks or stubs for daily tests so they are deterministic and can simulate errors, timeouts and slow responses; use the official sandbox for limited integration tests; add contract tests so contract changes are detected. Also test our side: retry with backoff, idempotency, handling of uncertain status, and alerts when the vendor is unhealthy."
+  },
+  "keywords": [
+   [
+    "mock",
+    "stub",
+    "simulasi",
+    "simulat"
+   ],
+   [
+    "sandbox",
+    "integrasi",
+    "integration"
+   ],
+   [
+    "contract",
+    "kontrak"
+   ],
+   [
+    "retry",
+    "backoff",
+    "idempoten",
+    "timeout",
+    "alert"
+   ]
+  ],
+  "pass": 0.6
+ },
+ {
+  "id": "int-029",
+  "topic": "interview",
+  "level": 3,
+  "type": "short",
+  "q": {
+   "id": "Anda diminta menguji fitur baru, tetapi requirement-nya samar. Apa langkah Anda?",
+   "en": "You are asked to test a new feature but the requirements are vague. What are your steps?"
+  },
+  "model": {
+   "id": "Ajukan pertanyaan klarifikasi kepada product owner dan developer, tuliskan asumsi dan acceptance criteria dalam contoh konkret (Given-When-Then), dan minta persetujuan. Sambil menunggu, lakukan exploratory testing berpiagam dan catat temuan. Catat hal yang belum jelas sebagai risiko, dan perbarui test saat requirement diperjelas.",
+   "en": "Ask clarifying questions to the product owner and developers, write the assumptions and acceptance criteria as concrete examples (Given-When-Then), and get them confirmed. Meanwhile do charter-based exploratory testing and record findings. Log unclear points as risks, and update tests as requirements are clarified."
+  },
+  "keywords": [
+   [
+    "tanya",
+    "ask",
+    "klarifikasi",
+    "clarif"
+   ],
+   [
+    "asumsi",
+    "assumption",
+    "acceptance criteria",
+    "given-when-then",
+    "contoh",
+    "example"
+   ],
+   [
+    "exploratory",
+    "eksplorasi"
+   ],
+   [
+    "risiko",
+    "risk",
+    "catat",
+    "record",
+    "perbarui",
+    "update"
+   ]
+  ],
+  "pass": 0.6
+ },
+ {
+  "id": "int-030",
+  "topic": "interview",
+  "level": 3,
+  "type": "short",
+  "q": {
+   "id": "Test otomasi Anda tidak menemukan bug apa pun selama enam bulan. Apakah itu berarti test-nya tidak berguna?",
+   "en": "Your automated tests have found no bugs for six months. Does that mean they are useless?"
+  },
+  "model": {
+   "id": "Belum tentu. Regression test bernilai sebagai jaring pengaman: ketiadaan failure bisa berarti kode stabil atau perubahan aman. Tetapi perlu ditinjau: apakah test benar-benar bisa gagal (uji dengan mutasi atau bug sengaja), apakah coverage area berisiko memadai, dan apakah ada bug yang lolos ke produksi yang tidak tertangkap. Hapus atau gabungkan test yang berlebihan.",
+   "en": "Not necessarily. Regression tests are valuable as a safety net: no failures may mean stable code or safe changes. But review it: can the tests actually fail (try mutation or a deliberate bug), is coverage of risky areas adequate, and did bugs escape to production that the tests missed? Remove or merge redundant tests."
+  },
+  "keywords": [
+   [
+    "jaring pengaman",
+    "safety net",
+    "regresi",
+    "regression"
+   ],
+   [
+    "bisa gagal",
+    "can fail",
+    "mutasi",
+    "mutation",
+    "sengaja",
+    "deliberate"
+   ],
+   [
+    "cakupan",
+    "coverage",
+    "risiko",
+    "risk"
+   ],
+   [
+    "lolos",
+    "escape",
+    "produksi",
+    "production",
+    "hapus",
+    "remove",
+    "redundan"
+   ]
+  ],
+  "pass": 0.6
+ },
+ {
+  "id": "int-031",
+  "topic": "interview",
+  "level": 2,
+  "type": "short",
+  "q": {
+   "id": "Bagaimana Anda mengukur apakah upaya QA di tim berhasil?",
+   "en": "How do you measure whether QA is succeeding in a team?"
+  },
+  "model": {
+   "id": "Pakai metrik hasil, bukan aktivitas: defect escape rate (bug yang lolos ke produksi), waktu mendeteksi dan memperbaiki, flaky rate, durasi pipeline, dan keluhan customer. Gabungkan dengan tren, bukan angka tunggal. Hindari metrik yang mudah dimanipulasi seperti jumlah test case atau jumlah bug yang ditemukan.",
+   "en": "Use outcome metrics, not activity: defect escape rate (bugs reaching production), time to detect and fix, flaky rate, pipeline duration and customer complaints. Look at trends rather than single numbers. Avoid easily gamed metrics such as the number of test cases or bugs found."
+  },
+  "keywords": [
+   [
+    "escape",
+    "lolos",
+    "produksi",
+    "production"
+   ],
+   [
+    "waktu",
+    "time",
+    "flaky",
+    "pipeline",
+    "durasi",
+    "duration"
+   ],
+   [
+    "tren",
+    "trend",
+    "pelanggan",
+    "customer"
+   ],
+   [
+    "hindari",
+    "avoid",
+    "manipulasi",
+    "gamed",
+    "jumlah test",
+    "number of test"
+   ]
+  ],
+  "pass": 0.6
+ },
+ {
+  "id": "int-032",
+  "topic": "interview",
+  "level": 2,
+  "type": "short",
+  "q": {
+   "id": "Mengapa Anda memilih karir di QA dan ke mana Anda ingin berkembang?",
+   "en": "Why did you choose a QA career and where do you want to grow?"
+  },
+  "model": {
+   "id": "Jawab jujur dan spesifik: apa yang Anda sukai dari QA (berpikir kritis, melindungi user, kolaborasi), contoh momen yang membuat Anda yakin, dan arah pengembangan konkret (otomasi, API dan performance, security, atau kepemimpinan kualitas) beserta langkah belajar yang sedang dijalani. Kaitkan dengan kebutuhan perusahaan tersebut.",
+   "en": "Answer honestly and specifically: what you like about QA (critical thinking, protecting users, collaboration), an example moment that convinced you, and a concrete growth direction (automation, API and performance, security, or quality leadership) with the learning steps you are taking. Tie it to the company's needs."
+  },
+  "keywords": [
+   [
+    "pengguna",
+    "user",
+    "berpikir kritis",
+    "critical thinking",
+    "kolaborasi",
+    "collaborat"
+   ],
+   [
+    "contoh",
+    "example",
+    "momen",
+    "moment",
+    "pengalaman",
+    "experience"
+   ],
+   [
+    "otomasi",
+    "automat",
+    "performa",
+    "performance",
+    "keamanan",
+    "security",
+    "kepemimpinan",
+    "leadership"
+   ],
+   [
+    "belajar",
+    "learn",
+    "perusahaan",
+    "company",
+    "kebutuhan",
+    "needs"
+   ]
+  ],
+  "pass": 0.6
+ }
+]

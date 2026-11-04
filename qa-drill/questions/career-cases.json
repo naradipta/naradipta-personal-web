@@ -70,7 +70,7 @@
    "id": [
     "Bagi jadi tahap: unit dan smoke tiap commit, suite penuh paralel",
     "Hapus semua test UI dari repository supaya pipeline cepat",
-    "Jalankan seluruh test hanya sebelum rilis akhir bulan saja",
+    "Jalankan seluruh test hanya sebelum release akhir bulan saja",
     "Minta developer tetap menunggu sampai pipeline selesai"
    ],
    "en": [
@@ -82,7 +82,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Umpan balik cepat adalah tujuan CI. Pelapisan, paralelisasi, dan sharding menjaga sinyal tetap cepat tanpa membuang cakupan. Menghapus test atau menunda ke akhir bulan menghilangkan manfaat CI.",
+   "id": "Feedback cepat adalah tujuan CI. Pelapisan, paralelisasi, dan sharding menjaga sinyal tetap cepat tanpa membuang coverage. Menghapus test atau menunda ke akhir bulan menghilangkan manfaat CI.",
    "en": "Fast feedback is the point of CI. Layering, parallelism and sharding keep the signal fast without dropping coverage. Deleting tests or deferring to month-end removes the benefit of CI."
   }
  },
@@ -103,15 +103,15 @@
     "Rata-rata waktu yang dibutuhkan untuk memperbaiki sebuah bug"
    ],
    "en": [
-    "The share of defects that slip past testing and surface in production",
+    "The share of defects that slip past testing into production",
     "The number of test cases skipped during a regression cycle",
     "The percentage of bugs developers reject for some reason",
-    "The average time it takes to fix a single bug"
+    "The average time it takes to fix a single reported bug"
    ]
   },
   "answer": 0,
   "exp": {
-   "id": "Metrik ini menunjukkan seberapa efektif testing menangkap masalah sebelum rilis. Ketiga opsi lain adalah metrik berbeda (skip rate, rejection rate, MTTR).",
+   "id": "Metrik ini menunjukkan seberapa efektif testing menangkap masalah sebelum release. Ketiga opsi lain adalah metrik berbeda (skip rate, rejection rate, MTTR).",
    "en": "This metric shows how effectively testing catches problems before release. The other options are different metrics (skip rate, rejection rate, MTTR)."
   }
  },
@@ -121,14 +121,14 @@
   "level": 2,
   "type": "mcq",
   "q": {
-   "id": "Bug: laporan transaksi menampilkan tanggal berbeda di server UTC dan browser pengguna di Jakarta (UTC+7), terutama di sekitar tengah malam. Dugaan akar masalah paling mungkin?",
+   "id": "Bug: laporan transaksi menampilkan tanggal berbeda di server UTC dan browser user di Jakarta (UTC+7), terutama di sekitar tengah malam. Dugaan root cause paling mungkin?",
    "en": "Bug: a transaction report shows different dates on a UTC server and a Jakarta (UTC+7) user's browser, especially around midnight. Most likely root cause?"
   },
   "options": {
    "id": [
-    "Penanganan zona waktu tidak konsisten antara penyimpanan dan tampilan",
+    "Zona waktu ditangani tidak konsisten antar lapisan sistem",
     "Database kehabisan ruang penyimpanan pada jam-jam tertentu",
-    "Cache browser pengguna belum dibersihkan sejak minggu lalu",
+    "Cache browser user belum dibersihkan sejak minggu lalu",
     "Font tanggal pada laporan tidak mendukung angka tertentu"
    ],
    "en": [
@@ -150,7 +150,7 @@
   "level": 3,
   "type": "mcq",
   "q": {
-   "id": "Dua pengguna menekan 'Beli' untuk stok terakhir hampir bersamaan dan keduanya sukses (stok menjadi -1). Jenis masalah dan pengujian yang tepat?",
+   "id": "Dua user menekan 'Beli' untuk stok terakhir hampir bersamaan dan keduanya sukses (stok menjadi -1). Jenis masalah dan testing yang tepat?",
    "en": "Two users click 'Buy' on the last item almost simultaneously and both succeed (stock becomes -1). What kind of problem is this and how to test it?"
   },
   "options": {
@@ -169,7 +169,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Cek-lalu-ubah tanpa atomisitas menyebabkan oversell. Uji lewat request paralel (skrip atau tool load) dan pastikan stok tidak negatif; perbaikan biasanya update atomik, locking, atau constraint database.",
+   "id": "Cek-lalu-ubah tanpa atomisitas menyebabkan oversell. Uji lewat request paralel (script atau tool load) dan pastikan stok tidak negatif; perbaikan biasanya update atomik, locking, atau constraint database.",
    "en": "A non-atomic check-then-update causes overselling. Test with parallel requests (script or load tool) and assert stock never goes negative; the fix is usually an atomic update, locking or a database constraint."
   }
  },
@@ -186,7 +186,7 @@
    "id": [
     "Severity = dampak teknis bug; priority = urgensi bisnis perbaikannya",
     "Severity = siapa yang memperbaiki bug; priority = siapa yang melaporkannya",
-    "Keduanya sama persis dan bisa dipertukarkan dalam laporan bug",
+    "Keduanya sama persis dan bisa dipertukarkan dalam bug report",
     "Severity selalu ditentukan developer; priority selalu oleh tester"
    ],
    "en": [
@@ -215,7 +215,7 @@
    "id": [
     "Prioritaskan menurut risiko dan sampaikan apa yang belum teruji",
     "Uji secara acak lalu nyatakan fitur itu siap untuk dirilis",
-    "Tolak rilis sampai seluruh kombinasi input sudah teruji",
+    "Tolak release sampai seluruh kombinasi input sudah teruji",
     "Uji happy path saja dan jangan bahas sisanya dengan tim"
    ],
    "en": [
@@ -227,7 +227,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Testing berbasis risiko menempatkan usaha di area paling berbahaya, dan transparansi soal risiko residual membuat keputusan rilis dibuat oleh pihak yang berwenang. Menguji semua kombinasi tidak mungkin.",
+   "id": "Testing berbasis risiko menempatkan usaha di area paling berbahaya, dan transparansi soal risiko residual membuat keputusan release dibuat oleh pihak yang berwenang. Menguji semua kombinasi tidak mungkin.",
    "en": "Risk-based testing puts effort where failure hurts most, and being open about residual risk lets the right people make the release call. Testing every combination is impossible."
   }
  },
@@ -243,12 +243,12 @@
   "options": {
    "id": [
     "Mendeteksi perubahan API yang merusak consumer tanpa menjalankan sistem penuh",
-    "Mengukur kecepatan respons endpoint saat beban pengguna sangat tinggi",
-    "Memeriksa tampilan antarmuka di banyak browser dan ukuran layar",
+    "Mengukur kecepatan respons endpoint saat load user sangat tinggi",
+    "Memeriksa tampilan UI di banyak browser dan ukuran layar",
     "Menggantikan seluruh unit test milik tim provider API"
    ],
    "en": [
-    "Detect API changes that break consumers without running the full system",
+    "Detect API changes that break consumers without the full system",
     "Measure endpoint response speed when user load is very high",
     "Check the interface across many browsers and screen sizes",
     "Replace all unit tests owned by the API provider team"
@@ -329,10 +329,10 @@
   },
   "options": {
    "id": [
-    "Telusuri mengapa tidak tertangkap, lalu tambah test atau perbaiki proses",
+    "Telusuri mengapa lolos, lalu tambah test atau perbaiki proses",
     "Mencari tahu siapa yang paling pantas disalahkan atas bug itu",
     "Menutup tiket tanpa menambahkan test baru apa pun",
-    "Menunggu sampai pelanggan melaporkan masalah yang sama lagi"
+    "Menunggu sampai customer melaporkan masalah yang sama lagi"
    ],
    "en": [
     "Trace why it was not caught, then add a test or fix the process",
@@ -343,7 +343,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "RCA yang sehat berfokus pada sistem: celah deteksi apa yang ada? Hasilnya diubah menjadi regression test atau perubahan proses. Mencari kambing hitam merusak budaya pelaporan.",
+   "id": "RCA yang sehat berfokus pada sistem: celah deteksi apa yang ada? Hasilnya diubah menjadi regression test atau perubahan proses. Mencari kambing hitam merusak budaya reporting.",
    "en": "A healthy RCA focuses on the system: what detection gap existed? The result becomes a regression test or process change. Blaming individuals damages the culture of reporting."
   }
  },
@@ -353,7 +353,7 @@
   "level": 2,
   "type": "mcq",
   "q": {
-   "id": "Halaman daftar produk memakai pagination offset. Saat ada produk baru ditambahkan antara halaman 1 dan 2, pengguna melihat produk yang sama dua kali. Cara menguji dan menyarankan perbaikan?",
+   "id": "Halaman daftar produk memakai pagination offset. Saat ada produk baru ditambahkan antara halaman 1 dan 2, user melihat produk yang sama dua kali. Cara menguji dan menyarankan perbaikan?",
    "en": "A product list uses offset pagination. When a new product is added between page 1 and 2, users see the same product twice. How to test and what to suggest?"
   },
   "options": {
@@ -387,10 +387,10 @@
   },
   "options": {
    "id": [
-    "Memastikan bug yang dilaporkan benar-benar sudah hilang",
-    "Memastikan fitur lain tidak rusak",
-    "Mengukur performa aplikasi",
-    "Menghitung jumlah baris kode"
+    "Memastikan bug yang dilaporkan sudah benar-benar hilang",
+    "Memastikan fitur lain di aplikasi tidak ikut menjadi rusak",
+    "Mengukur performance aplikasi setelah perbaikan dilakukan",
+    "Menghitung jumlah baris kode yang berubah pada perbaikan"
    ],
    "en": [
     "Confirm the reported bug is truly gone",
@@ -418,7 +418,7 @@
    "id": [
     "Skenario stabil, berulang, berisiko tinggi, dan cepat dijalankan",
     "Fitur baru yang antarmukanya masih berubah hampir setiap hari",
-    "Pengujian kegunaan yang butuh penilaian dari manusia sungguhan",
+    "Testing kegunaan yang butuh penilaian dari manusia sungguhan",
     "Skenario khusus yang hanya akan dijalankan satu kali saja"
    ],
    "en": [
@@ -474,9 +474,9 @@
   },
   "options": {
    "id": [
-    "Agar bisa jalan dalam urutan acak atau paralel, kegagalan mudah dilacak",
+    "Agar bisa jalan acak atau paralel dan failure mudah dilacak",
     "Agar jumlah test case dalam laporan bertambah banyak",
-    "Agar tidak diperlukan data uji sama sekali di seluruh suite",
+    "Agar tidak diperlukan test data sama sekali di seluruh suite",
     "Agar test bisa dilewati begitu saja ketika tenggat mendekat"
    ],
    "en": [
@@ -488,7 +488,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Test yang bergantung pada hasil test lain rapuh: satu kegagalan menjatuhkan rantai dan tidak bisa diparalelkan. Setiap test menyiapkan dan membersihkan datanya sendiri.",
+   "id": "Test yang bergantung pada hasil test lain rapuh: satu failure menjatuhkan rantai dan tidak bisa diparalelkan. Setiap test menyiapkan dan membersihkan datanya sendiri.",
    "en": "Tests that rely on another test's result are brittle: one failure topples the chain and they cannot run in parallel. Each test sets up and cleans its own data."
   }
  },
@@ -503,7 +503,7 @@
   },
   "options": {
    "id": [
-    "Mengganti id di /orders/123 jadi 124 dan melihat pesanan pengguna lain",
+    "Mengganti id di /orders/123 jadi 124 dan melihat pesanan user lain",
     "Password diwajibkan minimal 8 karakter saat pendaftaran akun",
     "Halaman login sudah memakai HTTPS di seluruh domain",
     "Tombol submit pada formulir tidak berwarna merah seperti desain"
@@ -517,8 +517,8 @@
   },
   "answer": 0,
   "exp": {
-   "id": "IDOR (insecure direct object reference) terjadi saat server tidak memeriksa kepemilikan resource. Uji dengan token pengguna A terhadap resource pengguna B; hasil yang benar adalah 403 atau 404.",
-   "en": "IDOR (insecure direct object reference) happens when the server does not check resource ownership. Test with user A's token against user B's resource; the correct result is 403 or 404."
+   "id": "IDOR (insecure direct object reference) terjadi saat server tidak memeriksa kepemilikan resource. Uji dengan token user A terhadap resource user B. Hasil yang benar 403 atau 404; trade-off: 404 tidak membocorkan bahwa resource itu ada, 403 lebih jelas bagi client yang sah.",
+   "en": "IDOR (insecure direct object reference) happens when the server does not check resource ownership. Test with user A's token against user B's resource. The correct result is 403 or 404; trade-off: 404 does not reveal the resource exists, 403 is clearer for legitimate clients."
   }
  },
  {
@@ -532,13 +532,13 @@
   },
   "options": {
    "id": [
-    "Kirim input seperti ' OR '1'='1, periksa hasil, error, atau waktu respons",
+    "Kirim ' OR '1'='1, lalu periksa hasil, error, atau waktu respons",
     "Kirim 10 karakter huruf biasa lalu lihat hasil pencarian",
     "Ubah ukuran jendela browser sambil melihat tampilan hasil",
     "Tekan tombol cari dua kali berturut-turut dengan cepat"
    ],
    "en": [
-    "Send input like ' OR '1'='1, inspect results, errors or response time",
+    "Send ' OR '1'='1, then inspect results, errors or response time",
     "Send 10 plain letters and then look at the search results",
     "Resize the browser window while watching the results display",
     "Press the search button twice in quick succession"
@@ -562,7 +562,7 @@
   "options": {
    "id": [
     "Melibatkan testing sedini mungkin, mis. review requirement dan test API",
-    "Menunda seluruh kegiatan testing sampai setelah rilis produksi",
+    "Menunda seluruh kegiatan testing sampai setelah release produksi",
     "Memindahkan semua test yang ada ke lapisan UI saja",
     "Mengurangi jumlah tester agar biaya tim lebih rendah"
    ],
@@ -585,14 +585,14 @@
   "level": 2,
   "type": "mcq",
   "q": {
-   "id": "Klien mengirim POST /payments dua kali karena timeout dan pelanggan tertagih ganda. Mekanisme yang mencegahnya?",
+   "id": "Client mengirim POST /payments dua kali karena timeout dan customer tertagih ganda. Mekanisme yang mencegahnya?",
    "en": "A client sends POST /payments twice after a timeout and the customer is charged twice. Which mechanism prevents this?"
   },
   "options": {
    "id": [
     "Idempotency key di header yang dicek oleh server",
     "Mengganti method POST menjadi GET untuk endpoint pembayaran",
-    "Menambah timeout klien menjadi 5 menit untuk semua request",
+    "Menambah timeout client menjadi 5 menit untuk semua request",
     "Mengembalikan status 200 untuk setiap kasus pembayaran"
    ],
    "en": [
@@ -614,8 +614,8 @@
   "level": 2,
   "type": "mcq",
   "q": {
-   "id": "API mengembalikan 200 dengan body {\"error\":\"not found\"} untuk resource yang tidak ada. Temuan tester?",
-   "en": "An API returns 200 with body {\"error\":\"not found\"} for a missing resource. What is the tester's finding?"
+   "id": "Sebuah REST API mengembalikan 200 dengan body {\"error\":\"not found\"} untuk resource yang tidak ada. Temuan tester?",
+   "en": "A REST API returns 200 with body {\"error\":\"not found\"} for a missing resource. What is the tester's finding?"
   },
   "options": {
    "id": [
@@ -633,8 +633,8 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Klien, cache, dan alat monitoring bergantung pada status code. 500 berarti kesalahan server, bukan resource hilang; 301 untuk pemindahan permanen.",
-   "en": "Clients, caches and monitoring depend on status codes. 500 means a server fault, not a missing resource; 301 is a permanent redirect."
+   "id": "Client, cache, dan alat monitoring bergantung pada status code. 500 berarti kesalahan server, bukan resource hilang; 301 untuk pemindahan permanen. Catatan konteks: pada GraphQL, 200 dengan array errors adalah konvensi yang wajar, jadi periksa dulu gaya API-nya.",
+   "en": "Clients, caches and monitoring depend on status codes. 500 means a server fault, not a missing resource; 301 is a permanent redirect. Context note: in GraphQL, 200 with an errors array is a normal convention, so check the API style first."
   }
  },
  {
@@ -650,7 +650,7 @@
    "id": [
     "400 dengan pesan validasi yang jelas",
     "500 karena terjadi error tak terduga di server",
-    "200 berisi seluruh data pengguna tanpa batas",
+    "200 berisi seluruh data user tanpa batas",
     "Server berhenti merespons sampai direstart"
    ],
    "en": [
@@ -662,8 +662,8 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Input tidak valid dari klien adalah 400 (atau 422). Tester memastikan nilai batas dan negatif tidak menghasilkan 500 atau membocorkan seluruh data.",
-   "en": "Invalid client input is a 400 (or 422). Testers confirm boundary and negative values do not cause a 500 or leak all data."
+   "id": "Input tidak valid dari client adalah 400 (atau 422). Trade-off: sebagian API diam-diam memakai nilai bawaan (clamp), tetapi validasi eksplisit lebih jelas bagi client. Yang pasti salah adalah 500 atau membocorkan seluruh data.",
+   "en": "Invalid client input is a 400 (or 422). Trade-off: some APIs silently clamp to a default, but explicit validation is clearer for clients. What is definitely wrong is a 500 or leaking all data."
   }
  },
  {
@@ -736,8 +736,8 @@
   "options": {
    "id": [
     "Contract test atau validasi schema OpenAPI di CI",
-    "Test warna dan posisi tombol di antarmuka pengguna",
-    "Load test dengan 1000 pengguna virtual secara bersamaan",
+    "Test warna dan posisi tombol di user interface",
+    "Load test dengan 1000 virtual user secara bersamaan",
     "Test manual yang dijalankan sekali setahun oleh tim"
    ],
    "en": [
@@ -749,7 +749,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Menghapus atau mengubah tipe field adalah breaking change. Validasi schema/kontrak di pipeline menangkapnya sebelum rilis.",
+   "id": "Menghapus atau mengubah tipe field adalah breaking change. Validasi schema/kontrak di pipeline menangkapnya sebelum release.",
    "en": "Removing or retyping a field is a breaking change. Schema/contract validation in the pipeline catches it before release."
   }
  },
@@ -765,7 +765,7 @@
   "options": {
    "id": [
     "429 Too Many Requests, idealnya dengan header Retry-After",
-    "403 Forbidden yang berlaku permanen bagi klien tersebut",
+    "403 Forbidden yang berlaku permanen bagi client tersebut",
     "200 seperti biasa karena batas hanya bersifat anjuran",
     "500 Internal Server Error karena server kewalahan"
    ],
@@ -825,7 +825,7 @@
     "Waktu tunggu bisa menumpuk dan sulit diprediksi saat debugging",
     "Selenium melarangnya dengan error saat kompilasi kode",
     "Explicit wait berhenti berfungsi sepenuhnya jika dicampur",
-    "Implicit wait hanya dirancang untuk pengujian mobile saja"
+    "Implicit wait hanya dirancang untuk testing mobile saja"
    ],
    "en": [
     "Wait times can stack up and become hard to predict when debugging",
@@ -854,7 +854,7 @@
     "Selenium Grid atau layanan cloud, satu driver per thread",
     "Satu driver global yang dipakai bersama oleh semua thread",
     "Menjalankan hanya satu browser dalam sebulan sekali",
-    "Memakai akun pengguna yang sama untuk semua test paralel"
+    "Memakai akun user yang sama untuk semua test paralel"
    ],
    "en": [
     "Selenium Grid or a cloud service, one driver per thread",
@@ -865,7 +865,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "WebDriver tidak thread-safe untuk dibagi. Satu instance per thread/test plus data uji terpisah membuat paralelisasi aman.",
+   "id": "WebDriver tidak thread-safe untuk dibagi. Satu instance per thread/test plus test data terpisah membuat paralelisasi aman.",
    "en": "A WebDriver is not safe to share across threads. One instance per thread/test plus separate test data makes parallelism safe."
   }
  },
@@ -923,7 +923,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "LEFT JOIN mengisi NULL untuk sisi kanan yang tidak cocok. Berguna untuk mencari data yatim, mis. pengguna tanpa pesanan.",
+   "id": "LEFT JOIN mengisi NULL untuk sisi kanan yang tidak cocok. Berguna untuk mencari data yatim, mis. user tanpa pesanan.",
    "en": "LEFT JOIN fills NULL for unmatched right-side rows. Useful for orphan checks, e.g. users without orders."
   }
  },
@@ -981,8 +981,8 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Atomicity menjamin transaksi berhasil seluruhnya atau dibatalkan seluruhnya (rollback). Kondisi setengah jadi menandakan transaksi tidak atomik.",
-   "en": "Atomicity guarantees a transaction fully succeeds or fully rolls back. A half-done state means the transaction was not atomic."
+   "id": "Atomicity menjamin transaksi berhasil seluruhnya atau dibatalkan seluruhnya (rollback). Kondisi setengah jadi menandakan transaksi tidak atomik; akibatnya total saldo juga tidak konsisten, tetapi pelanggaran yang menjadi sebab langsung adalah atomicity.",
+   "en": "Atomicity guarantees a transaction fully succeeds or fully rolls back. A half-done state means the transaction was not atomic; the totals end up inconsistent too, but the direct violation is atomicity."
   }
  },
  {
@@ -1025,16 +1025,16 @@
   },
   "options": {
    "id": [
-    "Menunggu elemen siap (terlihat, stabil, aktif) sebelum bertindak",
-    "Test boleh ditulis tanpa assertion sama sekali",
-    "Elemen tersembunyi selalu diabaikan untuk selamanya",
-    "Fitur ini hanya berfungsi di browser Chromium saja"
+    "Menunggu elemen siap (terlihat, stabil, aktif) lalu bertindak",
+    "Test boleh ditulis tanpa assertion sama sekali di mana pun",
+    "Elemen tersembunyi selalu diabaikan untuk selamanya oleh tool",
+    "Fitur ini hanya berfungsi di browser Chromium saja saat ini"
    ],
    "en": [
-    "It waits until the element is ready (visible, stable, enabled) to act",
-    "Tests may be written without any assertions at all",
-    "Hidden elements are always ignored forever",
-    "This feature only works in the Chromium browser"
+    "It waits until the element is ready (visible, stable, enabled)",
+    "Tests may be written without any assertions at all anywhere",
+    "Hidden elements are always ignored forever by the tool",
+    "This feature currently only works in the Chromium browser"
    ]
   },
   "answer": 0,
@@ -1054,10 +1054,10 @@
   },
   "options": {
    "id": [
-    "Trace viewer berisi snapshot DOM, jaringan, dan log per langkah",
+    "Trace viewer: snapshot DOM, jaringan, dan log per langkah",
     "console.log yang dipasang di setiap baris kode test",
-    "Menambah jumlah workers sampai 100 sekaligus",
-    "Menghapus test yang gagal supaya pipeline hijau"
+    "Menaikkan jumlah workers sampai 100 sekaligus di CI",
+    "Menghapus test yang gagal agar pipeline kembali hijau"
    ],
    "en": [
     "Trace viewer with DOM snapshots, network and logs per step",
@@ -1068,7 +1068,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Trace menyimpan jejak langkah per aksi sehingga kegagalan di CI bisa diputar ulang secara visual.",
+   "id": "Trace menyimpan jejak langkah per aksi sehingga failure di CI bisa diputar ulang secara visual.",
    "en": "A trace records every step so a CI failure can be replayed visually."
   }
  },
@@ -1078,15 +1078,15 @@
   "level": 2,
   "type": "mcq",
   "q": {
-   "id": "Mengapa cy.intercept berguna untuk menguji kegagalan backend?",
+   "id": "Mengapa cy.intercept berguna untuk menguji failure backend?",
    "en": "Why is cy.intercept useful for testing backend failures?"
   },
   "options": {
    "id": [
-    "Menyubstitusi respons (mis. 500 atau lambat) tanpa merusak backend",
-    "Mengubah kode server secara permanen di lingkungan test",
-    "Menggantikan peran browser selama test berjalan",
-    "Hanya dipakai untuk mencatat cookie milik pengguna"
+    "Menyubstitusi respons (mis. 500) tanpa merusak backend",
+    "Mengubah kode server secara permanen di test environment",
+    "Menggantikan peran browser selama test berjalan di CI",
+    "Hanya dipakai untuk mencatat cookie milik user"
    ],
    "en": [
     "Stubbing responses (e.g. 500 or slow) without breaking the backend",
@@ -1149,7 +1149,7 @@
    "en": "How would you design a test strategy for a new checkout feature?"
   },
   "model": {
-   "id": "Mulai dari risiko dan requirement: alur utama (keranjang, pembayaran, konfirmasi), negative path, nilai batas, pembayaran ganda/idempotency, konkurensi stok, keamanan, dan integrasi payment. Bagi ke lapisan: unit, API, sedikit E2E; tentukan data uji, environment, dan kriteria keluar.",
+   "id": "Mulai dari risiko dan requirement: alur utama (keranjang, pembayaran, konfirmasi), negative path, nilai batas, pembayaran ganda/idempotency, konkurensi stok, security, dan integrasi payment. Bagi ke lapisan: unit, API, sedikit E2E; tentukan test data, environment, dan kriteria keluar.",
    "en": "Start from risk and requirements: main flow (cart, payment, confirmation), negative paths, boundaries, double payment/idempotency, stock concurrency, security and payment integration. Split across layers: unit, API, a few E2E; define test data, environment and exit criteria."
   },
   "keywords": [
@@ -1189,7 +1189,7 @@
    "en": "How do you test an API with incomplete documentation?"
   },
   "model": {
-   "id": "Eksplorasi: baca kode/Swagger bila ada, tanya developer, amati trafik klien (dev tools/proxy), lalu uji metode, status code, validasi, auth, dan format error. Catat temuan sebagai dokumentasi dan usulkan kontrak/OpenAPI.",
+   "id": "Eksplorasi: baca kode/Swagger bila ada, tanya developer, amati trafik client (dev tools/proxy), lalu uji metode, status code, validasi, auth, dan format error. Catat temuan sebagai dokumentasi dan usulkan kontrak/OpenAPI.",
    "en": "Explore: read code/Swagger if available, ask developers, observe client traffic (dev tools/proxy), then test methods, status codes, validation, auth and error format. Record findings as documentation and propose a contract/OpenAPI."
   },
   "keywords": [
@@ -1226,7 +1226,7 @@
   "level": 2,
   "type": "short",
   "q": {
-   "id": "Apa yang Anda lakukan jika menemukan bug kritis sehari sebelum rilis?",
+   "id": "Apa yang Anda lakukan jika menemukan bug kritis sehari sebelum release?",
    "en": "What do you do if you find a critical bug a day before release?"
   },
   "model": {
@@ -1308,7 +1308,7 @@
    "en": "Where does AI help in QA, and what are its limits?"
   },
   "model": {
-   "id": "AI membantu menyusun test case, data uji, ringkasan log, dan menulis boilerplate otomasi. Batasnya: bisa salah atau mengarang, tidak paham konteks bisnis, dan berisiko membocorkan data bila prompt memuat informasi rahasia. Hasilnya harus ditinjau manusia dan diverifikasi dengan eksekusi nyata.",
+   "id": "AI membantu menyusun test case, test data, ringkasan log, dan menulis boilerplate otomasi. Batasnya: bisa salah atau mengarang, tidak paham konteks bisnis, dan berisiko membocorkan data bila prompt memuat informasi rahasia. Hasilnya harus ditinjau manusia dan diverifikasi dengan eksekusi nyata.",
    "en": "AI helps draft test cases, test data, log summaries and automation boilerplate. Limits: it can be wrong or invent things, lacks business context, and risks leaking data if prompts contain confidential information. Output must be reviewed by a human and verified by real execution."
   },
   "keywords": [

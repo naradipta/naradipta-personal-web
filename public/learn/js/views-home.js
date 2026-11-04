@@ -37,7 +37,7 @@
     return S.state.mocks.some(function (m) { return m.t >= since; });
   }
 
-  // Saran satu langkah paling penting hari ini, menurut tanggal ujian (bila ada), soal jatuh tempo, dan fokus belajar (istqb | career | both).
+  // Saran satu langkah paling penting hari ini, menurut tanggal ujian (bila ada), soal due, dan fokus belajar (istqb | career | both).
   function nextAction() {
     var due = QA.dueQuestions().length;
     var focus = S.state.focus || "both";
@@ -52,7 +52,7 @@
     }
     if (due > 0) {
       return {
-        text: pre + t("Ada " + due + " soal jatuh tempo untuk diulang.", due + " questions are due for review."),
+        text: pre + t("Ada " + due + " soal due untuk diulang.", due + " questions are due for review."),
         label: t("Ulangi sekarang", "Review now"), hash: "practice/due"
       };
     }
@@ -66,7 +66,7 @@
       });
       if (!best) return null;
       return {
-        text: pre + t("Fokus berikutnya: Bab " + best.n + " (" + L(best.title) + "), bobot ujian terbesar yang belum dikuasai.",
+        text: pre + t("Fokus berikutnya: Bab " + best.n + " (" + L(best.title) + "), bobot ujian terbesar yang belum mastered.",
                 "Next focus: Chapter " + best.n + " (" + L(best.title) + "), the biggest exam weight not yet mastered."),
         label: t("Latihan bab ini", "Practice this chapter"), hash: "practice/ch" + best.n
       };
@@ -81,7 +81,7 @@
       });
       if (!best) return null;
       return {
-        text: pre + t("Fokus berikutnya: " + best[1] + ", topik karir yang paling sedikit dikuasai.", "Next focus: " + best[2] + ", the career topic you have mastered the least."),
+        text: pre + t("Fokus berikutnya: " + best[1] + ", topik karir yang paling sedikit mastered.", "Next focus: " + best[2] + ", the career topic you have mastered the least."),
         label: t("Latihan topik ini", "Practice this topic"), hash: "practice/topic:" + best[0]
       };
     }
@@ -103,10 +103,18 @@
     ["katalon", "Katalon", "Katalon", "Pertanyaan interview seputar Katalon.", "Interview questions about Katalon."],
     ["sql", "SQL lanjutan", "Advanced SQL", "Join, agregasi, dan query untuk validasi data.", "Joins, aggregation and queries for data validation."],
     ["fundamentals", "Dasar QA dan metodologi", "QA fundamentals", "SDLC, level dan teknik test, TDD/BDD, perencanaan test.", "SDLC, test levels and techniques, TDD/BDD, test planning."],
-    ["nonfunctional", "Performa, keamanan, aksesibilitas", "Performance, security, accessibility", "Load/stress test, OWASP, WCAG, kompatibilitas.", "Load/stress testing, OWASP, WCAG, compatibility."],
+    ["nonfunctional", "Performance, security, accessibility", "Performance, security, accessibility", "Load/stress test, OWASP, WCAG, compatibility.", "Load/stress testing, OWASP, WCAG, compatibility."],
     ["tooling", "Git, CI/CD, dan monitoring", "Git, CI/CD and monitoring", "Alur Git, pipeline, Docker, log/monitoring, RCA, mobile.", "Git workflow, pipelines, Docker, logs/monitoring, RCA, mobile."],
+    ["coding", "Membaca kode dan live coding", "Code reading and live coding", "Jebakan JavaScript/Python, test sebagai kode, dan soal live coding.", "JavaScript/Python gotchas, tests as code and live-coding tasks."],
     ["interview", "Jawaban terbuka", "Open answers", "Latihan menjawab pertanyaan interview dengan kata-kata sendiri.", "Practise answering interview questions in your own words."]
   ];
+
+  // Nama tampil topik (dipakai lencana soal di Latihan); tanpa data baru: diambil dari daftar CAREER.
+  QA.topicName = function (topic) {
+    if (topic === "istqb") return "ISTQB";
+    var c = CAREER.filter(function (x) { return x[0] === topic; })[0];
+    return c ? t(c[1], c[2]) : topic;
+  };
 
   function topicStats(topic) {
     var qs = QA.questions.filter(function (q) { return q.topic === topic; });
@@ -141,7 +149,7 @@
           h("button", { class: "btn", type: "button", onclick: pick("career") }, t("Bekal karir QA", "QA career toolkit")),
           h("button", { class: "btn", type: "button", onclick: pick("both") }, t("Keduanya", "Both")))));
     }
-    // Kartu "Hari ini" hanya bila bermakna: ada soal jatuh tempo, sudah cukup jawaban (>= 10) untuk menilai area terlemah, atau ujian tinggal <= 14 hari.
+    // Kartu "Hari ini" hanya bila bermakna: ada soal due, sudah cukup jawaban (>= 10) untuk menilai area terlemah, atau ujian tinggal <= 14 hari.
     var dx = S.state.focus === "career" ? null : examDays();
     var na = due > 0 || o.seen >= 10 || (dx !== null && dx <= 14) ? nextAction() : null;
     if (na) {
@@ -152,16 +160,16 @@
 
     root.appendChild(h("div", { class: "stats" },
       stat(t("Soal dilihat", "Questions seen"), o.seen + "/" + o.total),
-      stat(t("Dikuasai", "Mastered"), o.mastered, t("box 3 ke atas", "box 3 and above")),
+      stat(t("Mastered", "Mastered"), o.mastered, t("box 3 ke atas", "box 3 and above")),
       stat(t("Akurasi", "Accuracy"), o.correct + o.wrong ? acc + "%" : "-"),
-      stat(t("Jatuh tempo", "Due"), due),
-      stat(t("Hari beruntun", "Day streak"), QA.streak(), t("belajar tiap hari", "studying daily"))));
+      stat(t("Due", "Due"), due),
+      stat(t("Streak", "Day streak"), QA.streak(), t("belajar tiap hari", "studying daily"))));
 
     if (QA.backupDue()) {
       root.appendChild(h("div", { class: "card", role: "note" },
-        h("div", null, t("Progres Anda hanya tersimpan di browser ini dan belum dicadangkan dalam 7 hari terakhir. Masuk ke akun agar tersinkron otomatis, atau ekspor cadangan.",
+        h("div", null, t("Progres Anda hanya tersimpan di browser ini dan belum di-backup dalam 7 hari terakhir. Masuk ke akun agar tersinkron otomatis, atau export backup.",
           "Your progress lives only in this browser and has not been backed up in the last 7 days. Sign in to sync automatically, or export a backup.")),
-        h("a", { class: "btn", href: "#/settings" }, t("Ekspor cadangan", "Export backup"))));
+        h("a", { class: "btn", href: "#/settings" }, t("Export backup", "Export backup"))));
     }
 
     function istqbSection() {
@@ -188,7 +196,7 @@
         h("div", { class: "row" }, h("h3", null, t("Bab ", "Chapter ") + ch.n + ". " + L(ch.title)),
           h("span", { class: "badge" }, weightOf(ch) + t(" soal ujian", " exam Qs"))),
         h("div", { class: "lbl" }, t("Dilihat ", "Seen ") + st.seen + "/" + st.total), bar(st.seen, st.total),
-        h("div", { class: "lbl" }, t("Dikuasai ", "Mastered ") + st.mastered + "/" + st.total), bar(st.mastered, st.total, "good"),
+        h("div", { class: "lbl" }, t("Mastered ", "Mastered ") + st.mastered + "/" + st.total), bar(st.mastered, st.total, "good"),
         chips,
         h("div", { class: "row gap" },
           h("a", { class: "btn small", href: "#/study/ch" + ch.n }, t("Baca materi", "Read material")),
@@ -225,7 +233,7 @@
       cgrid.appendChild(h("div", { class: "card" },
         h("div", { class: "row" }, h("h3", null, t(c[1], c[2])), h("span", { class: "badge" }, st.total + t(" soal", " Qs"))),
         h("p", { class: "muted small" }, t(c[3], c[4])),
-        h("div", { class: "lbl" }, t("Dikuasai ", "Mastered ") + st.mastered + "/" + st.total), bar(st.mastered, st.total, "good"),
+        h("div", { class: "lbl" }, t("Mastered ", "Mastered ") + st.mastered + "/" + st.total), bar(st.mastered, st.total, "good"),
         h("div", { class: "row gap" },
           h("a", { class: "btn small", href: "#/career/" + c[0] }, t("Baca materi", "Read material")),
           h("a", { class: "btn small", href: "#/practice/topic:" + c[0] }, st.seen ? t("Lanjut latihan", "Keep practising") : t("Latihan", "Practise")))));
@@ -276,7 +284,7 @@
     var src = (QA.sumberKarir || {})[topic];
     if (src && src.length) root.appendChild(h("div", { class: "card" },
       h("h2", { class: "h3" }, t("Sumber belajar", "Learning sources")),
-      h("p", { class: "small muted" }, t("Tautan ke sumber luar; materi di atas ditulis sendiri, bukan salinan. Label: resmi = standar atau dokumentasi pemilik alat; rujukan = penulis atau institusi tepercaya; komunitas = kurasi komunitas, dipakai sebagai peta topik.", "Links to external sources; the material above is original, not a copy. Labels: resmi = standards or the tool owner's docs; rujukan = trusted author or institution; komunitas = community-curated, used as a topic map.")),
+      h("p", { class: "small muted" }, t("Link ke sumber luar; materi di atas ditulis sendiri, bukan salinan. Label: resmi = standar atau dokumentasi pemilik alat; rujukan = penulis atau institusi tepercaya; komunitas = kurasi komunitas, dipakai sebagai peta topik.", "Links to external sources; the material above is original, not a copy. Labels: resmi = standards or the tool owner's docs; rujukan = trusted author or institution; komunitas = community-curated, used as a topic map.")),
       h("ul", { class: "linklist" }, src.map(function (x) { return h("li", null, h("a", { href: x[1], target: "_blank", rel: "noopener" }, x[0]), " ", h("span", { class: "muted small" }, "(" + x[2] + ")")); }))));
     root.appendChild(h("div", { class: "card accent" },
       h("div", null, t(st.total + " soal tersedia untuk topik ini.", st.total + " questions available for this topic.")),
@@ -404,7 +412,7 @@
       h("ul", null,
         h("li", null, t("Baca catatan bab: ~" + Math.round(S.state.dailyMin * 0.4) + " menit", "Read chapter notes: ~" + Math.round(S.state.dailyMin * 0.4) + " min")),
         h("li", null, t("Latihan soal: ~" + perDay + " soal", "Practice: ~" + perDay + " questions")),
-        h("li", null, t("Ulang soal jatuh tempo dan kartu istilah: sisanya", "Review due questions and glossary cards: the rest")))));
+        h("li", null, t("Review soal due dan flashcard: sisanya", "Review due questions and flashcards: the rest")))));
 
     var todayStr = QA.dateStr(new Date());
     var fmt = function (d) { return d.toLocaleDateString(S.state.lang === "id" ? "id-ID" : "en-GB", { day: "numeric", month: "short" }); };
@@ -414,7 +422,7 @@
         : t("Fase ulang dan simulasi", "Review and simulation phase");
       var detail = r.kind === "study"
         ? t("Baca catatan LO, latihan bab, lalu ulang soal yang salah.", "Read LO notes, practise the chapter, then redo missed questions.")
-        : t("Jalankan sekitar " + r.mocks + " mock exam, ulang soal lemah, dan kartu istilah. Hari ujian: istirahat cukup.", "Take about " + r.mocks + " mock exams, redo weak questions and glossary cards. Exam day: rest well.");
+        : t("Jalankan sekitar " + r.mocks + " mock exam, ulang soal lemah, dan flashcard. Hari ujian: istirahat cukup.", "Take about " + r.mocks + " mock exams, redo weak questions and flashcards. Exam day: rest well.");
       root.appendChild(h("div", { class: "card" + (isToday ? " today" : "") },
         h("div", { class: "row" }, h("b", null, fmt(r.from) + (QA.dateStr(r.from) === QA.dateStr(r.to) ? "" : " - " + fmt(r.to))), isToday ? h("span", { class: "badge" }, t("Hari ini", "Today")) : null),
         h("div", null, title), h("div", { class: "muted small" }, detail)));
@@ -446,14 +454,14 @@
 
     var msg = h("div", { class: "small muted", role: "status" }, importNote);
     importNote = "";
-    var file = h("input", { type: "file", accept: "application/json", "aria-label": t("Impor berkas progres (.json)", "Import progress file (.json)") });
+    var file = h("input", { type: "file", accept: "application/json", "aria-label": t("Import file progres (.json)", "Import progress file (.json)") });
     file.addEventListener("change", function () {
       var f = file.files && file.files[0];
       if (!f) return;
       var rd = new FileReader();
       rd.onload = function () {
         try { S.importJSON(String(rd.result)); importNote = t("Progres berhasil diimpor.", "Progress imported."); QA.announce(importNote); QA.render(); }
-        catch (e) { msg.textContent = t("Gagal impor: ", "Import failed: ") + e.message; }
+        catch (e) { msg.textContent = t("Gagal import: ", "Import failed: ") + e.message; }
       };
       rd.readAsText(f);
     });
@@ -464,10 +472,10 @@
     }
     var lastExportNote = h("p", { class: "small muted" }, exportNoteText());
     root.appendChild(h("div", { class: "card" },
-      h("h2", { class: "h3" }, t("Cadangan progres", "Progress backup")),
+      h("h2", { class: "h3" }, t("Backup progres", "Progress backup")),
       h("p", { class: "muted small" }, QA.account && QA.account.status === "in"
-        ? t("Progres otomatis tersimpan di akun Anda. Ekspor tetap berguna sebagai cadangan pribadi; impor akan menggantikan progres akun ini.", "Progress is saved to your account automatically. Export is still handy as a personal backup; importing replaces this account's progress.")
-        : t("Progres tersimpan di browser ini saja. Ekspor secara berkala.", "Progress is stored in this browser only. Export regularly.")),
+        ? t("Progres otomatis tersimpan di akun Anda. Export tetap berguna sebagai backup pribadi; import akan menggantikan progres akun ini.", "Progress is saved to your account automatically. Export is still handy as a personal backup; importing replaces this account's progress.")
+        : t("Progres tersimpan di browser ini saja. Export secara berkala.", "Progress is stored in this browser only. Export regularly.")),
       h("div", { class: "row gap" },
         h("button", {
           class: "btn", onclick: function () {
@@ -477,7 +485,7 @@
             S.state.lastExport = Date.now(); S.save();
             lastExportNote.textContent = exportNoteText();
           }
-        }, t("Ekspor", "Export")), file),
+        }, t("Export", "Export")), file),
       lastExportNote,
       msg));
 

@@ -11,7 +11,7 @@
   "options": {
    "id": [
     "Verifikasi: sesuai spesifikasi? Validasi: sesuai kebutuhan?",
-    "Verifikasi dilakukan pengguna; validasi dilakukan developer",
+    "Verifikasi dilakukan user; validasi dilakukan developer",
     "Verifikasi hanya untuk kode; validasi hanya untuk dokumen",
     "Keduanya sama dan hanya beda istilah antar perusahaan"
    ],
@@ -41,7 +41,7 @@
    "id": [
     "Menajamkan acceptance criteria sejak refinement dan menguji di dalam sprint",
     "Menunggu fitur selesai lalu menguji di fase terpisah setelah sprint",
-    "Hanya menulis laporan bug untuk dibaca manajer proyek",
+    "Hanya menulis bug report untuk dibaca manajer proyek",
     "Memutuskan prioritas backlog menggantikan product owner"
    ],
    "en": [
@@ -98,9 +98,9 @@
   "options": {
    "id": [
     "State transition testing",
-    "Equivalence partitioning pada nama pelanggan",
-    "Uji performa beban tinggi",
-    "Uji kompatibilitas browser"
+    "Equivalence partitioning pada nama customer",
+    "Uji performance load tinggi",
+    "Compatibility test browser"
    ],
    "en": [
     "State transition testing",
@@ -128,7 +128,7 @@
    "id": [
     "Sumber penentu hasil yang benar dari sebuah test",
     "Alat otomasi untuk menjalankan test secara paralel",
-    "Database khusus yang menyimpan seluruh data uji",
+    "Database khusus yang menyimpan seluruh test data",
     "Laporan ringkasan hasil regression tiap malam"
    ],
    "en": [
@@ -184,7 +184,7 @@
   },
   "options": {
    "id": [
-    "Given pesanan dibayar, When pelanggan membatalkan, Then dana dikembalikan",
+    "Given pesanan dibayar, When customer membatalkan, Then dana dikembalikan",
     "Given klik tombol biru, When klik menu ketiga, Then lihat halaman",
     "Given buka browser, When ketik teks, Then tekan enter lalu tutup",
     "Given sebuah database, When sebuah query dijalankan, Then ada hasil"
@@ -198,7 +198,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Skenario BDD menggambarkan perilaku bisnis yang bisa disepakati semua pihak, bukan rangkaian klik antarmuka.",
+   "id": "Skenario BDD menggambarkan perilaku bisnis yang bisa disepakati semua pihak, bukan rangkaian klik UI.",
    "en": "A BDD scenario describes business behaviour everyone can agree on, not a sequence of interface clicks."
   }
  },
@@ -237,12 +237,12 @@
   "level": 2,
   "type": "mcq",
   "q": {
-   "id": "Mengapa laporan performa sebaiknya memakai persentil (p95/p99) dan bukan hanya rata-rata?",
+   "id": "Mengapa laporan performance sebaiknya memakai persentil (p95/p99) dan bukan hanya rata-rata?",
    "en": "Why should performance reports use percentiles (p95/p99) rather than only the average?"
   },
   "options": {
    "id": [
-    "Rata-rata menyembunyikan pengguna yang sangat lambat",
+    "Rata-rata menyembunyikan user yang sangat lambat",
     "Persentil selalu bernilai lebih kecil dari rata-rata",
     "Rata-rata tidak dapat dihitung pada data waktu respons",
     "Persentil hanya berlaku untuk pengukuran database"
@@ -256,7 +256,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Sebagian kecil permintaan yang sangat lambat tidak terlihat di rata-rata, padahal itulah yang dirasakan pengguna tertentu. Persentil menampilkan ekor distribusi.",
+   "id": "Sebagian kecil permintaan yang sangat lambat tidak terlihat di rata-rata, padahal itulah yang dirasakan user tertentu. Persentil menampilkan ekor distribusi.",
    "en": "A small share of very slow requests vanishes in the average, yet some users feel exactly that. Percentiles show the tail of the distribution."
   }
  },
@@ -271,21 +271,21 @@
   },
   "options": {
    "id": [
-    "Load: beban diharapkan; stress: lewat batas untuk cari titik gagal",
-    "Load: tanpa pengguna sama sekali; stress: dengan satu pengguna",
-    "Load: khusus untuk keamanan; stress: khusus untuk tampilan",
+    "Load: load diharapkan; stress: lewat batas untuk cari titik gagal",
+    "Load: tanpa user sama sekali; stress: dengan satu user",
+    "Load: khusus untuk security; stress: khusus untuk tampilan",
     "Tidak ada perbedaan, hanya beda nama pada alat tertentu"
    ],
    "en": [
-    "Load: expected demand; stress: past the limit to find breaking point",
+    "Load: expected demand; stress: past limits to find the break point",
     "Load: with no users at all; stress: with one single user",
-    "Load: for security only; stress: for appearance only",
+    "Load: for security checks only; stress: for appearance only",
     "No difference, only different names in particular tools"
    ]
   },
   "answer": 0,
   "exp": {
-   "id": "Load test memverifikasi sistem sanggup menangani beban normal-puncak; stress test mencari batas dan perilaku saat gagal (apakah pulih dengan baik).",
+   "id": "Load test memverifikasi sistem sanggup menangani load normal-puncak; stress test mencari batas dan perilaku saat gagal (apakah pulih dengan baik).",
    "en": "A load test verifies the system handles normal-to-peak demand; a stress test finds the limit and how it behaves on failure (does it recover gracefully)."
   }
  },
@@ -295,15 +295,15 @@
   "level": 2,
   "type": "mcq",
   "q": {
-   "id": "Test beban 500 pengguna menunjukkan CPU mesin pembangkit beban 100% sedangkan server target santai. Kesimpulan?",
+   "id": "Test load 500 user menunjukkan CPU mesin load generator 100% sedangkan server target santai. Kesimpulan?",
    "en": "A 500-user load test shows the load generator at 100% CPU while the target server is idle. What follows?"
   },
   "options": {
    "id": [
-    "Tidak valid: bottleneck ada di pembangkit beban, bukan target",
-    "Server target pasti sangat cepat dan efisien",
-    "Sistem dinyatakan lulus uji beban dengan baik",
-    "Jumlah pengguna sebaiknya dinaikkan lagi segera"
+    "Tidak valid: bottleneck di load generator, bukan di target",
+    "Server target pasti sangat cepat dan efisien sekali",
+    "Sistem dinyatakan lulus load test dengan sangat baik",
+    "Jumlah user sebaiknya dinaikkan lagi segera mungkin"
    ],
    "en": [
     "Invalid: the bottleneck is the load generator, not the target",
@@ -314,7 +314,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Bila generator jenuh, angka latency dan throughput mencerminkan generator, bukan sistem yang diuji. Tambah mesin pembangkit atau kurangi beban per mesin.",
+   "id": "Bila generator jenuh, angka latency dan throughput mencerminkan generator, bukan sistem yang diuji. Tambah mesin load generator atau kurangi load per mesin.",
    "en": "When the generator is saturated, latency and throughput reflect the generator, not the system under test. Add generators or reduce the per-machine load."
   }
  },
@@ -329,7 +329,7 @@
   },
   "options": {
    "id": [
-    "Pengguna biasa membuka halaman admin lewat URL langsung",
+    "User biasa membuka halaman admin lewat URL langsung",
     "Situs memuat gambar lebih lambat di jaringan 3G biasa",
     "Warna tombol utama tidak persis sesuai desain awal",
     "Teks bantuan di halaman profil memuat salah ketik"
@@ -343,7 +343,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Access control memastikan setiap pengguna hanya mengakses yang berhak. Mengandalkan 'menu disembunyikan' tanpa pemeriksaan di server adalah celah klasik.",
+   "id": "Access control memastikan setiap user hanya mengakses yang berhak. Mengandalkan 'menu disembunyikan' tanpa pemeriksaan di server adalah celah klasik.",
    "en": "Access control ensures each user reaches only what they are entitled to. Relying on 'hiding the menu' without a server-side check is a classic hole."
   }
  },
@@ -353,21 +353,21 @@
   "level": 2,
   "type": "mcq",
   "q": {
-   "id": "Mengapa alat aksesibilitas otomatis (axe, Lighthouse) tidak cukup?",
+   "id": "Mengapa alat accessibility otomatis (axe, Lighthouse) tidak cukup?",
    "en": "Why are automated accessibility tools (axe, Lighthouse) not enough?"
   },
   "options": {
    "id": [
-    "Hanya menangkap sebagian; keyboard dan pembaca layar perlu uji manual",
-    "Alat otomatis selalu memberikan hasil yang salah",
+    "Hanya sebagian; keyboard dan pembaca layar perlu uji manual",
+    "Alat otomatis selalu memberikan hasil yang salah semua",
     "WCAG sama sekali tidak bisa diuji oleh tim mana pun",
-    "Aksesibilitas hanya berkaitan dengan warna halaman"
+    "Accessibility hanya berkaitan dengan warna halaman saja"
    ],
    "en": [
-    "They catch only part; keyboard and screen readers need manual checks",
-    "Automated tools always give wrong results",
-    "WCAG cannot be tested by any team at all",
-    "Accessibility is only related to page colours"
+    "Only part; keyboard and screen readers need manual checks",
+    "Automated tools always give results that are all wrong",
+    "WCAG cannot be tested by any team at all, ever",
+    "Accessibility is only related to the colours of a page"
    ]
   },
   "answer": 0,
@@ -401,7 +401,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "POUR adalah empat prinsip aksesibilitas WCAG: dapat dipersepsi, dapat dioperasikan, dapat dipahami, dan kokoh terhadap teknologi bantu.",
+   "id": "POUR adalah empat prinsip accessibility WCAG: dapat dipersepsi, dapat dioperasikan, dapat dipahami, dan kokoh terhadap teknologi bantu.",
    "en": "POUR are the four WCAG accessibility principles: perceivable, operable, understandable and robust against assistive technology."
   }
  },
@@ -411,15 +411,15 @@
   "level": 2,
   "type": "mcq",
   "q": {
-   "id": "Cara memilih kombinasi browser/perangkat untuk uji kompatibilitas?",
+   "id": "Cara memilih kombinasi browser/perangkat untuk compatibility test?",
    "en": "How should you choose browser/device combinations for compatibility testing?"
   },
   "options": {
    "id": [
-    "Dari data pengguna nyata (analytics) dan risiko",
+    "Dari data user nyata (analytics) dan risiko",
     "Semua kombinasi yang pernah ada di pasar",
     "Hanya browser yang dipakai oleh developer",
-    "Dipilih acak setiap kali ada rilis baru"
+    "Dipilih acak setiap kali ada release baru"
    ],
    "en": [
     "From real user data (analytics) and risk",
@@ -430,7 +430,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Semua kombinasi mustahil diuji. Analytics menunjukkan yang benar-benar dipakai pengguna sehingga usaha tertuju pada risiko terbesar.",
+   "id": "Semua kombinasi mustahil diuji. Analytics menunjukkan yang benar-benar dipakai user sehingga usaha tertuju pada risiko terbesar.",
    "en": "Testing all combinations is impossible. Analytics shows what users actually use, so effort goes to the biggest risk."
   }
  },
@@ -440,7 +440,7 @@
   "level": 3,
   "type": "mcq",
   "q": {
-   "id": "Pengujian keamanan di sistem milik klien tanpa izin tertulis, 'hanya untuk membantu'. Penilaian?",
+   "id": "Security testing di sistem milik klien tanpa izin tertulis, 'hanya untuk membantu'. Penilaian?",
    "en": "Security testing a client's system without written permission, 'just to help'. Assessment?"
   },
   "options": {
@@ -459,7 +459,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Niat baik tidak menggantikan otorisasi. Uji keamanan hanya pada sistem yang secara jelas Anda berwenang menguji.",
+   "id": "Niat baik tidak menggantikan otorisasi. Security test hanya pada sistem yang secara jelas Anda berwenang menguji.",
    "en": "Good intent does not replace authorisation. Security-test only systems you are clearly authorised to test."
   }
  },
@@ -561,21 +561,21 @@
   },
   "options": {
    "id": [
-    "Apa yang gagal, di mana, dan buktinya (log, screenshot)",
-    "Hanya berapa banyak test yang sudah dijalankan",
-    "Siapa nama penulis dari setiap test yang ada",
-    "Berapa lama server CI tetap menyala hari ini"
+    "Apa yang gagal, di mana, dan buktinya (log, gambar)",
+    "Hanya berapa banyak test yang sudah dijalankan saja",
+    "Siapa nama penulis dari setiap test yang ada ini",
+    "Berapa lama server CI tetap menyala pada hari ini"
    ],
    "en": [
-    "What failed, where, and the evidence (logs, screenshots)",
-    "Only how many tests have been run so far",
-    "The name of the author of each existing test",
-    "How long the CI server stayed on today"
+    "What failed, where, and the evidence (logs, images)",
+    "Only how many tests have been run so far in total",
+    "The name of the author of each of the existing tests",
+    "How long the CI server has stayed switched on today"
    ]
   },
   "answer": 0,
   "exp": {
-   "id": "Laporan yang tidak memberi bukti memaksa orang mereproduksi kegagalan dari nol. Artefak kegagalan mempercepat diagnosis.",
+   "id": "Laporan yang tidak memberi bukti memaksa orang mereproduksi failure dari nol. Failure artifact mempercepat diagnosis.",
    "en": "A report without evidence forces people to reproduce failures from scratch. Failure artefacts speed up diagnosis."
   }
  },
@@ -614,15 +614,15 @@
   "level": 3,
   "type": "mcq",
   "q": {
-   "id": "Dalam RCA, mana yang disebut akar masalah?",
-   "en": "In an RCA, which is the root cause?"
+   "id": "Dalam RCA bug produksi, mana yang paling tepat disebut root cause yang bisa dicegah?",
+   "en": "In an RCA of a production bug, which is best called the preventable root cause?"
   },
   "options": {
    "id": [
-    "Kontrol yang hilang hingga bug lolos, mis. tak ada test-nya",
-    "Baris kode tempat error pertama kali muncul",
-    "Pengguna yang melaporkan masalah itu pertama kali",
-    "Waktu terjadinya insiden menurut jam server"
+    "Kontrol yang hilang hingga bug lolos, mis. tanpa test",
+    "Baris kode tempat error pertama kali muncul di log",
+    "User yang melaporkan masalah itu pertama kalinya",
+    "Waktu terjadinya insiden menurut jam server produksi"
    ],
    "en": [
     "The missing control that let it through, e.g. no test",
@@ -633,8 +633,8 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Baris kode adalah penyebab langsung. Akar masalah adalah celah proses/kontrol yang bisa dicegah ke depan.",
-   "en": "The code line is the proximate cause. The root cause is the process/control gap that can be prevented in future."
+   "id": "Baris kode adalah penyebab langsung. Root cause yang bisa dicegah adalah celah proses atau kontrol (tidak ada test, review terlewat, requirement ambigu) yang membuat bug lolos. Satu insiden bisa punya beberapa faktor penyebab.",
+   "en": "The code line is the proximate cause. The preventable root cause is the process or control gap (no test, missed review, ambiguous requirement) that let the bug through. One incident can have several contributing factors."
   }
  },
  {
@@ -643,21 +643,21 @@
   "level": 2,
   "type": "mcq",
   "q": {
-   "id": "Tantangan khas pengujian aplikasi mobile dibanding web?",
+   "id": "Tantangan khas testing aplikasi mobile dibanding web?",
    "en": "What is a typical challenge of mobile testing compared with web?"
   },
   "options": {
    "id": [
     "Fragmentasi perangkat/OS, izin, jaringan buruk, interupsi",
-    "Perangkat mobile tidak memiliki layar sama sekali",
-    "Aplikasi mobile sama sekali tidak bisa diotomasi",
-    "Hanya ada satu ukuran layar untuk semua perangkat"
+    "Perangkat mobile memang tidak memiliki layar sama sekali",
+    "Aplikasi mobile tidak mungkin bisa diotomasi sama sekali",
+    "Hanya tersedia satu ukuran layar untuk semua perangkat"
    ],
    "en": [
-    "Device/OS fragmentation, permissions, poor network, interruptions",
-    "Mobile devices have no screen at all",
-    "Mobile apps cannot be automated at all",
-    "There is only one screen size for all devices"
+    "Device/OS fragmentation, permissions, bad networks, interrupts",
+    "Mobile devices simply do not have any screen at all",
+    "Mobile apps cannot possibly be automated in any way",
+    "Only a single screen size exists for every kind of device"
    ]
   },
   "answer": 0,
@@ -677,7 +677,7 @@
   },
   "options": {
    "id": [
-    "Agar kegagalan bisa didiagnosis tanpa reproduksi manual",
+    "Agar failure bisa didiagnosis tanpa reproduksi manual",
     "Agar pipeline menjadi lebih lambat dari biasanya",
     "Agar developer tidak perlu lagi membaca log apa pun",
     "Agar test tidak akan pernah gagal di masa depan"
@@ -691,7 +691,7 @@
   },
   "answer": 0,
   "exp": {
-   "id": "Kegagalan CI sering tidak muncul lokal. Artefak menyimpan keadaan saat gagal sehingga penyebab bisa ditelusuri.",
+   "id": "Failure CI sering tidak muncul lokal. Artefak menyimpan keadaan saat gagal sehingga penyebab bisa ditelusuri.",
    "en": "CI failures often do not reproduce locally. Artefacts keep the state at failure so the cause can be traced."
   }
  }

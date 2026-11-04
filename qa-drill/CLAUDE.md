@@ -45,7 +45,7 @@ qa-drill/                        (sumber dan alat, tidak terbit)
 ## Beranda, fokus, dan kartu
 - `S.state.focus` (`istqb` | `career` | `both` | null) menentukan saran "Hari ini" dan urutan jalur di Beranda; dipilih lewat kartu pertanyaan di Beranda atau Pengaturan.
 - Kartu "Hari ini" (`nextAction` di `views-home.js`), urutan prioritas: hari ujian (istirahat) → ujian <= 7 hari dan belum ada mock 3 hari terakhir (mock exam) → soal jatuh tempo → area terlemah menurut fokus. Tanggal ujian diabaikan bila fokus = karir. Kartu hanya tampil bila ada soal jatuh tempo, >= 10 soal sudah dijawab, atau ujian <= 14 hari.
-- `data/glossary.js`: tiap kartu punya `topic` (`istqb` bawaan, atau `rest-api`, `selenium`, `sql`, `playwright`, `cypress`, `qa-general`, `fundamentals`, `nonfunctional`, `tooling`, `interview`); kartu dipilih per topik di halaman Kartu. Istilah (`t`) harus unik karena dipakai sebagai kunci progres.
+- `data/glossary.js`: tiap kartu punya `topic` (`istqb` bawaan, atau `rest-api`, `selenium`, `sql`, `playwright`, `cypress`, `qa-general`, `fundamentals`, `nonfunctional`, `tooling`, `coding`, `interview`); kartu dipilih per topik di halaman Kartu. Istilah (`t`) harus unik karena dipakai sebagai kunci progres.
 - Soal Jalur 2 baru: tambah ke `questions/*.json`, buat pengecoh selevel jawaban benar (cek bias panjang di `build-data.py`).
 
 ## Email (verifikasi dan reset password)
@@ -75,6 +75,7 @@ Papan belajar bersifat opt-in (default mati), hanya untuk anggota yang sudah mas
 - `mcq`: `options:{id:[..],en:[..]}` (urutan sama di kedua bahasa), `answer` (indeks 0-based), `exp:{id,en}`. Opsi diacak saat tampil.
 - `tf`: `answer` true/false, `exp`.
 - `short`: `model:{id,en}`, `keywords` (array grup sinonim; ID dan EN dicampur), `pass` (0–1).
+- Soal membaca kode: field opsional `code` (teks polos multi-baris) dirender `QA.codeBlock` di `<pre>` lewat textContent. Jalankan dulu cuplikannya (node/python/sqlite) agar jawaban benar secara eksekusi, bukan tebakan.
 - `lo` + `k` hanya untuk soal ISTQB; `lo` harus ada di `data/lo.js`. `level` 1–3 mengikuti K-level.
 
 ## Penilaian isian singkat (tanpa AI)
@@ -98,10 +99,18 @@ Mengikuti struktur resmi CTFL v4.0 (ISTQB Exam Structure and Rules Tables): 40 s
 - Semua akses `localStorage` di dalam try/catch.
 - Data divalidasi saat load (`QA.validateData`); jika gagal, tampilkan error jelas.
 
+## Konvensi istilah (Bahasa Indonesia)
+Teks Indonesia memakai istilah teknis dan umum dunia software/QA dalam bahasa Inggris, tidak diterjemahkan, supaya tidak membingungkan: test, test case, test data, testing, defect, failure, environment, regression, coverage, branch, script, release, performance, security, accessibility, compatibility, client, user, customer, bug report, root cause, database, software, link, file, upload, import/export, backup, feedback, flashcard, due, new, mastered, streak, guest, spaced repetition. Susunan frasa mengikuti bahasa Inggris ("security testing", bukan "testing security"). Kata Indonesia biasa tetap dipakai (soal, materi, latihan, masuk/keluar, akun, rencana). Padanan Inggris di sisi EN ikut diseragamkan (mis. "Flashcards").
+- Istilah `due`/`new` di layar Flashcard dijelaskan satu kalimat ("New = belum pernah dibuka. Due = sudah waktunya direview lagi").
+- Bahasa Indonesia untuk makna lain tetap boleh: "cakupan" = scope di pilihan Latihan (label EN "Scope"), bukan coverage.
+
 ## Menambah topik Jalur 2 dan sumber belajar
-- Topik baru (mis. `fundamentals`, `nonfunctional`, `tooling`) harus didaftarkan di tiga tempat: array `CAREER` di `views-home.js`, daftar filter di `views-practice.js`, dan `DECKS` di `views-mock.js`; lalu isi `QA.materiKarir[topik]`, `QA.sumberKarir[topik]`, soal, dan kartu istilah.
+- Topik baru (mis. `fundamentals`, `nonfunctional`, `tooling`, `coding`) harus didaftarkan di tiga tempat: array `CAREER` di `views-home.js`, daftar filter di `views-practice.js`, dan `DECKS` di `views-mock.js`; lalu isi `QA.materiKarir[topik]`, `QA.sumberKarir[topik]`, soal, dan kartu istilah.
 - Sumber belajar hanya ditautkan, tidak disalin. Utamakan standar dan dokumentasi resmi (jenis `resmi`), lalu penulis/institusi tepercaya (`rujukan`). `komunitas` (mis. roadmap.sh/qa, Ministry of Testing) hanya untuk peta topik. Periksa setiap URL terbuka sebelum dimasukkan.
 - **roadmap.sh**: lisensinya melarang menyalin kontennya; hanya boleh menautkan. Pakai sebagai peta topik, tulis materi sendiri.
 
+## Berkas soal (questions/)
+`career-more.json`, `career-cases.json`, `career-roadmap.json`, `career-coding.json` (Jalur 2), `interview.json` + `interview-open.json` (jawaban terbuka: STAR dan studi kasus "bagaimana menguji X"), `istqb-k3.json` + `istqb-k3-more.json` (skenario K3: EP/BVA/decision table/state transition; hitungannya diverifikasi dengan skrip). Setelah menambah soal isian, uji bahwa jawaban model lolos `QA.grade.gradeShort` dan jawaban asal tidak.
+
 ## Ide berikutnya
-Soal tambahan Playwright/Cypress/Katalon dan SQL lanjut; soal skenario K3 lebih banyak (EP/BVA/decision table/state transition); latihan interview jawaban terbuka; CTFL Agile Tester atau Test Automation Engineer sebagai jalur lanjutan.
+Soal tambahan Playwright/Cypress/Katalon dan SQL lanjut; soal skenario K3 untuk bab 5 (estimasi, risiko); jenis soal "tulis kode" dengan eksekusi uji; CTFL Agile Tester atau Test Automation Engineer sebagai jalur lanjutan.

@@ -1,4 +1,4 @@
-// Penyimpanan progres di localStorage + jadwal pengulangan berjarak (Leitner).
+// Penyimpanan progres di localStorage + jadwal spaced repetition (Leitner).
 (function () {
   window.QA = window.QA || {};
   var GUEST_KEY = "qa-drill-v1";
@@ -34,7 +34,7 @@
     if (S.onSave) S.onSave();
   };
 
-  // Pindah ke ruang penyimpanan lain (tamu atau akun tertentu) dan muat state-nya. Tidak menyimpan apa pun.
+  // Pindah ke ruang penyimpanan lain (guest atau akun tertentu) dan muat state-nya. Tidak menyimpan apa pun.
   S.guestKey = GUEST_KEY;
   S.keyFor = function (userId) { return "qa-drill-u" + userId; };
   S.useKey = function (key) { KEY = key; S.state = load(key); };
@@ -45,9 +45,9 @@
   };
   S.hasProgress = function (st) { return !!st && (Object.keys(st.q).length > 0 || Object.keys(st.cards).length > 0 || st.history.length > 0 || st.mocks.length > 0); };
 
-  // conf (opsional): "guess" | "unsure" | "sure". Benar karena menebak tidak menaikkan box (belum benar-benar dikuasai),
+  // conf (opsional): "guess" | "unsure" | "sure". Benar karena menebak tidak menaikkan box (belum benar-benar mastered),
   // benar tapi ragu hanya menaikkan dari box 0, salah dengan yakin dicatat sebagai miskonsepsi (hyper).
-  // Box hanya naik bila soal memang sudah jatuh tempo: mengulang soal yang sama berkali-kali dalam satu sesi
+  // Box hanya naik bila soal memang sudah due: mengulang soal yang sama berkali-kali dalam satu sesi
   // tidak membuktikan ingatan jangka panjang (spacing effect).
   function bump(rec, correct, now, conf) {
     var wasDue = !rec || rec.due <= now;
@@ -117,9 +117,9 @@
     });
     return out;
   }
-  // Validasi dan bersihkan objek state dari sumber luar (berkas impor atau server). Melempar bila bentuknya salah.
+  // Validasi dan bersihkan objek state dari sumber luar (file import atau server). Melempar bila bentuknya salah.
   function normalize(obj) {
-    if (!isObj(obj) || !isObj(obj.q) || !isObj(obj.cards)) throw new Error("Format berkas tidak dikenali");
+    if (!isObj(obj) || !isObj(obj.q) || !isObj(obj.cards)) throw new Error("Format file tidak dikenali");
     if (obj.history !== undefined && !Array.isArray(obj.history)) throw new Error("Format riwayat tidak valid");
     if (obj.mocks !== undefined && !Array.isArray(obj.mocks)) throw new Error("Format mock tidak valid");
     var next = defaults();
@@ -144,7 +144,7 @@
   };
 
   // Gabungkan state dari server ke state lokal tanpa kehilangan kemajuan di salah satu perangkat:
-  // per soal/kartu pilih rekaman yang lebih sering dilihat; riwayat dan mock digabung per waktu;
+  // per soal/flashcard pilih rekaman yang lebih sering dilihat; riwayat dan mock digabung per waktu;
   // pengaturan mengikuti perangkat yang terakhir berubah. Tidak menyimpan; pemanggil yang memutuskan.
   function mergeRecs(a, b) {
     var out = {};

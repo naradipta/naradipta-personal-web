@@ -4,7 +4,7 @@ window.QA = window.QA || {};
 QA.syllabusUrl = "https://www.istqb.org/wp-content/uploads/2024/11/ISTQB_CTFL_Syllabus_v4.0.1.pdf";
 // Halaman resmi unduhan CTFL v4.0 di istqb.org (silabus, sample exam, aturan ujian, daftar terjemahan).
 QA.syllabusPageUrl = "https://www.istqb.org/certifications/certified-tester-foundation-level-ctfl-v4-0/";
-// Isi dengan tautan langsung silabus Bahasa Indonesia resmi (IDSTB) bila sudah ada; kosong = hanya teks petunjuk.
+// Isi dengan link langsung silabus Bahasa Indonesia resmi (IDSTB) bila sudah ada; kosong = hanya teks petunjuk.
 QA.syllabusUrlId = "";
 
 // Struktur ujian CTFL v4.0 (ISTQB Exam Structure and Rules Tables): 40 soal, lulus 26, 60 menit (75 menit non-native).
@@ -32,7 +32,7 @@ QA.los = [
     "Testing memicu failure yang disebabkan defect. Debugging adalah aktivitas developer untuk menemukan penyebab, menganalisis, dan memperbaikinya. Setelah perbaikan, tester melakukan confirmation testing.",
     "Testing triggers failures caused by defects. Debugging is the developer activity of finding the cause, analysing and fixing it. After the fix, testers perform confirmation testing."),
   LO("FL-1.2.1", 2, "Mengapa testing diperlukan", "Why testing is necessary",
-    "Testing adalah cara hemat biaya untuk menemukan defect sebelum dipakai di produksi sehingga kualitas naik. Tester yang ikut review requirement membawa sudut pandang pengguna, dan testing membantu memenuhi kewajiban kontrak, hukum, atau regulasi.",
+    "Testing adalah cara hemat biaya untuk menemukan defect sebelum dipakai di produksi sehingga kualitas naik. Tester yang ikut review requirement membawa sudut pandang user, dan testing membantu memenuhi kewajiban kontrak, hukum, atau regulasi.",
     "Testing is a cost-effective way to find defects before production, which raises quality. Testers in requirement reviews bring the user viewpoint, and testing helps meet contractual, legal or regulatory needs."),
   LO("FL-1.2.2", 1, "Testing dan quality assurance", "Testing and quality assurance",
     "Testing adalah bentuk quality control (QC): berorientasi produk dan korektif. QA berorientasi proses dan preventif, memastikan proses yang benar dijalankan. Keduanya berkontribusi pada kualitas.",
@@ -50,7 +50,7 @@ QA.los = [
     "Test process dipengaruhi konteks: model SDLC, test level dan type, risiko produk dan proyek, domain bisnis, batasan operasional (anggaran, waktu, kompleksitas), kebijakan organisasi, dan standar yang berlaku.",
     "The test process depends on context: SDLC model, test levels and types, product and project risks, business domain, operational constraints (budget, time, complexity), organisational policies, and applicable standards."),
   LO("FL-1.4.3", 2, "Testware", "Testware",
-    "Setiap aktivitas menghasilkan testware: planning menghasilkan test plan; analysis menghasilkan test condition; design menghasilkan test case, charter, dan kebutuhan data/lingkungan; implementation menghasilkan test procedure, test suite, dan data; execution menghasilkan test log dan defect report; completion menghasilkan test completion report dan lessons learned.",
+    "Setiap aktivitas menghasilkan testware: planning menghasilkan test plan; analysis menghasilkan test condition; design menghasilkan test case, charter, dan kebutuhan data/environment; implementation menghasilkan test procedure, test suite, dan data; execution menghasilkan test log dan defect report; completion menghasilkan test completion report dan lessons learned.",
     "Each activity produces testware: planning gives the test plan; analysis gives test conditions; design gives test cases, charters, data and environment needs; implementation gives test procedures, suites and data; execution gives test logs and defect reports; completion gives the test completion report and lessons learned."),
   LO("FL-1.4.4", 2, "Traceability", "Traceability",
     "Traceability menghubungkan test basis, testware, dan hasil. Manfaatnya: mengevaluasi coverage, analisis dampak perubahan, mendukung audit, dan membuat laporan mudah dipahami (mis. requirement mana yang sudah lulus).",
@@ -79,7 +79,7 @@ QA.los = [
     "TDD: tes ditulis dulu lalu kode, mengarahkan pengembangan. ATDD: tes diturunkan dari acceptance criteria sebelum implementasi. BDD: perilaku ditulis dalam bahasa alami (Given/When/Then) lalu diubah menjadi tes otomatis.",
     "TDD: write tests first, then code, to drive development. ATDD: derive tests from acceptance criteria before implementation. BDD: express behaviour in natural language (Given/When/Then) that becomes automated tests."),
   LO("FL-2.1.4", 2, "DevOps dan testing", "DevOps and testing",
-    "Manfaat: umpan balik cepat atas kualitas, CI/CD mendorong shift-left, proses otomatis, dan memperkuat uji non-fungsional. Risiko: pipeline perlu dibangun dan dirawat, otomasi butuh sumber daya, dan manual testing tetap diperlukan.",
+    "Manfaat: feedback cepat atas kualitas, CI/CD mendorong shift-left, proses otomatis, dan memperkuat uji non-fungsional. Risiko: pipeline perlu dibangun dan dirawat, otomasi butuh sumber daya, dan manual testing tetap diperlukan.",
     "Benefits: fast quality feedback, CI/CD promotes shift-left, automated processes, stronger non-functional testing. Risks: the pipeline must be built and maintained, automation needs resources, and manual testing is still needed."),
   LO("FL-2.1.5", 2, "Shift left", "Shift left",
     "Shift left berarti testing dilakukan lebih awal: review spesifikasi, menulis tes sebelum kode (TDD), static analysis sebelum dynamic, CI/CD. Biaya dan pelatihan di awal, tetapi menghemat biaya perbaikan di akhir.",
@@ -91,7 +91,7 @@ QA.los = [
     "Lima level: component, component integration, system, system integration, dan acceptance (UAT, operational acceptance, contractual/regulatory, alpha, beta). Perbedaannya pada objek uji, tujuan, test basis, dan siapa yang menguji.",
     "Five levels: component, component integration, system, system integration, and acceptance (UAT, operational, contractual/regulatory, alpha, beta). They differ in test object, objectives, test basis and who tests."),
   LO("FL-2.2.2", 2, "Test type", "Test types",
-    "Empat type: functional (apa yang dilakukan sistem), non-functional (performa, usability, keamanan, dll.), black-box (berbasis spesifikasi), dan white-box (berbasis struktur internal). Type dapat dilakukan di semua level.",
+    "Empat type: functional (apa yang dilakukan sistem), non-functional (performance, usability, security, dll.), black-box (berbasis spesifikasi), dan white-box (berbasis struktur internal). Type dapat dilakukan di semua level.",
     "Four types: functional (what the system does), non-functional (performance, usability, security, etc.), black-box (specification-based) and white-box (structure-based). Types can apply at all levels."),
   LO("FL-2.2.3", 2, "Confirmation vs regression testing", "Confirmation vs regression testing",
     "Confirmation testing memastikan defect yang diperbaiki benar-benar sudah beres (jalankan ulang tes yang gagal). Regression testing memastikan perubahan tidak merusak bagian lain; kandidat kuat untuk otomasi.",
@@ -108,10 +108,10 @@ QA.los = [
     "Menemukan defect lebih awal sehingga lebih murah diperbaiki, menemukan jenis defect yang sulit ditemukan secara dynamic, serta meningkatkan komunikasi dan pemahaman bersama.",
     "Finds defects early so they are cheaper to fix, finds defect types hard to find dynamically, and improves communication and shared understanding."),
   LO("FL-3.1.3", 2, "Static vs dynamic testing", "Static vs dynamic testing",
-    "Static menemukan defect langsung di work product tanpa menjalankan kode (requirement ambigu, pelanggaran standar kode, kode tak terjangkau). Dynamic memicu failure saat eksekusi (memory leak, masalah performa). Keduanya saling melengkapi.",
+    "Static menemukan defect langsung di work product tanpa menjalankan kode (requirement ambigu, pelanggaran standar kode, kode tak terjangkau). Dynamic memicu failure saat eksekusi (memory leak, masalah performance). Keduanya saling melengkapi.",
     "Static finds defects directly in work products without running code (ambiguous requirements, coding-standard violations, unreachable code). Dynamic triggers failures during execution (memory leaks, performance problems). They complement each other."),
-  LO("FL-3.2.1", 1, "Manfaat umpan balik awal", "Benefits of early feedback",
-    "Umpan balik awal dan sering dari stakeholder mengurangi risiko salah paham requirement, memperjelas pemahaman tim, dan mencegah pengerjaan ulang yang mahal.",
+  LO("FL-3.2.1", 1, "Manfaat feedback awal", "Benefits of early feedback",
+    "Feedback awal dan sering dari stakeholder mengurangi risiko salah paham requirement, memperjelas pemahaman tim, dan mencegah pengerjaan ulang yang mahal.",
     "Early, frequent stakeholder feedback reduces the risk of misunderstanding requirements, clarifies team understanding and prevents costly rework."),
   LO("FL-3.2.2", 2, "Proses review", "Review process",
     "Aktivitas: planning, review initiation, individual review (reviewer membaca sendiri dan mencatat temuan), communication and analysis (mendiskusikan temuan), fixing and reporting.",
@@ -120,10 +120,10 @@ QA.los = [
     "Manager (menentukan apa yang direview, menyediakan sumber daya), author, facilitator/moderator, review leader, reviewer, dan scribe (mencatat temuan).",
     "Manager (decides what is reviewed, provides resources), author, facilitator/moderator, review leader, reviewers and scribe (records findings)."),
   LO("FL-3.2.4", 2, "Jenis review", "Review types",
-    "Informal review (tanpa proses formal), walkthrough (dipimpin author; edukasi dan umpan balik), technical review (reviewer ahli teknis; mencapai konsensus), inspection (paling formal; peran, checklist, metrik; mencari defect sebanyak mungkin dan memperbaiki proses).",
+    "Informal review (tanpa proses formal), walkthrough (dipimpin author; edukasi dan feedback), technical review (reviewer ahli teknis; mencapai konsensus), inspection (paling formal; peran, checklist, metrik; mencari defect sebanyak mungkin dan memperbaiki proses).",
     "Informal review (no formal process), walkthrough (author-led; education and feedback), technical review (technical experts; reach consensus), inspection (most formal; roles, checklists, metrics; find maximum defects and improve the process)."),
   LO("FL-3.2.5", 1, "Faktor sukses review", "Success factors for reviews",
-    "Tujuan jelas, jenis review sesuai, review dalam potongan kecil, waktu cukup, dukungan manajemen, budaya yang konstruktif (bukan menilai kinerja author), dan pelatihan reviewer.",
+    "Tujuan jelas, jenis review sesuai, review dalam potongan kecil, waktu cukup, dukungan manajemen, budaya yang konstruktif (bukan menilai performance author), dan pelatihan reviewer.",
     "Clear objectives, suitable review type, small chunks, enough time, management support, a constructive culture (not judging authors' performance) and trained reviewers."),
 
   // ===== Bab 4 =====
@@ -161,7 +161,7 @@ QA.los = [
     "Tes diturunkan dari checklist yang dibuat dari pengalaman, data defect, dan pengetahuan tentang kepentingan user. Item bersifat tingkat tinggi (tanpa langkah detail) sehingga ada variasi, dan checklist diperbarui berkala.",
     "Tests derive from a checklist built from experience, defect data and knowledge of what matters to users. Items are high level (no detailed steps) so there is variation, and the checklist is updated regularly."),
   LO("FL-4.5.1", 2, "Penulisan user story kolaboratif", "Collaborative user story writing",
-    "User story: peran, tujuan, nilai bisnis. 3 C: Card (ringkasan), Conversation (diskusi), Confirmation (acceptance criteria dan tes). Kualitas story diperiksa dengan INVEST. Tester membawa sudut pandang pengujian.",
+    "User story: peran, tujuan, nilai bisnis. 3 C: Card (ringkasan), Conversation (diskusi), Confirmation (acceptance criteria dan tes). Kualitas story diperiksa dengan INVEST. Tester membawa sudut pandang testing.",
     "A user story has role, goal and business value. The 3 Cs: Card, Conversation, Confirmation (acceptance criteria and tests). Story quality is checked with INVEST. Testers bring the testing viewpoint."),
   LO("FL-4.5.2", 2, "Acceptance criteria", "Acceptance criteria",
     "Kondisi yang harus dipenuhi agar story diterima. Format: scenario-oriented (Given/When/Then), rule-oriented (daftar atau tabel aturan), atau format lain yang disepakati.",
@@ -178,7 +178,7 @@ QA.los = [
     "Dalam iteration/release planning tester membantu menulis user story yang dapat diuji beserta acceptance criteria, melakukan analisis risiko, mengestimasi usaha testing, dan merencanakan pendekatan test.",
     "In iteration/release planning testers help write testable user stories and acceptance criteria, do risk analysis, estimate testing effort and plan the test approach."),
   LO("FL-5.1.3", 2, "Entry dan exit criteria", "Entry and exit criteria",
-    "Entry criteria: prasyarat memulai (lingkungan siap, testware siap, data tersedia). Exit criteria (Definition of Done): syarat selesai (coverage tercapai, defect tidak terselesaikan di bawah batas, semua tes dijalankan).",
+    "Entry criteria: prasyarat memulai (environment siap, testware siap, data tersedia). Exit criteria (Definition of Done): syarat selesai (coverage tercapai, defect tidak terselesaikan di bawah batas, semua tes dijalankan).",
     "Entry criteria: preconditions to start (environment ready, testware ready, data available). Exit criteria (Definition of Done): conditions to finish (coverage met, unresolved defects below a limit, planned tests executed)."),
   LO("FL-5.1.4", 3, "Teknik estimasi", "Estimation techniques",
     "Teknik: berbasis rasio, ekstrapolasi, Wideband Delphi, dan three-point estimation. Three-point: E = (a + 4m + b) / 6, dengan a optimis, m paling mungkin, b pesimis. Standar deviasi = (b - a) / 6.",
@@ -190,13 +190,13 @@ QA.los = [
     "Lapisan bawah (unit/component) banyak, cepat, murah, dan terisolasi; lapisan atas (UI/end-to-end) sedikit, lambat, dan mahal. Semakin tinggi, semakin besar cakupan namun makin rapuh.",
     "Lower layers (unit/component) are many, fast, cheap and isolated; upper layers (UI/end-to-end) are few, slow and expensive. Higher means broader scope but more brittle."),
   LO("FL-5.1.7", 2, "Testing quadrants", "Testing quadrants",
-    "Q1 technology-facing mendukung tim (component, component integration). Q2 business-facing mendukung tim (fungsional, story). Q3 business-facing mengkritik produk (exploratory, usability, UAT). Q4 technology-facing mengkritik produk (performa, keamanan).",
+    "Q1 technology-facing mendukung tim (component, component integration). Q2 business-facing mendukung tim (fungsional, story). Q3 business-facing mengkritik produk (exploratory, usability, UAT). Q4 technology-facing mengkritik produk (performance, security).",
     "Q1 technology-facing supporting the team (component, component integration). Q2 business-facing supporting the team (functional, story). Q3 business-facing critiquing the product (exploratory, usability, UAT). Q4 technology-facing critiquing the product (performance, security)."),
   LO("FL-5.2.1", 1, "Tingkat risiko", "Risk level",
     "Risk level ditentukan oleh likelihood (kemungkinan terjadi) dan impact (dampak). Risiko tinggi mendapat perhatian testing lebih besar.",
     "Risk level is determined by likelihood and impact. Higher risks get more testing attention."),
   LO("FL-5.2.2", 2, "Risiko proyek vs risiko produk", "Project risks vs product risks",
-    "Risiko proyek mengancam keberhasilan proyek (jadwal, sumber daya, lingkungan test terlambat, tester keluar). Risiko produk mengancam kualitas produk (fungsi salah, performa buruk, masalah keamanan).",
+    "Risiko proyek mengancam keberhasilan proyek (jadwal, sumber daya, test environment terlambat, tester keluar). Risiko produk mengancam kualitas produk (fungsi salah, performance buruk, masalah security).",
     "Project risks threaten project success (schedule, resources, late test environment, tester leaving). Product risks threaten product quality (wrong functions, poor performance, security problems)."),
   LO("FL-5.2.3", 2, "Analisis risiko produk", "Product risk analysis",
     "Hasil analisis risiko produk dipakai untuk menentukan cakupan, level, teknik, dan usaha testing serta memprioritaskan tes agar risiko tinggi ditemukan lebih awal.",
@@ -217,15 +217,15 @@ QA.los = [
     "CM memastikan semua item test dan testware punya identitas unik, dikontrol versinya, dilacak perubahannya, dan terhubung satu sama lain sehingga traceability terjaga sepanjang proyek.",
     "CM ensures all test items and testware are uniquely identified, version controlled, change tracked and related to each other so traceability is kept throughout the project."),
   LO("FL-5.5.1", 3, "Menyusun defect report", "Preparing a defect report",
-    "Defect report yang baik: ID unik, judul ringkas, tanggal dan pelapor, test item dan lingkungan, deskripsi failure dengan langkah reproduksi, expected vs actual result, severity, priority, dan status.",
+    "Defect report yang baik: ID unik, judul ringkas, tanggal dan pelapor, test item dan environment, deskripsi failure dengan langkah reproduksi, expected vs actual result, severity, priority, dan status.",
     "A good defect report: unique ID, concise title, date and author, test item and environment, failure description with steps to reproduce, expected vs actual result, severity, priority and status."),
 
   // ===== Bab 6 =====
   LO("FL-6.1.1", 2, "Dukungan tool untuk testing", "Tool support for testing",
-    "Kategori tool: manajemen test dan ALM, static testing, desain dan implementasi test, eksekusi dan coverage, non-fungsional (performa, keamanan), DevOps (CI/CD), kolaborasi, dan tool pendukung lain.",
+    "Kategori tool: manajemen test dan ALM, static testing, desain dan implementasi test, eksekusi dan coverage, non-fungsional (performance, security), DevOps (CI/CD), kolaborasi, dan tool pendukung lain.",
     "Tool categories: test and application lifecycle management, static testing, test design and implementation, test execution and coverage, non-functional (performance, security), DevOps (CI/CD), collaboration and other support tools."),
   LO("FL-6.2.1", 1, "Manfaat dan risiko otomasi", "Benefits and risks of test automation",
-    "Manfaat: hemat waktu pada pekerjaan berulang, eksekusi lebih konsisten, penilaian lebih objektif, informasi lebih mudah diakses. Risiko: ekspektasi tidak realistis, usaha dan perawatan diremehkan, terlalu bergantung pada tool, masalah vendor dan kompatibilitas.",
+    "Manfaat: hemat waktu pada pekerjaan berulang, eksekusi lebih konsisten, penilaian lebih objektif, informasi lebih mudah diakses. Risiko: ekspektasi tidak realistis, usaha dan perawatan diremehkan, terlalu bergantung pada tool, masalah vendor dan compatibility.",
     "Benefits: time saved on repetitive work, more consistent execution, more objective assessment, easier access to information. Risks: unrealistic expectations, underestimated effort and maintenance, over-reliance on the tool, vendor and compatibility problems.")
 ];
 

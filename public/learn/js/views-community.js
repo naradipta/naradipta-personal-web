@@ -1,4 +1,4 @@
-// Komunitas: papan belajar opt-in. Hanya nama tampilan dan angka kasar (hari aktif, streak, soal dikuasai). Tanpa email, akurasi, atau jawaban.
+// Komunitas: papan belajar opt-in. Hanya nama tampilan dan angka kasar (hari aktif, streak, soal mastered). Tanpa email, akurasi, atau jawaban.
 (function () {
   var QA = window.QA, h = QA.h, t = QA.t;
   var acct = QA.account;
@@ -45,7 +45,7 @@
       h("p", { class: "small muted" }, t("Papan ini untuk saling menyemangati, bukan lomba. Bergabung bersifat pilihan dan bisa dibatalkan kapan saja.", "This board is for mutual encouragement, not a contest. Joining is optional and you can leave any time.")),
       h("div", { class: "field" }, h("label", { for: "dn" }, t("Nama tampilan (bukan email)", "Display name (not your email)")), name),
       h("label", { class: "inline", for: "dn-ok" }, agree,
-        h("span", null, t("Saya setuju nama tampilan, jumlah hari aktif, streak, dan jumlah soal yang dikuasai terlihat oleh sesama anggota yang sudah masuk. Email, akurasi, dan jawaban saya tidak pernah ditampilkan.",
+        h("span", null, t("Saya setuju nama tampilan, jumlah hari aktif, streak, dan jumlah soal yang mastered terlihat oleh sesama anggota yang sudah masuk. Email, akurasi, dan jawaban saya tidak pernah ditampilkan.",
           "I agree that my display name, active days, streak and mastered-question count are visible to other signed-in members. My email, accuracy and answers are never shown."))),
       h("p", { class: "form-err", role: "alert" }, formError), btn);
     form.addEventListener("submit", function (ev) {
@@ -61,7 +61,7 @@
     var box = h("div", { class: "card" });
     box.appendChild(h("div", { class: "row" }, h("h2", { class: "h3" }, t("Papan belajar", "Study board")),
       h("button", { class: "btn small", type: "button", onclick: function () { load(true); QA.render(true); } }, t("Muat ulang", "Refresh"))));
-    box.appendChild(h("p", { class: "small muted" }, t("Urut berdasarkan hari aktif 7 hari terakhir. Streak = hari beruntun belajar. Dikuasai = soal yang sudah naik ke box 3 atau lebih.",
+    box.appendChild(h("p", { class: "small muted" }, t("Urut berdasarkan hari aktif 7 hari terakhir. Streak = hari belajar berturut-turut. Mastered = soal yang sudah naik ke box 3 atau lebih.",
       "Sorted by active days in the last 7. Streak = consecutive study days. Mastered = questions at box 3 or above.")));
     if (cache.error) box.appendChild(h("p", { class: "form-err", role: "alert" }, t("Gagal memuat papan.", "Could not load the board.")));
     else if (!cache.rows) box.appendChild(h("p", { class: "muted", role: "status" }, t("Memuat...", "Loading...")));
@@ -69,7 +69,7 @@
     else {
       var tbl = h("table", { class: "board" },
         h("caption", { class: "sr-only" }, t("Papan belajar komunitas", "Community study board")),
-        h("thead", null, h("tr", null, h("th", { scope: "col" }, t("Nama", "Name")), h("th", { scope: "col" }, t("Aktif 7 hari", "Active 7d")), h("th", { scope: "col" }, "Streak"), h("th", { scope: "col" }, t("Dikuasai", "Mastered")))),
+        h("thead", null, h("tr", null, h("th", { scope: "col" }, t("Nama", "Name")), h("th", { scope: "col" }, t("Aktif 7 hari", "Active 7d")), h("th", { scope: "col" }, "Streak"), h("th", { scope: "col" }, t("Mastered", "Mastered")))),
         h("tbody", null, cache.rows.map(function (r) {
           return h("tr", { class: r.you ? "you" : "" },
             h("th", { scope: "row" }, r.name, r.you ? h("span", { class: "badge" }, t("Anda", "You")) : null,
