@@ -12,6 +12,8 @@ Environment=HOST=127.0.0.1
 Environment=TRUST_PROXY=1
 Environment=ALLOWED_ORIGIN=https://learn.naradipta.com
 Environment=DB_PATH=/var/lib/qa-drill/qa-drill.sqlite
+# Rahasia email (RESEND_API_KEY, MAIL_FROM, MAIL_PROVIDER, APP_URL) di berkas ini, izin 600, milik root:
+EnvironmentFile=-/etc/qa-drill.env
 ExecStart=/usr/bin/node server.js
 Restart=on-failure
 # Hardening dasar
