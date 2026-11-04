@@ -26,6 +26,7 @@ jobs:
           node qa-drill/tests/grade.test.js
           node qa-drill/tests/data.test.js
           node qa-drill/tests/server.test.js
+          node qa-drill/tests/smtp.test.js
       - name: Build situs
         run: npm run build
       - name: E2E dan aksesibilitas

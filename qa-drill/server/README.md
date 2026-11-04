@@ -27,16 +27,19 @@ Butuh **Node >= 22.13** (untuk `node:sqlite`). Aplikasi di `public/learn/` tetap
 Diaktifkan lewat variabel lingkungan; tanpa `MAIL_PROVIDER` semua fitur email mati (aplikasi tetap jalan, tombol "Lupa password" disembunyikan, komunitas tidak butuh verifikasi).
 | Variabel | Arti |
 |---|---|
-| `MAIL_PROVIDER` | `resend` (kirim lewat Resend HTTP API) atau `log` (dev: isi email dicetak ke konsol) |
+| `MAIL_PROVIDER` | `smtp` (mis. Brevo), `resend` (Resend HTTP API), atau `log` (dev: isi email dicetak ke konsol) |
 | `MAIL_FROM` | pengirim, mis. `QA Drill <no-reply@naradipta.com>` (domain harus terverifikasi di penyedia; atur SPF, DKIM, DMARC) |
-| `RESEND_API_KEY` | kunci API Resend (rahasia: simpan di `EnvironmentFile`, bukan di repo) |
+| `MAIL_SMTP_USER`, `MAIL_SMTP_KEY` | untuk `smtp`: login dan kunci SMTP (Brevo: *SMTP & API → SMTP*; login berbentuk `xxxx@smtp-brevo.com`, kunci berawalan `xsmtpsib-`). Rahasia: simpan di `EnvironmentFile`/`env_file`, bukan di repo |
+| `MAIL_SMTP_HOST`, `MAIL_SMTP_PORT` | untuk `smtp`: bawaan `smtp-relay.brevo.com` dan `465` (TLS langsung; tidak ada STARTTLS). Port 25 diblokir GCP |
+| `RESEND_API_KEY` | untuk `resend`: kunci API Resend (rahasia, sama seperti di atas) |
 | `APP_URL` | alamat publik untuk tautan di email, mis. `https://learn.naradipta.com` |
 
 - Alur: daftar → email verifikasi (token 24 jam, sekali pakai). Lupa password → email tautan reset (1 jam, sekali pakai); selesai reset, semua sesi dicabut dan email otomatis terverifikasi.
 - Token hanya disimpan sebagai hash; tautan memakai fragment (`#/verify/<token>`, `#/reset/<token>`) sehingga token tidak masuk log web server.
 - "Lupa password" menjawab sama untuk email terdaftar atau tidak (tidak membocorkan akun). Batas: 3 permintaan/jam per email, 3 kirim ulang verifikasi/jam per akun.
 - Bila verifikasi aktif, bergabung di papan komunitas mensyaratkan email terverifikasi. Akun lama tetap bisa belajar dan sinkron, hanya diminta verifikasi untuk komunitas.
-- Penyedia lain: tambahkan adapter di `mailer.js` (cukup fungsi `send({to, subject, text, html})`). Tidak ada SMTP karena tanpa dependency.
+- SMTP memakai klien kecil `smtp.js` (hanya `node:tls`, tanpa dependency): TLS langsung + `AUTH PLAIN`, tanpa antrean atau percobaan ulang. Kegagalan kirim hanya dicatat ke log (`mail gagal: ...`, tanpa kredensial) dan tidak menggagalkan pendaftaran; pengguna bisa memakai "kirim ulang verifikasi". Domain pengirim harus terautentikasi di Brevo (DKIM/DMARC). Tes: `node tests/smtp.test.js` (server SMTP palsu di loopback).
+- Penyedia lain: tambahkan adapter di `mailer.js` (cukup fungsi `send({to, subject, text, html})`).
 - Cadangan manual: `node admin.js verify <email>` dan `node admin.js set-password <email> <password>`.
 - Tes E2E email: jalankan server dengan `MAIL_PROVIDER=log APP_URL=http://localhost:4400` dan arahkan stdout ke berkas, lalu `E2E_MAIL_LOG=<berkas> npm test`.
 
