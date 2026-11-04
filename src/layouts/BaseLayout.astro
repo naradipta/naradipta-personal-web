@@ -12,6 +12,7 @@ const {
   title = `${siteConfig.name} — ${siteConfig.role}`,
   description = siteConfig.tagline,
 } = Astro.props;
+const qaDrillUrl = siteConfig.qaDrillUrl ?? "https://learn.naradipta.com/";
 ---
 
 <html lang="en">
@@ -61,7 +62,7 @@ const {
           <a href="/#experience">Experience</a>
           <a href="/#what-i-do">What I Do</a>
           <a href="/#gallery">Gallery</a>
-          <a href="https://learn.naradipta.com/">QA Drill</a>
+          <a href={qaDrillUrl}>QA Drill</a>
           <a href="/#contact">Contact</a>
         </nav>
       </div>

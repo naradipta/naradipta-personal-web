@@ -199,7 +199,7 @@ JSDOM.fromFile(file, { runScripts: "dangerously", resources: "usable", pretendTo
     const bad = QA.sanitize();
     assert.ok(bad.length >= 1 && QA.questions.length === before, "soal rusak dibuang");
     go("dashboard"); QA.render();
-    assert.ok(/dilewati/.test(text()) && d.querySelector("nav.nav"), "peringatan tampil dan navigasi tetap ada");
+    assert.ok(/dilewati/.test(text()) && d.querySelector("nav.side-nav"), "peringatan tampil dan navigasi tetap ada");
     QA.dataWarnings = [];
 
     assert.deepStrictEqual(errors, [], "tanpa error runtime: " + errors.join("; "));

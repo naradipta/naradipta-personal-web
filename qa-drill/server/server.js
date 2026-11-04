@@ -39,6 +39,18 @@ function createServer(opts = {}) {
     hits.set(key, list);
     return list.length > max;
   }
+  // Pembatas khusus kegagalan: isLimited hanya membaca, hit mencatat satu kegagalan.
+  function isLimited(key, max, windowMs) {
+    const now = Date.now();
+    const list = (hits.get(key) || []).filter((t) => now - t < windowMs);
+    hits.set(key, list);
+    return list.length >= max;
+  }
+  function hit(key) {
+    const list = hits.get(key) || [];
+    list.push(Date.now());
+    hits.set(key, list);
+  }
   const janitor = setInterval(() => {
     const now = Date.now();
     for (const [k, v] of hits) if (!v.some((t) => now - t < 15 * 60000)) hits.delete(k);
@@ -69,8 +81,12 @@ function createServer(opts = {}) {
         chunks.push(c);
       });
       req.on('end', () => {
-        try { resolve(JSON.parse(Buffer.concat(chunks).toString('utf8') || '{}')); }
-        catch { reject(Object.assign(new Error('bad json'), { status: 400 })); }
+        let v;
+        try { v = JSON.parse(Buffer.concat(chunks).toString('utf8') || '{}'); }
+        catch { return reject(Object.assign(new Error('bad json'), { status: 400 })); }
+        // Hanya objek biasa yang diterima: `null`, angka, atau array membuat akses body.email dst. melempar TypeError (500).
+        if (v === null || typeof v !== 'object' || Array.isArray(v)) return reject(Object.assign(new Error('invalid_body'), { status: 400 }));
+        resolve(v);
       });
       req.on('error', reject);
     });
@@ -153,7 +169,7 @@ function createServer(opts = {}) {
       const email = auth.normalizeEmail(body.email);
       if (!auth.validEmail(email)) return send(res, 400, { error: 'invalid_email' });
       if (!auth.validPassword(body.password)) return send(res, 400, { error: 'invalid_password' });
-      if (limited('em:' + email, 10, 15 * 60000)) return send(res, 429, { error: 'too_many_requests' });
+      if (route === 'POST /api/register' && limited('em:' + email, 10, 15 * 60000)) return send(res, 429, { error: 'too_many_requests' });
 
       if (route === 'POST /api/register') {
         if (db.userCount() >= maxUsers) return send(res, 503, { error: 'registration_closed' });
@@ -165,9 +181,13 @@ function createServer(opts = {}) {
         if (mailer.enabled) sendToken({ id, email }, 'verify');
         return startSession(res, id, 201);
       }
+      // Hanya login yang GAGAL dihitung, per (email, IP): login benar tidak memakai kuota, dan penyerang dari IP lain
+      // tidak bisa mengunci pemilik akun dari IP-nya sendiri.
+      const failKey = 'lf:' + email + '|' + ip;
+      if (isLimited(failKey, 10, 15 * 60000)) return send(res, 429, { error: 'too_many_requests' });
       const user = db.userByEmail(email);
       const ok = user ? await auth.verifyPassword(body.password, user.pw_hash) : await auth.verifyDummy(body.password);
-      if (!ok) return send(res, 401, { error: 'invalid_credentials' });
+      if (!ok) { hit(failKey); return send(res, 401, { error: 'invalid_credentials' }); }
       return startSession(res, user.id, 200);
     }
 
@@ -237,6 +257,8 @@ function createServer(opts = {}) {
       const body = await readBody(req);
       const share = body.share === true;
       const name = typeof body.displayName === 'string' ? body.displayName.trim().replace(/\s+/g, ' ') : '';
+      // Nama selalu divalidasi (panjang dan karakter) walau tidak sedang dibagikan, supaya data sembarang tidak tersimpan.
+      if (name && !stats.validDisplayName(name)) return send(res, 400, { error: 'invalid_display_name' });
       if (share && mailer.enabled && user.verified_at == null) return send(res, 403, { error: 'verify_required' });
       if (share && user.name_locked === 1) return send(res, 403, { error: 'name_locked' });
       if (share && !stats.validDisplayName(name)) return send(res, 400, { error: 'invalid_display_name' });

@@ -33,7 +33,7 @@ qa-drill/                        (sumber dan alat, tidak terbit)
   questions/*.json   sumber soal (edit di sini)
   tools/build-data.py gabungkan questions/*.json -> public/learn/data/questions.js; memeriksa LO, K-level, bias panjang opsi
   server/            API login + sinkronisasi (Node >= 22.13, SQLite, tanpa dependency); lihat server/README.md
-  tests/             grade/data/server.test.js (Node murni), smoke.test.js (butuh jsdom), e2e/ (Playwright + axe)
+  tests/             grade/data/server.test.js (Node murni), smoke.test.js dan sync.test.js (butuh jsdom; sync = push saat edit datang di tengah push), e2e/ (Playwright + axe)
 ```
 
 ## Tata letak dan navigasi

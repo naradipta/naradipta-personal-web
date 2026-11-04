@@ -76,7 +76,7 @@ function open(file) {
     getProgress: db.prepare('SELECT data, version, updated_at, stats FROM progress WHERE user_id = ?'),
     setProfile: db.prepare('UPDATE users SET display_name = ?, share_stats = ? WHERE id = ?'),
     setStats: db.prepare('UPDATE progress SET stats = ? WHERE user_id = ?'),
-    community: db.prepare(`SELECT u.id, u.display_name, p.data, p.stats FROM users u LEFT JOIN progress p ON p.user_id = u.id
+    community: db.prepare(`SELECT u.id, u.display_name, CASE WHEN p.stats IS NULL THEN p.data END AS data, p.stats FROM users u LEFT JOIN progress p ON p.user_id = u.id
       WHERE u.share_stats = 1 AND u.display_name IS NOT NULL AND u.name_locked = 0
         AND (SELECT COUNT(DISTINCT r.reporter_id) FROM reports r WHERE r.reported_id = u.id AND r.resolved_at IS NULL) < ?`),
     sharedNames: db.prepare('SELECT id, display_name FROM users WHERE share_stats = 1 AND display_name IS NOT NULL AND name_locked = 0'),
