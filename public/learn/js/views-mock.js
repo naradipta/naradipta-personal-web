@@ -1,4 +1,4 @@
-// Tampilan: Mock Exam gaya CTFL (40 soal, 60/75 menit, lulus 26) dan Kartu Istilah.
+// Tampilan: Mock Exam gaya CTFL (40 soal, 60/75 menit, lulus 26) dan Flashcard.
 (function () {
   var QA = window.QA, S = QA.store, h = QA.h, t = QA.t, L = QA.L;
   var mock = null, timer = null;
@@ -78,7 +78,7 @@
         h("li", null, QA.exam.total + t(" soal pilihan ganda, ", " multiple-choice questions, ") + minutes + t(" menit", " minutes")),
         h("li", null, t("Lulus: ", "Pass: ") + QA.exam.pass + "/" + QA.exam.total + " (65%)"),
         h("li", null, t("Sebaran per bab mengikuti tabel struktur ujian ISTQB: ", "Per-chapter spread follows the ISTQB exam structure table: ") + QA.chapters.map(function (c) { return c.mix[1] + c.mix[2] + c.mix[3]; }).join(" / ")),
-        h("li", null, t("Tidak ada umpan balik sampai Anda menyerahkan. Hasil dicatat dan soal yang salah masuk jadwal ulang.", "No feedback until you submit. Results are saved and missed questions enter the review schedule."))),
+        h("li", null, t("Tidak ada feedback sampai Anda menyerahkan. Hasil dicatat dan soal yang salah masuk jadwal review.", "No feedback until you submit. Results are saved and missed questions enter the review schedule."))),
       h("div", { class: "muted small" }, t("Bank soal: ", "Question bank: ") + pool + t(" soal pilihan ganda bertag ISTQB. Ini simulasi latihan, bukan soal ujian resmi.", " ISTQB-tagged multiple-choice questions. This is practice, not official exam questions.")),
       h("button", { class: "btn primary", onclick: function () { startMock(); QA.render(); } }, t("Mulai ujian", "Start exam"))));
     return root;
@@ -101,6 +101,7 @@
 
     var card = h("div", { class: "card" });
     card.appendChild(h("h2", { class: "qtext" }, L(q.q)));
+    if (q.code) card.appendChild(QA.codeBlock(q));
     it.order.forEach(function (orig, pos) {
       card.appendChild(h("button", {
         class: "opt" + (it.pick === orig ? " picked" : ""),
@@ -169,14 +170,15 @@
     return examView();
   };
 
-  // ===================== KARTU ISTILAH =====================
+  // ===================== Flashcard =====================
   var deck = null;
   var deckTopic = "all";
 
   function cardKey(g) { return g.t; }
 
   var DECKS = [["all", "Semua topik", "All topics"], ["istqb", "ISTQB CTFL", "ISTQB CTFL"], ["rest-api", "REST API", "REST API"], ["selenium", "Selenium", "Selenium"],
-    ["sql", "SQL", "SQL"], ["playwright", "Playwright", "Playwright"], ["cypress", "Cypress", "Cypress"], ["qa-general", "QA umum", "General QA"], ["interview", "Interview", "Interview"]];
+    ["sql", "SQL", "SQL"], ["playwright", "Playwright", "Playwright"], ["cypress", "Cypress", "Cypress"], ["qa-general", "QA umum", "General QA"],
+    ["fundamentals", "Dasar QA", "QA fundamentals"], ["nonfunctional", "Non-fungsional", "Non-functional"], ["tooling", "Git, CI/CD", "Git, CI/CD"], ["coding", "Kode", "Code"], ["interview", "Interview", "Interview"]];
   function inTopic(g, topic) { return topic === "all" || g.topic === topic; }
 
   function startDeck(mode, topic) {
@@ -189,25 +191,29 @@
 
   QA.routes.cards = function () {
     var root = h("div", { class: "page" });
-    root.appendChild(h("h1", null, t("Kartu istilah", "Glossary cards")));
+    root.appendChild(h("h1", null, t("Flashcard", "Flashcards")));
     if (!deck) {
       var topic = h("select", { id: "deck-topic" }, DECKS.map(function (d) {
         var n = QA.glossary.filter(function (g) { return inTopic(g, d[0]); }).length;
         return h("option", { value: d[0], selected: d[0] === deckTopic ? "" : null }, t(d[1], d[2]) + " (" + n + ")");
       }));
       topic.addEventListener("change", function () { deckTopic = topic.value; QA.render(true); });
-      var dueN = QA.glossary.filter(function (g) { var r = S.state.cards[cardKey(g)]; return inTopic(g, deckTopic) && (!r || S.isDue(r)); }).length;
-      var total = QA.glossary.filter(function (g) { return inTopic(g, deckTopic); }).length;
+      var inT = QA.glossary.filter(function (g) { return inTopic(g, deckTopic); });
+      var total = inT.length;
+      var newN = inT.filter(function (g) { return !S.state.cards[cardKey(g)]; }).length;
+      var dueN = inT.filter(function (g) { var r = S.state.cards[cardKey(g)]; return r && S.isDue(r); }).length;
+      var ready = newN + dueN;
       root.appendChild(h("div", { class: "card" },
-        h("label", { for: "deck-topic" }, t("Topik kartu", "Card topic"), topic),
-        h("p", null, total + t(" kartu. Jatuh tempo atau baru: ", " cards. Due or new: ") + dueN),
+        h("label", { for: "deck-topic" }, t("Topik flashcard", "Flashcard topic"), topic),
+        h("p", null, total + t(" flashcard: ", " flashcards: ") + newN + " new, " + dueN + " due."),
+        h("p", { class: "small muted" }, t("New = belum pernah dibuka. Due = sudah waktunya direview lagi.", "New = never opened. Due = scheduled for review now.")),
         h("div", { class: "row gap" },
-          h("button", { class: "btn primary", disabled: !dueN, onclick: function () { startDeck("due", deckTopic); QA.render(); } }, t("Mulai (jatuh tempo + baru)", "Start (due + new)")),
-          h("button", { class: "btn", disabled: !total, onclick: function () { startDeck("all", deckTopic); QA.render(); } }, t("Semua kartu", "All cards")))));
+          h("button", { class: "btn primary", disabled: !ready, onclick: function () { startDeck("due", deckTopic); QA.render(); } }, t("Mulai review: due + new (" + ready + ")", "Start review: due + new (" + ready + ")")),
+          h("button", { class: "btn", disabled: !total, onclick: function () { startDeck("all", deckTopic); QA.render(); } }, t("Review semua (" + total + ")", "Review all (" + total + ")")))));
       return root;
     }
     if (deck.i >= deck.items.length) {
-      root.appendChild(h("div", { class: "card okbox" }, h("div", { class: "big" }, deck.known + "/" + deck.items.length), h("div", null, t("kartu sudah Anda ketahui.", "cards you knew."))));
+      root.appendChild(h("div", { class: "card okbox" }, h("div", { class: "big" }, deck.known + "/" + deck.items.length), h("div", null, t("flashcard sudah Anda ketahui.", "flashcards you knew."))));
       root.appendChild(h("button", { class: "btn primary", onclick: function () { deck = null; QA.render(); } }, t("Selesai", "Done")));
       return root;
     }

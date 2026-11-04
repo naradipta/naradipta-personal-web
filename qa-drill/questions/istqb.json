@@ -71,7 +71,7 @@
     "Bug tersebar merata di semua modul sehingga alokasi testing sebaiknya dibagi rata pula",
     "Sebagian kecil modul memuat sebagian besar defect",
     "Defect hanya ada di lapisan UI karena logika bisnis di backend selalu terjaga",
-    "Defect hanya muncul saat produksi karena lingkungan test tidak pernah sama dengan produksi"
+    "Defect hanya muncul saat produksi karena test environment tidak pernah sama dengan produksi"
    ],
    "en": [
     "Bugs are spread evenly across all modules so testing effort should be split evenly too",
@@ -311,9 +311,9 @@
   "options": {
    "id": [
     "Pengecekan awal luas dan dangkal untuk memastikan build layak diuji lebih lanjut",
-    "Pengujian mendalam pada satu fitur sampai semua kombinasi inputnya terpenuhi",
-    "Pengujian performa dengan banyak pengguna bersamaan pada lingkungan produksi",
-    "Pengujian keamanan menyeluruh untuk mencari celah sebelum rilis ke pelanggan"
+    "Testing mendalam pada satu fitur sampai semua kombinasi inputnya terpenuhi",
+    "Performance testing dengan banyak user bersamaan pada production environment",
+    "Security testing menyeluruh untuk mencari celah sebelum release ke customer"
    ],
    "en": [
     "A broad, shallow initial check that a build is stable enough for further testing",
@@ -505,7 +505,7 @@
    "id": [
     "Struktur kode internal dan arsitektur yang dibangun oleh tim pengembang",
     "Spesifikasi dan perilaku yang terlihat dari luar",
-    "Hanya pengalaman dan intuisi penguji tanpa memakai dokumen apa pun sebagai acuan",
+    "Hanya pengalaman dan intuisi tester tanpa memakai dokumen apa pun sebagai acuan",
     "Hasil review kode yang dilakukan sesama developer sebelum perubahan digabungkan"
    ],
    "en": [
@@ -563,7 +563,7 @@
    "id": [
     "Sistem tanpa defect pasti sukses di pasar karena kualitas teknisnya sempurna",
     "Sistem tanpa defect tetap bisa gagal bila tidak memenuhi kebutuhan user",
-    "Tidak ada satu pun sistem tanpa defect, jadi pengujian tidak pernah bisa dianggap selesai",
+    "Tidak ada satu pun sistem tanpa defect, jadi testing tidak pernah bisa dianggap selesai",
     "Semua bug pasti ditemukan bila tim melakukan testing cukup lama dengan teknik yang tepat"
    ],
    "en": [
@@ -575,7 +575,7 @@
   },
   "answer": 1,
   "exp": {
-   "id": "Bebas bug bukan berarti berguna bagi pengguna.",
+   "id": "Bebas bug bukan berarti berguna bagi user.",
    "en": "Being bug-free does not mean useful to users."
   }
  },
@@ -593,7 +593,7 @@
     "Scope, pendekatan, sumber daya, jadwal",
     "Hanya daftar bug yang ditemukan beserta tingkat keparahan masing-masing defect",
     "Hanya kode test otomasi yang akan dijalankan pada pipeline untuk iterasi berjalan",
-    "Hanya hasil eksekusi test dari iterasi sebelumnya beserta tanggal dan nama penguji"
+    "Hanya hasil eksekusi test dari iterasi sebelumnya beserta tanggal dan nama tester"
    ],
    "en": [
     "Scope, approach, resources, schedule",
@@ -720,7 +720,7 @@
   },
   "answer": 1,
   "exp": {
-   "id": "Non-functional: performa, usability, keamanan, reliabilitas, kompatibilitas.",
+   "id": "Non-functional: performance, usability, security, reliabilitas, compatibility.",
    "en": "Non-functional: performance, usability, security, reliability, compatibility."
   }
  },
@@ -818,7 +818,7 @@
   "options": {
    "id": [
     "Melacak hubungan requirement dengan test case dan defect",
-    "Mengukur kecepatan CPU dan memori server selama tes berjalan di lingkungan staging",
+    "Mengukur kecepatan CPU dan memori server selama tes berjalan di environment staging",
     "Menjadwalkan sprint dan membagi tugas anggota tim berdasarkan kapasitas tiap orang",
     "Menyimpan password dan kredensial uji secara aman di repositori bersama"
    ],
@@ -846,8 +846,8 @@
   },
   "options": {
    "id": [
-    "Developer di lingkungan developer",
-    "Pengguna nyata di lingkungan mereka sendiri",
+    "Developer di environment developer",
+    "User nyata di environment mereka sendiri",
     "Tim security saja",
     "Kompiler"
    ],
@@ -860,7 +860,7 @@
   },
   "answer": 1,
   "exp": {
-   "id": "Alpha: internal di lingkungan pengembang. Beta: pengguna eksternal di lingkungan sendiri.",
+   "id": "Alpha: internal di environment pengembang. Beta: user eksternal di environment sendiri.",
    "en": "Alpha: internal at the developer's site. Beta: external users in their own environment."
   }
  },
@@ -877,7 +877,7 @@
    "id": [
     "Semua defect critical sudah ditutup dan coverage target tercapai",
     "Developer sudah menyelesaikan seluruh pekerjaan pengembangan dan pulang untuk hari itu",
-    "Build baru berhasil dibuat dan siap dipasang pada lingkungan pengujian berikutnya",
+    "Build baru berhasil dibuat dan siap dipasang pada environment testing berikutnya",
     "Sprint baru dimulai sehingga tim perlu segera menyiapkan test case untuk fitur baru"
    ],
    "en": [

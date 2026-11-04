@@ -1,4 +1,4 @@
-// Tampilan: Latihan (dengan pengulangan berjarak).
+// Tampilan: Latihan (dengan spaced repetition).
 (function () {
   var QA = window.QA, S = QA.store, G = QA.grade, h = QA.h, t = QA.t, L = QA.L;
   var session = null;
@@ -19,8 +19,12 @@
     ["topic:cypress", "Interview: Cypress", "Interview: Cypress"],
     ["topic:katalon", "Interview: Katalon", "Interview: Katalon"],
     ["topic:sql", "Interview: SQL lanjutan", "Interview: Advanced SQL"],
+    ["topic:fundamentals", "Dasar QA dan metodologi", "QA fundamentals"],
+    ["topic:nonfunctional", "Performance, security, accessibility", "Performance, security, accessibility"],
+    ["topic:tooling", "Git, CI/CD, dan monitoring", "Git, CI/CD and monitoring"],
+    ["topic:coding", "Membaca kode dan live coding", "Code reading and live coding"],
     ["topic:interview", "Interview: jawaban terbuka", "Interview: open-ended answers"],
-    ["due", "Hanya yang jatuh tempo", "Due for review only"]
+    ["due", "Hanya yang due", "Due for review only"]
   ];
 
   function poolFor(f) {
@@ -95,7 +99,7 @@
       grp(t("Jalur 2 \u00b7 Bekal karir QA", "Path 2 \u00b7 QA career toolkit"), SCOPES.filter(function (s) { return s[0].indexOf("topic:") === 0; })));
     var level = h("select", null, [["", "Semua level", "All levels"], ["1", "Level 1 (dasar)", "Level 1 (basic)"], ["2", "Level 2 (menengah)", "Level 2 (intermediate)"], ["3", "Level 3 (lanjut)", "Level 3 (advanced)"]].map(function (o) { return h("option", { value: o[0] }, t(o[1], o[2])); }));
     var type = h("select", null, [["", "Semua tipe", "All types"], ["mcq", "Pilihan ganda", "Multiple choice"], ["tf", "Benar/Salah", "True/False"], ["short", "Isian singkat", "Short answer"]].map(function (o) { return h("option", { value: o[0] }, t(o[1], o[2])); }));
-    var order = h("select", null, [["smart", "Cerdas (jatuh tempo, belum dilihat, lalu sisanya; topik diselang-seling)", "Smart (due, unseen, then the rest; topics interleaved)"], ["random", "Acak", "Random"]].map(function (o) { return h("option", { value: o[0] }, t(o[1], o[2])); }));
+    var order = h("select", null, [["smart", "Cerdas (due, belum dilihat, lalu sisanya; topik diselang-seling)", "Smart (due, unseen, then the rest; topics interleaved)"], ["random", "Acak", "Random"]].map(function (o) { return h("option", { value: o[0] }, t(o[1], o[2])); }));
     var count = h("select", null, [10, 20, 40, 0].map(function (n) { return h("option", { value: String(n) }, n ? n + t(" soal", " questions") : t("Semua", "All")); }));
     root.appendChild(h("div", { class: "card" },
       msg ? h("div", { class: "warn small" }, msg) : null,
@@ -111,16 +115,16 @@
           QA.render();
         }
       }, t("Mulai", "Start"))));
-    root.appendChild(h("p", { class: "small muted" }, t("Setiap jawaban memengaruhi jadwal ulang: benar dan yakin = interval lebih panjang, menebak/ragu = naik lebih pelan, salah = kembali ke awal.", "Each answer affects the review schedule: correct and sure = longer interval, guessing/unsure = slower climb, wrong = back to the start.")));
+    root.appendChild(h("p", { class: "small muted" }, t("Setiap jawaban memengaruhi jadwal review: benar dan yakin = interval lebih panjang, menebak/ragu = naik lebih pelan, salah = kembali ke awal.", "Each answer affects the review schedule: correct and sure = longer interval, guessing/unsure = slower climb, wrong = back to the start.")));
     root.appendChild(h("details", { class: "card" },
       h("summary", null, t("Mengapa latihan ini bekerja (dasar riset belajar)", "Why this practice works (learning-science basis)")),
       h("ul", { class: "small" },
         h("li", null, h("b", null, t("Retrieval practice: ", "Retrieval practice: ")), t("menjawab dari ingatan jauh lebih kuat daripada membaca ulang (testing effect).", "recalling from memory beats rereading (testing effect).")),
         h("li", null, h("b", null, t("Spaced repetition: ", "Spaced repetition: ")), t("jarak ulang melebar (1, 2, 4, 8... hari) memperlambat lupa.", "widening gaps (1, 2, 4, 8... days) slow forgetting.")),
         h("li", null, h("b", null, t("Interleaving: ", "Interleaving: ")), t("topik diselang-seling agar Anda belajar memilih strategi, bukan hanya menghafal pola satu bab.", "topics are mixed so you learn to choose a strategy, not just repeat one chapter's pattern.")),
-        h("li", null, h("b", null, t("Keyakinan (kalibrasi): ", "Confidence (calibration): ")), t("menandai menebak/ragu/yakin membuat Anda jujur soal apa yang benar-benar dikuasai; salah tapi yakin adalah miskonsepsi yang paling mudah diperbaiki lewat umpan balik (hypercorrection).", "marking guess/unsure/sure keeps you honest about what you really know; being wrong but sure is a misconception best fixed by feedback (hypercorrection).")),
+        h("li", null, h("b", null, t("Keyakinan (kalibrasi): ", "Confidence (calibration): ")), t("menandai menebak/ragu/yakin membuat Anda jujur soal apa yang benar-benar mastered; salah tapi yakin adalah miskonsepsi yang paling mudah diperbaiki lewat feedback (hypercorrection).", "marking guess/unsure/sure keeps you honest about what you really know; being wrong but sure is a misconception best fixed by feedback (hypercorrection).")),
         h("li", null, h("b", null, t("Relearning: ", "Relearning: ")), t("soal yang salah muncul lagi beberapa soal kemudian dalam sesi yang sama, setelah Anda membaca penjelasan.", "missed questions return a few questions later in the same session, after you read the explanation.")),
-        h("li", null, h("b", null, t("Umpan balik korektif: ", "Corrective feedback: ")), t("jawaban benar dan alasannya langsung ditampilkan, plus pembahasan lengkap di akhir sesi.", "the right answer and the reason are shown right away, plus a full review at the end.")))));
+        h("li", null, h("b", null, t("Feedback korektif: ", "Corrective feedback: ")), t("jawaban benar dan alasannya langsung ditampilkan, plus pembahasan lengkap di akhir sesi.", "the right answer and the reason are shown right away, plus a full review at the end.")))));
     return root;
   }
 
@@ -209,7 +213,7 @@
         box.appendChild(h("div", { class: "card " + (r.pass ? "okbox" : "badbox") },
           h("b", null, t("Kecocokan kata kunci: ", "Keyword match: ") + Math.round(r.score * 100) + "% (" + r.matched.length + "/" + q.keywords.length + ")"),
           h("div", null, t("Jawaban acuan: ", "Model answer: "), L(q.model))));
-        box.appendChild(h("div", { class: "muted small" }, t("Nilai sendiri (menentukan jadwal ulang):", "Grade yourself (sets the review schedule):")));
+        box.appendChild(h("div", { class: "muted small" }, t("Nilai sendiri (menentukan jadwal review):", "Grade yourself (sets the review schedule):")));
         box.appendChild(h("div", { class: "row gap" },
           h("button", { class: "btn good", onclick: function () { item.pick = "self-right"; finishItem(item, true); onChange(); } }, t("Benar", "Correct")),
           h("button", { class: "btn", onclick: function () { item.pick = "self-almost"; finishItem(item, false); onChange(); } }, t("Hampir", "Almost")),
@@ -226,8 +230,13 @@
     return box;
   }
 
+  // Soal membaca kode: field opsional `code` (teks polos, tampil lewat textContent di <pre>).
+  QA.codeBlock = function (q) {
+    return q.code ? h("pre", { class: "qcode", tabindex: "0", role: "group", "aria-label": t("Potongan kode soal", "Code for this question") }, q.code) : null;
+  };
+
   QA.questionHeader = function (q) {
-    var tags = [h("span", { class: "badge" }, q.topic)];
+    var tags = [h("span", { class: "badge" }, QA.topicName ? QA.topicName(q.topic) : q.topic)];
     if (q.lo) tags.push(h("span", { class: "badge k" + (q.k || 2) }, q.lo + " K" + (q.k || 2)));
     return h("div", { class: "row gap tags" }, tags);
   };
@@ -243,8 +252,9 @@
     root.appendChild(h("div", { class: "bar" }, h("span", { style: "width:" + QA.pct(s.i, s.items.length) + "%" })));
     var card = h("div", { class: "card" });
     card.appendChild(QA.questionHeader(item.q));
-    if (item.retry) card.appendChild(h("div", { class: "small warn card" }, t("Ulangan: soal ini salah tadi. Coba jawab lagi dari ingatan (tidak mengubah jadwal ulang).", "Retry: you missed this earlier. Try to recall it again (does not change the review schedule).")));
+    if (item.retry) card.appendChild(h("div", { class: "small warn card" }, t("Ulangan: soal ini salah tadi. Coba jawab lagi dari ingatan (tidak mengubah jadwal review).", "Retry: you missed this earlier. Try to recall it again (does not change the review schedule).")));
     card.appendChild(h("h2", { class: "qtext", tabindex: "-1", "data-autofocus": item.answered || item.pending ? null : "1" }, L(item.q.q)));
+    if (item.q.code) card.appendChild(QA.codeBlock(item.q));
     card.appendChild(questionBody(item, function () { QA.render(true); }));
     if (item.answered) {
       card.appendChild(h("button", {
@@ -285,6 +295,7 @@
           QA.questionHeader(q),
           it.conf === "sure" ? h("div", { class: "small bad" }, "⚠ " + t("Salah tapi yakin", "Wrong but sure")) : null,
           h("div", { class: "qtext" }, L(q.q)),
+          QA.codeBlock(q),
           q.type === "short" ? null : h("div", { class: "badbox card small" }, t("Jawaban Anda: ", "Your answer: ") + yours),
           h("div", { class: "okbox card small" }, t("Jawaban benar: ", "Correct answer: ") + answerText(q)),
           q.exp ? h("div", { class: "expl card small" }, h("b", null, t("Mengapa: ", "Why: ")), L(q.exp)) : null,

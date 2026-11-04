@@ -147,7 +147,7 @@ test('preview: wajib login dan link absolut diberi awalan /admin/preview/', asyn
   const t = await setup();
   const pv = path.join(t.dataDir, 'preview');
   fs.mkdirSync(path.join(pv, 'projects'), { recursive: true });
-  fs.writeFileSync(path.join(pv, 'index.html'), '<a href="/projects">p</a><a href="/#work">w</a><img src="/uploads/a.png"><a href="//cdn.example/x">c</a><a href="https://x.example">e</a>');
+  fs.writeFileSync(path.join(pv, 'index.html'), '<a href="/projects">p</a><a href="/#work">w</a><img src="/uploads/a.png"><a href="//cdn.example/x">c</a><a href="https://x.example">e</a><a href=\'/single\'>s</a><img srcset="/a.png 1x, /b.png 2x, //cdn.example/c.png 3x"><div style="background:url(/bg.png)"></div>');
   fs.writeFileSync(path.join(pv, 'projects', 'index.html'), 'x');
   fs.writeFileSync(path.join(pv, 'projects.html'), '<a href="/">home</a>');
   assert.equal((await fetch(t.base + '/preview/')).status, 401);
@@ -160,5 +160,14 @@ test('preview: wajib login dan link absolut diberi awalan /admin/preview/', asyn
   assert.match(html, /src="\/admin\/preview\/uploads\/a\.png"/);
   assert.match(html, /href="\/\/cdn\.example\/x"/); // protocol-relative tidak diubah
   assert.match(html, /href="https:\/\/x\.example"/);
+  assert.match(html, /href='\/admin\/preview\/single'/); // kutip tunggal
+  assert.match(html, /srcset="\/admin\/preview\/a\.png 1x, \/admin\/preview\/b\.png 2x, \/\/cdn\.example\/c\.png 3x"/); // srcset
+  assert.match(html, /url\(\/admin\/preview\/bg\.png\)/); // CSS url()
+  t.close();
+});
+
+test('body JSON bukan objek (null, array, angka) ditolak 400, bukan 500', async () => {
+  const t = await setup();
+  for (const bad of [null, [], 7]) assert.equal((await t.call('POST', '/api/login', bad)).status, 400);
   t.close();
 });

@@ -57,6 +57,8 @@ export interface SiteConfig {
   avatar?: string;
   /** Path ke file resume/CV PDF, mis. "/resume.pdf" (taruh file di public/). Opsional. */
   resumeUrl?: string;
+  /** URL QA Drill di menu atas. Opsional; bawaan https://learn.naradipta.com/. */
+  qaDrillUrl?: string;
   tagline: string;
   valueProposition: string;
   whatIDo: WhatIDoItem[];

@@ -57,7 +57,7 @@ async function verifyViaMail(){await new Promise(r=>setTimeout(r,400)); const q=
 // ===== 2. axe-core pada semua rute, terang/gelap, 390 & 1100 =====
 for (const [w,scheme] of [[390,'light'],[390,'dark'],[1100,'light'],[1100,'dark']]) {
  const p=await newPage(w,scheme);
- for (const r of ['dashboard','study','study/ch4','practice','mock','cards','plan','settings','account','more','community','career/selenium','career/sql']) {
+ for (const r of ['dashboard','study','study/ch4','practice','mock','cards','plan','settings','account','more','community','career/selenium','career/sql','career/fundamentals','career/nonfunctional','career/tooling','career/coding']) {
   await p.goto(B+'#/'+r); await p.waitForTimeout(200);
   await p.evaluate(axeSrc);
   const v=await p.evaluate(async()=>{const x=await axe.run('body',{runOnly:['wcag2a','wcag2aa','best-practice']});return x.violations.map(a=>({id:a.id,impact:a.impact,n:a.nodes.length,t:a.nodes[0].target.join(' ')}));});
@@ -69,6 +69,26 @@ for (const [w,scheme] of [[390,'light'],[390,'dark'],[1100,'light'],[1100,'dark'
  for (const st of ['pending']) { await p.evaluate(axeSrc); const v=await p.evaluate(async()=>(await axe.run('body',{runOnly:['wcag2a','wcag2aa']})).violations.map(a=>({id:a.id,t:a.nodes[0].target.join(' ')}))); ok(`axe ${w}/${scheme}/practice-pending`, v.length===0, JSON.stringify(v)); }
  await p.locator('.conf .conf-sure').click();
  { await p.evaluate(axeSrc); const v=await p.evaluate(async()=>(await axe.run('body',{runOnly:['wcag2a','wcag2aa']})).violations.map(a=>({id:a.id,t:a.nodes[0].target.join(' ')}))); ok(`axe ${w}/${scheme}/practice-answered`, v.length===0, JSON.stringify(v)); }
+}
+
+// ===== 2b. Mobile: topik karir, sumber belajar, soal berkode (tanpa overflow, font isian 16px, target sentuh) =====
+for (const w of [360,390]) {
+ const p=await newPage(w,'light');
+ for (const tp of ['rest-api','qa-general','fundamentals','nonfunctional','tooling','coding']) {
+  await p.goto(B+'#/career/'+tp); await p.waitForSelector('#app details');
+  const m=await p.evaluate(()=>({ov:document.documentElement.scrollWidth>window.innerWidth+1, n:document.querySelectorAll('#app ul.linklist a').length,
+   safe:[...document.querySelectorAll('#app ul.linklist a')].every(a=>/^https:/.test(a.href)&&a.target==='_blank'&&/noopener/.test(a.rel)),
+   short:[...document.querySelectorAll('#app ul.linklist a')].filter(a=>a.getBoundingClientRect().height<24).length}));
+  ok(`mobile ${w} career/${tp}: tanpa overflow, sumber tampil dan aman, target >= 24px`, !m.ov&&m.n>0&&m.safe&&m.short===0, JSON.stringify(m));
+ }
+ await p.goto(B+'#/practice'); await p.waitForSelector('#app select');
+ const fs16=await p.evaluate(()=>[...document.querySelectorAll('#app select,#app input[type=text],#app textarea')].every(e=>parseFloat(getComputedStyle(e).fontSize)>=16));
+ ok(`mobile ${w}: kolom isian >= 16px (tanpa zoom otomatis iOS)`, fs16);
+ const sel=p.locator('#app select'); await sel.nth(0).selectOption('topic:coding'); await sel.nth(2).selectOption('mcq');
+ await p.getByRole('button',{name:/^Mulai/}).click(); await p.waitForSelector('#app pre.qcode');
+ const c=await p.evaluate(()=>{const e=document.querySelector('#app pre.qcode');return {ov:document.documentElement.scrollWidth>window.innerWidth+1, wrap:getComputedStyle(e).whiteSpace, tab:e.tabIndex}});
+ ok(`mobile ${w}: soal berkode membungkus, tanpa overflow, dapat difokus`, !c.ov&&c.wrap==='pre-wrap'&&c.tab===0, JSON.stringify(c));
+ await p.context().close();
 }
 
 // ===== 3. Alur lengkap =====
@@ -101,7 +121,7 @@ for (const [w,scheme] of [[390,'light'],[390,'dark'],[1100,'light'],[1100,'dark'
  const mocks=await p.evaluate(()=>JSON.parse(localStorage.getItem('qa-drill-v1')).mocks.length); ok('mock stored', mocks===1);
  // ekspor / impor
  await p.goto(B+'#/settings');
- const [dl]=await Promise.all([p.waitForEvent('download'),p.getByRole('button',{name:'Ekspor'}).click()]);
+ const [dl]=await Promise.all([p.waitForEvent('download'),p.getByRole('button',{name:'Export'}).click()]);
  const exp=path.join(TMP,'export.json'); await dl.saveAs(exp);
  const exported=JSON.parse(fs.readFileSync(exp,'utf8')); ok('export contains q/mocks', Object.keys(exported.q).length>0&&exported.mocks.length===1);
  await p.getByRole('button',{name:'Hapus progres'}).click(); await p.waitForTimeout(200);
@@ -128,10 +148,10 @@ for (const [w,scheme] of [[390,'light'],[390,'dark'],[1100,'light'],[1100,'dark'
  const p=await newPage(390,'light'); await p.goto(B+'#/dashboard');
  await p.evaluate(()=>{const st=QA.store.state; for(let i=0;i<20;i++) st.q['x'+i]={box:1,due:0,seen:1,correct:1,wrong:0,last:1,hyper:0}; QA.store.save();});
  await p.reload(); await p.waitForSelector('h1');
- ok('backup reminder shown when never exported', /belum dicadangkan/.test(await p.locator('#app').innerText()));
+ ok('backup reminder shown when never exported', /belum di-backup/.test(await p.locator('#app').innerText()));
  await p.evaluate(axeSrc); const v=await p.evaluate(async()=>(await axe.run('body',{runOnly:['wcag2a','wcag2aa']})).violations.map(a=>a.id));
  ok('axe with backup reminder', v.length===0, JSON.stringify(v));
- await p.goto(B+'#/settings'); const [dl]=await Promise.all([p.waitForEvent('download'),p.getByRole('button',{name:'Ekspor'}).click()]); await dl.path();
+ await p.goto(B+'#/settings'); const [dl]=await Promise.all([p.waitForEvent('download'),p.getByRole('button',{name:'Export'}).click()]); await dl.path();
  ok('export records last-exported note', /Terakhir diekspor/.test(await p.locator('#app').innerText()));
  await p.goto(B+'#/dashboard'); ok('reminder hidden after export', !/belum dicadangkan/.test(await p.locator('#app').innerText()));
 }
@@ -195,6 +215,7 @@ for (const [w,scheme] of [[390,'light'],[390,'dark'],[1100,'light'],[1100,'dark'
  // akun kedua: tidak melihat progres akun pertama
  await signUp(e2);
  ok('second account starts empty (no leak from first account)', await p.evaluate(()=>Object.keys(QA.store.state.q).length===0));
+ await p.waitForSelector('.acct-email',{state:'attached'});
  ok('shell shows the signed-in email', /iso2/.test(await p.evaluate(()=>document.querySelector('.acct-email').textContent)));
  await p.goto(B+'#/account'); await p.getByRole('button',{name:'Keluar'}).first().click(); await p.waitForSelector('#acct-email');
  // masuk lagi ke akun pertama: progres kembali dari server
@@ -268,7 +289,7 @@ if (process.env.E2E_MAIL_LOG) {
  ok('mail: verify page confirms and hides app chrome', /Email terverifikasi/.test(await q.locator('#app').innerText()) && (await q.locator('.tabbar a').count())===0);
  await q.evaluate(axeSrc); ok('axe on verify page', (await q.evaluate(async()=>(await axe.run('body',{runOnly:['wcag2a','wcag2aa']})).violations.length))===0);
  const r=await newPage(390,'light',false); await r.goto(B+'#/account'); await r.waitForSelector('#acct-email'); await r.getByRole('button',{name:'Lupa password?'}).click();
- await r.fill('#acct-email',e); await r.locator('button[type=submit]').click(); await r.waitForFunction(()=>/tautan reset sudah dikirim/.test(document.querySelector('[role=status]').textContent));
+ await r.fill('#acct-email',e); await r.locator('button[type=submit]').click(); await r.waitForFunction(()=>/link reset sudah dikirim/.test(document.querySelector('[role=status]').textContent));
  await r.waitForTimeout(400); const rlink=lastLink('reset'); ok('mail: reset link was "sent"', !!rlink);
  await r.goto(rlink); await r.waitForSelector('#np'); await r.evaluate(axeSrc); ok('axe on reset page', (await r.evaluate(async()=>(await axe.run('body',{runOnly:['wcag2a','wcag2aa']})).violations.length))===0);
  await r.fill('#np',pw2); await r.fill('#np2','beda-sekali-1'); await r.locator('button[type=submit]').click(); await r.waitForFunction(()=>/tidak sama/.test(document.querySelector('.form-err').textContent)); ok('mail: mismatched passwords rejected', true);
@@ -290,8 +311,8 @@ if (process.env.E2E_MAIL_LOG) {
  ok('chooser hidden after choosing', !/Apa tujuan belajar Anda/.test(await p.locator('#app').innerText()));
  await p.evaluate(axeSrc); ok('axe on dashboard with focus set', (await p.evaluate(async()=>(await axe.run('body',{runOnly:['wcag2a','wcag2aa']})).violations.length))===0);
  await p.goto(B+'#/cards'); await p.waitForSelector('#deck-topic'); await p.selectOption('#deck-topic','sql');
- ok('glossary deck filters by topic', await p.evaluate(()=>QA.glossary.filter(g=>g.topic==='sql').length>=5) && /6 kartu/.test(await p.locator('#app').innerText()));
- await p.getByRole('button',{name:'Semua kartu'}).click(); await p.waitForSelector('.flash');
+ ok('glossary deck filters by topic', await p.evaluate(()=>{const n=QA.glossary.filter(g=>g.topic==='sql').length;return n>=5&&new RegExp('^'+n+' flashcard','m').test(document.getElementById('app').innerText)}));
+ await p.getByRole('button',{name:/Review semua/}).click(); await p.waitForSelector('.flash');
  const shown=(await p.locator('.flash .big').innerText()).trim();
  ok('deck contains only the chosen topic', await p.evaluate(t=>QA.glossary.filter(g=>g.topic==='sql').map(g=>g.t).includes(t),shown), shown);
  await p.goto(B+'#/settings'); ok('settings shows the study focus', (await p.locator('#focus-sel').inputValue())==='career');

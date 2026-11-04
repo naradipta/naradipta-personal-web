@@ -92,6 +92,12 @@ server.listen(0, "127.0.0.1", async () => {
       await new Promise((r) => cs.listen(0, "127.0.0.1", r));
       const base = "http://127.0.0.1:" + cs.address().port;
       const cookie = sessionOf(await call(base, "POST", "/api/register", { email: "rafi@example.com", password: "rahasia-123" }));
+      // body bukan objek (null, array, angka, string) ditolak 400, bukan 500
+      for (const bad of [null, [], 7, "x"]) assert.strictEqual((await call(base, "POST", "/api/login", bad)).status, 400, "body bukan objek -> 400");
+      // login yang benar tidak memakai kuota percobaan gagal per email
+      for (let i = 0; i < 12; i++) assert.strictEqual((await call(base, "POST", "/api/login", { email: "rafi@example.com", password: "rahasia-123" })).status, 200, "login benar tidak dibatasi");
+      // nama tampilan selalu divalidasi walau share=false
+      assert.strictEqual((await call(base, "PUT", "/api/profile", { displayName: "rafi@example.com", share: false }, cookie)).json.error, "invalid_display_name", "nama tak valid ditolak walau tidak dibagikan");
       // komunitas (opt-in): default tidak tampil; hanya nama tampilan + angka ringkas
     assert.strictEqual((await call(base, "GET", "/api/community")).status, 401, "komunitas butuh login");
     const me0 = (await call(base, "GET", "/api/me", undefined, cookie)).json; assert.strictEqual(me0.share, false); assert.strictEqual(me0.displayName, null);

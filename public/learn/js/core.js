@@ -14,7 +14,7 @@
     ["study", "Materi", "Study material", "book", "Materi", "Material"],
     ["practice", "Latihan", "Practice", "target"],
     ["mock", "Mock Exam", "Mock Exam", "clock"],
-    ["cards", "Kartu Istilah", "Glossary Cards", "layers"],
+    ["cards", "Flashcard", "Flashcards", "layers"],
     ["plan", "Rencana", "Plan", "calendar"],
     ["community", "Komunitas", "Community", "users"],
     ["settings", "Pengaturan", "Settings", "sliders"]
@@ -64,7 +64,7 @@
     return "learning";
   };
 
-  // Hari beruntun (streak) dari riwayat lokal: sesi latihan dan mock exam. Hari ini yang belum belajar tidak memutus streak.
+  // Streak dari riwayat lokal: sesi latihan dan mock exam. Hari ini yang belum belajar tidak memutus streak.
   QA.streak = function () {
     var days = {};
     S.state.history.concat(S.state.mocks).forEach(function (e) { if (e && e.t) days[QA.dateStr(new Date(e.t))] = 1; });
@@ -144,7 +144,7 @@
     var root = h("div", { class: "page" });
     root.appendChild(h("h1", null, QA.t("Lainnya", "More")));
     var list = h("div", { class: "card list" });
-    [["cards", "Kartu Istilah", "Glossary Cards", "layers"], ["plan", "Rencana belajar", "Study plan", "calendar"], ["community", "Komunitas", "Community", "users"],
+    [["cards", "Flashcard", "Flashcards", "layers"], ["plan", "Rencana belajar", "Study plan", "calendar"], ["community", "Komunitas", "Community", "users"],
      ["account", "Akun", "Account", "user"], ["settings", "Pengaturan", "Settings", "sliders"]].forEach(function (n) {
       list.appendChild(h("a", { href: "#/" + n[0], class: "list-item" }, QA.icon(n[3]), h("span", null, QA.t(n[1], n[2]))));
     });
@@ -154,7 +154,7 @@
   };
 
   var TITLES = { dashboard: ["Beranda", "Home"], study: ["Materi", "Study material"], practice: ["Latihan", "Practice"], mock: ["Mock Exam", "Mock Exam"],
-    cards: ["Kartu Istilah", "Glossary Cards"], plan: ["Rencana", "Plan"], settings: ["Pengaturan", "Settings"], account: ["Akun", "Account"],
+    cards: ["Flashcard", "Flashcards"], plan: ["Rencana", "Plan"], settings: ["Pengaturan", "Settings"], account: ["Akun", "Account"],
     community: ["Komunitas", "Community"], more: ["Lainnya", "More"], career: ["Materi karir", "Career material"], welcome: ["Masuk", "Sign in"], loading: ["Memuat", "Loading"] };
   QA.pageTitle = function (name) { var x = TITLES[name]; return x ? QA.t(x[0], x[1]) : "QA Drill"; };
 
@@ -162,7 +162,7 @@
     var y = window.pageYOffset || 0;
     var r = parse();
     if (!QA.routes[r.name]) r = { name: "dashboard", arg: "" };
-    var gate = QA.gate ? QA.gate() : null; // layar masuk/daftar menggantikan halaman apa pun sampai login atau pilih tamu
+    var gate = QA.gate ? QA.gate() : null; // layar masuk/daftar menggantikan halaman apa pun sampai login atau pilih guest
     if (gate) r = { name: gate, arg: r.name === gate ? r.arg : "" };
     buildShell(r.name, !!gate);
     document.documentElement.lang = S.state.lang;
@@ -186,7 +186,7 @@
   };
 
   // Pengumuman untuk pembaca layar (aria-live) tanpa mengubah tampilan.
-  // Ingatkan ekspor bila sudah ada progres berarti dan cadangan terakhir lebih dari 7 hari (atau belum pernah).
+  // Ingatkan export bila sudah ada progres berarti dan backup terakhir lebih dari 7 hari (atau belum pernah).
   QA.backupDue = function () {
     if (QA.account && QA.account.status === "in") return false; // sudah tersinkron ke akun
     var seen = Object.keys(QA.store.state.q).length;

@@ -2,6 +2,1987 @@
 window.QA = window.QA || {};
 QA.questions = [
 {
+"id": "gen-031",
+"topic": "qa-general",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Test otomatis Anda lulus di laptop tetapi gagal acak di CI. Langkah pertama yang paling tepat?",
+"en": "Your automated test passes on your laptop but fails randomly in CI. Best first step?"
+},
+"options": {
+"id": [
+"Kumpulkan log dan trace dari beberapa run gagal, cari polanya",
+"Tambahkan retry 3x pada test itu agar pipeline kembali hijau",
+"Tandai test itu skip sampai ada waktu luang untuk memeriksanya",
+"Naikkan semua timeout menjadi 60 detik di seluruh suite"
+],
+"en": [
+"Collect logs and traces from several failed runs, look for a pattern",
+"Add 3 retries to that test so the pipeline goes green again",
+"Mark the test as skipped until there is spare time to check it",
+"Raise all timeouts to 60 seconds across the whole suite"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Flaky test harus didiagnosis dulu: penyebab umum adalah race condition, data bersama antar test, dan perbedaan environment. Retry, skip, dan timeout besar hanya menyembunyikan gejala dan menurunkan kepercayaan pada pipeline.",
+"en": "A flaky test must be diagnosed first: common causes are race conditions, data shared between tests and environment differences. Retries, skips and huge timeouts only hide the symptom and erode trust in the pipeline."
+}
+},
+{
+"id": "gen-032",
+"topic": "qa-general",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Mengapa test pyramid menyarankan lebih banyak unit test daripada UI test?",
+"en": "Why does the test pyramid recommend more unit tests than UI tests?"
+},
+"options": {
+"id": [
+"Unit test cepat, murah, dan stabil, jadi umpan baliknya lebih dini",
+"UI test tidak mampu mendeteksi bug fungsional sama sekali",
+"Unit test selalu menggantikan kebutuhan akan integration test",
+"Developer tidak diperbolehkan menulis UI test di tim mana pun"
+],
+"en": [
+"Unit tests are fast, cheap and stable, so feedback comes earlier",
+"UI tests are unable to detect functional bugs at all",
+"Unit tests always replace the need for any integration tests",
+"Developers are not allowed to write UI tests in any team"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Semakin tinggi lapisan, semakin lambat, mahal, dan rapuh test-nya. Piramida bukan larangan UI test; ia mengarahkan porsi usaha. Unit test tidak menggantikan integration test karena tidak melihat interaksi antar komponen.",
+"en": "The higher the layer, the slower, costlier and more brittle the tests. The pyramid does not ban UI tests; it guides effort. Unit tests do not replace integration tests because they cannot see interactions between components."
+}
+},
+{
+"id": "gen-033",
+"topic": "qa-general",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Pipeline CI berjalan 45 menit dan developer mulai mengabaikannya. Perbaikan yang paling masuk akal?",
+"en": "A CI pipeline takes 45 minutes and developers start ignoring it. What is the most sensible fix?"
+},
+"options": {
+"id": [
+"Bagi jadi tahap: unit dan smoke tiap commit, suite penuh paralel",
+"Hapus semua test UI dari repository supaya pipeline cepat",
+"Jalankan seluruh test hanya sebelum release akhir bulan saja",
+"Minta developer tetap menunggu sampai pipeline selesai"
+],
+"en": [
+"Split into stages: unit and smoke per commit, full suite in parallel",
+"Delete every UI test from the repository to speed up the pipeline",
+"Run the entire test suite only before the end-of-month release",
+"Ask developers to keep waiting until the pipeline finishes"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Feedback cepat adalah tujuan CI. Pelapisan, paralelisasi, dan sharding menjaga sinyal tetap cepat tanpa membuang coverage. Menghapus test atau menunda ke akhir bulan menghilangkan manfaat CI.",
+"en": "Fast feedback is the point of CI. Layering, parallelism and sharding keep the signal fast without dropping coverage. Deleting tests or deferring to month-end removes the benefit of CI."
+}
+},
+{
+"id": "gen-034",
+"topic": "qa-general",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Apa itu defect escape rate?",
+"en": "What is the defect escape rate?"
+},
+"options": {
+"id": [
+"Proporsi defect yang lolos testing dan baru ditemukan di produksi",
+"Jumlah test case yang dilewati selama siklus regression",
+"Persentase bug yang ditolak developer dengan alasan tertentu",
+"Rata-rata waktu yang dibutuhkan untuk memperbaiki sebuah bug"
+],
+"en": [
+"The share of defects that slip past testing into production",
+"The number of test cases skipped during a regression cycle",
+"The percentage of bugs developers reject for some reason",
+"The average time it takes to fix a single reported bug"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Metrik ini menunjukkan seberapa efektif testing menangkap masalah sebelum release. Ketiga opsi lain adalah metrik berbeda (skip rate, rejection rate, MTTR).",
+"en": "This metric shows how effectively testing catches problems before release. The other options are different metrics (skip rate, rejection rate, MTTR)."
+}
+},
+{
+"id": "gen-035",
+"topic": "qa-general",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Bug: laporan transaksi menampilkan tanggal berbeda di server UTC dan browser user di Jakarta (UTC+7), terutama di sekitar tengah malam. Dugaan root cause paling mungkin?",
+"en": "Bug: a transaction report shows different dates on a UTC server and a Jakarta (UTC+7) user's browser, especially around midnight. Most likely root cause?"
+},
+"options": {
+"id": [
+"Zona waktu ditangani tidak konsisten antar lapisan sistem",
+"Database kehabisan ruang penyimpanan pada jam-jam tertentu",
+"Cache browser user belum dibersihkan sejak minggu lalu",
+"Font tanggal pada laporan tidak mendukung angka tertentu"
+],
+"en": [
+"Timezone handling is inconsistent between storage and display",
+"The database runs out of storage space at certain hours",
+"The user's browser cache has not been cleared since last week",
+"The report's date font does not support certain digits"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Masalah di sekitar tengah malam adalah ciri khas konversi zona waktu. Praktik baik: simpan UTC, konversi hanya saat tampil, dan uji dengan data di batas hari (23:30 UTC+7 = 16:30 UTC, hari sama; 00:30 UTC+7 = 17:30 UTC hari sebelumnya).",
+"en": "Trouble around midnight is the signature of timezone conversion. Good practice: store UTC, convert only at display, and test with data at the day boundary (00:30 UTC+7 is 17:30 UTC on the previous day)."
+}
+},
+{
+"id": "gen-036",
+"topic": "qa-general",
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Dua user menekan 'Beli' untuk stok terakhir hampir bersamaan dan keduanya sukses (stok menjadi -1). Jenis masalah dan testing yang tepat?",
+"en": "Two users click 'Buy' on the last item almost simultaneously and both succeed (stock becomes -1). What kind of problem is this and how to test it?"
+},
+"options": {
+"id": [
+"Race condition; uji dengan request paralel, periksa stok akhir",
+"Bug tampilan; cukup diuji dengan membandingkan screenshot",
+"Masalah jaringan sesaat; ulangi test sampai berhasil",
+"Masalah validasi UI; cukup tambahkan pesan error di layar"
+],
+"en": [
+"Race condition; test with parallel requests, check the final stock",
+"Display bug; testing screenshot comparisons is enough",
+"A brief network glitch; rerun the test until it passes",
+"A UI validation issue; just add an error message on screen"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Cek-lalu-ubah tanpa atomisitas menyebabkan oversell. Uji lewat request paralel (script atau tool load) dan pastikan stok tidak negatif; perbaikan biasanya update atomik, locking, atau constraint database.",
+"en": "A non-atomic check-then-update causes overselling. Test with parallel requests (script or load tool) and assert stock never goes negative; the fix is usually an atomic update, locking or a database constraint."
+}
+},
+{
+"id": "gen-037",
+"topic": "qa-general",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Apa beda severity dan priority yang benar?",
+"en": "What is the correct difference between severity and priority?"
+},
+"options": {
+"id": [
+"Severity = dampak teknis bug; priority = urgensi bisnis perbaikannya",
+"Severity = siapa yang memperbaiki bug; priority = siapa yang melaporkannya",
+"Keduanya sama persis dan bisa dipertukarkan dalam bug report",
+"Severity selalu ditentukan developer; priority selalu oleh tester"
+],
+"en": [
+"Severity = technical impact of a bug; priority = business urgency to fix",
+"Severity = who fixes the bug; priority = who reported it",
+"Both are exactly the same and interchangeable in a bug report",
+"Severity is always set by developers; priority always by testers"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Contoh: typo di logo halaman utama severity rendah tetapi priority tinggi; crash di fitur yang jarang dipakai severity tinggi tetapi priority bisa lebih rendah. Penetapan idealnya hasil diskusi, bukan satu peran.",
+"en": "Example: a typo in the homepage logo is low severity but high priority; a crash in a rarely used feature is high severity but may be lower priority. Ideally both are agreed together, not set by one role."
+}
+},
+{
+"id": "gen-038",
+"topic": "qa-general",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Fitur diberi tenggat mepet dan Anda tidak bisa menguji semuanya. Pendekatan terbaik?",
+"en": "A feature has a tight deadline and you cannot test everything. Best approach?"
+},
+"options": {
+"id": [
+"Prioritaskan menurut risiko dan sampaikan apa yang belum teruji",
+"Uji secara acak lalu nyatakan fitur itu siap untuk dirilis",
+"Tolak release sampai seluruh kombinasi input sudah teruji",
+"Uji happy path saja dan jangan bahas sisanya dengan tim"
+],
+"en": [
+"Prioritise by risk and communicate what remains untested",
+"Test at random, then declare the feature ready to be released",
+"Refuse release until every input combination has been tested",
+"Test the happy path only and do not discuss the rest with the team"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Testing berbasis risiko menempatkan usaha di area paling berbahaya, dan transparansi soal risiko residual membuat keputusan release dibuat oleh pihak yang berwenang. Menguji semua kombinasi tidak mungkin.",
+"en": "Risk-based testing puts effort where failure hurts most, and being open about residual risk lets the right people make the release call. Testing every combination is impossible."
+}
+},
+{
+"id": "gen-039",
+"topic": "qa-general",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Apa tujuan utama contract testing (mis. Pact) pada arsitektur microservices?",
+"en": "What is the main purpose of contract testing (e.g. Pact) in a microservices architecture?"
+},
+"options": {
+"id": [
+"Mendeteksi perubahan API yang merusak consumer tanpa menjalankan sistem penuh",
+"Mengukur kecepatan respons endpoint saat load user sangat tinggi",
+"Memeriksa tampilan UI di banyak browser dan ukuran layar",
+"Menggantikan seluruh unit test milik tim provider API"
+],
+"en": [
+"Detect API changes that break consumers without the full system",
+"Measure endpoint response speed when user load is very high",
+"Check the interface across many browsers and screen sizes",
+"Replace all unit tests owned by the API provider team"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Consumer mendefinisikan ekspektasi (kontrak) dan provider memverifikasinya di pipeline-nya sendiri, sehingga breaking change terdeteksi lebih dini dan lebih murah daripada end-to-end test.",
+"en": "The consumer defines expectations (the contract) and the provider verifies them in its own pipeline, so breaking changes are caught earlier and cheaper than with end-to-end tests."
+}
+},
+{
+"id": "gen-040",
+"topic": "qa-general",
+"level": 1,
+"type": "mcq",
+"q": {
+"id": "Kapan smoke test dijalankan?",
+"en": "When is a smoke test run?"
+},
+"options": {
+"id": [
+"Setelah build atau deploy baru, memastikan fungsi kritis hidup",
+"Hanya setelah seluruh bug di backlog berhasil ditutup tim",
+"Sebelum developer mulai menulis kode untuk fitur baru",
+"Sebagai pengganti penuh seluruh suite regression yang ada"
+],
+"en": [
+"After a new build or deploy, confirming critical functions are alive",
+"Only after every bug in the backlog has been closed by the team",
+"Before developers start writing code for a new feature",
+"As a full replacement for the entire existing regression suite"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Smoke test = pemeriksaan cepat dan dangkal atas alur kritis. Jika gagal, build tidak layak diuji lebih lanjut. Ia tidak menggantikan regression.",
+"en": "A smoke test is a quick, shallow check of critical flows. If it fails, the build is not worth deeper testing. It does not replace regression."
+}
+},
+{
+"id": "gen-041",
+"topic": "qa-general",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Staging memakai 1 worker sedangkan produksi 4 worker; bug 'data ganda' hanya muncul di produksi. Pelajaran QA terbaik?",
+"en": "Staging uses 1 worker while production uses 4; a 'duplicate data' bug only appears in production. Best QA takeaway?"
+},
+"options": {
+"id": [
+"Samakan konfigurasi staging dengan produksi, tambah test konkurensi",
+"Anggap bug yang hanya muncul di produksi tidak bisa direproduksi",
+"Matikan 3 worker di produksi untuk selamanya agar sama dengan staging",
+"Cukup tambahkan catatan bug di dokumentasi internal tim"
+],
+"en": [
+"Align staging with production config, add concurrency tests",
+"Assume bugs that only appear in production cannot be reproduced",
+"Turn off 3 production workers permanently to match staging",
+"Just add a bug note to the team's internal documentation"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Perbedaan environment (jumlah worker, zona waktu, replika database) adalah sumber umum bug produksi-saja. Menyamakan konfigurasi dan menguji konkurensi menutup celahnya.",
+"en": "Environment differences (worker count, timezone, database replicas) are a common source of production-only bugs. Matching configuration and testing concurrency closes the gap."
+}
+},
+{
+"id": "gen-042",
+"topic": "qa-general",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Setelah bug lolos ke produksi, tindakan QA yang paling bernilai?",
+"en": "After a bug escapes to production, which QA action is most valuable?"
+},
+"options": {
+"id": [
+"Telusuri mengapa lolos, lalu tambah test atau perbaiki proses",
+"Mencari tahu siapa yang paling pantas disalahkan atas bug itu",
+"Menutup tiket tanpa menambahkan test baru apa pun",
+"Menunggu sampai customer melaporkan masalah yang sama lagi"
+],
+"en": [
+"Trace why it was not caught, then add a test or fix the process",
+"Find out who is most deserving of blame for the bug",
+"Close the ticket without adding any new test whatsoever",
+"Wait until customers report the very same problem again"
+]
+},
+"answer": 0,
+"exp": {
+"id": "RCA yang sehat berfokus pada sistem: celah deteksi apa yang ada? Hasilnya diubah menjadi regression test atau perubahan proses. Mencari kambing hitam merusak budaya reporting.",
+"en": "A healthy RCA focuses on the system: what detection gap existed? The result becomes a regression test or process change. Blaming individuals damages the culture of reporting."
+}
+},
+{
+"id": "gen-043",
+"topic": "qa-general",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Halaman daftar produk memakai pagination offset. Saat ada produk baru ditambahkan antara halaman 1 dan 2, user melihat produk yang sama dua kali. Cara menguji dan menyarankan perbaikan?",
+"en": "A product list uses offset pagination. When a new product is added between page 1 and 2, users see the same product twice. How to test and what to suggest?"
+},
+"options": {
+"id": [
+"Sisipkan data antar permintaan halaman, sarankan keyset pagination",
+"Anggap itu perilaku wajar dan tidak perlu diuji sama sekali",
+"Perbesar ukuran halaman menjadi 10.000 baris per permintaan",
+"Hapus fitur halaman berikutnya dari seluruh daftar produk"
+],
+"en": [
+"Insert data between page requests, suggest keyset pagination",
+"Treat it as normal behaviour that needs no testing at all",
+"Raise the page size to 10,000 rows per request",
+"Remove the next-page feature from every product list"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Offset bergeser saat data berubah sehingga baris terduplikasi atau terlewat. Keyset pagination memakai penanda terakhir dan urutan unik sehingga stabil. Uji juga urutan tanpa ORDER BY yang tidak deterministik.",
+"en": "Offsets shift when data changes, so rows get duplicated or skipped. Keyset pagination uses the last-seen marker and a unique ordering, which is stable. Also test for non-deterministic ordering without ORDER BY."
+}
+},
+{
+"id": "gen-044",
+"topic": "qa-general",
+"level": 1,
+"type": "mcq",
+"q": {
+"id": "Apa tujuan retest (confirmation testing) setelah bug diperbaiki?",
+"en": "What is the purpose of a retest (confirmation test) after a bug fix?"
+},
+"options": {
+"id": [
+"Memastikan bug yang dilaporkan sudah benar-benar hilang",
+"Memastikan fitur lain di aplikasi tidak ikut menjadi rusak",
+"Mengukur performance aplikasi setelah perbaikan dilakukan",
+"Menghitung jumlah baris kode yang berubah pada perbaikan"
+],
+"en": [
+"Confirm the reported bug is truly gone",
+"Confirm other features are not broken",
+"Measure application performance",
+"Count lines of code"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Retest mengulang skenario yang gagal. Memastikan fitur lain tidak rusak adalah tugas regression testing, yang berbeda.",
+"en": "A retest repeats the failing scenario. Checking that other features are not broken is regression testing, which is different."
+}
+},
+{
+"id": "gen-045",
+"topic": "qa-general",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Kapan paling masuk akal membuat test otomatis dari sebuah skenario?",
+"en": "When does it make most sense to automate a scenario?"
+},
+"options": {
+"id": [
+"Skenario stabil, berulang, berisiko tinggi, dan cepat dijalankan",
+"Fitur baru yang antarmukanya masih berubah hampir setiap hari",
+"Testing kegunaan yang butuh penilaian dari manusia sungguhan",
+"Skenario khusus yang hanya akan dijalankan satu kali saja"
+],
+"en": [
+"The scenario is stable, repeated, high-risk and quick to run",
+"A new feature whose interface still changes almost every day",
+"Usability testing that needs judgement from real human users",
+"A special scenario that will only ever be run a single time"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Nilai otomasi datang dari pengulangan. UI yang sering berubah, penilaian manusia, dan skenario sekali pakai biaya perawatannya lebih besar daripada manfaatnya.",
+"en": "Automation pays off through repetition. Fast-changing UI, human judgement and one-off scenarios cost more to maintain than they return."
+}
+},
+{
+"id": "gen-046",
+"topic": "qa-general",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Developer menolak bug Anda dengan alasan 'works on my machine'. Respons terbaik?",
+"en": "A developer rejects your bug saying 'works on my machine'. Best response?"
+},
+"options": {
+"id": [
+"Beri langkah reproduksi, versi build, data, dan log, bandingkan environment",
+"Tutup bug itu sendiri karena developer sudah menyatakan tidak bisa",
+"Eskalasi langsung ke manajer tanpa menyertakan bukti pendukung",
+"Turunkan severity menjadi rendah agar tiket cepat diselesaikan"
+],
+"en": [
+"Give repro steps, build version, data and logs, compare environments",
+"Close the bug yourself since the developer already said it cannot happen",
+"Escalate straight to a manager without attaching supporting evidence",
+"Lower the severity to low so the ticket gets resolved quickly"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Perbedaan environment atau data adalah penyebab umum. Bukti yang jelas dan perbandingan environment mengubah debat menjadi pemecahan masalah bersama.",
+"en": "Environment or data differences are a common cause. Clear evidence and an environment comparison turn a debate into joint problem-solving."
+}
+},
+{
+"id": "gen-047",
+"topic": "qa-general",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Mengapa test case sebaiknya independen satu sama lain?",
+"en": "Why should test cases be independent of each other?"
+},
+"options": {
+"id": [
+"Agar bisa jalan acak atau paralel dan failure mudah dilacak",
+"Agar jumlah test case dalam laporan bertambah banyak",
+"Agar tidak diperlukan test data sama sekali di seluruh suite",
+"Agar test bisa dilewati begitu saja ketika tenggat mendekat"
+],
+"en": [
+"So they run in any order or in parallel and failures trace easily",
+"So the number of test cases in the report grows larger",
+"So no test data is needed at all anywhere in the suite",
+"So tests can simply be skipped whenever a deadline approaches"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Test yang bergantung pada hasil test lain rapuh: satu failure menjatuhkan rantai dan tidak bisa diparalelkan. Setiap test menyiapkan dan membersihkan datanya sendiri.",
+"en": "Tests that rely on another test's result are brittle: one failure topples the chain and they cannot run in parallel. Each test sets up and cleans its own data."
+}
+},
+{
+"id": "gen-048",
+"topic": "qa-general",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Mana contoh kerentanan IDOR yang perlu diuji tester?",
+"en": "Which is an example of an IDOR vulnerability a tester should check?"
+},
+"options": {
+"id": [
+"Mengganti id di /orders/123 jadi 124 dan melihat pesanan user lain",
+"Password diwajibkan minimal 8 karakter saat pendaftaran akun",
+"Halaman login sudah memakai HTTPS di seluruh domain",
+"Tombol submit pada formulir tidak berwarna merah seperti desain"
+],
+"en": [
+"Changing the id in /orders/123 to 124 and seeing another user's order",
+"Passwords are required to be at least 8 characters at sign-up",
+"The login page already uses HTTPS across the whole domain",
+"The submit button on the form is not red as in the design"
+]
+},
+"answer": 0,
+"exp": {
+"id": "IDOR (insecure direct object reference) terjadi saat server tidak memeriksa kepemilikan resource. Uji dengan token user A terhadap resource user B. Hasil yang benar 403 atau 404; trade-off: 404 tidak membocorkan bahwa resource itu ada, 403 lebih jelas bagi client yang sah.",
+"en": "IDOR (insecure direct object reference) happens when the server does not check resource ownership. Test with user A's token against user B's resource. The correct result is 403 or 404; trade-off: 404 does not reveal the resource exists, 403 is clearer for legitimate clients."
+}
+},
+{
+"id": "gen-049",
+"topic": "qa-general",
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Mana test untuk mendeteksi SQL injection yang paling tepat pada kolom pencarian?",
+"en": "Which test best detects SQL injection on a search field?"
+},
+"options": {
+"id": [
+"Kirim ' OR '1'='1, lalu periksa hasil, error, atau waktu respons",
+"Kirim 10 karakter huruf biasa lalu lihat hasil pencarian",
+"Ubah ukuran jendela browser sambil melihat tampilan hasil",
+"Tekan tombol cari dua kali berturut-turut dengan cepat"
+],
+"en": [
+"Send ' OR '1'='1, then inspect results, errors or response time",
+"Send 10 plain letters and then look at the search results",
+"Resize the browser window while watching the results display",
+"Press the search button twice in quick succession"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Payload khusus menguji apakah input digabung langsung ke query. Perbaikan yang benar adalah parameterized query, bukan hanya filter karakter. Uji dilakukan hanya pada sistem yang Anda berwenang menguji.",
+"en": "Special payloads test whether input is concatenated into a query. The proper fix is parameterized queries, not just character filtering. Only test systems you are authorised to test."
+}
+},
+{
+"id": "gen-050",
+"topic": "qa-general",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Apa makna 'shift-left testing'?",
+"en": "What does 'shift-left testing' mean?"
+},
+"options": {
+"id": [
+"Melibatkan testing sedini mungkin, mis. review requirement dan test API",
+"Menunda seluruh kegiatan testing sampai setelah release produksi",
+"Memindahkan semua test yang ada ke lapisan UI saja",
+"Mengurangi jumlah tester agar biaya tim lebih rendah"
+],
+"en": [
+"Involving testing as early as possible, e.g. requirement reviews and API tests",
+"Postponing all testing activities until after the production release",
+"Moving every existing test to the UI layer only",
+"Cutting the number of testers so team costs are lower"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Defect yang ditemukan lebih awal jauh lebih murah diperbaiki. Shift-left tidak menghapus peran tester; ia memindahkan kegiatan kualitas ke hulu.",
+"en": "Defects found earlier are far cheaper to fix. Shift-left does not remove testers; it moves quality activities upstream."
+}
+},
+{
+"id": "api-029",
+"topic": "rest-api",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Client mengirim POST /payments dua kali karena timeout dan customer tertagih ganda. Mekanisme yang mencegahnya?",
+"en": "A client sends POST /payments twice after a timeout and the customer is charged twice. Which mechanism prevents this?"
+},
+"options": {
+"id": [
+"Idempotency key di header yang dicek oleh server",
+"Mengganti method POST menjadi GET untuk endpoint pembayaran",
+"Menambah timeout client menjadi 5 menit untuk semua request",
+"Mengembalikan status 200 untuk setiap kasus pembayaran"
+],
+"en": [
+"An idempotency key in a header that the server checks",
+"Switching the POST method to GET for the payment endpoint",
+"Raising the client timeout to 5 minutes for all requests",
+"Returning status 200 for every payment case"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Server menyimpan hasil per key sehingga request ulang mengembalikan hasil yang sama tanpa menagih lagi. GET tidak boleh mengubah state, dan timeout besar tidak menyelesaikan retry.",
+"en": "The server stores the result per key so a repeat returns the same outcome without charging again. GET must not change state, and a long timeout does not solve retries."
+}
+},
+{
+"id": "api-030",
+"topic": "rest-api",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Sebuah REST API mengembalikan 200 dengan body {\"error\":\"not found\"} untuk resource yang tidak ada. Temuan tester?",
+"en": "A REST API returns 200 with body {\"error\":\"not found\"} for a missing resource. What is the tester's finding?"
+},
+"options": {
+"id": [
+"Status code menyesatkan; seharusnya 404 agar monitoring bereaksi",
+"Tidak ada masalah, karena body respons sudah menjelaskan errornya",
+"Seharusnya 500, karena resource yang diminta tidak ditemukan",
+"Seharusnya 301, karena resource sudah dipindahkan ke tempat lain"
+],
+"en": [
+"Misleading status code; it should be 404 so monitoring can react",
+"No problem, because the response body already explains the error",
+"It should be 500, because the requested resource was not found",
+"It should be 301, because the resource was moved elsewhere"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Client, cache, dan alat monitoring bergantung pada status code. 500 berarti kesalahan server, bukan resource hilang; 301 untuk pemindahan permanen. Catatan konteks: pada GraphQL, 200 dengan array errors adalah konvensi yang wajar, jadi periksa dulu gaya API-nya.",
+"en": "Clients, caches and monitoring depend on status codes. 500 means a server fault, not a missing resource; 301 is a permanent redirect. Context note: in GraphQL, 200 with an errors array is a normal convention, so check the API style first."
+}
+},
+{
+"id": "api-031",
+"topic": "rest-api",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Endpoint GET /users?page=2&limit=-5. Perilaku yang benar?",
+"en": "Endpoint GET /users?page=2&limit=-5. What is the correct behaviour?"
+},
+"options": {
+"id": [
+"400 dengan pesan validasi yang jelas",
+"500 karena terjadi error tak terduga di server",
+"200 berisi seluruh data user tanpa batas",
+"Server berhenti merespons sampai direstart"
+],
+"en": [
+"400 with a clear validation message",
+"500 because an unexpected error occurs on the server",
+"200 containing all user data without any limit",
+"The server stops responding until it is restarted"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Input tidak valid dari client adalah 400 (atau 422). Trade-off: sebagian API diam-diam memakai nilai bawaan (clamp), tetapi validasi eksplisit lebih jelas bagi client. Yang pasti salah adalah 500 atau membocorkan seluruh data.",
+"en": "Invalid client input is a 400 (or 422). Trade-off: some APIs silently clamp to a default, but explicit validation is clearer for clients. What is definitely wrong is a 500 or leaking all data."
+}
+},
+{
+"id": "api-032",
+"topic": "rest-api",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Token JWT sudah kedaluwarsa tetapi tetap diterima API. Risikonya?",
+"en": "An expired JWT is still accepted by the API. What is the risk?"
+},
+"options": {
+"id": [
+"Akses tak sah bertahan setelah sesi seharusnya berakhir",
+"Respons API menjadi sedikit lebih lambat dari biasanya",
+"Format JSON di body respons berubah secara tidak terduga",
+"Tidak ada risiko, sebab format token masih tampak valid"
+],
+"en": [
+"Unauthorised access persists after the session should have ended",
+"API responses become a little slower than usual",
+"The JSON format of the response body changes unexpectedly",
+"No risk, since the token's format still looks valid"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Server wajib memeriksa klaim exp dan menolak dengan 401. Token curian jadi berguna selamanya bila expiry tidak ditegakkan.",
+"en": "The server must validate the exp claim and reject with 401. A stolen token stays useful forever if expiry is not enforced."
+}
+},
+{
+"id": "api-033",
+"topic": "rest-api",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Apa beda PUT dan PATCH yang tepat?",
+"en": "What is the correct difference between PUT and PATCH?"
+},
+"options": {
+"id": [
+"PUT mengganti seluruh resource; PATCH mengubah sebagian field",
+"PUT hanya dipakai untuk membuat, PATCH hanya untuk menghapus",
+"Keduanya identik dan bisa saling menggantikan di semua API",
+"PATCH selalu idempotent sedangkan PUT tidak pernah idempotent"
+],
+"en": [
+"PUT replaces the whole resource; PATCH changes some fields",
+"PUT is only used to create, PATCH is only used to delete",
+"Both are identical and can replace each other in every API",
+"PATCH is always idempotent while PUT is never idempotent"
+]
+},
+"answer": 0,
+"exp": {
+"id": "PUT idempotent karena mengganti penuh. PATCH bisa idempotent atau tidak tergantung desain (mis. 'tambah 1' tidak idempotent).",
+"en": "PUT is idempotent because it replaces fully. PATCH may or may not be idempotent depending on design (e.g. 'add 1' is not)."
+}
+},
+{
+"id": "api-034",
+"topic": "rest-api",
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Provider menghapus field 'phone' dari response. Consumer lama crash. Test yang paling cocok mencegahnya?",
+"en": "A provider removes the 'phone' field from a response and an old consumer crashes. Which test best prevents this?"
+},
+"options": {
+"id": [
+"Contract test atau validasi schema OpenAPI di CI",
+"Test warna dan posisi tombol di user interface",
+"Load test dengan 1000 virtual user secara bersamaan",
+"Test manual yang dijalankan sekali setahun oleh tim"
+],
+"en": [
+"A contract test or OpenAPI schema validation in CI",
+"A test of button colour and position in the user interface",
+"A load test with 1000 virtual users running at the same time",
+"A manual test run once a year by the team"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Menghapus atau mengubah tipe field adalah breaking change. Validasi schema/kontrak di pipeline menangkapnya sebelum release.",
+"en": "Removing or retyping a field is a breaking change. Schema/contract validation in the pipeline catches it before release."
+}
+},
+{
+"id": "api-035",
+"topic": "rest-api",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Rate limit 100 request/menit. Tester mengirim 101. Hasil yang diharapkan?",
+"en": "Rate limit is 100 requests/minute. The tester sends 101. Expected result?"
+},
+"options": {
+"id": [
+"429 Too Many Requests, idealnya dengan header Retry-After",
+"403 Forbidden yang berlaku permanen bagi client tersebut",
+"200 seperti biasa karena batas hanya bersifat anjuran",
+"500 Internal Server Error karena server kewalahan"
+],
+"en": [
+"429 Too Many Requests, ideally with a Retry-After header",
+"A 403 Forbidden that applies permanently to that client",
+"200 as usual because the limit is only a recommendation",
+"500 Internal Server Error because the server is overwhelmed"
+]
+},
+"answer": 0,
+"exp": {
+"id": "429 adalah kode standar untuk pembatasan laju. Uji juga bahwa kuota pulih setelah jendela waktu berlalu.",
+"en": "429 is the standard code for rate limiting. Also test that the quota recovers after the time window passes."
+}
+},
+{
+"id": "sel-032",
+"topic": "selenium",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Test Selenium sering gagal dengan StaleElementReferenceException setelah halaman memuat ulang sebagian. Perbaikan terbaik?",
+"en": "A Selenium test often fails with StaleElementReferenceException after a partial page reload. Best fix?"
+},
+"options": {
+"id": [
+"Cari ulang elemen setelah DOM berubah, pakai explicit wait",
+"Tambahkan Thread.sleep(10000) di setiap langkah test",
+"Simpan elemen di variabel global selama seluruh test",
+"Matikan JavaScript browser agar DOM tidak berubah"
+],
+"en": [
+"Re-locate the element after the DOM change, use an explicit wait",
+"Add Thread.sleep(10000) before every step in the test",
+"Keep the element in a global variable throughout the test",
+"Disable browser JavaScript so the DOM cannot change"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Stale berarti referensi menunjuk elemen yang sudah dilepas dari DOM. Locate ulang plus explicit wait menangani ini; sleep membuat test lambat dan tetap rapuh.",
+"en": "Stale means the reference points to an element detached from the DOM. Re-locating plus an explicit wait handles it; sleep makes tests slow and still brittle."
+}
+},
+{
+"id": "sel-033",
+"topic": "selenium",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Mengapa implicit wait dan explicit wait sebaiknya tidak dicampur?",
+"en": "Why should implicit and explicit waits not be mixed?"
+},
+"options": {
+"id": [
+"Waktu tunggu bisa menumpuk dan sulit diprediksi saat debugging",
+"Selenium melarangnya dengan error saat kompilasi kode",
+"Explicit wait berhenti berfungsi sepenuhnya jika dicampur",
+"Implicit wait hanya dirancang untuk testing mobile saja"
+],
+"en": [
+"Wait times can stack up and become hard to predict when debugging",
+"Selenium forbids it with an error at code compilation",
+"Explicit waits stop working completely when they are mixed",
+"Implicit waits are designed for mobile testing only"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Mencampurkan keduanya dapat menghasilkan waktu tunggu yang tak terduga. Pilih satu strategi, umumnya explicit wait pada kondisi spesifik.",
+"en": "Mixing them can produce unpredictable timeouts. Pick one strategy, usually explicit waits on specific conditions."
+}
+},
+{
+"id": "sel-034",
+"topic": "selenium",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Cara menjalankan test Selenium yang andal di banyak browser dan paralel di CI?",
+"en": "How do you run Selenium tests reliably across browsers and in parallel in CI?"
+},
+"options": {
+"id": [
+"Selenium Grid atau layanan cloud, satu driver per thread",
+"Satu driver global yang dipakai bersama oleh semua thread",
+"Menjalankan hanya satu browser dalam sebulan sekali",
+"Memakai akun user yang sama untuk semua test paralel"
+],
+"en": [
+"Selenium Grid or a cloud service, one driver per thread",
+"One global driver shared among all the threads",
+"Running only a single browser once a month",
+"Using the same user account for all parallel tests"
+]
+},
+"answer": 0,
+"exp": {
+"id": "WebDriver tidak thread-safe untuk dibagi. Satu instance per thread/test plus test data terpisah membuat paralelisasi aman.",
+"en": "A WebDriver is not safe to share across threads. One instance per thread/test plus separate test data makes parallelism safe."
+}
+},
+{
+"id": "sel-035",
+"topic": "selenium",
+"level": 1,
+"type": "mcq",
+"q": {
+"id": "Untuk apa Page Object Model?",
+"en": "What is the Page Object Model for?"
+},
+"options": {
+"id": [
+"Memisahkan locator dan aksi halaman dari logika test",
+"Membuat browser berjalan jauh lebih cepat dari biasanya",
+"Menggantikan kebutuhan akan assertion di dalam test",
+"Membuat laporan hasil test secara otomatis tiap run"
+],
+"en": [
+"Separating page locators and actions from the test logic",
+"Making the browser run much faster than it normally does",
+"Replacing the need for assertions inside the tests",
+"Generating the test result report automatically on each run"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Saat UI berubah, hanya page object yang diperbarui, bukan setiap test. Assertion tetap ada di test.",
+"en": "When the UI changes only the page object is updated, not every test. Assertions stay in the test."
+}
+},
+{
+"id": "sql-017",
+"topic": "sql",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Beda INNER JOIN dan LEFT JOIN?",
+"en": "What is the difference between INNER JOIN and LEFT JOIN?"
+},
+"options": {
+"id": [
+"INNER hanya baris yang cocok; LEFT menyertakan semua baris kiri",
+"INNER mengambil semua baris dari kedua tabel; LEFT hanya satu baris",
+"Tidak ada perbedaan; keduanya selalu memberi hasil yang sama",
+"LEFT hanya bisa dipakai pada tabel yang sedang kosong"
+],
+"en": [
+"INNER only matching rows; LEFT keeps all left-table rows",
+"INNER takes all rows from both tables; LEFT takes only one row",
+"No difference; both always give the same result",
+"LEFT can only be used on tables that are currently empty"
+]
+},
+"answer": 0,
+"exp": {
+"id": "LEFT JOIN mengisi NULL untuk sisi kanan yang tidak cocok. Berguna untuk mencari data yatim, mis. user tanpa pesanan.",
+"en": "LEFT JOIN fills NULL for unmatched right-side rows. Useful for orphan checks, e.g. users without orders."
+}
+},
+{
+"id": "sql-018",
+"topic": "sql",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Query untuk menemukan email ganda di tabel users?",
+"en": "Which query finds duplicate emails in the users table?"
+},
+"options": {
+"id": [
+"SELECT email, COUNT(*) FROM users GROUP BY email HAVING COUNT(*) > 1",
+"SELECT email FROM users WHERE COUNT(email) > 1 GROUP BY email",
+"SELECT DISTINCT email, COUNT(*) FROM users ORDER BY email",
+"SELECT email FROM users GROUP BY email ORDER BY email LIMIT 1"
+],
+"en": [
+"SELECT email, COUNT(*) FROM users GROUP BY email HAVING COUNT(*) > 1",
+"SELECT email FROM users WHERE COUNT(email) > 1 GROUP BY email",
+"SELECT DISTINCT email, COUNT(*) FROM users ORDER BY email",
+"SELECT email FROM users GROUP BY email ORDER BY email LIMIT 1"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Filter pada hasil agregat harus memakai HAVING, bukan WHERE. DISTINCT justru menyembunyikan duplikat.",
+"en": "Filtering on an aggregate result needs HAVING, not WHERE. DISTINCT actually hides duplicates."
+}
+},
+{
+"id": "sql-019",
+"topic": "sql",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Setelah transfer saldo, data A berkurang tetapi B tidak bertambah karena error di tengah proses. Properti ACID yang dilanggar?",
+"en": "After a balance transfer, A is debited but B is not credited because of a mid-process error. Which ACID property is violated?"
+},
+"options": {
+"id": [
+"Atomicity",
+"Isolation",
+"Durability",
+"Consistency tidak relevan di sini"
+],
+"en": [
+"Atomicity",
+"Isolation",
+"Durability",
+"Consistency is irrelevant here"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Atomicity menjamin transaksi berhasil seluruhnya atau dibatalkan seluruhnya (rollback). Kondisi setengah jadi menandakan transaksi tidak atomik; akibatnya total saldo juga tidak konsisten, tetapi pelanggaran yang menjadi sebab langsung adalah atomicity.",
+"en": "Atomicity guarantees a transaction fully succeeds or fully rolls back. A half-done state means the transaction was not atomic; the totals end up inconsistent too, but the direct violation is atomicity."
+}
+},
+{
+"id": "sql-020",
+"topic": "sql",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Mengapa WHERE kolom = NULL tidak mengembalikan baris yang diharapkan?",
+"en": "Why does WHERE column = NULL not return the expected rows?"
+},
+"options": {
+"id": [
+"NULL bukan nilai, jadi pakai IS NULL",
+"Kolom itu wajib bertipe teks agar bisa dibandingkan",
+"Database mengabaikan klausa WHERE untuk nilai kosong",
+"NULL dianggap sama dengan string kosong oleh SQL"
+],
+"en": [
+"NULL is not a value, so use IS NULL",
+"The column must be of text type to be compared",
+"The database ignores the WHERE clause for empty values",
+"SQL treats NULL as equal to an empty string"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Perbandingan apa pun dengan NULL bernilai unknown, bukan true. Pakai IS NULL / IS NOT NULL.",
+"en": "Any comparison with NULL yields unknown, not true. Use IS NULL / IS NOT NULL."
+}
+},
+{
+"id": "pw-017",
+"topic": "playwright",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Apa keunggulan auto-waiting Playwright dibanding sleep manual?",
+"en": "What advantage does Playwright auto-waiting have over manual sleeps?"
+},
+"options": {
+"id": [
+"Menunggu elemen siap (terlihat, stabil, aktif) lalu bertindak",
+"Test boleh ditulis tanpa assertion sama sekali di mana pun",
+"Elemen tersembunyi selalu diabaikan untuk selamanya oleh tool",
+"Fitur ini hanya berfungsi di browser Chromium saja saat ini"
+],
+"en": [
+"It waits until the element is ready (visible, stable, enabled)",
+"Tests may be written without any assertions at all anywhere",
+"Hidden elements are always ignored forever by the tool",
+"This feature currently only works in the Chromium browser"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Actionability checks mengurangi flakiness tanpa jeda tetap. Assertion web-first (expect(locator)) juga mencoba ulang sampai batas waktu.",
+"en": "Actionability checks reduce flakiness without fixed delays. Web-first assertions (expect(locator)) also retry until the timeout."
+}
+},
+{
+"id": "pw-018",
+"topic": "playwright",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Pipeline CI gagal tetapi Anda tidak bisa mereproduksi lokal. Fitur Playwright yang paling membantu?",
+"en": "A CI run fails but you cannot reproduce it locally. Which Playwright feature helps most?"
+},
+"options": {
+"id": [
+"Trace viewer: snapshot DOM, jaringan, dan log per langkah",
+"console.log yang dipasang di setiap baris kode test",
+"Menaikkan jumlah workers sampai 100 sekaligus di CI",
+"Menghapus test yang gagal agar pipeline kembali hijau"
+],
+"en": [
+"Trace viewer with DOM snapshots, network and logs per step",
+"console.log statements placed on every line of test code",
+"Raising the number of workers up to 100 at once",
+"Deleting the failing test so the pipeline goes green"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Trace menyimpan jejak langkah per aksi sehingga failure di CI bisa diputar ulang secara visual.",
+"en": "A trace records every step so a CI failure can be replayed visually."
+}
+},
+{
+"id": "cy-016",
+"topic": "cypress",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Mengapa cy.intercept berguna untuk menguji failure backend?",
+"en": "Why is cy.intercept useful for testing backend failures?"
+},
+"options": {
+"id": [
+"Menyubstitusi respons (mis. 500) tanpa merusak backend",
+"Mengubah kode server secara permanen di test environment",
+"Menggantikan peran browser selama test berjalan di CI",
+"Hanya dipakai untuk mencatat cookie milik user"
+],
+"en": [
+"Stubbing responses (e.g. 500 or slow) without breaking the backend",
+"Permanently changing the server code in the test environment",
+"Replacing the role of the browser while the test runs",
+"It is only used to record the user's cookies"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Dengan intercept, UI diuji pada kondisi error, kosong, atau lambat secara deterministik.",
+"en": "With intercept, the UI is tested under error, empty or slow conditions deterministically."
+}
+},
+{
+"id": "int-013",
+"topic": "interview",
+"level": 2,
+"type": "short",
+"q": {
+"id": "Bagaimana Anda menangani flaky test di pipeline?",
+"en": "How do you handle flaky tests in a pipeline?"
+},
+"model": {
+"id": "Ukur dulu: catat pola gagal/lulus dari banyak run, karantina test yang flaky agar tidak memblokir pipeline, lalu cari root cause (race condition, data bersama, environment, timing). Retry hanya sementara, bukan solusi; perbaiki dan kembalikan test ke suite.",
+"en": "Measure first: track pass/fail patterns over many runs, quarantine flaky tests so they do not block the pipeline, then find the root cause (race condition, shared data, environment, timing). Retries are temporary, not a fix; repair and return the test to the suite."
+},
+"keywords": [
+[
+"karantina",
+"quarantine",
+"isolasi"
+],
+[
+"root cause",
+"akar",
+"penyebab"
+],
+[
+"retry",
+"ulang"
+],
+[
+"pola",
+"pattern",
+"ukur",
+"measure",
+"track"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-014",
+"topic": "interview",
+"level": 2,
+"type": "short",
+"q": {
+"id": "Bagaimana Anda merancang strategi test untuk fitur checkout baru?",
+"en": "How would you design a test strategy for a new checkout feature?"
+},
+"model": {
+"id": "Mulai dari risiko dan requirement: alur utama (keranjang, pembayaran, konfirmasi), negative path, nilai batas, pembayaran ganda/idempotency, konkurensi stok, security, dan integrasi payment. Bagi ke lapisan: unit, API, sedikit E2E; tentukan test data, environment, dan kriteria keluar.",
+"en": "Start from risk and requirements: main flow (cart, payment, confirmation), negative paths, boundaries, double payment/idempotency, stock concurrency, security and payment integration. Split across layers: unit, API, a few E2E; define test data, environment and exit criteria."
+},
+"keywords": [
+[
+"risiko",
+"risk"
+],
+[
+"negative",
+"batas",
+"boundary",
+"edge"
+],
+[
+"api",
+"unit",
+"e2e",
+"layer",
+"lapisan"
+],
+[
+"data",
+"environment",
+"exit criteria",
+"kriteria"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-015",
+"topic": "interview",
+"level": 2,
+"type": "short",
+"q": {
+"id": "Bagaimana Anda menguji API tanpa dokumentasi lengkap?",
+"en": "How do you test an API with incomplete documentation?"
+},
+"model": {
+"id": "Eksplorasi: baca kode/Swagger bila ada, tanya developer, amati trafik client (dev tools/proxy), lalu uji metode, status code, validasi, auth, dan format error. Catat temuan sebagai dokumentasi dan usulkan kontrak/OpenAPI.",
+"en": "Explore: read code/Swagger if available, ask developers, observe client traffic (dev tools/proxy), then test methods, status codes, validation, auth and error format. Record findings as documentation and propose a contract/OpenAPI."
+},
+"keywords": [
+[
+"eksplorasi",
+"explor",
+"amati",
+"observe"
+],
+[
+"status",
+"validasi",
+"validation",
+"auth"
+],
+[
+"tanya",
+"ask",
+"developer"
+],
+[
+"openapi",
+"kontrak",
+"contract",
+"dokumentasi",
+"documentation"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-016",
+"topic": "interview",
+"level": 2,
+"type": "short",
+"q": {
+"id": "Apa yang Anda lakukan jika menemukan bug kritis sehari sebelum release?",
+"en": "What do you do if you find a critical bug a day before release?"
+},
+"model": {
+"id": "Reproduksi dan kumpulkan bukti, nilai dampak dan frekuensi, beri tahu developer dan product owner segera, bantu ukur opsi (perbaiki, workaround, tunda, feature flag), dan biarkan keputusan go/no-go dibuat stakeholder berdasarkan risiko. Setelah itu tambahkan regression test.",
+"en": "Reproduce and gather evidence, assess impact and frequency, notify the developer and product owner immediately, help weigh options (fix, workaround, delay, feature flag), and let stakeholders make the go/no-go call based on risk. Afterwards add a regression test."
+},
+"keywords": [
+[
+"reproduksi",
+"reproduce",
+"bukti",
+"evidence"
+],
+[
+"dampak",
+"impact",
+"risiko",
+"risk"
+],
+[
+"go/no-go",
+"stakeholder",
+"product owner"
+],
+[
+"regression",
+"regresi",
+"workaround",
+"feature flag"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-017",
+"topic": "interview",
+"level": 2,
+"type": "short",
+"q": {
+"id": "Jelaskan perbedaan QA, QC, dan testing dengan contoh singkat.",
+"en": "Explain the difference between QA, QC and testing with a short example."
+},
+"model": {
+"id": "QA preventif dan berorientasi proses (mis. code review, standar, definition of done). QC berorientasi produk untuk mendeteksi defect. Testing adalah salah satu kegiatan QC: menjalankan atau memeriksa produk untuk menemukan defect dan menilai kualitas.",
+"en": "QA is preventive and process-oriented (e.g. code review, standards, definition of done). QC is product-oriented, detecting defects. Testing is one QC activity: running or inspecting the product to find defects and assess quality."
+},
+"keywords": [
+[
+"preventif",
+"preventive",
+"proses",
+"process"
+],
+[
+"produk",
+"product",
+"deteksi",
+"detect"
+],
+[
+"testing"
+],
+[
+"contoh",
+"example",
+"review",
+"definition of done"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-018",
+"topic": "interview",
+"level": 3,
+"type": "short",
+"q": {
+"id": "Di mana AI membantu pekerjaan QA, dan apa batasnya?",
+"en": "Where does AI help in QA, and what are its limits?"
+},
+"model": {
+"id": "AI membantu menyusun test case, test data, ringkasan log, dan menulis boilerplate otomasi. Batasnya: bisa salah atau mengarang, tidak paham konteks bisnis, dan berisiko membocorkan data bila prompt memuat informasi rahasia. Hasilnya harus ditinjau manusia dan diverifikasi dengan eksekusi nyata.",
+"en": "AI helps draft test cases, test data, log summaries and automation boilerplate. Limits: it can be wrong or invent things, lacks business context, and risks leaking data if prompts contain confidential information. Output must be reviewed by a human and verified by real execution."
+},
+"keywords": [
+[
+"test case",
+"data uji",
+"test data",
+"boilerplate",
+"log"
+],
+[
+"salah",
+"wrong",
+"halusinasi",
+"hallucinat",
+"mengarang"
+],
+[
+"rahasia",
+"confidential",
+"data",
+"privasi",
+"privacy"
+],
+[
+"tinjau",
+"review",
+"verifikasi",
+"verify",
+"manusia",
+"human"
+]
+],
+"pass": 0.6
+},
+{
+"id": "code-001",
+"topic": "coding",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Apa keluaran kode JavaScript ini?",
+"en": "What does this JavaScript print?"
+},
+"code": "console.log([1, 2, 3].map(parseInt));",
+"options": {
+"id": [
+"[1, NaN, NaN]",
+"[1, 2, 3]",
+"[0, 1, 2]",
+"[1, 2, NaN]"
+],
+"en": [
+"[1, NaN, NaN]",
+"[1, 2, 3]",
+"[0, 1, 2]",
+"[1, 2, NaN]"
+]
+},
+"answer": 0,
+"exp": {
+"id": "map memberi parseInt tiga argumen (nilai, indeks, array). Indeks dipakai sebagai radix: parseInt(2, 1) dan parseInt(3, 2) menghasilkan NaN. Pakai map(Number) atau map(x => parseInt(x, 10)).",
+"en": "map passes parseInt three arguments (value, index, array). The index is used as the radix: parseInt(2, 1) and parseInt(3, 2) give NaN. Use map(Number) or map(x => parseInt(x, 10))."
+}
+},
+{
+"id": "code-002",
+"topic": "coding",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Mengapa assertion ini sebaiknya tidak ditulis seperti itu?",
+"en": "Why should this assertion not be written this way?"
+},
+"code": "const total = 0.1 + 0.2;\nexpect(total).toBe(0.3);   // gagal",
+"options": {
+"id": [
+"Pecahan biner tidak tepat; pakai toBeCloseTo atau satuan bulat",
+"toBe hanya bisa dipakai untuk membandingkan string saja",
+"0.1 + 0.2 selalu persis 0.3, jadi tes ini salah ketik",
+"JavaScript tidak mendukung bilangan desimal sama sekali"
+],
+"en": [
+"Binary fractions are inexact; use toBeCloseTo or integer units",
+"toBe can only be used for comparing strings and nothing else",
+"0.1 + 0.2 is always exactly 0.3, so this test has a typo",
+"JavaScript does not support decimal numbers at all"
+]
+},
+"answer": 0,
+"exp": {
+"id": "0.1 + 0.2 bernilai 0.30000000000000004. Untuk uang, simpan dalam satuan terkecil (sen) sebagai bilangan bulat; untuk perbandingan lain gunakan toleransi.",
+"en": "0.1 + 0.2 is 0.30000000000000004. For money, store the smallest unit (cents) as integers; for other comparisons use a tolerance."
+}
+},
+{
+"id": "code-003",
+"topic": "coding",
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Apa keluaran kode ini?",
+"en": "What does this print?"
+},
+"code": "for (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 0);\n}",
+"options": {
+"id": [
+"3 3 3",
+"0 1 2",
+"2 2 2",
+"0 0 0"
+],
+"en": [
+"3 3 3",
+"0 1 2",
+"2 2 2",
+"0 0 0"
+]
+},
+"answer": 0,
+"exp": {
+"id": "var berlingkup fungsi sehingga ketiga callback berbagi satu i yang sudah bernilai 3 saat callback berjalan. Dengan let, tiap iterasi punya salinan sendiri dan hasilnya 0 1 2.",
+"en": "var is function-scoped, so all three callbacks share one i that is already 3 when they run. With let, each iteration has its own copy and the output is 0 1 2."
+}
+},
+{
+"id": "code-004",
+"topic": "coding",
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Urutan keluaran kode ini?",
+"en": "What is the output order?"
+},
+"code": "console.log('A');\nsetTimeout(() => console.log('B'));\nPromise.resolve().then(() => console.log('C'));\nconsole.log('D');",
+"options": {
+"id": [
+"A D C B",
+"A B C D",
+"A C D B",
+"A D B C"
+],
+"en": [
+"A D C B",
+"A B C D",
+"A C D B",
+"A D B C"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Kode sinkron jalan dulu (A, D). Callback promise (microtask) berjalan sebelum setTimeout (macrotask), sehingga C lalu B.",
+"en": "Synchronous code runs first (A, D). Promise callbacks (microtasks) run before setTimeout (macrotasks), so C then B."
+}
+},
+{
+"id": "code-005",
+"topic": "coding",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Apa masalah pada kode test Playwright ini?",
+"en": "What is wrong with this Playwright test?"
+},
+"code": "test('login', async ({ page }) => {\n  page.goto('/login');\n  await page.fill('#email', 'a@b.c');\n  await page.click('#submit');\n});",
+"options": {
+"id": [
+"goto tidak di-await, langkah berikutnya jalan lebih dulu",
+"fill tidak boleh dipakai pada elemen input teks",
+"fungsi test tidak boleh dideklarasikan sebagai async",
+"click wajib dipanggil lebih dulu daripada fill"
+],
+"en": [
+"goto is not awaited, so later steps run too early",
+"fill must not be used on plain text input elements",
+"a test function must not be declared as async",
+"click is required to be called before fill happens"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Promise yang tidak di-await membuat test berlanjut tanpa menunggu dan menghasilkan flaky test atau unhandled rejection. Aktifkan lint rule no-floating-promises.",
+"en": "An un-awaited promise lets the test continue without waiting, causing flakiness or unhandled rejections. Enable the no-floating-promises lint rule."
+}
+},
+{
+"id": "code-006",
+"topic": "coding",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Mengapa test Selenium (Python) ini flaky?",
+"en": "Why is this Selenium (Python) test flaky?"
+},
+"code": "driver.find_element(By.ID, 'save').click()\nassert driver.find_element(By.ID, 'msg').text == 'Saved'",
+"options": {
+"id": [
+"Teks dibaca tepat setelah klik tanpa jeda; pakai explicit wait",
+"find_element tidak bisa dipanggil dua kali berturut-turut",
+"assert tidak berfungsi untuk membandingkan teks string",
+"By.ID sudah tidak didukung lagi di Selenium 4 ke atas"
+],
+"en": [
+"Text is read right after the click, no wait; use an explicit wait",
+"find_element cannot be called twice in a row in a single test",
+"assert does not work for comparing text strings of any kind",
+"By.ID is no longer supported in Selenium 4 or later versions"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Pesan muncul setelah request selesai. Gunakan WebDriverWait dengan expected_conditions, mis. text_to_be_present_in_element, bukan sleep.",
+"en": "The message appears after a request finishes. Use WebDriverWait with expected_conditions, e.g. text_to_be_present_in_element, not sleep."
+}
+},
+{
+"id": "code-007",
+"topic": "coding",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Test API ini tidak pernah gagal bahkan saat status 500. Mengapa?",
+"en": "This API test never fails even on a 500. Why?"
+},
+"code": "def test_create_user():\n    r = client.post('/users', json=payload)\n    assert r.status_code == 200 or 201",
+"options": {
+"id": [
+"'or 201' selalu truthy; pakai status_code in (200, 201)",
+"client.post tidak mengembalikan atribut status_code",
+"assert hanya akan memeriksa kode HTTP berawalan 2xx",
+"payload tidak pernah dikirim ke endpoint tersebut"
+],
+"en": [
+"'or 201' is always truthy; use status_code in (200, 201)",
+"client.post does not return a status_code attribute",
+"assert only ever checks HTTP codes that start with 2xx",
+"the payload is never actually sent to that endpoint"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Python membaca (status_code == 200) or 201; angka 201 selalu truthy. Ini kesalahan klasik yang membuat test hijau palsu.",
+"en": "Python reads (status_code == 200) or 201; the number 201 is always truthy. A classic mistake that creates false-green tests."
+}
+},
+{
+"id": "code-008",
+"topic": "coding",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Apa keluaran kode Python ini?",
+"en": "What does this Python print?"
+},
+"code": "def add(x, items=[]):\n    items.append(x)\n    return items\n\nadd(1)\nprint(add(2))",
+"options": {
+"id": [
+"[1, 2]",
+"[2]",
+"[1]",
+"[]"
+],
+"en": [
+"[1, 2]",
+"[2]",
+"[1]",
+"[]"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Nilai default dibuat sekali saat fungsi didefinisikan sehingga list dipakai bersama antar pemanggilan. Pakai items=None lalu buat list baru di dalam fungsi. Efek serupa bisa membuat test saling bergantung.",
+"en": "The default is created once at definition time, so the list is shared across calls. Use items=None and create a new list inside. A similar effect can make tests depend on each other."
+}
+},
+{
+"id": "code-009",
+"topic": "coding",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Apa keluaran kode Python ini?",
+"en": "What does this Python print?"
+},
+"code": "print(10 // 3, -10 // 3, 10 % 3)",
+"options": {
+"id": [
+"3 -4 1",
+"3 -3 1",
+"3 -4 -1",
+"3.33 -3.33 1"
+],
+"en": [
+"3 -4 1",
+"3 -3 1",
+"3 -4 -1",
+"3.33 -3.33 1"
+]
+},
+"answer": 0,
+"exp": {
+"id": "// adalah pembagian lantai: -10 // 3 = -4 (dibulatkan ke bawah, bukan ke nol). 10 % 3 = 1.",
+"en": "// is floor division: -10 // 3 = -4 (rounded down, not toward zero). 10 % 3 = 1."
+}
+},
+{
+"id": "code-010",
+"topic": "coding",
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Apa keluaran kode Python ini?",
+"en": "What does this Python print?"
+},
+"code": "print(round(2.5), round(3.5))",
+"options": {
+"id": [
+"2 4",
+"3 4",
+"2 3",
+"3 3"
+],
+"en": [
+"2 4",
+"3 4",
+"2 3",
+"3 3"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Python 3 memakai pembulatan ke genap terdekat (banker's rounding) untuk nilai .5. Penting saat memverifikasi perhitungan uang atau persentase.",
+"en": "Python 3 rounds .5 values to the nearest even number (banker's rounding). Important when verifying money or percentage calculations."
+}
+},
+{
+"id": "code-011",
+"topic": "coding",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Berapa panjang a setelah kode ini dijalankan?",
+"en": "What is the length of a after this runs?"
+},
+"code": "a = [1, 2, 3]\nb = a[:]\nb.append(4)\nprint(len(a))",
+"options": {
+"id": [
+"3",
+"4",
+"7",
+"Error"
+],
+"en": [
+"3",
+"4",
+"7",
+"Error"
+]
+},
+"answer": 0,
+"exp": {
+"id": "a[:] membuat salinan dangkal sehingga menambah elemen ke b tidak mengubah a. Bila b = a, panjang a menjadi 4 karena keduanya menunjuk list yang sama.",
+"en": "a[:] makes a shallow copy so appending to b does not change a. With b = a the length would be 4 because both names point to the same list."
+}
+},
+{
+"id": "code-012",
+"topic": "coding",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Apa hasil query ini?",
+"en": "What does this query return?"
+},
+"code": "-- users: 5 baris, 2 di antaranya email = NULL\nSELECT COUNT(*), COUNT(email) FROM users;",
+"options": {
+"id": [
+"5 dan 3",
+"5 dan 5",
+"3 dan 3",
+"3 dan 5"
+],
+"en": [
+"5 dan 3",
+"5 dan 5",
+"3 dan 3",
+"3 dan 5"
+]
+},
+"answer": 0,
+"exp": {
+"id": "COUNT(*) menghitung semua baris; COUNT(kolom) melewati NULL. Berguna untuk memeriksa kelengkapan data.",
+"en": "COUNT(*) counts all rows; COUNT(column) skips NULLs. Useful for checking data completeness."
+}
+},
+{
+"id": "code-013",
+"topic": "coding",
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "User u2 dan u3 tidak muncul di hasil. Mengapa?",
+"en": "Users u2 and u3 are missing from the result. Why?"
+},
+"code": "-- users: u1,u2,u3; orders: (o1,u1,'paid'), (o2,u1,'cancelled')\nSELECT u.id, COUNT(o.id)\nFROM users u LEFT JOIN orders o ON o.user_id = u.id\nWHERE o.status = 'paid'\nGROUP BY u.id;",
+"options": {
+"id": [
+"WHERE di tabel kanan membuang NULL, LEFT JOIN jadi seperti INNER",
+"LEFT JOIN memang selalu menghapus user tanpa pesanan",
+"GROUP BY tidak boleh dipakai bersama fungsi COUNT",
+"Status 'paid' sama sekali tidak ada di tabel orders"
+],
+"en": [
+"WHERE on the right table drops NULLs, so LEFT JOIN acts like INNER",
+"LEFT JOIN always removes users that have no orders at all",
+"GROUP BY must not be used together with the COUNT function",
+"The 'paid' status does not exist in the orders table at all"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Untuk u2 dan u3, o.status bernilai NULL sehingga ditolak oleh WHERE. Pindahkan syaratnya ke ON (AND o.status = 'paid') agar semua user tetap tampil dengan hitungan 0.",
+"en": "For u2 and u3, o.status is NULL and is rejected by WHERE. Move the condition into ON (AND o.status = 'paid') so every user stays with a count of 0."
+}
+},
+{
+"id": "code-014",
+"topic": "coding",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Mengapa test ini rapuh dan bagaimana memperbaikinya?",
+"en": "Why is this test brittle and how do you fix it?"
+},
+"code": "const r = await api.get('/products');\nexpect(r.body.items).toEqual(['pen', 'book', 'bag']);",
+"options": {
+"id": [
+"Bergantung pada urutan dan isi data; siapkan data sendiri",
+"toEqual tidak mampu membandingkan array sama sekali",
+"await tidak boleh dipakai pada permintaan GET biasa",
+"items seharusnya berupa objek, bukan sebuah array"
+],
+"en": [
+"It depends on data order and content; seed own data",
+"toEqual is not able to compare arrays at all",
+"await must not be used on a plain GET request",
+"items should be an object rather than an array"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Mengandalkan data bersama atau urutan yang tidak dijamin membuat test gagal acak. Buat test data di dalam test atau pakai pencocokan yang tidak peka urutan.",
+"en": "Relying on shared data or unguaranteed order makes tests fail randomly. Create test data inside the test or use order-insensitive matching."
+}
+},
+{
+"id": "code-015",
+"topic": "coding",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Hasil dari regex ini?",
+"en": "What does this regex return?"
+},
+"code": "import re\nprint(re.findall(r'\\d+', 'order 123 and 45'))",
+"options": {
+"id": [
+"['123', '45']",
+"['1', '2', '3', '4', '5']",
+"['123 and 45']",
+"[123, 45]"
+],
+"en": [
+"['123', '45']",
+"['1', '2', '3', '4', '5']",
+"['123 and 45']",
+"[123, 45]"
+]
+},
+"answer": 0,
+"exp": {
+"id": "\\d+ mencocokkan satu atau lebih digit berurutan, dan findall mengembalikan list string. Berguna untuk mengambil ID dari log.",
+"en": "\\d+ matches one or more consecutive digits and findall returns a list of strings. Useful for extracting IDs from logs."
+}
+},
+{
+"id": "code-016",
+"topic": "coding",
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Berapa hasil kode ini dan apa fungsinya?",
+"en": "What does this return and what is it for?"
+},
+"code": "lines = ['INFO start', 'ERROR db', 'WARN slow', 'ERROR timeout']\nprint(sum(1 for l in lines if 'ERROR' in l))",
+"options": {
+"id": [
+"2, menghitung baris log berlevel ERROR",
+"4, menghitung semua baris",
+"0, karena sum tidak menerima generator",
+"1, hanya baris ERROR pertama"
+],
+"en": [
+"2, counting log lines at ERROR level",
+"4, counting all lines",
+"0, because sum does not accept generators",
+"1, only the first ERROR line"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Generator menghasilkan 1 untuk tiap baris yang memuat ERROR lalu dijumlahkan. Pola ini sering dipakai untuk menganalisis log hasil test.",
+"en": "The generator yields 1 for each line containing ERROR, then sums them. This pattern is common when analysing test logs."
+}
+},
+{
+"id": "code-017",
+"topic": "coding",
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Mengapa JavaScript mencetak 'undefined' pada kode ini?",
+"en": "Why does JavaScript print 'undefined' here?"
+},
+"code": "async function getUser() { return { id: 1 }; }\nconst u = getUser();\nconsole.log(u.id);",
+"options": {
+"id": [
+"getUser mengembalikan Promise; perlu await untuk membacanya",
+"Properti id memang tidak ada pada objek yang dikembalikan",
+"Fungsi async dilarang mengembalikan nilai berupa objek",
+"console.log tidak mampu mencetak nilai berupa angka"
+],
+"en": [
+"getUser returns a Promise; it needs await to be read",
+"The id property does not exist on the returned object",
+"An async function is forbidden from returning an object",
+"console.log is not able to print a numeric value"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Fungsi async selalu mengembalikan Promise. Tanpa await, u.id dibaca dari Promise (undefined). Lupa await adalah penyebab umum test otomasi aneh.",
+"en": "An async function always returns a Promise. Without await, u.id is read from the Promise (undefined). A forgotten await is a common cause of odd automation tests."
+}
+},
+{
+"id": "code-018",
+"topic": "coding",
+"level": 2,
+"type": "short",
+"q": {
+"id": "Tulis (atau jelaskan) cara menemukan elemen duplikat dalam sebuah list dan kompleksitasnya.",
+"en": "Write (or explain) how to find duplicate elements in a list, and its complexity."
+},
+"model": {
+"id": "Telusuri list sekali sambil menyimpan elemen yang sudah terlihat di set atau dictionary. Bila elemen sudah ada di set, itu duplikat. Waktu O(n) dengan memori tambahan O(n); membandingkan semua pasangan O(n^2). Bahas juga kasus list kosong dan tipe data campuran.",
+"en": "Walk the list once while storing seen elements in a set or dictionary. If an element is already in the set it is a duplicate. Time O(n) with O(n) extra memory; comparing all pairs is O(n^2). Also mention the empty list and mixed types."
+},
+"keywords": [
+[
+"set",
+"dictionary",
+"hash",
+"dict"
+],
+[
+"o(n)",
+"linear",
+"sekali",
+"once"
+],
+[
+"duplikat",
+"duplicate"
+],
+[
+"kosong",
+"empty",
+"kasus",
+"edge",
+"memori",
+"memory"
+]
+],
+"pass": 0.6
+},
+{
+"id": "code-019",
+"topic": "coding",
+"level": 3,
+"type": "short",
+"q": {
+"id": "Bagaimana memeriksa apakah tanda kurung dalam sebuah string seimbang, misalnya \"{[()]}\"?",
+"en": "How do you check whether brackets in a string are balanced, e.g. \"{[()]}\"?"
+},
+"model": {
+"id": "Pakai stack: dorong kurung buka; tiap kurung tutup harus cocok dengan puncak stack lalu pop. Di akhir stack harus kosong. Test case: string kosong, hanya kurung tutup, urutan salah seperti \"([)]\", dan kurung tidak berpasangan. Kompleksitas O(n).",
+"en": "Use a stack: push opening brackets; each closing bracket must match the top of the stack, then pop. At the end the stack must be empty. Test cases: empty string, only closing bracket, wrong order like \"([)]\", unmatched brackets. Complexity O(n)."
+},
+"keywords": [
+[
+"stack",
+"tumpukan"
+],
+[
+"push",
+"pop",
+"dorong",
+"buka",
+"open"
+],
+[
+"kosong",
+"empty",
+"akhir",
+"end"
+],
+[
+"kasus",
+"case",
+"uji",
+"test",
+"edge",
+"o(n)"
+]
+],
+"pass": 0.6
+},
+{
+"id": "code-020",
+"topic": "coding",
+"level": 2,
+"type": "short",
+"q": {
+"id": "Anda diberi file log besar. Bagaimana menghitung jumlah error per jenis dengan script?",
+"en": "You are given a large log file. How would you script counting errors by type?"
+},
+"model": {
+"id": "Baca file baris demi baris (streaming) agar tidak memuat semuanya ke memori, ekstrak level atau kode error dengan split atau regex, lalu hitung dengan dictionary atau Counter. Tampilkan urutan terbanyak dan tangani baris yang formatnya rusak.",
+"en": "Read the file line by line (streaming) so it is not loaded into memory, extract the level or error code with split or regex, then count with a dictionary or Counter. Show the most frequent first and handle malformed lines."
+},
+"keywords": [
+[
+"baris",
+"line",
+"stream"
+],
+[
+"regex",
+"split",
+"ekstrak",
+"extract",
+"parse"
+],
+[
+"dictionary",
+"counter",
+"hitung",
+"count"
+],
+[
+"rusak",
+"malformed",
+"memori",
+"memory",
+"urut",
+"sort"
+]
+],
+"pass": 0.6
+},
+{
 "id": "pw-007",
 "topic": "playwright",
 "level": 2,
@@ -200,7 +2181,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "Worker menjalankan file berbeda secara paralel; test dalam satu file berurutan kecuali fullyParallel diaktifkan. Karena itu data uji antar worker tidak boleh bertabrakan.",
+"id": "Worker menjalankan file berbeda secara paralel; test dalam satu file berurutan kecuali fullyParallel diaktifkan. Karena itu test data antar worker tidak boleh bertabrakan.",
 "en": "Workers run different files in parallel; tests within a file run in order unless fullyParallel is enabled. So test data must not collide across workers."
 }
 },
@@ -215,10 +2196,10 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Menyiapkan dan membersihkan dependensi test (halaman login, data uji) secara terisolasi dan dapat dipakai ulang",
-"Mengunci versi browser di proyek supaya tidak pernah ikut diperbarui oleh rilis Playwright",
+"Menyiapkan dan membersihkan dependensi test (halaman login, test data) secara terisolasi dan dapat dipakai ulang",
+"Mengunci versi browser di proyek supaya tidak pernah ikut diperbarui oleh release Playwright",
 "Menerjemahkan test secara otomatis ke bahasa pemrograman lain ketika tim memintanya",
-"Menggantikan kebutuhan assertion dengan menyimpan tangkapan layar di akhir setiap test"
+"Menggantikan kebutuhan assertion dengan menyimpan screenshot di akhir setiap test"
 ],
 "en": [
 "Setting up and tearing down test dependencies (signed-in page, test data) in an isolated, reusable way",
@@ -274,9 +2255,9 @@ QA.questions = [
 "options": {
 "id": [
 "Merekam interaksi di browser dan menghasilkan kode test awal yang perlu dirapikan",
-"Membuat laporan bug rinci ke Jira secara otomatis tanpa campur tangan manusia sama sekali",
+"Membuat bug report rinci ke Jira secara otomatis tanpa campur tangan manusia sama sekali",
 "Mengompilasi aplikasi yang diuji menjadi paket instalasi untuk setiap platform",
-"Menghapus seluruh cache browser milik semua pengguna yang pernah mengunjungi situs"
+"Menghapus seluruh cache browser milik semua user yang pernah mengunjungi situs"
 ],
 "en": [
 "Recording browser interactions and generating starter test code that needs tidying",
@@ -287,7 +2268,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "Codegen membantu memulai skrip dengan cepat, tetapi hasilnya tetap perlu ditinjau: locator, assertion, dan struktur.",
+"id": "Codegen membantu memulai script dengan cepat, tetapi hasilnya tetap perlu ditinjau: locator, assertion, dan struktur.",
 "en": "Codegen helps start scripts quickly, but the output still needs review: locators, assertions and structure."
 }
 },
@@ -316,7 +2297,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "Cypress menyusun antrean perintah asinkron; cy.get tidak mengembalikan elemen sebagai nilai biasa dan jQuery text() tidak tersedia di chain Cypress. Ambil nilai lewat .then(($el) => ...).",
+"id": "Cypress menyusun queue perintah asinkron; cy.get tidak mengembalikan elemen sebagai nilai biasa dan jQuery text() tidak tersedia di chain Cypress. Ambil nilai lewat .then(($el) => ...).",
 "en": "Cypress builds an async command queue; cy.get does not return the element as a plain value, and jQuery's text() is not on the Cypress chain. Read values via .then(($el) => ...)."
 }
 },
@@ -362,7 +2343,7 @@ QA.questions = [
 "id": [
 "Query seperti cy.get dan assertion yang mengikutinya diulang otomatis sampai berhasil atau timeout",
 "Seluruh file test diulang tanpa batas sampai setiap test di dalamnya akhirnya berhasil lulus",
-"Cypress otomatis mengirim ulang laporan bug ke tracker yang sebelumnya gagal terkirim",
+"Cypress otomatis mengirim ulang bug report ke tracker yang sebelumnya gagal terkirim",
 "Aksi seperti click dijalankan berulang kali sampai halaman akhirnya berubah state-nya"
 ],
 "en": [
@@ -403,7 +2384,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "cy.origin() memungkinkan alur lintas origin dalam satu test (dengan batasan cakupan callback). Ini bagian dari batasan same-origin yang perlu diketahui.",
+"id": "cy.origin() memungkinkan alur lintas origin dalam satu test (dengan batasan coverage callback). Ini bagian dari batasan same-origin yang perlu diketahui.",
 "en": "cy.origin() enables cross-origin flows in one test (with callback scope limits). It is part of the same-origin constraint you should know about."
 }
 },
@@ -506,7 +2487,7 @@ QA.questions = [
 "options": {
 "id": [
 "Menyimpan dan memulihkan cookie, local storage sesi login antar test agar tidak login berulang",
-"Menambah jumlah sesi pengguna bersamaan yang dapat dilayani aplikasi di lingkungan produksi",
+"Menambah jumlah sesi user bersamaan yang dapat dilayani aplikasi di production environment",
 "Mengatur batas waktu global yang berlaku untuk seluruh eksekusi Cypress di mesin tersebut",
 "Merekam video seluruh layar komputer selama test sedang berjalan di mesin tersebut"
 ],
@@ -535,7 +2516,7 @@ QA.questions = [
 "options": {
 "id": [
 "Memasang dan menguji satu komponen UI secara terpisah tanpa menjalankan seluruh aplikasi",
-"Menguji koneksi antar server database secara langsung tanpa antarmuka pengguna",
+"Menguji koneksi antar server database secara langsung tanpa user interface",
 "Menghitung jumlah baris kode dan melaporkan totalnya untuk setiap folder repositori",
 "Menggantikan setiap test end-to-end di proyek tanpa terkecuali sama sekali"
 ],
@@ -593,8 +2574,8 @@ QA.questions = [
 "options": {
 "id": [
 "Menyimpan test object (locator) terpusat sehingga perubahan UI cukup diperbaiki di satu tempat",
-"Menyimpan seluruh kode sumber aplikasi yang diuji untuk setiap rilis yang ada",
-"Menyimpan password semua pengguna aplikasi secara polos untuk keperluan test",
+"Menyimpan seluruh kode sumber aplikasi yang diuji untuk setiap release yang ada",
+"Menyimpan password semua user aplikasi secara polos untuk keperluan test",
 "Menjalankan test dengan sendirinya tanpa memerlukan test case sama sekali"
 ],
 "en": [
@@ -635,7 +2616,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "Collection berguna untuk eksekusi lintas browser atau lingkungan: tiap suite dijalankan dengan konfigurasinya sendiri.",
+"id": "Collection berguna untuk eksekusi lintas browser atau environment: tiap suite dijalankan dengan konfigurasinya sendiri.",
 "en": "A Collection is useful for cross-browser or cross-environment runs: each suite runs with its own configuration."
 }
 },
@@ -682,7 +2663,7 @@ QA.questions = [
 "Menghubungkan Test Data (Excel, CSV, database) ke variabel test case sehingga test berjalan per baris data",
 "Menulis ulang test case yang sama sekali lagi untuk setiap baris data yang ada",
 "Memasukkan semua baris data langsung ke Object Repository sebagai test object",
-"Menunggu pengguna sungguhan mengetik data ke formulir satu per satu selama run"
+"Menunggu user sungguhan mengetik data ke formulir satu per satu selama run"
 ],
 "en": [
 "Binding Test Data (Excel, CSV, database) to test case variables so the test runs once per data row",
@@ -722,7 +2703,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "Self-healing mengurangi kegagalan karena perubahan locator, tetapi hasilnya tetap perlu ditinjau agar locator yang \"disembuhkan\" tidak menunjuk elemen yang salah.",
+"id": "Self-healing mengurangi failure karena perubahan locator, tetapi hasilnya tetap perlu ditinjau agar locator yang \"disembuhkan\" tidak menunjuk elemen yang salah.",
 "en": "Self-healing reduces failures from locator changes, but the result should still be reviewed so a healed locator does not point to the wrong element."
 }
 },
@@ -732,7 +2713,7 @@ QA.questions = [
 "level": 1,
 "type": "mcq",
 "q": {
-"id": "Bahasa apa yang dipakai untuk custom keyword dan skrip di Katalon Studio?",
+"id": "Bahasa apa yang dipakai untuk custom keyword dan script di Katalon Studio?",
 "en": "Which language is used for custom keywords and scripts in Katalon Studio?"
 },
 "options": {
@@ -751,7 +2732,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "Katalon Studio berbasis Groovy/Java sehingga library Java dapat dipakai di skrip.",
+"id": "Katalon Studio berbasis Groovy/Java sehingga library Java dapat dipakai di script.",
 "en": "Katalon Studio is Groovy/Java based, so Java libraries can be used in scripts."
 }
 },
@@ -766,8 +2747,8 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Mencatat kegagalan tetapi melanjutkan langkah berikutnya, dan test case akhirnya ditandai gagal",
-"Mengabaikan kegagalan sepenuhnya, seolah verifikasi itu tidak pernah dijalankan",
+"Mencatat failure tetapi melanjutkan langkah berikutnya, dan test case akhirnya ditandai gagal",
+"Mengabaikan failure sepenuhnya, seolah verifikasi itu tidak pernah dijalankan",
 "Menghentikan seluruh eksekusi seketika dan menghapus semua hasil sejauh ini",
 "Mengulang keyword tanpa batas sampai akhirnya berhasil dengan sendirinya"
 ],
@@ -790,7 +2771,7 @@ QA.questions = [
 "level": 2,
 "type": "mcq",
 "q": {
-"id": "Bagaimana test Katalon dijalankan di pipeline CI tanpa membuka antarmuka Studio?",
+"id": "Bagaimana test Katalon dijalankan di pipeline CI tanpa membuka interface Studio?",
 "en": "How do you run Katalon tests in a CI pipeline without opening the Studio UI?"
 },
 "options": {
@@ -877,7 +2858,7 @@ QA.questions = [
 "level": 3,
 "type": "mcq",
 "q": {
-"id": "Cara mengambil pesanan terbaru milik tiap pelanggan (satu baris per pelanggan)?",
+"id": "Cara mengambil pesanan terbaru milik tiap customer (satu baris per customer)?",
 "en": "How do you get each customer's latest order (one row per customer)?"
 },
 "options": {
@@ -896,7 +2877,7 @@ QA.questions = [
 },
 "answer": 1,
 "exp": {
-"id": "ROW_NUMBER() dengan PARTITION BY menomori pesanan per pelanggan; rn = 1 adalah yang terbaru. Opsi pertama hanya mengembalikan satu baris total, bukan per pelanggan.",
+"id": "ROW_NUMBER() dengan PARTITION BY menomori pesanan per customer; rn = 1 adalah yang terbaru. Opsi pertama hanya mengembalikan satu baris total, bukan per customer.",
 "en": "ROW_NUMBER() with PARTITION BY numbers orders per customer; rn = 1 is the latest. The first option returns a single row overall, not one per customer."
 }
 },
@@ -993,15 +2974,15 @@ QA.questions = [
 "level": 3,
 "type": "mcq",
 "q": {
-"id": "LEFT JOIN orders o ON ... WHERE o.status = 'PAID' ternyata menghilangkan pelanggan tanpa pesanan. Mengapa?",
+"id": "LEFT JOIN orders o ON ... WHERE o.status = 'PAID' ternyata menghilangkan customer tanpa pesanan. Mengapa?",
 "en": "LEFT JOIN orders o ON ... WHERE o.status = 'PAID' drops customers with no orders. Why?"
 },
 "options": {
 "id": [
 "Kondisi di WHERE pada tabel kanan menyaring baris NULL sehingga efeknya seperti INNER JOIN; pindahkan ke ON",
 "LEFT JOIN tidak boleh digabung dengan kolom status, sehingga query diam-diam berubah menjadi scan biasa",
-"PAID adalah kata terlarang di SQL, sehingga database membuang pelanggan yang tidak punya pesanan",
-"Database menghapus pelanggan tanpa pesanan dari tabel aslinya secara fisik setelah query dijalankan"
+"PAID adalah kata terlarang di SQL, sehingga database membuang customer yang tidak punya pesanan",
+"Database menghapus customer tanpa pesanan dari tabel aslinya secara fisik setelah query dijalankan"
 ],
 "en": [
 "A WHERE condition on the right table filters out the NULL rows so it behaves like an INNER JOIN; move it to ON",
@@ -1012,7 +2993,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "Baris tanpa pesanan memiliki o.status NULL, yang tidak memenuhi o.status = 'PAID'. Menaruh kondisi di ON mempertahankan pelanggan tanpa pesanan.",
+"id": "Baris tanpa pesanan memiliki o.status NULL, yang tidak memenuhi o.status = 'PAID'. Menaruh kondisi di ON mempertahankan customer tanpa pesanan.",
 "en": "Rows without orders have o.status NULL, which fails o.status = 'PAID'. Putting the condition in ON keeps customers without orders."
 }
 },
@@ -1022,7 +3003,7 @@ QA.questions = [
 "level": 2,
 "type": "mcq",
 "q": {
-"id": "Anda perlu membersihkan data uji milik satu user saja. Pernyataan mana yang tepat?",
+"id": "Anda perlu membersihkan test data milik satu user saja. Pernyataan mana yang tepat?",
 "en": "You need to clean up test data for one user only. Which statement is right?"
 },
 "options": {
@@ -1116,7 +3097,7 @@ QA.questions = [
 "id": [
 "Atomicity (transaksi harus tuntas seluruhnya atau tidak sama sekali)",
 "Durability (data hilang begitu aliran listrik server dimatikan)",
-"Isolation (dua pengguna yang bekerja bersamaan melihat kumpulan data yang berbeda)",
+"Isolation (dua user yang bekerja bersamaan melihat kumpulan data yang berbeda)",
 "Consistency saja, yang sama sekali tidak berhubungan dengan penanganan transaksi"
 ],
 "en": [
@@ -1171,7 +3152,7 @@ QA.questions = [
 "en": "Tell me about the hardest bug you found and how you handled it."
 },
 "model": {
-"id": "Gunakan STAR: konteks singkat, langkah reproduksi dan penyempitan penyebab (log, data, environment), kerja sama dengan developer sampai root cause, dampak bisnis, lalu pelajaran atau pencegahan (test regresi baru, perbaikan proses). Hindari menyebut data internal perusahaan.",
+"id": "Gunakan STAR: konteks singkat, langkah reproduksi dan penyempitan penyebab (log, data, environment), kerja sama dengan developer sampai root cause, dampak bisnis, lalu pelajaran atau pencegahan (regression test baru, perbaikan proses). Hindari menyebut data internal perusahaan.",
 "en": "Use STAR: brief context, reproduction and narrowing down the cause (logs, data, environment), working with developers to the root cause, business impact, then the lesson or prevention (new regression test, process fix). Avoid naming internal company data."
 },
 "keywords": [
@@ -1256,7 +3237,7 @@ QA.questions = [
 "en": "How would you test a login feature?"
 },
 "model": {
-"id": "Klarifikasi requirement lalu rancang test: kredensial valid dan tidak valid, nilai batas panjang input, karakter khusus, akun terkunci setelah percobaan gagal, sesi dan logout, \"ingat saya\", keamanan (brute force, SQL injection, pesan error yang tidak membocorkan keberadaan akun), aksesibilitas, dan performa. Putuskan mana yang diotomasi.",
+"id": "Klarifikasi requirement lalu rancang test: kredensial valid dan tidak valid, nilai batas panjang input, karakter khusus, akun terkunci setelah percobaan gagal, sesi dan logout, \"ingat saya\", security (brute force, SQL injection, pesan error yang tidak membocorkan keberadaan akun), accessibility, dan performance. Putuskan mana yang diotomasi.",
 "en": "Clarify requirements, then design tests: valid and invalid credentials, input length boundaries, special characters, lockout after failed attempts, session and logout, \"remember me\", security (brute force, SQL injection, error messages that do not reveal account existence), accessibility and performance. Decide what to automate."
 },
 "keywords": [
@@ -1296,7 +3277,7 @@ QA.questions = [
 "level": 3,
 "type": "short",
 "q": {
-"id": "Bagaimana Anda memutuskan bahwa sebuah rilis aman untuk dirilis (go/no-go)?",
+"id": "Bagaimana Anda memutuskan bahwa sebuah release aman untuk dirilis (go/no-go)?",
 "en": "How do you decide that a release is safe to ship (go/no-go)?"
 },
 "model": {
@@ -1339,7 +3320,7 @@ QA.questions = [
 "en": "Your automated test sometimes passes and sometimes fails (flaky). How do you handle it?"
 },
 "model": {
-"id": "Cari akar masalah dulu: wait yang salah, data bersama antar test, ketergantungan urutan, environment tidak stabil, atau race condition di aplikasi. Kumpulkan bukti (log, trace, video), perbaiki penyebabnya, karantina sementara test yang mengganggu pipeline, dan pakai retry hanya sebagai jaring pengaman, bukan solusi.",
+"id": "Cari root cause dulu: wait yang salah, data bersama antar test, ketergantungan urutan, environment tidak stabil, atau race condition di aplikasi. Kumpulkan bukti (log, trace, video), perbaiki penyebabnya, karantina sementara test yang mengganggu pipeline, dan pakai retry hanya sebagai jaring pengaman, bukan solusi.",
 "en": "Find the root cause first: wrong waits, data shared between tests, order dependence, an unstable environment or a race condition in the app. Gather evidence (logs, traces, video), fix the cause, quarantine the test temporarily if it blocks the pipeline, and use retries only as a safety net, not a solution."
 },
 "keywords": [
@@ -1381,7 +3362,7 @@ QA.questions = [
 "en": "You are asked to test an API with no documentation. What are your steps?"
 },
 "model": {
-"id": "Cari sumber informasi: tanya developer, baca kode atau OpenAPI/Swagger bila ada, amati lalu lintas dari aplikasi klien. Jelajahi endpoint secara eksploratori (method, status, header, error), catat temuan sebagai kontrak sementara, konfirmasi ke developer, lalu ubah menjadi test otomatis yang mencakup positif, negatif, autentikasi, dan batas.",
+"id": "Cari sumber informasi: tanya developer, baca kode atau OpenAPI/Swagger bila ada, amati lalu lintas dari aplikasi client. Jelajahi endpoint secara eksploratori (method, status, header, error), catat temuan sebagai kontrak sementara, konfirmasi ke developer, lalu ubah menjadi test otomatis yang mencakup positif, negatif, autentikasi, dan batas.",
 "en": "Find information sources: ask developers, read the code or OpenAPI/Swagger if available, observe traffic from the client app. Explore endpoints exploratively (methods, status, headers, errors), record findings as a provisional contract, confirm with developers, then turn it into automated tests covering positive, negative, authentication and boundaries."
 },
 "keywords": [
@@ -1415,6 +3396,1352 @@ QA.questions = [
 "authentication",
 "batas",
 "boundary"
+]
+],
+"pass": 0.6
+},
+{
+"id": "fun-001",
+"topic": "fundamentals",
+"level": 1,
+"type": "mcq",
+"q": {
+"id": "Apa beda verifikasi dan validasi?",
+"en": "What is the difference between verification and validation?"
+},
+"options": {
+"id": [
+"Verifikasi: sesuai spesifikasi? Validasi: sesuai kebutuhan?",
+"Verifikasi dilakukan user; validasi dilakukan developer",
+"Verifikasi hanya untuk kode; validasi hanya untuk dokumen",
+"Keduanya sama dan hanya beda istilah antar perusahaan"
+],
+"en": [
+"Verification: matches the spec? Validation: meets user needs?",
+"Verification is done by users; validation is done by developers",
+"Verification is only for code; validation is only for documents",
+"Both are the same and only differ by company terminology"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Verifikasi memeriksa kesesuaian dengan spesifikasi ('membangun dengan benar'); validasi memeriksa apakah produk memenuhi kebutuhan nyata ('membangun yang benar'). Produk bisa lolos verifikasi tetapi gagal validasi bila spesifikasinya salah.",
+"en": "Verification checks conformance to the spec ('building it right'); validation checks it meets real needs ('building the right thing'). A product can pass verification yet fail validation if the spec itself is wrong."
+}
+},
+{
+"id": "fun-002",
+"topic": "fundamentals",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Peran QA yang paling tepat dalam tim Scrum?",
+"en": "What is the most fitting QA role in a Scrum team?"
+},
+"options": {
+"id": [
+"Menajamkan acceptance criteria sejak refinement dan menguji di dalam sprint",
+"Menunggu fitur selesai lalu menguji di fase terpisah setelah sprint",
+"Hanya menulis bug report untuk dibaca manajer proyek",
+"Memutuskan prioritas backlog menggantikan product owner"
+],
+"en": [
+"Sharpen acceptance criteria from refinement and test within the sprint",
+"Wait for features to finish, then test in a separate post-sprint phase",
+"Only write bug reports for the project manager to read",
+"Decide backlog priority in place of the product owner"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Dalam Agile kualitas dikerjakan bersama sepanjang sprint. Fase test terpisah mengembalikan pola waterfall, dan prioritas backlog adalah wewenang product owner.",
+"en": "In Agile, quality is built together throughout the sprint. A separate test phase brings back waterfall habits, and backlog priority belongs to the product owner."
+}
+},
+{
+"id": "fun-003",
+"topic": "fundamentals",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Aturan usia minimal 18 tahun. Nilai uji boundary value yang paling relevan?",
+"en": "The rule says minimum age is 18. Which boundary values are most relevant?"
+},
+"options": {
+"id": [
+"17, 18, 19",
+"1, 50, 100",
+"0, 18, 180",
+"18, 28, 38"
+],
+"en": [
+"17, 18, 19",
+"1, 50, 100",
+"0, 18, 180",
+"18, 28, 38"
+]
+},
+"answer": 0,
+"exp": {
+"id": "BVA menguji di dan sekitar tepi: tepat di bawah (17), tepat di batas (18), dan tepat di atas (19). Nilai lain tidak berada di tepi kelompok.",
+"en": "BVA tests at and around the edge: just below (17), on the boundary (18) and just above (19). The other values are not at a partition edge."
+}
+},
+{
+"id": "fun-004",
+"topic": "fundamentals",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Status pesanan: baru, dibayar, dikirim, dibatalkan. Teknik apa paling cocok untuk menguji perpindahan statusnya?",
+"en": "Order status: new, paid, shipped, cancelled. Which technique fits testing its transitions?"
+},
+"options": {
+"id": [
+"State transition testing",
+"Equivalence partitioning pada nama customer",
+"Uji performance load tinggi",
+"Compatibility test browser"
+],
+"en": [
+"State transition testing",
+"Equivalence partitioning on the customer name",
+"High-load performance testing",
+"Browser compatibility testing"
+]
+},
+"answer": 0,
+"exp": {
+"id": "State transition memodelkan status, kejadian, dan perpindahan yang sah maupun tidak sah (mis. dikirim lalu dibayar harus ditolak).",
+"en": "State transition models states, events and valid or invalid moves (e.g. shipped then paid must be rejected)."
+}
+},
+{
+"id": "fun-005",
+"topic": "fundamentals",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Apa itu test oracle?",
+"en": "What is a test oracle?"
+},
+"options": {
+"id": [
+"Sumber penentu hasil yang benar dari sebuah test",
+"Alat otomasi untuk menjalankan test secara paralel",
+"Database khusus yang menyimpan seluruh test data",
+"Laporan ringkasan hasil regression tiap malam"
+],
+"en": [
+"A source that decides the correct result of a test",
+"An automation tool for running tests in parallel",
+"A special database that stores all of the test data",
+"A nightly summary report of regression results"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Oracle bisa berupa spesifikasi, versi sebelumnya, sistem pembanding, atau perhitungan independen. Tanpa oracle, hasil sebenarnya tidak bisa dinilai.",
+"en": "An oracle can be a spec, a previous version, a reference system or an independent calculation. Without one, an actual result cannot be judged."
+}
+},
+{
+"id": "fun-006",
+"topic": "fundamentals",
+"level": 1,
+"type": "mcq",
+"q": {
+"id": "Urutan siklus TDD yang benar?",
+"en": "What is the correct TDD cycle?"
+},
+"options": {
+"id": [
+"Tulis test gagal, buat lulus, refactor",
+"Tulis kode, tulis test, abaikan hasilnya",
+"Refactor dulu, tulis kode, hapus test",
+"Deploy dulu, tulis test, lalu perbaiki kode"
+],
+"en": [
+"Write a failing test, make it pass, refactor",
+"Write code, write a test, ignore the result",
+"Refactor first, write code, delete the test",
+"Deploy first, write a test, then fix the code"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Red-green-refactor: test gagal dulu (red), kode minimal agar lulus (green), lalu rapikan desain tanpa mengubah perilaku.",
+"en": "Red-green-refactor: failing test first (red), minimal code to pass (green), then clean the design without changing behaviour."
+}
+},
+{
+"id": "fun-007",
+"topic": "fundamentals",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Skenario Given-When-Then manakah yang ditulis dengan baik?",
+"en": "Which Given-When-Then scenario is written well?"
+},
+"options": {
+"id": [
+"Given pesanan dibayar, When customer membatalkan, Then dana dikembalikan",
+"Given klik tombol biru, When klik menu ketiga, Then lihat halaman",
+"Given buka browser, When ketik teks, Then tekan enter lalu tutup",
+"Given sebuah database, When sebuah query dijalankan, Then ada hasil"
+],
+"en": [
+"Given an order is paid, When the customer cancels, Then the money is refunded",
+"Given click the blue button, When click the third menu, Then see the page",
+"Given open the browser, When type text, Then press enter then close",
+"Given a database, When a query is run, Then there is a result"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Skenario BDD menggambarkan perilaku bisnis yang bisa disepakati semua pihak, bukan rangkaian klik UI.",
+"en": "A BDD scenario describes business behaviour everyone can agree on, not a sequence of interface clicks."
+}
+},
+{
+"id": "fun-008",
+"topic": "fundamentals",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Mengapa test data sebaiknya disiapkan dan dibersihkan oleh test itu sendiri?",
+"en": "Why should each test prepare and clean up its own data?"
+},
+"options": {
+"id": [
+"Agar test independen, bisa diulang, dan aman paralel",
+"Agar suite berjalan lebih lambat dan lebih teliti",
+"Agar tidak perlu environment khusus untuk menguji",
+"Agar data produksi bisa langsung dipakai ulang"
+],
+"en": [
+"So tests stay independent, repeatable and parallel-safe",
+"So the suite runs slower and with more thoroughness",
+"So that no dedicated test environment is needed",
+"So that production data can be reused directly"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Data bersama membuat test saling memengaruhi sehingga hasilnya berubah-ubah. Data produksi juga membawa risiko privasi.",
+"en": "Shared data makes tests affect each other so results vary. Production data also carries privacy risk."
+}
+},
+{
+"id": "nfn-001",
+"topic": "nonfunctional",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Mengapa laporan performance sebaiknya memakai persentil (p95/p99) dan bukan hanya rata-rata?",
+"en": "Why should performance reports use percentiles (p95/p99) rather than only the average?"
+},
+"options": {
+"id": [
+"Rata-rata menyembunyikan user yang sangat lambat",
+"Persentil selalu bernilai lebih kecil dari rata-rata",
+"Rata-rata tidak dapat dihitung pada data waktu respons",
+"Persentil hanya berlaku untuk pengukuran database"
+],
+"en": [
+"The average hides users with very slow responses",
+"Percentiles are always smaller than the average",
+"The average cannot be computed on response time data",
+"Percentiles only apply to database measurements"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Sebagian kecil permintaan yang sangat lambat tidak terlihat di rata-rata, padahal itulah yang dirasakan user tertentu. Persentil menampilkan ekor distribusi.",
+"en": "A small share of very slow requests vanishes in the average, yet some users feel exactly that. Percentiles show the tail of the distribution."
+}
+},
+{
+"id": "nfn-002",
+"topic": "nonfunctional",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Perbedaan load test dan stress test?",
+"en": "What is the difference between a load test and a stress test?"
+},
+"options": {
+"id": [
+"Load: load diharapkan; stress: lewat batas untuk cari titik gagal",
+"Load: tanpa user sama sekali; stress: dengan satu user",
+"Load: khusus untuk security; stress: khusus untuk tampilan",
+"Tidak ada perbedaan, hanya beda nama pada alat tertentu"
+],
+"en": [
+"Load: expected demand; stress: past limits to find the break point",
+"Load: with no users at all; stress: with one single user",
+"Load: for security checks only; stress: for appearance only",
+"No difference, only different names in particular tools"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Load test memverifikasi sistem sanggup menangani load normal-puncak; stress test mencari batas dan perilaku saat gagal (apakah pulih dengan baik).",
+"en": "A load test verifies the system handles normal-to-peak demand; a stress test finds the limit and how it behaves on failure (does it recover gracefully)."
+}
+},
+{
+"id": "nfn-003",
+"topic": "nonfunctional",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Test load 500 user menunjukkan CPU mesin load generator 100% sedangkan server target santai. Kesimpulan?",
+"en": "A 500-user load test shows the load generator at 100% CPU while the target server is idle. What follows?"
+},
+"options": {
+"id": [
+"Tidak valid: bottleneck di load generator, bukan di target",
+"Server target pasti sangat cepat dan efisien sekali",
+"Sistem dinyatakan lulus load test dengan sangat baik",
+"Jumlah user sebaiknya dinaikkan lagi segera mungkin"
+],
+"en": [
+"Invalid: the bottleneck is the load generator, not the target",
+"The target server must be extremely fast and efficient",
+"The system is declared to pass the load test well",
+"The user count should be raised again right away"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Bila generator jenuh, angka latency dan throughput mencerminkan generator, bukan sistem yang diuji. Tambah mesin load generator atau kurangi load per mesin.",
+"en": "When the generator is saturated, latency and throughput reflect the generator, not the system under test. Add generators or reduce the per-machine load."
+}
+},
+{
+"id": "nfn-004",
+"topic": "nonfunctional",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Mana yang termasuk risiko 'broken access control' pada OWASP Top 10?",
+"en": "Which is an example of 'broken access control' in the OWASP Top 10?"
+},
+"options": {
+"id": [
+"User biasa membuka halaman admin lewat URL langsung",
+"Situs memuat gambar lebih lambat di jaringan 3G biasa",
+"Warna tombol utama tidak persis sesuai desain awal",
+"Teks bantuan di halaman profil memuat salah ketik"
+],
+"en": [
+"A normal user opens an admin page via a direct URL",
+"The site loads images more slowly on a regular 3G network",
+"The main button colour does not match the original design",
+"The help text on the profile page contains a typo"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Access control memastikan setiap user hanya mengakses yang berhak. Mengandalkan 'menu disembunyikan' tanpa pemeriksaan di server adalah celah klasik.",
+"en": "Access control ensures each user reaches only what they are entitled to. Relying on 'hiding the menu' without a server-side check is a classic hole."
+}
+},
+{
+"id": "nfn-005",
+"topic": "nonfunctional",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Mengapa alat accessibility otomatis (axe, Lighthouse) tidak cukup?",
+"en": "Why are automated accessibility tools (axe, Lighthouse) not enough?"
+},
+"options": {
+"id": [
+"Hanya sebagian; keyboard dan pembaca layar perlu uji manual",
+"Alat otomatis selalu memberikan hasil yang salah semua",
+"WCAG sama sekali tidak bisa diuji oleh tim mana pun",
+"Accessibility hanya berkaitan dengan warna halaman saja"
+],
+"en": [
+"Only part; keyboard and screen readers need manual checks",
+"Automated tools always give results that are all wrong",
+"WCAG cannot be tested by any team at all, ever",
+"Accessibility is only related to the colours of a page"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Alat menangkap pelanggaran yang bisa dideteksi mesin (kontras, label hilang). Urutan fokus yang logis atau teks alternatif yang bermakna butuh penilaian manusia.",
+"en": "Tools catch machine-detectable violations (contrast, missing labels). A logical focus order or meaningful alt text needs human judgement."
+}
+},
+{
+"id": "nfn-006",
+"topic": "nonfunctional",
+"level": 1,
+"type": "mcq",
+"q": {
+"id": "Apa singkatan POUR pada WCAG?",
+"en": "What does POUR stand for in WCAG?"
+},
+"options": {
+"id": [
+"Perceivable, Operable, Understandable, Robust",
+"Performance, Output, Usability, Reliability",
+"Planning, Operation, Updates, Review",
+"Public, Open, Universal, Reachable"
+],
+"en": [
+"Perceivable, Operable, Understandable, Robust",
+"Performance, Output, Usability, Reliability",
+"Planning, Operation, Updates, Review",
+"Public, Open, Universal, Reachable"
+]
+},
+"answer": 0,
+"exp": {
+"id": "POUR adalah empat prinsip accessibility WCAG: dapat dipersepsi, dapat dioperasikan, dapat dipahami, dan kokoh terhadap teknologi bantu.",
+"en": "POUR are the four WCAG accessibility principles: perceivable, operable, understandable and robust against assistive technology."
+}
+},
+{
+"id": "nfn-007",
+"topic": "nonfunctional",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Cara memilih kombinasi browser/perangkat untuk compatibility test?",
+"en": "How should you choose browser/device combinations for compatibility testing?"
+},
+"options": {
+"id": [
+"Dari data user nyata (analytics) dan risiko",
+"Semua kombinasi yang pernah ada di pasar",
+"Hanya browser yang dipakai oleh developer",
+"Dipilih acak setiap kali ada release baru"
+],
+"en": [
+"From real user data (analytics) and risk",
+"Every combination that has ever existed on the market",
+"Only the browsers that the developers use",
+"Chosen at random each time there is a new release"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Semua kombinasi mustahil diuji. Analytics menunjukkan yang benar-benar dipakai user sehingga usaha tertuju pada risiko terbesar.",
+"en": "Testing all combinations is impossible. Analytics shows what users actually use, so effort goes to the biggest risk."
+}
+},
+{
+"id": "nfn-008",
+"topic": "nonfunctional",
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Security testing di sistem milik klien tanpa izin tertulis, 'hanya untuk membantu'. Penilaian?",
+"en": "Security testing a client's system without written permission, 'just to help'. Assessment?"
+},
+"options": {
+"id": [
+"Tidak etis dan bisa melanggar hukum; minta izin tertulis",
+"Boleh saja selama niatnya memang baik",
+"Boleh bila hanya dilakukan pada malam hari",
+"Boleh bila hasilnya dirahasiakan dari semua orang"
+],
+"en": [
+"Unethical and possibly illegal; get written permission",
+"Perfectly fine as long as the intent is good",
+"Fine if it is only done during the night",
+"Fine if the results are kept secret from everyone"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Niat baik tidak menggantikan otorisasi. Security test hanya pada sistem yang secara jelas Anda berwenang menguji.",
+"en": "Good intent does not replace authorisation. Security-test only systems you are clearly authorised to test."
+}
+},
+{
+"id": "tool-001",
+"topic": "tooling",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Perbedaan utama git merge dan git rebase?",
+"en": "What is the main difference between git merge and git rebase?"
+},
+"options": {
+"id": [
+"Merge menyatukan riwayat; rebase menulis ulang commit",
+"Merge menghapus sebuah cabang; rebase membuat cabang",
+"Rebase hanya dipakai untuk file gambar dan biner",
+"Tidak ada perbedaan sama sekali antara keduanya"
+],
+"en": [
+"Merge joins histories; rebase rewrites commits",
+"Merge deletes a branch; rebase creates a branch",
+"Rebase is only used for image and binary files",
+"There is no difference at all between the two"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Rebase mengubah riwayat commit sehingga tidak dilakukan pada cabang yang dipakai bersama. Merge mempertahankan riwayat apa adanya.",
+"en": "Rebase changes commit history so it is avoided on shared branches. Merge preserves history as is."
+}
+},
+{
+"id": "tool-002",
+"topic": "tooling",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Anda tidak sengaja meng-commit API key ke repository. Tindakan yang benar?",
+"en": "You accidentally committed an API key to the repository. What is the right action?"
+},
+"options": {
+"id": [
+"Cabut dan ganti key, lalu bersihkan riwayat bila perlu",
+"Hapus commit terakhir saja lalu anggap selesai",
+"Biarkan saja karena repository ini bersifat privat",
+"Ubah nama file yang memuat key tersebut saja"
+],
+"en": [
+"Revoke and rotate the key, then clean history if needed",
+"Just delete the last commit and consider it done",
+"Leave it alone because the repository is private",
+"Only rename the file that contains the key"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Key yang pernah masuk riwayat harus dianggap bocor. Menghapus commit tidak cukup karena salinan dan cache mungkin ada.",
+"en": "A key that ever entered history must be considered leaked. Deleting the commit is not enough because copies and caches may exist."
+}
+},
+{
+"id": "tool-003",
+"topic": "tooling",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Tujuan Docker pada environment test?",
+"en": "What is Docker's purpose in a test environment?"
+},
+"options": {
+"id": [
+"Membuat environment sama di laptop dan CI",
+"Menggantikan seluruh test otomatis di proyek",
+"Menambah kecepatan CPU secara fisik di server",
+"Menghapus kebutuhan akan versi dependensi aplikasi"
+],
+"en": [
+"Creating the same environment on laptops and CI",
+"Replacing every automated test in the project",
+"Physically adding CPU speed on the server",
+"Removing the need for application dependency versions"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Container membungkus aplikasi dan dependensinya sehingga perbedaan environment, penyebab umum flaky test dan 'works on my machine', berkurang.",
+"en": "Containers bundle the app and its dependencies, reducing environment differences, a common cause of flaky tests and 'works on my machine'."
+}
+},
+{
+"id": "tool-004",
+"topic": "tooling",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Laporan test otomatis yang berguna harus menjawab apa?",
+"en": "What must a useful automated test report answer?"
+},
+"options": {
+"id": [
+"Apa yang gagal, di mana, dan buktinya (log, gambar)",
+"Hanya berapa banyak test yang sudah dijalankan saja",
+"Siapa nama penulis dari setiap test yang ada ini",
+"Berapa lama server CI tetap menyala pada hari ini"
+],
+"en": [
+"What failed, where, and the evidence (logs, images)",
+"Only how many tests have been run so far in total",
+"The name of the author of each of the existing tests",
+"How long the CI server has stayed switched on today"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Laporan yang tidak memberi bukti memaksa orang mereproduksi failure dari nol. Failure artifact mempercepat diagnosis.",
+"en": "A report without evidence forces people to reproduce failures from scratch. Failure artefacts speed up diagnosis."
+}
+},
+{
+"id": "tool-005",
+"topic": "tooling",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Tiga sinyal observability?",
+"en": "What are the three observability signals?"
+},
+"options": {
+"id": [
+"Log, metrik, trace",
+"CPU, RAM, disk",
+"Build, test, deploy",
+"Alpha, beta, gamma"
+],
+"en": [
+"Logs, metrics, traces",
+"CPU, RAM, disk",
+"Build, test, deploy",
+"Alpha, beta, gamma"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Log mencatat kejadian, metrik menghitung tren, trace mengikuti satu request lintas layanan. Ketiganya saling melengkapi saat menyelidiki bug produksi.",
+"en": "Logs record events, metrics count trends, traces follow a single request across services. Together they help investigate production bugs."
+}
+},
+{
+"id": "tool-006",
+"topic": "tooling",
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Dalam RCA bug produksi, mana yang paling tepat disebut root cause yang bisa dicegah?",
+"en": "In an RCA of a production bug, which is best called the preventable root cause?"
+},
+"options": {
+"id": [
+"Kontrol yang hilang hingga bug lolos, mis. tanpa test",
+"Baris kode tempat error pertama kali muncul di log",
+"User yang melaporkan masalah itu pertama kalinya",
+"Waktu terjadinya insiden menurut jam server produksi"
+],
+"en": [
+"The missing control that let it through, e.g. no test",
+"The line of code where the error first appeared",
+"The user who first reported the problem",
+"The time of the incident according to server clock"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Baris kode adalah penyebab langsung. Root cause yang bisa dicegah adalah celah proses atau kontrol (tidak ada test, review terlewat, requirement ambigu) yang membuat bug lolos. Satu insiden bisa punya beberapa faktor penyebab.",
+"en": "The code line is the proximate cause. The preventable root cause is the process or control gap (no test, missed review, ambiguous requirement) that let the bug through. One incident can have several contributing factors."
+}
+},
+{
+"id": "tool-007",
+"topic": "tooling",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Tantangan khas testing aplikasi mobile dibanding web?",
+"en": "What is a typical challenge of mobile testing compared with web?"
+},
+"options": {
+"id": [
+"Fragmentasi perangkat/OS, izin, jaringan buruk, interupsi",
+"Perangkat mobile memang tidak memiliki layar sama sekali",
+"Aplikasi mobile tidak mungkin bisa diotomasi sama sekali",
+"Hanya tersedia satu ukuran layar untuk semua perangkat"
+],
+"en": [
+"Device/OS fragmentation, permissions, bad networks, interrupts",
+"Mobile devices simply do not have any screen at all",
+"Mobile apps cannot possibly be automated in any way",
+"Only a single screen size exists for every kind of device"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Perangkat, versi OS, izin (kamera/lokasi), kondisi jaringan, dan interupsi (telepon, notifikasi) membuat kasus mobile unik. Appium dan alat lain bisa mengotomasi.",
+"en": "Devices, OS versions, permissions (camera/location), network conditions and interruptions (calls, notifications) make mobile unique. Appium and others can automate it."
+}
+},
+{
+"id": "tool-008",
+"topic": "tooling",
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Mengapa pipeline CI sebaiknya menyimpan screenshot/trace saat test gagal?",
+"en": "Why should CI keep screenshots/traces when a test fails?"
+},
+"options": {
+"id": [
+"Agar failure bisa didiagnosis tanpa reproduksi manual",
+"Agar pipeline menjadi lebih lambat dari biasanya",
+"Agar developer tidak perlu lagi membaca log apa pun",
+"Agar test tidak akan pernah gagal di masa depan"
+],
+"en": [
+"So failures can be diagnosed without manual reproduction",
+"So the pipeline becomes slower than it normally is",
+"So developers no longer need to read any logs at all",
+"So tests will never fail again in the future"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Failure CI sering tidak muncul lokal. Artefak menyimpan keadaan saat gagal sehingga penyebab bisa ditelusuri.",
+"en": "CI failures often do not reproduce locally. Artefacts keep the state at failure so the cause can be traced."
+}
+},
+{
+"id": "int-019",
+"topic": "interview",
+"level": 2,
+"type": "short",
+"q": {
+"id": "Ceritakan saat Anda berselisih pendapat dengan developer soal sebuah bug. Bagaimana akhirnya?",
+"en": "Tell me about a time you disagreed with a developer about a bug. How did it end?"
+},
+"model": {
+"id": "Gunakan STAR. Tunjukkan Anda memisahkan fakta dari opini: langkah reproduksi, log atau rekaman, dan dampak ke user. Dengarkan sudut pandang developer, cari titik temu (mungkin perilaku sesuai spesifikasi tetapi spesifikasinya yang bermasalah), libatkan product owner bila perlu, dan sebut hasilnya serta hubungan kerja sesudahnya. Hindari menyalahkan orang.",
+"en": "Use STAR. Show you separated facts from opinion: reproduction steps, logs or a recording, and user impact. Listen to the developer's view, find common ground (maybe the behaviour matches the spec but the spec is the problem), involve the product owner when needed, and state the result and the working relationship afterwards. Avoid blaming people."
+},
+"keywords": [
+[
+"fakta",
+"bukti",
+"evidence",
+"reproduksi",
+"reproduce",
+"log"
+],
+[
+"dengar",
+"listen",
+"sudut pandang",
+"perspective",
+"kolaborasi",
+"collaborat"
+],
+[
+"product owner",
+"stakeholder",
+"spesifikasi",
+"spec",
+"requirement"
+],
+[
+"hasil",
+"result",
+"outcome",
+"pelajaran",
+"lesson"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-020",
+"topic": "interview",
+"level": 2,
+"type": "short",
+"q": {
+"id": "Ceritakan kesalahan yang pernah Anda buat sebagai QA dan apa yang Anda ubah sesudahnya.",
+"en": "Tell me about a mistake you made as a QA and what you changed afterwards."
+},
+"model": {
+"id": "Pilih kesalahan nyata yang tidak fatal. Jelaskan situasi, akui tanggung jawab tanpa membela diri, sebutkan dampaknya, tindakan perbaikan yang segera dilakukan, dan perubahan jangka panjang (mis. checklist, regression test baru, review). Tutup dengan pelajaran yang bisa diterapkan lagi.",
+"en": "Choose a real, non-fatal mistake. Describe the situation, own it without defensiveness, state the impact, the immediate fix, and the long-term change (e.g. a checklist, a new regression test, a review). Close with a lesson you can reuse."
+},
+"keywords": [
+[
+"akui",
+"own",
+"tanggung jawab",
+"responsib",
+"admit"
+],
+[
+"dampak",
+"impact",
+"akibat"
+],
+[
+"perbaik",
+"fix",
+"checklist",
+"regression",
+"proses",
+"process"
+],
+[
+"pelajaran",
+"lesson",
+"belajar",
+"learn"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-021",
+"topic": "interview",
+"level": 2,
+"type": "short",
+"q": {
+"id": "Anda punya lima tugas penting dan waktu hanya cukup untuk dua. Bagaimana memutuskan?",
+"en": "You have five important tasks and time for only two. How do you decide?"
+},
+"model": {
+"id": "Nilai berdasarkan risiko dan dampak bisnis (kemungkinan x dampak), tenggat, dan ketergantungan. Konfirmasi prioritas dengan product owner atau atasan alih-alih menebak. Komunikasikan secara terbuka apa yang ditunda beserta risikonya, dan cari cara mendelegasikan atau mengotomasi sebagian.",
+"en": "Assess by risk and business impact (likelihood x impact), deadlines and dependencies. Confirm priorities with the product owner or manager instead of guessing. Communicate openly what is deferred and its risk, and look for ways to delegate or automate part of it."
+},
+"keywords": [
+[
+"risiko",
+"risk",
+"dampak",
+"impact"
+],
+[
+"tenggat",
+"deadline",
+"prioritas",
+"priorit"
+],
+[
+"konfirmasi",
+"confirm",
+"product owner",
+"atasan",
+"manager",
+"komunikasi",
+"communicat"
+],
+[
+"tunda",
+"defer",
+"delegasi",
+"delegate",
+"otomasi",
+"automat"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-022",
+"topic": "interview",
+"level": 3,
+"type": "short",
+"q": {
+"id": "Product owner menganggap bug yang Anda temukan 'tidak penting', Anda yakin sebaliknya. Apa yang Anda lakukan?",
+"en": "The product owner says a bug you found 'does not matter', but you disagree. What do you do?"
+},
+"model": {
+"id": "Siapkan data, bukan opini: seberapa banyak user terdampak, seberapa sering, dampak ke uang, reputasi, atau security, dan apakah ada workaround. Presentasikan singkat, tawarkan opsi (perbaiki sekarang, workaround, jadwalkan), lalu hormati keputusan yang diambil sambil mencatat risiko residual di tiket.",
+"en": "Bring data, not opinions: how many users are affected, how often, the impact on money, reputation or security, and whether a workaround exists. Present briefly, offer options (fix now, workaround, schedule), then respect the decision while recording the residual risk in the ticket."
+},
+"keywords": [
+[
+"data",
+"bukti",
+"evidence",
+"pengguna",
+"user",
+"frekuensi",
+"frequency"
+],
+[
+"dampak",
+"impact",
+"risiko",
+"risk"
+],
+[
+"opsi",
+"option",
+"workaround",
+"jadwal",
+"schedule"
+],
+[
+"catat",
+"record",
+"dokumen",
+"document",
+"keputusan",
+"decision",
+"hormati",
+"respect"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-023",
+"topic": "interview",
+"level": 2,
+"type": "short",
+"q": {
+"id": "Anda bergabung ke tim yang belum punya test otomasi. Apa yang Anda lakukan di 90 hari pertama?",
+"en": "You join a team with no test automation. What do you do in your first 90 days?"
+},
+"model": {
+"id": "Bulan pertama: pahami produk, alur kritis, risiko, dan proses release; bangun hubungan dengan developer dan product owner. Lalu mulai kecil: smoke test otomatis untuk alur paling penting dan jalankan di CI. Bulan berikutnya perluas ke test API dan regression berisiko tinggi, tetapkan konvensi dan test data, serta ukur hasilnya (waktu regression, bug yang tertangkap).",
+"en": "Month one: learn the product, critical flows, risks and the release process; build relationships with developers and the product owner. Then start small: automated smoke tests for the most important flow, run in CI. In later months expand to API tests and high-risk regression, set conventions and test data, and measure results (regression time, bugs caught)."
+},
+"keywords": [
+[
+"pahami",
+"understand",
+"risiko",
+"risk",
+"alur kritis",
+"critical"
+],
+[
+"smoke",
+"kecil",
+"small"
+],
+[
+"ci",
+"pipeline"
+],
+[
+"ukur",
+"measure",
+"api",
+"regression",
+"konvensi",
+"convention"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-024",
+"topic": "interview",
+"level": 2,
+"type": "short",
+"q": {
+"id": "Bagaimana Anda menguji fitur login?",
+"en": "How would you test a login feature?"
+},
+"model": {
+"id": "Positif: kredensial valid, ingat saya, logout. Negatif: password salah, email tidak terdaftar (pesan generik), kolom kosong, spasi di ujung, huruf besar-kecil. Batas dan security: panjang maksimum, rate limit atau penguncian akun, masa berlaku sesi dan token, injection, HTTPS. Lain-lain: accessibility, tombol back, banyak perangkat. Otomasi di level API dan beberapa E2E.",
+"en": "Positive: valid credentials, remember me, logout. Negative: wrong password, unregistered email (generic message), empty fields, trailing spaces, letter case. Limits and security: maximum length, rate limiting or account lockout, session and token expiry, injection, HTTPS. Other: accessibility, back button, multiple devices. Automate at API level plus a few E2E."
+},
+"keywords": [
+[
+"positif",
+"positive",
+"valid"
+],
+[
+"negatif",
+"negative",
+"salah",
+"wrong",
+"kosong",
+"empty"
+],
+[
+"keamanan",
+"security",
+"rate limit",
+"kunci",
+"lock",
+"token",
+"sesi",
+"session"
+],
+[
+"batas",
+"boundary",
+"aksesibilitas",
+"accessib",
+"otomasi",
+"automat"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-025",
+"topic": "interview",
+"level": 2,
+"type": "short",
+"q": {
+"id": "Bagaimana Anda menguji fitur pencarian pada toko online?",
+"en": "How would you test the search feature of an online shop?"
+},
+"model": {
+"id": "Fungsional: kata kunci cocok persis, sebagian, huruf besar-kecil, salah ketik, kosong, tidak ada hasil. Relevansi dan pengurutan, filter, serta pagination yang konsisten saat data berubah. Input khusus (karakter spesial, emoji, string sangat panjang, injection). Performance pada data besar dan kecepatan respons, plus tampilan di mobile dan accessibility.",
+"en": "Functional: exact and partial keyword matches, letter case, typos, empty, no results. Relevance and sorting, filters, and pagination that stays consistent as data changes. Special input (special characters, emoji, very long strings, injection). Performance on large data and response time, plus mobile display and accessibility."
+},
+"keywords": [
+[
+"kata kunci",
+"keyword",
+"cocok",
+"match",
+"kosong",
+"empty",
+"tidak ada hasil",
+"no result"
+],
+[
+"relevan",
+"urut",
+"sort",
+"filter",
+"pagination"
+],
+[
+"karakter",
+"special",
+"injection",
+"panjang",
+"long"
+],
+[
+"performa",
+"performance",
+"mobile",
+"aksesibilitas",
+"accessib"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-026",
+"topic": "interview",
+"level": 2,
+"type": "short",
+"q": {
+"id": "Bagaimana Anda menguji fitur upload file (upload)?",
+"en": "How would you test a file upload feature?"
+},
+"model": {
+"id": "Tipe dan ekstensi yang diizinkan atau ditolak (termasuk ekstensi ganda dan tipe palsu), ukuran minimum dan maksimum, nama file dengan spasi atau karakter khusus, file kosong atau rusak, upload banyak file sekaligus, koneksi putus di tengah, pembatalan, dan upload ulang. Security: file berbahaya, path traversal, dan pemeriksaan di server, bukan hanya di client.",
+"en": "Allowed and rejected types and extensions (including double extensions and spoofed types), minimum and maximum size, file names with spaces or special characters, empty or corrupt files, multiple files at once, connection drop midway, cancel, and re-upload. Security: malicious files, path traversal, and checks on the server, not only on the client."
+},
+"keywords": [
+[
+"tipe",
+"type",
+"ekstensi",
+"extension",
+"format"
+],
+[
+"ukuran",
+"size",
+"batas",
+"limit",
+"kosong",
+"empty",
+"rusak",
+"corrupt"
+],
+[
+"putus",
+"interrupt",
+"batal",
+"cancel",
+"jaringan",
+"network",
+"banyak",
+"multiple"
+],
+[
+"keamanan",
+"security",
+"server",
+"berbahaya",
+"malicious",
+"traversal"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-027",
+"topic": "interview",
+"level": 3,
+"type": "short",
+"q": {
+"id": "Bagaimana Anda menguji fitur transfer uang atau pembayaran?",
+"en": "How would you test a money transfer or payment feature?"
+},
+"model": {
+"id": "Happy path dan semua negative path (saldo kurang, nominal nol atau negatif, batas harian). Integritas: transaksi atomik dengan rollback, tidak ada pembayaran ganda saat retry (idempotency), konkurensi pada saldo yang sama, rekonsiliasi saldo dan ledger. Security: otorisasi, verifikasi tambahan, pengelolaan data kartu. Juga failure pihak ketiga, timeout, audit log, dan kepatuhan.",
+"en": "Happy path and all negative paths (insufficient balance, zero or negative amount, daily limit). Integrity: atomic transactions with rollback, no double payment on retry (idempotency), concurrency on the same balance, reconciliation of balance and ledger. Security: authorisation, extra verification, handling of card data. Also third-party failures, timeouts, audit logs and compliance."
+},
+"keywords": [
+[
+"saldo",
+"balance",
+"negatif",
+"negative",
+"batas",
+"limit"
+],
+[
+"atomik",
+"atomic",
+"rollback",
+"idempoten",
+"konkuren",
+"concurren",
+"ganda",
+"double"
+],
+[
+"rekonsiliasi",
+"reconcil",
+"ledger",
+"audit"
+],
+[
+"keamanan",
+"security",
+"otorisasi",
+"authoris",
+"authoriz",
+"timeout",
+"pihak ketiga",
+"third"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-028",
+"topic": "interview",
+"level": 3,
+"type": "short",
+"q": {
+"id": "Bagaimana Anda menguji integrasi dengan API pembayaran pihak ketiga yang tidak stabil di environment test?",
+"en": "How do you test an integration with an unstable third-party payment API in the test environment?"
+},
+"model": {
+"id": "Pisahkan: gunakan mock atau stub untuk test harian agar deterministik dan bisa mensimulasikan error, timeout, dan respons lambat; pakai sandbox resmi untuk test integrasi terbatas; tambahkan contract test supaya perubahan kontrak terdeteksi. Uji juga sisi kita: retry dengan backoff, idempotency, penanganan status tidak pasti, dan alert saat vendor bermasalah.",
+"en": "Separate concerns: use mocks or stubs for daily tests so they are deterministic and can simulate errors, timeouts and slow responses; use the official sandbox for limited integration tests; add contract tests so contract changes are detected. Also test our side: retry with backoff, idempotency, handling of uncertain status, and alerts when the vendor is unhealthy."
+},
+"keywords": [
+[
+"mock",
+"stub",
+"simulasi",
+"simulat"
+],
+[
+"sandbox",
+"integrasi",
+"integration"
+],
+[
+"contract",
+"kontrak"
+],
+[
+"retry",
+"backoff",
+"idempoten",
+"timeout",
+"alert"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-029",
+"topic": "interview",
+"level": 3,
+"type": "short",
+"q": {
+"id": "Anda diminta menguji fitur baru, tetapi requirement-nya samar. Apa langkah Anda?",
+"en": "You are asked to test a new feature but the requirements are vague. What are your steps?"
+},
+"model": {
+"id": "Ajukan pertanyaan klarifikasi kepada product owner dan developer, tuliskan asumsi dan acceptance criteria dalam contoh konkret (Given-When-Then), dan minta persetujuan. Sambil menunggu, lakukan exploratory testing berpiagam dan catat temuan. Catat hal yang belum jelas sebagai risiko, dan perbarui test saat requirement diperjelas.",
+"en": "Ask clarifying questions to the product owner and developers, write the assumptions and acceptance criteria as concrete examples (Given-When-Then), and get them confirmed. Meanwhile do charter-based exploratory testing and record findings. Log unclear points as risks, and update tests as requirements are clarified."
+},
+"keywords": [
+[
+"tanya",
+"ask",
+"klarifikasi",
+"clarif"
+],
+[
+"asumsi",
+"assumption",
+"acceptance criteria",
+"given-when-then",
+"contoh",
+"example"
+],
+[
+"exploratory",
+"eksplorasi"
+],
+[
+"risiko",
+"risk",
+"catat",
+"record",
+"perbarui",
+"update"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-030",
+"topic": "interview",
+"level": 3,
+"type": "short",
+"q": {
+"id": "Test otomasi Anda tidak menemukan bug apa pun selama enam bulan. Apakah itu berarti test-nya tidak berguna?",
+"en": "Your automated tests have found no bugs for six months. Does that mean they are useless?"
+},
+"model": {
+"id": "Belum tentu. Regression test bernilai sebagai jaring pengaman: ketiadaan failure bisa berarti kode stabil atau perubahan aman. Tetapi perlu ditinjau: apakah test benar-benar bisa gagal (uji dengan mutasi atau bug sengaja), apakah coverage area berisiko memadai, dan apakah ada bug yang lolos ke produksi yang tidak tertangkap. Hapus atau gabungkan test yang berlebihan.",
+"en": "Not necessarily. Regression tests are valuable as a safety net: no failures may mean stable code or safe changes. But review it: can the tests actually fail (try mutation or a deliberate bug), is coverage of risky areas adequate, and did bugs escape to production that the tests missed? Remove or merge redundant tests."
+},
+"keywords": [
+[
+"jaring pengaman",
+"safety net",
+"regresi",
+"regression"
+],
+[
+"bisa gagal",
+"can fail",
+"mutasi",
+"mutation",
+"sengaja",
+"deliberate"
+],
+[
+"cakupan",
+"coverage",
+"risiko",
+"risk"
+],
+[
+"lolos",
+"escape",
+"produksi",
+"production",
+"hapus",
+"remove",
+"redundan"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-031",
+"topic": "interview",
+"level": 2,
+"type": "short",
+"q": {
+"id": "Bagaimana Anda mengukur apakah upaya QA di tim berhasil?",
+"en": "How do you measure whether QA is succeeding in a team?"
+},
+"model": {
+"id": "Pakai metrik hasil, bukan aktivitas: defect escape rate (bug yang lolos ke produksi), waktu mendeteksi dan memperbaiki, flaky rate, durasi pipeline, dan keluhan customer. Gabungkan dengan tren, bukan angka tunggal. Hindari metrik yang mudah dimanipulasi seperti jumlah test case atau jumlah bug yang ditemukan.",
+"en": "Use outcome metrics, not activity: defect escape rate (bugs reaching production), time to detect and fix, flaky rate, pipeline duration and customer complaints. Look at trends rather than single numbers. Avoid easily gamed metrics such as the number of test cases or bugs found."
+},
+"keywords": [
+[
+"escape",
+"lolos",
+"produksi",
+"production"
+],
+[
+"waktu",
+"time",
+"flaky",
+"pipeline",
+"durasi",
+"duration"
+],
+[
+"tren",
+"trend",
+"pelanggan",
+"customer"
+],
+[
+"hindari",
+"avoid",
+"manipulasi",
+"gamed",
+"jumlah test",
+"number of test"
+]
+],
+"pass": 0.6
+},
+{
+"id": "int-032",
+"topic": "interview",
+"level": 2,
+"type": "short",
+"q": {
+"id": "Mengapa Anda memilih karir di QA dan ke mana Anda ingin berkembang?",
+"en": "Why did you choose a QA career and where do you want to grow?"
+},
+"model": {
+"id": "Jawab jujur dan spesifik: apa yang Anda sukai dari QA (berpikir kritis, melindungi user, kolaborasi), contoh momen yang membuat Anda yakin, dan arah pengembangan konkret (otomasi, API dan performance, security, atau kepemimpinan kualitas) beserta langkah belajar yang sedang dijalani. Kaitkan dengan kebutuhan perusahaan tersebut.",
+"en": "Answer honestly and specifically: what you like about QA (critical thinking, protecting users, collaboration), an example moment that convinced you, and a concrete growth direction (automation, API and performance, security, or quality leadership) with the learning steps you are taking. Tie it to the company's needs."
+},
+"keywords": [
+[
+"pengguna",
+"user",
+"berpikir kritis",
+"critical thinking",
+"kolaborasi",
+"collaborat"
+],
+[
+"contoh",
+"example",
+"momen",
+"moment",
+"pengalaman",
+"experience"
+],
+[
+"otomasi",
+"automat",
+"performa",
+"performance",
+"keamanan",
+"security",
+"kepemimpinan",
+"leadership"
+],
+[
+"belajar",
+"learn",
+"perusahaan",
+"company",
+"kebutuhan",
+"needs"
 ]
 ],
 "pass": 0.6
@@ -1473,7 +4800,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "Locator berbasis role, label, atau test id mencerminkan cara pengguna melihat halaman dan jarang patah. Selector posisi dan kelas gaya rapuh terhadap perubahan struktur.",
+"id": "Locator berbasis role, label, atau test id mencerminkan cara user melihat halaman dan jarang patah. Selector posisi dan kelas gaya rapuh terhadap perubahan struktur.",
 "en": "Role, label or test-id locators mirror how users see the page and rarely break. Position and styling-class selectors are brittle against structure changes."
 }
 },
@@ -1604,7 +4931,7 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Command Cypress async dalam antrean dan mengembalikan chainable, bukan nilai; pakai .then() atau alias",
+"Command Cypress async dalam queue dan mengembalikan chainable, bukan nilai; pakai .then() atau alias",
 "Karena cy.get hanya mendukung selector ID dan tidak bisa membaca teks elemen sama sekali",
 "Karena Cypress memang tidak menyediakan fungsi untuk membaca teks dari sebuah elemen",
 "Karena semua command Cypress wajib diawali dengan await agar nilai kembaliannya tersedia"
@@ -1663,7 +4990,7 @@ QA.questions = [
 "options": {
 "id": [
 "Query dan assertion diulang otomatis sampai lolos atau timeout (default 4 detik)",
-"Seluruh test diulang jika gagal tanpa perlu konfigurasi apa pun oleh pengguna Cypress",
+"Seluruh test diulang jika gagal tanpa perlu konfigurasi apa pun oleh user Cypress",
 "Command yang mengubah state seperti click diulang berkali-kali sampai berhasil dijalankan",
 "Cypress mengulang test terus-menerus sampai hasilnya hijau, berapa pun jumlah percobaannya"
 ],
@@ -1693,7 +5020,7 @@ QA.questions = [
 "id": [
 "cy.session() untuk menyimpan dan memulihkan sesi login (login lewat API bila bisa)",
 "Login manual dulu di browser lalu menjalankan Cypress tanpa pernah menutup browser itu",
-"Menonaktifkan autentikasi di aplikasi sepenuhnya selama test berjalan di lingkungan apa pun",
+"Menonaktifkan autentikasi di aplikasi sepenuhnya selama test berjalan di environment apa pun",
 "Memakai cy.wait(10000) setiap kali login supaya sesi sempat terbentuk dengan sempurna"
 ],
 "en": [
@@ -1780,8 +5107,8 @@ QA.questions = [
 "id": [
 "Menjalankan beberapa test suite sekaligus, mis. lintas browser atau profile, berurutan atau paralel",
 "Menyimpan locator elemen web secara terpusat untuk dipakai ulang oleh seluruh test case",
-"Menyimpan data uji dalam file CSV yang dihubungkan ke langkah-langkah test case",
-"Membuat laporan bug otomatis ke sistem tracker setiap kali sebuah test gagal"
+"Menyimpan test data dalam file CSV yang dihubungkan ke langkah-langkah test case",
+"Membuat bug report otomatis ke sistem tracker setiap kali sebuah test gagal"
 ],
 "en": [
 "Running several test suites together, e.g. across browsers or profiles, sequentially or in parallel",
@@ -1839,7 +5166,7 @@ QA.questions = [
 "Locator disimpan terpusat sehingga satu perubahan memperbaiki semua test; ada self-healing",
 "Karena membuat setiap test berjalan jauh lebih cepat dibanding menulis locator di langkah",
 "Karena menghilangkan kebutuhan assertion pada hampir seluruh langkah verifikasi test",
-"Karena otomatis menuliskan data uji yang dibutuhkan oleh setiap test case baru"
+"Karena otomatis menuliskan test data yang dibutuhkan oleh setiap test case baru"
 ],
 "en": [
 "Locators are kept centrally so one change fixes all tests; self-healing is available",
@@ -1889,7 +5216,7 @@ QA.questions = [
 "level": 2,
 "type": "mcq",
 "q": {
-"id": "Query mana yang menemukan pelanggan yang belum pernah membuat pesanan?",
+"id": "Query mana yang menemukan customer yang belum pernah membuat pesanan?",
 "en": "Which query finds customers who have never placed an order?"
 },
 "options": {
@@ -1908,7 +5235,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "LEFT JOIN mempertahankan semua pelanggan; yang tidak punya pesanan memiliki kolom o.id NULL. NOT EXISTS juga valid. '= NULL' tidak pernah benar.",
+"id": "LEFT JOIN mempertahankan semua customer; yang tidak punya pesanan memiliki kolom o.id NULL. NOT EXISTS juga valid. '= NULL' tidak pernah benar.",
 "en": "LEFT JOIN keeps all customers; those without orders have o.id NULL. NOT EXISTS is also valid. '= NULL' is never true."
 }
 },
@@ -2081,7 +5408,7 @@ QA.questions = [
 "en": "Your automated test is flaky (sometimes passes, sometimes fails). How do you handle it?"
 },
 "model": {
-"id": "Reproduksi dan cari akar masalah: timing/waiting, data uji yang saling mengganggu, lingkungan tidak stabil, atau locator rapuh. Perbaiki dengan wait berbasis kondisi, isolasi data, mock dependensi tak stabil; karantina sementara agar tidak menghalangi pipeline, dan jangan sekadar menambah retry.",
+"id": "Reproduksi dan cari root cause: timing/waiting, test data yang saling mengganggu, environment tidak stabil, atau locator rapuh. Perbaiki dengan wait berbasis kondisi, isolasi data, mock dependensi tak stabil; karantina sementara agar tidak menghalangi pipeline, dan jangan sekadar menambah retry.",
 "en": "Reproduce and find the root cause: timing/waiting, test data interference, unstable environment or brittle locators. Fix with condition-based waits, data isolation, mocking unstable dependencies; quarantine temporarily so the pipeline is not blocked, and don't just add retries."
 },
 "keywords": [
@@ -2163,11 +5490,11 @@ QA.questions = [
 "level": 3,
 "type": "short",
 "q": {
-"id": "Bagaimana Anda melaporkan risiko rilis kepada stakeholder non-teknis?",
+"id": "Bagaimana Anda melaporkan risiko release kepada stakeholder non-teknis?",
 "en": "How do you report release risk to non-technical stakeholders?"
 },
 "model": {
-"id": "Gunakan bahasa dampak bisnis, bukan istilah teknis: apa yang sudah diuji, apa yang belum, defect terbuka beserta tingkat keparahan dan dampak pengguna, serta rekomendasi (rilis, rilis dengan mitigasi, tunda). Sajikan ringkas dengan data seperti status pass/fail dan cakupan area berisiko.",
+"id": "Gunakan bahasa dampak bisnis, bukan istilah teknis: apa yang sudah diuji, apa yang belum, defect terbuka beserta tingkat keparahan dan dampak user, serta rekomendasi (release, release dengan mitigasi, tunda). Sajikan ringkas dengan data seperti status pass/fail dan coverage area berisiko.",
 "en": "Use business-impact language, not technical jargon: what was tested, what was not, open defects with severity and user impact, and a recommendation (release, release with mitigation, delay). Keep it concise with data such as pass/fail status and coverage of risky areas."
 },
 "keywords": [
@@ -2215,7 +5542,7 @@ QA.questions = [
 "en": "Describe a hard bug you found using the STAR format (without confidential company data)."
 },
 "model": {
-"id": "Situasi: konteks umum fitur dan masalahnya. Tugas: peran saya. Aksi: bagaimana saya mereproduksi, mempersempit penyebab, berkolaborasi dengan developer, dan menambah pengamanan. Hasil: bug diperbaiki dan dampak terukur, mis. regresi yang dicegah atau pelajaran proses.",
+"id": "Situasi: konteks umum fitur dan masalahnya. Tugas: peran saya. Aksi: bagaimana saya mereproduksi, mempersempit penyebab, berkolaborasi dengan developer, dan menambah pengamanan. Hasil: bug diperbaiki dan dampak terukur, mis. regression yang dicegah atau pelajaran proses.",
 "en": "Situation: general context of the feature and the problem. Task: my role. Action: how I reproduced, narrowed down the cause, collaborated with developers and added safeguards. Result: the bug fixed and a measurable effect, e.g. regression prevented or process learning."
 },
 "keywords": [
@@ -2294,8 +5621,8 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Tool eksekusi test yang menjalankan skrip otomasi pada aplikasi",
-"Tool non-fungsional yang mengukur performa di bawah beban",
+"Tool eksekusi test yang menjalankan script otomasi pada aplikasi",
+"Tool non-fungsional yang mengukur performance di bawah load",
 "Tool static testing yang menganalisis kode tanpa eksekusi",
 "Tool manajemen test yang melacak hasil dan defect proyek"
 ],
@@ -2320,13 +5647,13 @@ QA.questions = [
 "level": 2,
 "type": "mcq",
 "q": {
-"id": "Tim ingin tahu waktu respons API ketika ribuan pengguna virtual mengaksesnya bersamaan. Tool kategori mana yang dibutuhkan?",
+"id": "Tim ingin tahu waktu respons API ketika ribuan virtual user mengaksesnya bersamaan. Tool kategori mana yang dibutuhkan?",
 "en": "A team wants to know API response times when thousands of virtual users access it at once. Which tool category is needed?"
 },
 "options": {
 "id": [
 "Tool kolaborasi yang membantu tim berbagi informasi dan komunikasi",
-"Tool non-fungsional untuk pengujian performa dan beban",
+"Tool non-fungsional untuk performance testing dan load",
 "Tool static testing yang memeriksa kode sebelum dijalankan",
 "Tool desain test yang membantu menurunkan test case dari model"
 ],
@@ -2339,7 +5666,7 @@ QA.questions = [
 },
 "answer": 1,
 "exp": {
-"id": "Mensimulasikan banyak pengguna dan mengukur waktu respons adalah tool non-fungsional (performa/beban).",
+"id": "Mensimulasikan banyak user dan mengukur waktu respons adalah tool non-fungsional (performance/load).",
 "en": "Simulating many users and measuring response time is the job of non-functional (performance/load) tools."
 }
 },
@@ -2356,9 +5683,9 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Tool eksekusi test yang menjalankan skrip secara otomatis",
+"Tool eksekusi test yang menjalankan script secara otomatis",
 "Tool coverage yang menghitung persentase kode yang dites",
-"Tool performa yang mensimulasikan banyak pengguna virtual",
+"Tool performance yang mensimulasikan banyak virtual user",
 "Tool manajemen test atau ALM yang menautkan artefak testing"
 ],
 "en": [
@@ -2421,7 +5748,7 @@ QA.questions = [
 "Ekspektasi yang tidak realistis terhadap kemampuan tool",
 "Eksekusi yang menjadi lebih konsisten dari waktu ke waktu",
 "Penilaian hasil test yang menjadi lebih objektif dan terukur",
-"Waktu yang terhemat pada pekerjaan regresi yang berulang"
+"Waktu yang terhemat pada pekerjaan regression yang berulang"
 ],
 "en": [
 "Unrealistic expectations of what the tool can do",
@@ -2444,14 +5771,14 @@ QA.questions = [
 "level": 1,
 "type": "mcq",
 "q": {
-"id": "Tim menjalankan test regresi yang sama setiap rilis. Manfaat otomasi apa yang paling relevan?",
+"id": "Tim menjalankan regression test yang sama setiap release. Manfaat otomasi apa yang paling relevan?",
 "en": "A team runs the same regression tests every release. Which automation benefit is most relevant?"
 },
 "options": {
 "id": [
 "Tester tidak perlu lagi berpikir tentang risiko produk",
-"Skrip otomasi tidak pernah memerlukan pembaruan lagi",
-"Seluruh pengujian eksploratori dapat dihapus dari rencana",
+"Script otomasi tidak pernah memerlukan pembaruan lagi",
+"Seluruh exploratory testing dapat dihapus dari rencana",
 "Waktu terhemat karena pekerjaan berulang dijalankan tool"
 ],
 "en": [
@@ -2463,7 +5790,7 @@ QA.questions = [
 },
 "answer": 3,
 "exp": {
-"id": "Pekerjaan berulang seperti regresi adalah kandidat utama otomasi; manfaatnya adalah penghematan waktu.",
+"id": "Pekerjaan berulang seperti regression adalah kandidat utama otomasi; manfaatnya adalah penghematan waktu.",
 "en": "Repetitive work such as regression is a prime automation candidate; the benefit is time saved."
 }
 },
@@ -2475,13 +5802,13 @@ QA.questions = [
 "level": 1,
 "type": "mcq",
 "q": {
-"id": "Tim mengotomasi UI lalu UI sering berubah dan skrip terus rusak. Risiko otomasi apa yang terjadi?",
+"id": "Tim mengotomasi UI lalu UI sering berubah dan script terus rusak. Risiko otomasi apa yang terjadi?",
 "en": "A team automates the UI, then the UI changes often and scripts keep breaking. Which automation risk occurred?"
 },
 "options": {
 "id": [
 "Informasi hasil test menjadi sulit diakses oleh seluruh tim",
-"Usaha perawatan skrip diremehkan saat otomasi direncanakan",
+"Usaha perawatan script diremehkan saat otomasi direncanakan",
 "Penilaian hasil menjadi terlalu objektif untuk dipercaya orang",
 "Eksekusi test menjadi kurang konsisten dibanding cara manual"
 ],
@@ -2494,7 +5821,7 @@ QA.questions = [
 },
 "answer": 1,
 "exp": {
-"id": "Meremehkan usaha pembuatan dan perawatan skrip adalah risiko otomasi yang umum.",
+"id": "Meremehkan usaha pembuatan dan perawatan script adalah risiko otomasi yang umum.",
 "en": "Underestimating the effort of building and maintaining scripts is a common automation risk."
 }
 },
@@ -2537,13 +5864,13 @@ QA.questions = [
 "level": 2,
 "type": "mcq",
 "q": {
-"id": "Analis salah memahami aturan diskon (error), sehingga kode memakai rumus yang keliru (defect), dan pelanggan melihat harga salah (failure). Apa root cause paling awal dalam rantai ini?",
+"id": "Analis salah memahami aturan diskon (error), sehingga kode memakai rumus yang keliru (defect), dan customer melihat harga salah (failure). Apa root cause paling awal dalam rantai ini?",
 "en": "An analyst misunderstood the discount rule (error), so the code used a wrong formula (defect), and a customer saw a wrong price (failure). What is the earliest root cause in this chain?"
 },
 "options": {
 "id": [
 "Kesalahpahaman aturan diskon oleh analis",
-"Harga salah yang akhirnya dilihat oleh pelanggan pada halaman pembayaran aplikasi",
+"Harga salah yang akhirnya dilihat oleh customer pada halaman pembayaran aplikasi",
 "Rumus yang keliru pada kode program yang menghitung diskon untuk setiap pesanan",
 "Jumlah test case yang kurang untuk mencakup semua kombinasi aturan diskon yang ada"
 ],
@@ -2556,7 +5883,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "Root cause adalah penyebab awal yang jika dihilangkan mencegah defect: di sini kesalahpahaman (error). Defect ada di kode; failure yang terlihat pengguna.",
+"id": "Root cause adalah penyebab awal yang jika dihilangkan mencegah defect: di sini kesalahpahaman (error). Defect ada di kode; failure yang terlihat user.",
 "en": "A root cause is the earliest cause which, if removed, prevents the defect: here the misunderstanding (error). The defect is in the code; the failure is what users see."
 }
 },
@@ -2568,14 +5895,14 @@ QA.questions = [
 "level": 2,
 "type": "mcq",
 "q": {
-"id": "Sekitar 70% defect rilis lalu ditemukan di modul pembayaran, sementara modul lain hampir bersih. Prinsip testing mana yang paling menjelaskan ini, dan apa tindakannya?",
+"id": "Sekitar 70% defect release lalu ditemukan di modul pembayaran, sementara modul lain hampir bersih. Prinsip testing mana yang paling menjelaskan ini, dan apa tindakannya?",
 "en": "About 70% of the last release's defects were found in the payment module while other modules were almost clean. Which testing principle best explains this, and what follows?"
 },
 "options": {
 "id": [
 "Defect clustering: fokuskan lebih banyak testing pada modul pembayaran",
 "Absence-of-defects fallacy: berhenti menguji modul lain",
-"Testing shows presence of defects: rilis ditunda selamanya",
+"Testing shows presence of defects: release ditunda selamanya",
 "Exhaustive testing: uji semua kombinasi modul pembayaran"
 ],
 "en": [
@@ -2618,7 +5945,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "Traceability mendukung analisis dampak perubahan, penilaian cakupan, dan pelaporan status terhadap requirement.",
+"id": "Traceability mendukung analisis dampak perubahan, penilaian coverage, dan reporting status terhadap requirement.",
 "en": "Traceability supports change impact analysis, coverage assessment and status reporting against requirements."
 }
 },
@@ -2728,7 +6055,7 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Memberi umpan balik cepat atas perubahan sehingga defect cepat terlihat",
+"Memberi feedback cepat atas perubahan sehingga defect cepat terlihat",
 "Menghilangkan kebutuhan test case karena pipeline sudah memeriksa semua perubahan kode",
 "Menjamin tidak ada defect yang lolos ke produksi selama pipeline berwarna hijau",
 "Menggantikan semua testing manual sehingga tester dapat dialihkan ke pekerjaan lain"
@@ -2742,7 +6069,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "DevOps menekankan umpan balik cepat dan otomasi. Pipeline mengurangi risiko tetapi tidak menjamin bebas defect dan tidak menggantikan eksploratori.",
+"id": "DevOps menekankan feedback cepat dan otomasi. Pipeline mengurangi risiko tetapi tidak menjamin bebas defect dan tidak menggantikan eksploratori.",
 "en": "DevOps stresses fast feedback and automation. A pipeline lowers risk but does not guarantee zero defects or replace exploratory testing."
 }
 },
@@ -2754,15 +6081,15 @@ QA.questions = [
 "level": 2,
 "type": "mcq",
 "q": {
-"id": "Di retrospective sprint, tim menemukan banyak test otomasi flaky yang memperlambat rilis. Hasil retrospective yang paling sesuai tujuannya adalah...",
+"id": "Di retrospective sprint, tim menemukan banyak test otomasi flaky yang memperlambat release. Hasil retrospective yang paling sesuai tujuannya adalah...",
 "en": "In a sprint retrospective the team finds many flaky automated tests slowing releases. The outcome that best fits a retrospective's purpose is..."
 },
 "options": {
 "id": [
 "Menyepakati tindakan perbaikan proses, mis. stabilisasi test dan aturan karantina, lalu meninjaunya",
 "Menyalahkan tester yang menulis test yang flaky agar kejadian serupa tidak terulang",
-"Menghapus semua test otomasi supaya rilis tidak lagi terhambat oleh test yang gagal",
-"Menunda pembahasan sampai rilis selesai agar tim tidak terganggu tekanan jadwal"
+"Menghapus semua test otomasi supaya release tidak lagi terhambat oleh test yang gagal",
+"Menunda pembahasan sampai release selesai agar tim tidak terganggu tekanan jadwal"
 ],
 "en": [
 "Agreeing process improvement actions, e.g. stabilising tests and a quarantine rule, then reviewing them",
@@ -2804,7 +6131,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "Integration testing berfokus pada interaksi antar komponen atau sistem. Component testing menguji satu unit terisolasi; acceptance menilai kesiapan dari sisi bisnis; maintenance testing bukan level, melainkan pengujian saat sistem berubah.",
+"id": "Integration testing berfokus pada interaksi antar komponen atau sistem. Component testing menguji satu unit terisolasi; acceptance menilai kesiapan dari sisi bisnis; maintenance testing bukan level, melainkan testing saat sistem berubah.",
 "en": "Integration testing focuses on interactions between components or systems. Component testing checks one isolated unit; acceptance judges business readiness; maintenance testing is not a level but testing during system change."
 }
 },
@@ -2822,8 +6149,8 @@ QA.questions = [
 "options": {
 "id": [
 "Memeriksa perhitungan pajak pada invoice",
-"Mengukur waktu respons dengan 1.000 pengguna bersamaan",
-"Memeriksa kemudahan dipelajari antarmuka baru",
+"Mengukur waktu respons dengan 1.000 user bersamaan",
+"Memeriksa kemudahan dipelajari UI baru",
 "Memeriksa data tetap aman saat serangan injeksi"
 ],
 "en": [
@@ -2835,7 +6162,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "Functional testing menilai apa yang dilakukan sistem. Performa, usability, dan keamanan adalah karakteristik non-fungsional.",
+"id": "Functional testing menilai apa yang dilakukan sistem. Performance, usability, dan security adalah karakteristik non-fungsional.",
 "en": "Functional testing evaluates what the system does. Performance, usability and security are non-functional characteristics."
 }
 },
@@ -2847,15 +6174,15 @@ QA.questions = [
 "level": 2,
 "type": "mcq",
 "q": {
-"id": "Basis data produksi akan dimigrasikan ke platform baru tanpa perubahan fitur. Testing yang tepat?",
+"id": "Database produksi akan dimigrasikan ke platform baru tanpa perubahan fitur. Testing yang tepat?",
 "en": "The production database will be migrated to a new platform with no feature change. What testing fits?"
 },
 "options": {
 "id": [
-"Maintenance testing: uji migrasi data, lingkungan baru, dan regression agar fungsi tetap benar",
+"Maintenance testing: uji migrasi data, environment baru, dan regression agar fungsi tetap benar",
 "Tidak perlu testing karena tidak ada fitur yang berubah selama proses migrasi berlangsung",
 "Hanya component testing satu fungsi, karena perubahan terjadi di lapisan penyimpanan",
-"Hanya testing performa yang dijalankan setahun setelah migrasi selesai dilakukan"
+"Hanya testing performance yang dijalankan setahun setelah migrasi selesai dilakukan"
 ],
 "en": [
 "Maintenance testing: test data migration, the new environment, and regression to keep behaviour correct",
@@ -2866,7 +6193,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "Migrasi adalah pemicu maintenance testing, dengan analisis dampak untuk menentukan cakupan regression.",
+"id": "Migrasi adalah trigger maintenance testing, dengan analisis dampak untuk menentukan coverage regression.",
 "en": "Migration is a trigger for maintenance testing, with impact analysis to scope regression."
 }
 },
@@ -2884,7 +6211,7 @@ QA.questions = [
 "options": {
 "id": [
 "Requirement yang ambigu atau saling bertentangan",
-"Kebocoran memori saat beban tinggi",
+"Kebocoran memori saat load tinggi",
 "Lonjakan waktu respons pada jam sibuk",
 "Crash pada perangkat tertentu"
 ],
@@ -2897,7 +6224,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "Static testing memeriksa work product tanpa menjalankan kode. Masalah runtime seperti memori, performa, dan perangkat butuh dynamic testing.",
+"id": "Static testing memeriksa work product tanpa menjalankan kode. Masalah runtime seperti memori, performance, dan perangkat butuh dynamic testing.",
 "en": "Static testing examines work products without running code. Runtime issues such as memory, performance and devices need dynamic testing."
 }
 },
@@ -2915,7 +6242,7 @@ QA.questions = [
 "options": {
 "id": [
 "Kode yang tidak pernah dijangkau (unreachable) dan pelanggaran standar penulisan kode",
-"Waktu respons lambat pada beban tinggi",
+"Waktu respons lambat pada load tinggi",
 "Layout rusak di browser tertentu",
 "Salah hitung hanya pada input tertentu saat runtime"
 ],
@@ -2959,7 +6286,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "Mulai dari perencanaan, memulai review, review individual, diskusi dan analisis temuan, lalu perbaikan dan pelaporan.",
+"id": "Mulai dari perencanaan, memulai review, review individual, diskusi dan analisis temuan, lalu perbaikan dan reporting.",
 "en": "Start with planning, initiate the review, individual review, discuss and analyse findings, then fix and report."
 }
 },
@@ -2971,7 +6298,7 @@ QA.questions = [
 "level": 2,
 "type": "mcq",
 "q": {
-"id": "Review yang dipimpin penulis untuk menjelaskan work product kepada peserta dan mengumpulkan umpan balik, tanpa proses formal ketat, disebut...",
+"id": "Review yang dipimpin penulis untuk menjelaskan work product kepada peserta dan mengumpulkan feedback, tanpa proses formal ketat, disebut...",
 "en": "A review led by the author to explain the work product to participants and gather feedback, without a strict formal process, is called a..."
 },
 "options": {
@@ -3194,7 +6521,7 @@ QA.questions = [
 "options": {
 "id": [
 "Setelah 5 kali password salah berturut-turut, akun dikunci 15 menit dan muncul pesan penguncian",
-"Login harus aman, nyaman, dan cepat bagi seluruh jenis pengguna aplikasi",
+"Login harus aman, nyaman, dan cepat bagi seluruh jenis user aplikasi",
 "Sistem harus bagus dan berfungsi dengan baik dalam semua kondisi penggunaan",
 "Developer menulis kode login dengan rapi serta mengikuti standar penulisan kode"
 ],
@@ -3225,8 +6552,8 @@ QA.questions = [
 "options": {
 "id": [
 "Semua test kritis lolos dan tidak ada defect kritis yang masih terbuka",
-"Lingkungan test sudah siap dan dapat diakses",
-"Data uji sudah tersedia",
+"Test environment sudah siap dan dapat diakses",
+"Test data sudah tersedia",
 "Build sudah lolos smoke test"
 ],
 "en": [
@@ -3250,7 +6577,7 @@ QA.questions = [
 "level": 3,
 "type": "mcq",
 "q": {
-"id": "Tiga sprint lalu, tim menyelesaikan pengujian 20, 24, dan 22 test case per sprint. Masih ada 66 test case yang harus diuji. Dengan ekstrapolasi dari rata-rata, perkiraan jumlah sprint?",
+"id": "Tiga sprint lalu, tim menyelesaikan testing 20, 24, dan 22 test case per sprint. Masih ada 66 test case yang harus diuji. Dengan ekstrapolasi dari rata-rata, perkiraan jumlah sprint?",
 "en": "In the last three sprints the team finished testing 20, 24 and 22 test cases per sprint. 66 test cases remain. Extrapolating from the average, about how many sprints are needed?"
 },
 "options": {
@@ -3331,7 +6658,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "Q1: component/integration; Q2: functional examples dan story tests; Q3: eksploratori, usability, UAT; Q4: performa, keamanan, dan karakteristik non-fungsional lain.",
+"id": "Q1: component/integration; Q2: functional examples dan story tests; Q3: eksploratori, usability, UAT; Q4: performance, security, dan karakteristik non-fungsional lain.",
 "en": "Q1: component/integration; Q2: functional examples and story tests; Q3: exploratory, usability, UAT; Q4: performance, security and other non-functional characteristics."
 }
 },
@@ -3348,9 +6675,9 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Pembulatan salah pada hitungan cicilan yang merugikan pelanggan",
+"Pembulatan salah pada hitungan cicilan yang merugikan customer",
 "Anggota tim kunci pindah ke perusahaan lain di tengah proyek yang sedang berjalan",
-"Lingkungan test terlambat tersedia sehingga jadwal eksekusi tes bergeser dua minggu",
+"Test environment terlambat tersedia sehingga jadwal eksekusi tes bergeser dua minggu",
 "Anggaran untuk tool testing dipotong oleh manajemen pada kuartal berikutnya"
 ],
 "en": [
@@ -3362,7 +6689,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "Product risk menyangkut kualitas produk; project risk menyangkut manajemen dan kontrol proyek (orang, jadwal, anggaran, lingkungan).",
+"id": "Product risk menyangkut kualitas produk; project risk menyangkut manajemen dan kontrol proyek (orang, jadwal, anggaran, environment).",
 "en": "Product risks concern product quality; project risks concern project management and control (people, schedule, budget, environment)."
 }
 },
@@ -3424,7 +6751,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "Metrik umum: kemajuan eksekusi test, defect ditemukan dan diperbaiki, cakupan requirement atau kode, usaha dan biaya.",
+"id": "Metrik umum: kemajuan eksekusi test, defect ditemukan dan diperbaiki, requirement coverage atau kode, usaha dan biaya.",
 "en": "Common metrics: test execution progress, defects found and fixed, requirement or code coverage, effort and cost."
 }
 },
@@ -3443,7 +6770,7 @@ QA.questions = [
 "id": [
 "Ringkasan testing, deviasi dari rencana, status terhadap exit criteria, metrik, dan risiko tersisa",
 "Seluruh log eksekusi mentah dari setiap test case yang dijalankan selama iterasi berlangsung",
-"Hanya jumlah test yang lolos tanpa konteks apa pun tentang cakupan maupun risikonya",
+"Hanya jumlah test yang lolos tanpa konteks apa pun tentang coverage maupun risikonya",
 "Kode sumber seluruh test otomasi beserta riwayat perubahannya di repositori"
 ],
 "en": [
@@ -3661,7 +6988,7 @@ QA.questions = [
 "Testing memperbaiki defect, sedangkan debugging menemukan failure pada saat sistem berjalan",
 "Testing memicu failure akibat defect; debugging menemukan dan memperbaiki penyebabnya",
 "Keduanya sama-sama selalu dilakukan oleh tester karena tujuan dan hasilnya identik",
-"Debugging hanya dilakukan setelah rilis, ketika pengguna sudah melaporkan masalah di produksi"
+"Debugging hanya dilakukan setelah release, ketika user sudah melaporkan masalah di produksi"
 ],
 "en": [
 "Testing fixes defects, while debugging finds failures while the system is running",
@@ -3691,7 +7018,7 @@ QA.questions = [
 "id": [
 "Menjamin sistem bebas defect sehingga tidak ada failure yang akan terjadi di produksi",
 "Mengurangi risiko failure saat beroperasi dengan menemukan defect lebih dulu",
-"Menghilangkan kebutuhan review karena semua masalah pasti ditemukan oleh pengujian",
+"Menghilangkan kebutuhan review karena semua masalah pasti ditemukan oleh testing",
 "Menggantikan requirement karena test case sudah menjelaskan perilaku yang diharapkan"
 ],
 "en": [
@@ -3940,7 +7267,7 @@ QA.questions = [
 "Mendesain test case berdasarkan kondisi test yang sudah dianalisis",
 "Menjalankan test case dan membandingkan hasil aktual dengan hasil yang diharapkan",
 "Memantau kemajuan dan mengontrol aktivitas test",
-"Menyiapkan data tes dan lingkungan yang dibutuhkan untuk eksekusi"
+"Menyiapkan data tes dan environment yang dibutuhkan untuk eksekusi"
 ],
 "en": [
 "Designing test cases from the test conditions that were analysed",
@@ -4002,7 +7329,7 @@ QA.questions = [
 "Hanya tester yang bertanggung jawab atas kualitas, sedangkan anggota tim lain fokus pada fitur",
 "Siapa pun dengan keahlian yang dibutuhkan bisa mengerjakan tugas; seluruh tim bertanggung jawab atas kualitas",
 "Semua orang di tim harus menjadi tester bersertifikat sebelum boleh ikut mengerjakan tugas",
-"Developer dilarang menguji agar pekerjaan pengujian tetap independen dari pengembangan"
+"Developer dilarang menguji agar pekerjaan testing tetap independen dari pengembangan"
 ],
 "en": [
 "Only testers are responsible for quality, while other team members focus on features",
@@ -4093,7 +7420,7 @@ QA.questions = [
 "options": {
 "id": [
 "Setiap aktivitas pengembangan punya aktivitas test yang sepadan",
-"Testing hanya dimulai setelah rilis",
+"Testing hanya dimulai setelah release",
 "Satu test level cukup untuk semua tujuan",
 "Tester tidak ikut membahas requirement"
 ],
@@ -4154,8 +7481,8 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Menghilangkan semua manual testing karena pipeline menjalankan semua jenis pengujian",
-"Umpan balik kualitas cepat lewat pipeline CI/CD yang menjalankan tes otomatis",
+"Menghilangkan semua manual testing karena pipeline menjalankan semua jenis testing",
+"Feedback kualitas cepat lewat pipeline CI/CD yang menjalankan tes otomatis",
 "Tidak perlu lagi merawat otomasi karena pipeline memperbaiki test yang rusak sendiri",
 "Test environment tidak lagi dibutuhkan karena semua tes berjalan di mesin developer"
 ],
@@ -4187,7 +7514,7 @@ QA.questions = [
 "id": [
 "Menunda test sampai tahap akhir proyek ketika semua fitur sudah selesai dibuat",
 "Mereview user story dan acceptance criteria sebelum coding dimulai",
-"Menambah jumlah tester setelah rilis agar defect produksi bisa diperbaiki lebih cepat",
+"Menambah jumlah tester setelah release agar defect produksi bisa diperbaiki lebih cepat",
 "Menghapus static analysis dari pipeline supaya proses build berjalan lebih singkat"
 ],
 "en": [
@@ -4219,7 +7546,7 @@ QA.questions = [
 "Sebelum proyek dimulai untuk menetapkan jadwal dan pembagian tugas seluruh anggota tim",
 "Di akhir proyek atau iterasi untuk membahas keberhasilan dan perbaikan",
 "Hanya ketika produksi gagal total, sebagai bagian dari analisis insiden yang formal",
-"Setiap kuartal untuk menilai kinerja individu dan menentukan kenaikan gaji anggota tim"
+"Setiap kuartal untuk menilai performance individu dan menentukan kenaikan gaji anggota tim"
 ],
 "en": [
 "Before the project starts to set the schedule and the division of tasks for all team members",
@@ -4273,7 +7600,7 @@ QA.questions = [
 "level": 2,
 "type": "mcq",
 "q": {
-"id": "Pengujian oleh administrator untuk backup/restore dan disaster recovery termasuk...",
+"id": "Testing oleh administrator untuk backup/restore dan disaster recovery termasuk...",
 "en": "Testing by administrators for backup/restore and disaster recovery is..."
 },
 "options": {
@@ -4292,7 +7619,7 @@ QA.questions = [
 },
 "answer": 1,
 "exp": {
-"id": "Operational acceptance testing menguji kesiapan operasional: backup, recovery, pemeliharaan, keamanan.",
+"id": "Operational acceptance testing menguji kesiapan operasional: backup, recovery, pemeliharaan, security.",
 "en": "Operational acceptance testing checks operational readiness: backup, recovery, maintenance, security."
 }
 },
@@ -4310,7 +7637,7 @@ QA.questions = [
 "options": {
 "id": [
 "Didasarkan pada struktur internal sistem seperti kode atau arsitektur",
-"Hanya dilakukan pada acceptance level oleh pengguna bisnis sebelum rilis dilakukan",
+"Hanya dilakukan pada acceptance level oleh user bisnis sebelum release dilakukan",
 "Didasarkan hanya pada spesifikasi tanpa melihat bagaimana sistem dibangun di dalamnya",
 "Tidak mengukur coverage apa pun karena fokusnya hanya pada perilaku dari luar"
 ],
@@ -4366,7 +7693,7 @@ QA.questions = [
 "level": 2,
 "type": "mcq",
 "q": {
-"id": "Pemindahan aplikasi ke platform atau database baru adalah pemicu maintenance testing berupa...",
+"id": "Pemindahan aplikasi ke platform atau database baru adalah trigger maintenance testing berupa...",
 "en": "Moving an application to a new platform or database is a maintenance testing trigger of type..."
 },
 "options": {
@@ -4385,7 +7712,7 @@ QA.questions = [
 },
 "answer": 1,
 "exp": {
-"id": "Pemicu: modification (perubahan fitur/perbaikan), migration (pindah platform/data), retirement (pensiun sistem).",
+"id": "Trigger: modification (perubahan fitur/perbaikan), migration (pindah platform/data), retirement (pensiun sistem).",
 "en": "Triggers: modification (changes/fixes), migration (platform/data move), retirement (system decommissioning)."
 }
 },
@@ -4434,9 +7761,9 @@ QA.questions = [
 "options": {
 "id": [
 "Menemukan defect lebih awal sehingga lebih murah diperbaiki",
-"Menjamin kode bebas bug sebelum masuk ke tahap pengujian dinamis maupun rilis",
+"Menjamin kode bebas bug sebelum masuk ke tahap testing dinamis maupun release",
 "Menggantikan dynamic testing sepenuhnya sehingga eksekusi kode tidak lagi diperlukan",
-"Mengukur performa aplikasi di bawah beban nyata dengan banyak pengguna sekaligus"
+"Mengukur performance aplikasi di bawah load nyata dengan banyak user sekaligus"
 ],
 "en": [
 "Finding defects early so they are cheaper to fix",
@@ -4467,7 +7794,7 @@ QA.questions = [
 "Memory leak",
 "Waktu respons lambat",
 "Ambiguitas pada requirement",
-"Crash saat beban tinggi"
+"Crash saat load tinggi"
 ],
 "en": [
 "Memory leak",
@@ -4490,7 +7817,7 @@ QA.questions = [
 "level": 1,
 "type": "mcq",
 "q": {
-"id": "Manfaat umpan balik awal dan sering dari stakeholder adalah...",
+"id": "Manfaat feedback awal dan sering dari stakeholder adalah...",
 "en": "A benefit of early and frequent stakeholder feedback is..."
 },
 "options": {
@@ -4509,7 +7836,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "Umpan balik dini mengurangi salah paham dan pengerjaan ulang mahal.",
+"id": "Feedback dini mengurangi salah paham dan pengerjaan ulang mahal.",
 "en": "Early feedback reduces misunderstanding and costly rework."
 }
 },
@@ -4583,7 +7910,7 @@ QA.questions = [
 "level": 2,
 "type": "mcq",
 "q": {
-"id": "Jenis review mana yang dipimpin author dengan tujuan edukasi dan meminta umpan balik?",
+"id": "Jenis review mana yang dipimpin author dengan tujuan edukasi dan meminta feedback?",
 "en": "Which review type is led by the author to educate and gather feedback?"
 },
 "options": {
@@ -4619,7 +7946,7 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Hasil review dipakai untuk menilai kinerja author",
+"Hasil review dipakai untuk menilai performance author",
 "Peserta punya waktu cukup dan tujuan review jelas",
 "Review dilakukan atas seluruh dokumen sekaligus",
 "Hanya manajer yang menjadi reviewer"
@@ -4633,7 +7960,7 @@ QA.questions = [
 },
 "answer": 1,
 "exp": {
-"id": "Tujuan jelas, waktu cukup, potongan kecil, budaya konstruktif. Menilai kinerja author merusak budaya review.",
+"id": "Tujuan jelas, waktu cukup, potongan kecil, budaya konstruktif. Menilai performance author merusak budaya review.",
 "en": "Clear objectives, enough time, small chunks, constructive culture. Judging authors damages review culture."
 }
 },
@@ -5024,7 +8351,7 @@ QA.questions = [
 "id": [
 "Desain dan eksekusi tes dipisah jauh dan didokumentasikan penuh sebelum dijalankan",
 "Desain, eksekusi, dan pembelajaran dilakukan bersamaan, dipandu test charter dan sering dibatasi waktu",
-"Tes hanya dijalankan oleh tool otomatis berdasarkan skrip yang ditulis jauh sebelumnya",
+"Tes hanya dijalankan oleh tool otomatis berdasarkan script yang ditulis jauh sebelumnya",
 "Hanya dipakai pada unit level oleh developer yang menulis kode yang sedang diuji"
 ],
 "en": [
@@ -5141,7 +8468,7 @@ QA.questions = [
 "level": 3,
 "type": "mcq",
 "q": {
-"id": "Story: \"Sebagai pelanggan, saya ingin ongkir gratis untuk pesanan minimal $50.\" Test case acceptance mana yang diturunkan dengan benar?",
+"id": "Story: \"Sebagai customer, saya ingin ongkir gratis untuk pesanan minimal $50.\" Test case acceptance mana yang diturunkan dengan benar?",
 "en": "Story: \"As a customer I want free shipping for orders of at least $50.\" Which acceptance test case is derived correctly?"
 },
 "options": {
@@ -5180,7 +8507,7 @@ QA.questions = [
 "Pendekatan test dan jadwal",
 "Kode sumber aplikasi",
 "Hasil eksekusi tiap test case",
-"Daftar password pengguna"
+"Daftar password user"
 ],
 "en": [
 "Test approach and schedule",
@@ -5346,7 +8673,7 @@ QA.questions = [
 },
 "answer": 1,
 "exp": {
-"id": "Semakin ke atas, cakupan lebih luas tetapi tes lebih sedikit, lambat, dan rapuh.",
+"id": "Semakin ke atas, coverage lebih luas tetapi tes lebih sedikit, lambat, dan rapuh.",
 "en": "Higher up, scope is broader but tests should be fewer, slower and more brittle."
 }
 },
@@ -5377,7 +8704,7 @@ QA.questions = [
 },
 "answer": 2,
 "exp": {
-"id": "Q1 component/integration; Q2 fungsional; Q3 exploratory/usability/UAT; Q4 performa dan keamanan.",
+"id": "Q1 component/integration; Q2 fungsional; Q3 exploratory/usability/UAT; Q4 performance dan security.",
 "en": "Q1 component/integration; Q2 functional; Q3 exploratory/usability/UAT; Q4 performance and security."
 }
 },
@@ -5439,7 +8766,7 @@ QA.questions = [
 },
 "answer": 1,
 "exp": {
-"id": "Project risk menyangkut jalannya proyek (jadwal, sumber daya, lingkungan). Tiga opsi lain adalah product risk.",
+"id": "Project risk menyangkut jalannya proyek (jadwal, sumber daya, environment). Tiga opsi lain adalah product risk.",
 "en": "Project risks concern how the project runs (schedule, resources, environment). The other three are product risks."
 }
 },
@@ -5456,7 +8783,7 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Menentukan cakupan, teknik, dan usaha testing serta prioritas tes",
+"Menentukan coverage, teknik, dan usaha testing serta prioritas tes",
 "Menggantikan semua test case dengan satu dokumen ringkasan yang disetujui manajer",
 "Menghapus test plan lama setelah setiap iterasi supaya tidak membingungkan tim",
 "Menentukan gaji dan jenjang karier tester berdasarkan jumlah defect yang ditemukan"
@@ -5583,7 +8910,7 @@ QA.questions = [
 "Memastikan item test dan testware teridentifikasi unik, terkontrol versinya, dan saling terhubung",
 "Menggantikan test plan dengan daftar versi build yang disetujui manajemen proyek",
 "Menjalankan ulang seluruh tes otomatis setiap kali ada versi baru dari testware",
-"Menentukan prioritas defect berdasarkan versi yang dilaporkan oleh pengguna"
+"Menentukan prioritas defect berdasarkan versi yang dilaporkan oleh user"
 ],
 "en": [
 "Ensuring test items and testware are uniquely identified, version controlled and related",
@@ -5625,7 +8952,7 @@ QA.questions = [
 },
 "answer": 1,
 "exp": {
-"id": "Laporan baik memuat langkah reproduksi, expected vs actual, dan lingkungan. Opsi lain samar atau menyalahkan orang.",
+"id": "Laporan baik memuat langkah reproduksi, expected vs actual, dan environment. Opsi lain samar atau menyalahkan orang.",
 "en": "A good report has steps to reproduce, expected vs actual, and environment. The others are vague or blame people."
 }
 },
@@ -5637,7 +8964,7 @@ QA.questions = [
 "level": 2,
 "type": "mcq",
 "q": {
-"id": "Tool yang mendukung manajemen test case, pelacakan requirement, dan pelaporan tergolong...",
+"id": "Tool yang mendukung manajemen test case, pelacakan requirement, dan reporting tergolong...",
 "en": "A tool supporting test case management, requirement tracking and reporting is classified as..."
 },
 "options": {
@@ -5706,7 +9033,7 @@ QA.questions = [
 "id": [
 "Eksekusi lebih konsisten karena langkah yang sama dijalankan persis setiap kali",
 "Usaha dan perawatan otomasi yang diremehkan",
-"Hemat waktu pada tes berulang, terutama untuk regression yang dijalankan tiap rilis",
+"Hemat waktu pada tes berulang, terutama untuk regression yang dijalankan tiap release",
 "Penilaian hasil lebih objektif karena tidak bergantung pada penilaian manusia"
 ],
 "en": [
@@ -5736,7 +9063,7 @@ QA.questions = [
 "options": {
 "id": [
 "Mengurangi pekerjaan manual berulang dan eksekusi lebih konsisten",
-"Tidak memerlukan perawatan skrip",
+"Tidak memerlukan perawatan script",
 "Menggantikan kebutuhan exploratory testing",
 "Selalu menemukan lebih banyak defect"
 ],
@@ -5813,6 +9140,533 @@ QA.questions = [
 "exp": {
 "id": "Risiko tinggi direspons dengan mitigasi: lebih banyak dan lebih ketat testing serta sumber daya yang tepat.",
 "en": "High risk is answered with mitigation: more and stricter testing plus the right resources."
+}
+},
+{
+"id": "ctfl-133",
+"topic": "istqb",
+"lo": "FL-4.2.1",
+"k": 3,
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Ongkir menurut berat (kg, bilangan bulat): 1-5 = Rp10.000, 6-20 = Rp25.000, 21-50 = Rp60.000. Berat di bawah 1 atau di atas 50 ditolak. Berapa test minimal agar setiap partisi (valid dan tidak valid) tercakup sekali?",
+"en": "Shipping fee by weight (kg, integers): 1-5 = 10,000, 6-20 = 25,000, 21-50 = 60,000. Weights below 1 or above 50 are rejected. What is the minimum number of tests to cover each partition (valid and invalid) once?"
+},
+"options": {
+"id": [
+"5",
+"3",
+"4",
+"7"
+],
+"en": [
+"5",
+"3",
+"4",
+"7"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Ada tiga partisi valid dan dua partisi tidak valid (di bawah 1, di atas 50), total lima. Satu nilai wakil per partisi: misalnya 0, 3, 10, 30, 51.",
+"en": "There are three valid and two invalid partitions (below 1, above 50), five in total. One representative per partition, e.g. 0, 3, 10, 30, 51."
+}
+},
+{
+"id": "ctfl-134",
+"topic": "istqb",
+"lo": "FL-4.2.1",
+"k": 3,
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Panjang password valid 8 sampai 16 karakter. Kumpulan nilai panjang mana yang mencakup semua partisi dengan EP?",
+"en": "A password is valid with 8 to 16 characters. Which set of lengths covers all partitions using EP?"
+},
+"options": {
+"id": [
+"5, 10, 20",
+"8, 10, 16",
+"7, 8, 9",
+"1, 2, 3"
+],
+"en": [
+"5, 10, 20",
+"8, 10, 16",
+"7, 8, 9",
+"1, 2, 3"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Ada tiga partisi: di bawah 8 (tidak valid), 8-16 (valid), di atas 16 (tidak valid). Nilai 5, 10, 20 masing-masing mewakili satu partisi. Set lain hanya menyentuh satu atau dua partisi.",
+"en": "There are three partitions: below 8 (invalid), 8-16 (valid), above 16 (invalid). The values 5, 10, 20 each represent one partition. The other sets touch only one or two partitions."
+}
+},
+{
+"id": "ctfl-135",
+"topic": "istqb",
+"lo": "FL-4.2.1",
+"k": 3,
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Diskon belanja (Rupiah, bilangan bulat): total < 100.000 = 0%, 100.000-499.999 = 5%, >= 500.000 = 10%. Total negatif tidak valid. Set input mana yang mencakup semua partisi dengan jumlah test paling sedikit?",
+"en": "Shopping discount (Rupiah, integers): total < 100,000 = 0%, 100,000-499,999 = 5%, >= 500,000 = 10%. A negative total is invalid. Which input set covers all partitions with the fewest tests?"
+},
+"options": {
+"id": [
+"-1, 50.000, 250.000, 600.000",
+"50.000, 250.000, 600.000",
+"0, 100.000, 500.000, 1.000.000",
+"-1, 0, 99.999, 100.000, 500.000"
+],
+"en": [
+"-1, 50,000, 250,000, 600,000",
+"50,000, 250,000, 600,000",
+"0, 100,000, 500,000, 1,000,000",
+"-1, 0, 99,999, 100,000, 500,000"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Partisinya: negatif (tidak valid), 0-99.999, 100.000-499.999, dan >= 500.000, jadi empat nilai wakil sudah cukup. Opsi kedua melewatkan partisi tidak valid; opsi ketiga mengandung dua nilai pada partisi yang sama dan tidak ada yang negatif; opsi keempat memakai lima nilai.",
+"en": "The partitions are negative (invalid), 0-99,999, 100,000-499,999 and >= 500,000, so four representatives suffice. The second option misses the invalid partition; the third has no negative value; the fourth uses five values."
+}
+},
+{
+"id": "ctfl-136",
+"topic": "istqb",
+"lo": "FL-4.2.1",
+"k": 3,
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Partisi usia untuk tarif tiket: 0-17, 17-64, 65 ke atas. Apa kelemahan pembagian ini?",
+"en": "Age partitions for ticket prices: 0-17, 17-64, 65 and above. What is wrong with this split?"
+},
+"options": {
+"id": [
+"Usia 17 masuk dua partisi: partisinya tumpang tindih",
+"Jumlah partisinya terlalu sedikit untuk tarif tiket",
+"Usia 65 sama sekali tidak tercakup oleh partisi",
+"Partisi ekuivalen dilarang memuat rentang nilai"
+],
+"en": [
+"Age 17 is in two partitions: they overlap",
+"The number of partitions is too few for ticket pricing",
+"Age 65 is not covered by any partition at all",
+"Equivalence partitions are forbidden from holding ranges"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Partisi ekuivalen harus saling lepas (tidak tumpang tindih) dan lengkap. Nilai 17 ambigu: masuk 0-17 atau 17-64? Perbaiki menjadi 0-17, 18-64, 65 ke atas.",
+"en": "Equivalence partitions must be disjoint (no overlap) and complete. The value 17 is ambiguous: 0-17 or 17-64? Fix as 0-17, 18-64, 65 and above."
+}
+},
+{
+"id": "ctfl-137",
+"topic": "istqb",
+"lo": "FL-4.2.2",
+"k": 3,
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Syarat: usia harus lebih dari 17 dan kurang dari 66 (bilangan bulat). Nilai uji BVA dua nilai yang benar?",
+"en": "Rule: age must be greater than 17 and less than 66 (integers). Which are the correct two-value BVA test values?"
+},
+"options": {
+"id": [
+"17, 18, 65, 66",
+"17, 18, 66, 67",
+"16, 17, 65, 66",
+"18, 19, 64, 65"
+],
+"en": [
+"17, 18, 65, 66",
+"17, 18, 66, 67",
+"16, 17, 65, 66",
+"18, 19, 64, 65"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Rentang valid bilangan bulat adalah 18-65. Dua-nilai BVA: batas dan tetangga di luar rentang, yaitu 17, 18 dan 65, 66. Kesalahan umum adalah memakai angka dalam kalimat (17 dan 66) sebagai batas valid.",
+"en": "The valid integer range is 18-65. Two-value BVA: each boundary and its neighbour outside the range, i.e. 17, 18 and 65, 66. A common slip is treating the numbers in the sentence (17 and 66) as the valid boundaries."
+}
+},
+{
+"id": "ctfl-138",
+"topic": "istqb",
+"lo": "FL-4.2.2",
+"k": 3,
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Tarif jarak (km, bilangan bulat): 0-10, 11-25, 26-100; di luar itu tidak valid. Berapa nilai berbeda yang diperlukan untuk BVA dua nilai di seluruh partisi?",
+"en": "Distance fee (km, integers): 0-10, 11-25, 26-100; anything else is invalid. How many distinct values are needed for two-value BVA across all partitions?"
+},
+"options": {
+"id": [
+"8",
+"6",
+"10",
+"12"
+],
+"en": [
+"8",
+"6",
+"10",
+"12"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Nilai: -1, 0, 10, 11, 25, 26, 100, 101. Batas yang bersebelahan (10|11 dan 25|26) berbagi nilai sehingga totalnya 8, bukan 12.",
+"en": "Values: -1, 0, 10, 11, 25, 26, 100, 101. Adjacent boundaries (10|11 and 25|26) share values, so the total is 8, not 12."
+}
+},
+{
+"id": "ctfl-139",
+"topic": "istqb",
+"lo": "FL-4.2.2",
+"k": 3,
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Kolom harga menerima 0,01 sampai 999,99 (dua desimal). Nilai uji BVA dua nilai yang benar?",
+"en": "A price field accepts 0.01 to 999.99 (two decimals). Which are the correct two-value BVA test values?"
+},
+"options": {
+"id": [
+"0,00; 0,01; 999,99; 1000,00",
+"0; 1; 999; 1000",
+"0,01; 0,02; 999,98; 999,99",
+"0,00; 0,01; 999,99; 1000,99"
+],
+"en": [
+"0.00; 0.01; 999.99; 1000.00",
+"0; 1; 999; 1000",
+"0.01; 0.02; 999.98; 999.99",
+"0.00; 0.01; 999.99; 1000.99"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Tetangga ditentukan oleh presisi (dua desimal), jadi tetangga 0,01 adalah 0,00 dan tetangga 999,99 adalah 1000,00. Memakai bilangan bulat mengabaikan presisi kolom.",
+"en": "Neighbours are set by precision (two decimals), so the neighbour of 0.01 is 0.00 and of 999.99 is 1000.00. Using integers ignores the field's precision."
+}
+},
+{
+"id": "ctfl-140",
+"topic": "istqb",
+"lo": "FL-4.2.2",
+"k": 3,
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Spesifikasi: 'user berusia 18 tahun atau lebih boleh mendaftar'. Developer menulis if (usia > 18). Nilai uji mana yang mendeteksi defect ini?",
+"en": "Spec: 'users aged 18 or older may register'. The developer wrote if (age > 18). Which test value detects this defect?"
+},
+"options": {
+"id": [
+"18",
+"17",
+"19",
+"40"
+],
+"en": [
+"18",
+"17",
+"19",
+"40"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Defect off-by-one: 18 seharusnya diterima tetapi ditolak. BVA menargetkan tepat jenis defect ini. Nilai 17, 19, dan 40 berperilaku sama pada kode benar maupun salah.",
+"en": "An off-by-one defect: 18 should be accepted but is rejected. BVA targets exactly this kind of defect. 17, 19 and 40 behave the same on correct and faulty code."
+}
+},
+{
+"id": "ctfl-141",
+"topic": "istqb",
+"lo": "FL-4.2.3",
+"k": 3,
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Persetujuan pinjaman: tiga kondisi (kredit baik, pendapatan cukup, punya utang lain), semua Ya/Tidak. Bila kredit tidak baik, hasil selalu 'tolak' apa pun kondisi lain. Berapa kolom aturan setelah kolom digabung?",
+"en": "Loan approval: three conditions (good credit, enough income, other debt), all Yes/No. If credit is not good, the outcome is always 'reject' whatever the other conditions. How many rule columns remain after collapsing?"
+},
+"options": {
+"id": [
+"5",
+"8",
+"4",
+"6"
+],
+"en": [
+"5",
+"8",
+"4",
+"6"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Kredit tidak baik digabung menjadi satu kolom (kondisi lain 'tidak peduli'). Kredit baik memakai 2 x 2 = 4 kolom. Total 1 + 4 = 5, bukan 8.",
+"en": "Bad credit collapses into a single column (the others are 'don't care'). Good credit uses 2 x 2 = 4 columns. Total 1 + 4 = 5, not 8."
+}
+},
+{
+"id": "ctfl-142",
+"topic": "istqb",
+"lo": "FL-4.2.3",
+"k": 3,
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Decision table memakai dua kondisi: 'pesanan sudah dibayar' dan 'pesanan sudah dikirim'. Kombinasi 'dikirim tetapi belum dibayar' mustahil menurut aturan bisnis. Berapa test case untuk coverage semua aturan yang layak?",
+"en": "A decision table uses two conditions: 'order is paid' and 'order is shipped'. The combination 'shipped but unpaid' is impossible by business rules. How many test cases cover all feasible rules?"
+},
+"options": {
+"id": [
+"3",
+"4",
+"2",
+"1"
+],
+"en": [
+"3",
+"4",
+"2",
+"1"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Tabel penuh punya 4 kolom, satu di antaranya tidak mungkin terjadi sehingga dikeluarkan. Sisa 3 aturan layak, masing-masing diuji.",
+"en": "The full table has 4 columns, one of which cannot occur and is dropped. The remaining 3 feasible rules are each tested."
+}
+},
+{
+"id": "ctfl-143",
+"topic": "istqb",
+"lo": "FL-4.2.3",
+"k": 3,
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Premi asuransi: pengemudi di bawah 25 tahun dan punya riwayat kecelakaan = +50%; hanya salah satu dari keduanya = +25%; tidak keduanya = tarif dasar. Seorang pengemudi 30 tahun punya riwayat kecelakaan. Hasil yang diharapkan?",
+"en": "Insurance premium: a driver under 25 with an accident history = +50%; only one of the two = +25%; neither = base rate. A 30-year-old driver has an accident history. Expected result?"
+},
+"options": {
+"id": [
+"+25%",
+"+50%",
+"Tarif dasar",
+"Ditolak"
+],
+"en": [
+"+25%",
+"+50%",
+"Base rate",
+"Rejected"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Usia 30 berarti kondisi 'di bawah 25' tidak terpenuhi, sedangkan riwayat kecelakaan terpenuhi. Tepat satu kondisi benar sehingga +25%.",
+"en": "Age 30 means 'under 25' is not met while the accident history is. Exactly one condition is true, so +25%."
+}
+},
+{
+"id": "ctfl-144",
+"topic": "istqb",
+"lo": "FL-4.2.3",
+"k": 3,
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Sebuah decision table dengan tiga kondisi Ya/Tidak hanya punya tujuh kolom: YYY, YYN, YNY, YNN, NYY, NYN, NNY. Apa masalahnya?",
+"en": "A decision table with three Yes/No conditions has only seven columns: YYY, YYN, YNY, YNN, NYY, NYN, NNY. What is the problem?"
+},
+"options": {
+"id": [
+"NNN hilang, jadi tabel tidak lengkap",
+"Ada satu kolom yang muncul sebagai duplikat",
+"Tabel seharusnya hanya memiliki enam kolom saja",
+"Tidak ada masalah; tabel itu sudah lengkap"
+],
+"en": [
+"NNN is missing, so the table is incomplete",
+"One column appears as a duplicate of another",
+"The table should only have six columns in total",
+"No problem; the table is already complete"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Tiga kondisi biner menghasilkan 2^3 = 8 kombinasi. Yang hilang adalah NNN; kombinasi yang terlewat berarti perilaku tidak terdefinisi dan tidak teruji.",
+"en": "Three binary conditions give 2^3 = 8 combinations. NNN is missing; a missing combination means undefined, untested behaviour."
+}
+},
+{
+"id": "ctfl-145",
+"topic": "istqb",
+"lo": "FL-4.2.4",
+"k": 3,
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Akun: Active -(3x gagal login)-> Locked; Locked -(unlock)-> Active; Active -(close)-> Closed; Locked -(close)-> Closed. Closed tidak punya transisi keluar. Ada 3 state dan 3 event. Berapa pasangan (state, event) yang tidak valid?",
+"en": "Account: Active -(3 failed logins)-> Locked; Locked -(unlock)-> Active; Active -(close)-> Closed; Locked -(close)-> Closed. Closed has no outgoing transitions. There are 3 states and 3 events. How many (state, event) pairs are invalid?"
+},
+"options": {
+"id": [
+"5",
+"4",
+"9",
+"3"
+],
+"en": [
+"5",
+"4",
+"9",
+"3"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Total pasangan 3 x 3 = 9; transisi valid ada 4, sehingga 5 tidak valid (mis. unlock saat Active, gagal login saat Locked, semua event saat Closed). Pasangan tidak valid ini diuji sebagai negative test.",
+"en": "Total pairs 3 x 3 = 9; there are 4 valid transitions, so 5 are invalid (e.g. unlock while Active, failed login while Locked, every event while Closed). These invalid pairs are tested as negative tests."
+}
+},
+{
+"id": "ctfl-146",
+"topic": "istqb",
+"lo": "FL-4.2.4",
+"k": 3,
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Artikel: Draft -(submit)-> Submitted; Submitted -(approve)-> Approved; Approved -(publish)-> Published; Submitted -(reject)-> Rejected; Rejected -(edit)-> Draft. Setiap urutan dimulai dari Draft. Berapa urutan test minimal agar semua transisi valid tercakup?",
+"en": "Article: Draft -(submit)-> Submitted; Submitted -(approve)-> Approved; Approved -(publish)-> Published; Submitted -(reject)-> Rejected; Rejected -(edit)-> Draft. Every sequence starts at Draft. What is the minimum number of test sequences to cover all valid transitions?"
+},
+"options": {
+"id": [
+"2",
+"1",
+"3",
+"5"
+],
+"en": [
+"2",
+"1",
+"3",
+"5"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Urutan 1: submit, approve, publish. Urutan 2: submit, reject, edit. Keduanya bersama menutup kelima transisi. Satu urutan tidak cukup karena reject dan approve keluar dari state yang sama.",
+"en": "Sequence 1: submit, approve, publish. Sequence 2: submit, reject, edit. Together they cover all five transitions. One sequence is not enough because reject and approve leave the same state."
+}
+},
+{
+"id": "ctfl-147",
+"topic": "istqb",
+"lo": "FL-4.2.4",
+"k": 3,
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Pada model artikel di atas, sebuah test menjalankan: Draft, Submitted, Rejected, Draft, Submitted, Approved. Berapa transisi berbeda yang tercakup?",
+"en": "In the article model above, a test runs: Draft, Submitted, Rejected, Draft, Submitted, Approved. How many distinct transitions does it cover?"
+},
+"options": {
+"id": [
+"4",
+"5",
+"6",
+"3"
+],
+"en": [
+"4",
+"5",
+"6",
+"3"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Ada 5 langkah, tetapi submit dari Draft ke Submitted terjadi dua kali. Transisi berbeda: submit, reject, edit, approve = 4.",
+"en": "There are 5 steps, but submit from Draft to Submitted occurs twice. Distinct transitions: submit, reject, edit, approve = 4."
+}
+},
+{
+"id": "ctfl-148",
+"topic": "istqb",
+"lo": "FL-4.2.4",
+"k": 3,
+"level": 3,
+"type": "mcq",
+"q": {
+"id": "Model pesanan: Pending -(pay)-> Paid; Paid -(refund)-> Refunded; Pending -(cancel)-> Cancelled. Test mengirim event pay, refund, lalu pay lagi. Perilaku yang benar untuk event pay terakhir?",
+"en": "Order model: Pending -(pay)-> Paid; Paid -(refund)-> Refunded; Pending -(cancel)-> Cancelled. A test sends pay, refund, then pay again. What is the correct behaviour for the last pay event?"
+},
+"options": {
+"id": [
+"Ditolak: Refunded tidak punya transisi pay",
+"Diterima, lalu pesanan kembali ke state Paid",
+"Diterima, lalu pesanan masuk ke state Pending",
+"Event itu menghapus seluruh data pesanan"
+],
+"en": [
+"Rejected: Refunded has no pay transition",
+"Accepted, and the order returns to the Paid state",
+"Accepted, and the order moves to the Pending state",
+"The event deletes the whole order record"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Model tidak punya transisi pay dari Refunded, jadi event itu harus ditolak dan state tetap Refunded. Ini negative test klasik untuk transisi tidak valid.",
+"en": "The model has no pay transition from Refunded, so the event must be rejected and the state stay Refunded. A classic negative test for an invalid transition."
+}
+},
+{
+"id": "ctfl-149",
+"topic": "istqb",
+"lo": "FL-4.3.2",
+"k": 2,
+"level": 2,
+"type": "mcq",
+"q": {
+"id": "Kode: if (A) { s1 } lalu if (B) { s2 } (tanpa else). Satu test dijalankan dengan A = benar dan B = benar. Berapa statement coverage dan branch coverage?",
+"en": "Code: if (A) { s1 } then if (B) { s2 } (no else). One test runs with A = true and B = true. What are the statement and branch coverage?"
+},
+"options": {
+"id": [
+"Statement 100%, branch 50%",
+"Statement 100%, branch 100%",
+"Statement 50%, branch 50%",
+"Statement 50%, branch 100%"
+],
+"en": [
+"Statement 100%, branch 50%",
+"Statement 100%, branch 100%",
+"Statement 50%, branch 50%",
+"Statement 50%, branch 100%"
+]
+},
+"answer": 0,
+"exp": {
+"id": "Kedua statement dieksekusi (100%). Ada dua keputusan, masing-masing dua cabang (benar/salah) = 4 cabang; test hanya menjalankan dua cabang 'benar' = 50%. Perlu test kedua dengan A dan B salah.",
+"en": "Both statements run (100%). There are two decisions with two branches each (true/false) = 4 branches; the test only takes the two 'true' branches = 50%. A second test with A and B false is needed."
 }
 },
 {
@@ -6040,7 +9894,7 @@ QA.questions = [
 "level": 3,
 "type": "mcq",
 "q": {
-"id": "Decision table diskon: anggota+kupon = 20%; anggota tanpa kupon = 10%; bukan anggota+kupon = 5%; bukan anggota tanpa kupon = 0%. Pelanggan bukan anggota memakai kupon. Hasil yang diharapkan?",
+"id": "Decision table diskon: anggota+kupon = 20%; anggota tanpa kupon = 10%; bukan anggota+kupon = 5%; bukan anggota tanpa kupon = 0%. Customer bukan anggota memakai kupon. Hasil yang diharapkan?",
 "en": "Discount decision table: member+coupon = 20%; member without coupon = 10%; non-member+coupon = 5%; non-member without coupon = 0%. A non-member uses a coupon. Expected result?"
 },
 "options": {
@@ -6257,7 +10111,7 @@ QA.questions = [
 "level": 3,
 "type": "mcq",
 "q": {
-"id": "Cakupan requirement: T1 = R1,R2,R3; T2 = R3,R4,R6; T3 = R1,R2; T4 = R5. Urutan prioritisasi 'additional coverage' (tiap langkah memilih yang menambah cakupan baru terbanyak)?",
+"id": "Requirement coverage: T1 = R1,R2,R3; T2 = R3,R4,R6; T3 = R1,R2; T4 = R5. Urutan prioritisasi 'additional coverage' (tiap langkah memilih yang menambah coverage baru terbanyak)?",
 "en": "Requirement coverage: T1 = R1,R2,R3; T2 = R3,R4,R6; T3 = R1,R2; T4 = R5. 'Additional coverage' prioritisation order (each step picks the test adding most new coverage)?"
 },
 "options": {
@@ -6307,7 +10161,7 @@ QA.questions = [
 },
 "answer": 1,
 "exp": {
-"id": "Laporan yang baik memuat lingkungan/versi, langkah reproduksi, hasil aktual vs harapan, dan bukti. Opsi lain samar, emosional, atau berupa dugaan.",
+"id": "Laporan yang baik memuat environment/versi, langkah reproduksi, hasil aktual vs harapan, dan bukti. Opsi lain samar, emosional, atau berupa dugaan.",
 "en": "A good report has environment/version, reproduction steps, actual vs expected results and evidence. The others are vague, emotional or speculative."
 }
 },
@@ -6319,12 +10173,12 @@ QA.questions = [
 "level": 3,
 "type": "mcq",
 "q": {
-"id": "User story: 'Sebagai pelanggan, saya ingin memakai voucher agar membayar lebih murah.' Acceptance test ATDD mana yang paling baik?",
+"id": "User story: 'Sebagai customer, saya ingin memakai voucher agar membayar lebih murah.' Acceptance test ATDD mana yang paling baik?",
 "en": "User story: 'As a customer, I want to apply a voucher so that I pay less.' Which ATDD acceptance test is best?"
 },
 "options": {
 "id": [
-"Voucher harus bekerja dengan baik di semua kondisi keranjang pelanggan",
+"Voucher harus bekerja dengan baik di semua kondisi keranjang customer",
 "Given keranjang Rp200.000 dan voucher HEMAT10 (10%, min. Rp100.000), When voucher diterapkan, Then total Rp180.000",
 "Developer memeriksa kode fungsi diskon untuk memastikan rumusnya sudah benar",
 "Tampilan voucher harus bagus dan konsisten dengan desain aplikasi terbaru"
@@ -6418,7 +10272,7 @@ QA.questions = [
 "Bug tersebar merata di semua modul sehingga alokasi testing sebaiknya dibagi rata pula",
 "Sebagian kecil modul memuat sebagian besar defect",
 "Defect hanya ada di lapisan UI karena logika bisnis di backend selalu terjaga",
-"Defect hanya muncul saat produksi karena lingkungan test tidak pernah sama dengan produksi"
+"Defect hanya muncul saat produksi karena test environment tidak pernah sama dengan produksi"
 ],
 "en": [
 "Bugs are spread evenly across all modules so testing effort should be split evenly too",
@@ -6674,9 +10528,9 @@ QA.questions = [
 "options": {
 "id": [
 "Pengecekan awal luas dan dangkal untuk memastikan build layak diuji lebih lanjut",
-"Pengujian mendalam pada satu fitur sampai semua kombinasi inputnya terpenuhi",
-"Pengujian performa dengan banyak pengguna bersamaan pada lingkungan produksi",
-"Pengujian keamanan menyeluruh untuk mencari celah sebelum rilis ke pelanggan"
+"Testing mendalam pada satu fitur sampai semua kombinasi inputnya terpenuhi",
+"Performance testing dengan banyak user bersamaan pada production environment",
+"Security testing menyeluruh untuk mencari celah sebelum release ke customer"
 ],
 "en": [
 "A broad, shallow initial check that a build is stable enough for further testing",
@@ -6882,7 +10736,7 @@ QA.questions = [
 "id": [
 "Struktur kode internal dan arsitektur yang dibangun oleh tim pengembang",
 "Spesifikasi dan perilaku yang terlihat dari luar",
-"Hanya pengalaman dan intuisi penguji tanpa memakai dokumen apa pun sebagai acuan",
+"Hanya pengalaman dan intuisi tester tanpa memakai dokumen apa pun sebagai acuan",
 "Hasil review kode yang dilakukan sesama developer sebelum perubahan digabungkan"
 ],
 "en": [
@@ -6944,7 +10798,7 @@ QA.questions = [
 "id": [
 "Sistem tanpa defect pasti sukses di pasar karena kualitas teknisnya sempurna",
 "Sistem tanpa defect tetap bisa gagal bila tidak memenuhi kebutuhan user",
-"Tidak ada satu pun sistem tanpa defect, jadi pengujian tidak pernah bisa dianggap selesai",
+"Tidak ada satu pun sistem tanpa defect, jadi testing tidak pernah bisa dianggap selesai",
 "Semua bug pasti ditemukan bila tim melakukan testing cukup lama dengan teknik yang tepat"
 ],
 "en": [
@@ -6956,7 +10810,7 @@ QA.questions = [
 },
 "answer": 1,
 "exp": {
-"id": "Bebas bug bukan berarti berguna bagi pengguna.",
+"id": "Bebas bug bukan berarti berguna bagi user.",
 "en": "Being bug-free does not mean useful to users."
 },
 "lo": "FL-1.3.1",
@@ -6976,7 +10830,7 @@ QA.questions = [
 "Scope, pendekatan, sumber daya, jadwal",
 "Hanya daftar bug yang ditemukan beserta tingkat keparahan masing-masing defect",
 "Hanya kode test otomasi yang akan dijalankan pada pipeline untuk iterasi berjalan",
-"Hanya hasil eksekusi test dari iterasi sebelumnya beserta tanggal dan nama penguji"
+"Hanya hasil eksekusi test dari iterasi sebelumnya beserta tanggal dan nama tester"
 ],
 "en": [
 "Scope, approach, resources, schedule",
@@ -7111,7 +10965,7 @@ QA.questions = [
 },
 "answer": 1,
 "exp": {
-"id": "Non-functional: performa, usability, keamanan, reliabilitas, kompatibilitas.",
+"id": "Non-functional: performance, usability, security, reliabilitas, compatibility.",
 "en": "Non-functional: performance, usability, security, reliability, compatibility."
 },
 "lo": "FL-2.2.2",
@@ -7217,7 +11071,7 @@ QA.questions = [
 "options": {
 "id": [
 "Melacak hubungan requirement dengan test case dan defect",
-"Mengukur kecepatan CPU dan memori server selama tes berjalan di lingkungan staging",
+"Mengukur kecepatan CPU dan memori server selama tes berjalan di environment staging",
 "Menjadwalkan sprint dan membagi tugas anggota tim berdasarkan kapasitas tiap orang",
 "Menyimpan password dan kredensial uji secara aman di repositori bersama"
 ],
@@ -7247,8 +11101,8 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Developer di lingkungan developer",
-"Pengguna nyata di lingkungan mereka sendiri",
+"Developer di environment developer",
+"User nyata di environment mereka sendiri",
 "Tim security saja",
 "Kompiler"
 ],
@@ -7261,7 +11115,7 @@ QA.questions = [
 },
 "answer": 1,
 "exp": {
-"id": "Alpha: internal di lingkungan pengembang. Beta: pengguna eksternal di lingkungan sendiri.",
+"id": "Alpha: internal di environment pengembang. Beta: user eksternal di environment sendiri.",
 "en": "Alpha: internal at the developer's site. Beta: external users in their own environment."
 },
 "lo": "FL-2.2.1",
@@ -7280,7 +11134,7 @@ QA.questions = [
 "id": [
 "Semua defect critical sudah ditutup dan coverage target tercapai",
 "Developer sudah menyelesaikan seluruh pekerjaan pengembangan dan pulang untuk hari itu",
-"Build baru berhasil dibuat dan siap dipasang pada lingkungan pengujian berikutnya",
+"Build baru berhasil dibuat dan siap dipasang pada environment testing berikutnya",
 "Sprint baru dimulai sehingga tim perlu segera menyiapkan test case untuk fitur baru"
 ],
 "en": [
@@ -7589,7 +11443,7 @@ QA.questions = [
 "options": {
 "id": [
 "Menjalankan build dan test otomatis pada setiap perubahan untuk feedback cepat",
-"Menggantikan tester sepenuhnya karena semua pengujian sudah dilakukan oleh pipeline",
+"Menggantikan tester sepenuhnya karena semua testing sudah dilakukan oleh pipeline",
 "Menghapus kebutuhan code review karena pipeline sudah memeriksa seluruh perubahan",
 "Mempercepat koneksi internet tim pengembang saat mengunduh dependensi proyek"
 ],
@@ -7619,7 +11473,7 @@ QA.questions = [
 "id": [
 "Kadang lolos kadang gagal tanpa perubahan kode",
 "Selalu gagal setelah deploy terbaru, walau kodenya tidak berubah",
-"Selalu lolos di lingkungan lokal tetapi tidak pernah dijalankan di CI",
+"Selalu lolos di environment lokal tetapi tidak pernah dijalankan di CI",
 "Terlalu cepat selesai sehingga hasilnya sulit dipercaya"
 ],
 "en": [
@@ -7631,7 +11485,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "Penyebab: timing/wait buruk, data bersama, ketergantungan antar test, lingkungan tidak stabil.",
+"id": "Penyebab: timing/wait buruk, data bersama, ketergantungan antar test, environment tidak stabil.",
 "en": "Causes: poor timing/waits, shared data, test inter-dependence, unstable environments."
 }
 },
@@ -7645,7 +11499,7 @@ QA.questions = [
 "en": "What are common causes of flaky tests and how do you fix them?"
 },
 "model": {
-"id": "Penyebab: sinkronisasi/wait buruk, data test bersama atau tidak terisolasi, lingkungan/dependensi eksternal tidak stabil. Solusi: explicit wait, data terisolasi, mock dependensi, stabilkan environment.",
+"id": "Penyebab: sinkronisasi/wait buruk, data test bersama atau tidak terisolasi, environment/dependensi eksternal tidak stabil. Solusi: explicit wait, data terisolasi, mock dependensi, stabilkan environment.",
 "en": "Causes: poor synchronisation/waits, shared or non-isolated test data, unstable environment/external dependencies. Fixes: explicit waits, isolated data, mock dependencies, stabilise environment."
 },
 "keywords": [
@@ -7742,7 +11596,7 @@ QA.questions = [
 "Menjalankan test yang sama dengan banyak set data",
 "Mengambil data langsung dari database produksi secara otomatis sebelum setiap test dijalankan",
 "Membuat laporan ringkasan hasil test dalam format yang mudah dibaca oleh manajer proyek",
-"Menghapus seluruh data test setelah eksekusi selesai supaya lingkungan tetap bersih"
+"Menghapus seluruh data test setelah eksekusi selesai supaya environment tetap bersih"
 ],
 "en": [
 "Run the same test with multiple data sets",
@@ -7827,8 +11681,8 @@ QA.questions = [
 "options": {
 "id": [
 "Menguji sistem melampaui kapasitas normal untuk mencari titik patah dan pemulihan",
-"Menguji tampilan antarmuka di berbagai warna, ukuran layar, dan tema yang berbeda",
-"Menguji perilaku sistem untuk satu pengguna saja dalam kondisi yang sangat ideal",
+"Menguji tampilan UI di berbagai warna, ukuran layar, dan tema yang berbeda",
+"Menguji perilaku sistem untuk satu user saja dalam kondisi yang sangat ideal",
 "Menguji ketepatan terjemahan teks aplikasi ke beberapa bahasa yang didukung"
 ],
 "en": [
@@ -7840,7 +11694,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "Load testing: beban yang diharapkan. Spike: lonjakan mendadak. Soak: beban lama.",
+"id": "Load testing: load yang diharapkan. Spike: lonjakan mendadak. Soak: load lama.",
 "en": "Load testing: expected load. Spike: sudden surge. Soak: prolonged load."
 }
 },
@@ -7869,7 +11723,7 @@ QA.questions = [
 },
 "answer": 0,
 "exp": {
-"id": "Aplikasi yang aman memakai parameterized query. Lakukan hanya di lingkungan yang Anda berwenang untuk menguji.",
+"id": "Aplikasi yang aman memakai parameterized query. Lakukan hanya di environment yang Anda berwenang untuk menguji.",
 "en": "A secure application uses parameterized queries. Only test in environments you are authorised to test."
 }
 },
@@ -7887,7 +11741,7 @@ QA.questions = [
 "Menyisipkan script berbahaya yang dieksekusi di browser korban",
 "Serangan yang hanya menargetkan database melalui query yang dimanipulasi penyerang",
 "Serangan DDoS yang membanjiri server dengan lalu lintas hingga layanan tidak bisa diakses",
-"Kegagalan CSS yang membuat tampilan halaman rusak pada sebagian perangkat pengguna"
+"Failure CSS yang membuat tampilan halaman rusak pada sebagian perangkat user"
 ],
 "en": [
 "Injecting malicious script that runs in a victim's browser",
@@ -7916,7 +11770,7 @@ QA.questions = [
 "Mengganti dependensi eksternal agar test terisolasi dan deterministik",
 "Mempercepat koneksi internet dengan memblokir seluruh permintaan ke layanan eksternal",
 "Menghapus bug dari kode produksi sebelum test dijalankan oleh pipeline CI",
-"Mengganti database produksi dengan salinan lama yang sudah tidak dipakai pengguna"
+"Mengganti database produksi dengan salinan lama yang sudah tidak dipakai user"
 ],
 "en": [
 "Replace external dependencies so tests are isolated and deterministic",
@@ -8078,7 +11932,7 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Lingkungan test konsisten dan mudah diulang",
+"Test environment konsisten dan mudah diulang",
 "Menghilangkan kebutuhan test karena kontainer sudah memastikan aplikasi pasti berjalan benar",
 "Membuat bug otomatis hilang saat aplikasi dipaketkan ke dalam image yang baru",
 "Mengganti Git sebagai sistem version control untuk seluruh kode dan konfigurasi"
@@ -8154,7 +12008,7 @@ QA.questions = [
 "Scenario: gambaran tinggi apa yang diuji; test case: langkah, data, dan hasil yang diharapkan",
 "Keduanya sama persis dan hanya dibedakan oleh nama yang dipakai tiap tim berbeda-beda",
 "Test case lebih umum dan ringkas daripada scenario yang selalu memuat langkah rinci",
-"Scenario hanya dipakai pada pengujian performa, sedangkan test case dipakai untuk fungsional"
+"Scenario hanya dipakai pada performance testing, sedangkan test case dipakai untuk fungsional"
 ],
 "en": [
 "Scenario: high-level what to test; test case: steps, data and expected result",
@@ -8382,7 +12236,7 @@ QA.questions = [
 },
 "answer": 1,
 "exp": {
-"id": "Resource tidak ditemukan = 404. 500 hanya untuk kegagalan server yang tidak terduga.",
+"id": "Resource tidak ditemukan = 404. 500 hanya untuk failure server yang tidak terduga.",
 "en": "Resource not found = 404. 500 is only for unexpected server failures."
 }
 },
@@ -8465,10 +12319,10 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Request gagal karena ada kesalahan pada sisi klien",
+"Request gagal karena ada kesalahan pada sisi client",
 "Request sukses dan tidak ada body di response",
-"Resource dipindahkan permanen ke URL lain dan klien perlu mengikuti",
-"Server sedang sibuk dan klien diminta mencoba lagi nanti"
+"Resource dipindahkan permanen ke URL lain dan client perlu mengikuti",
+"Server sedang sibuk dan client diminta mencoba lagi nanti"
 ],
 "en": [
 "The request failed because of an error on the client side",
@@ -8688,7 +12542,7 @@ QA.questions = [
 },
 "options": {
 "id": [
-"Sama saja; keduanya berarti pengguna tidak boleh mengakses resource itu",
+"Sama saja; keduanya berarti user tidak boleh mengakses resource itu",
 "401 = belum terautentikasi/token invalid; 403 = terautentikasi tapi tidak berhak",
 "401 = server error di sisi backend; 403 = client error karena permintaan salah format",
 "401 = resource tidak ada di server; 403 = resource ada tetapi sedang dipindahkan"
@@ -8767,7 +12621,7 @@ QA.questions = [
 "level": 1,
 "type": "mcq",
 "q": {
-"id": "Server sedang maintenance atau kelebihan beban. Status code yang tepat?",
+"id": "Server sedang maintenance atau kelebihan load. Status code yang tepat?",
 "en": "The server is under maintenance or overloaded. The correct status code?"
 },
 "options": {
@@ -8997,7 +12851,7 @@ QA.questions = [
 },
 "answer": 1,
 "exp": {
-"id": "Tanpa autentikasi = 401. Ini kasus uji negatif wajib untuk endpoint terproteksi.",
+"id": "Tanpa autentikasi = 401. Ini test case negatif wajib untuk endpoint terproteksi.",
 "en": "No authentication = 401. A mandatory negative test for protected endpoints."
 }
 },
@@ -9013,9 +12867,9 @@ QA.questions = [
 "options": {
 "id": [
 "401 dengan pesan generik \"Email atau password salah\"",
-"200 dengan pesan \"Email tidak terdaftar di sistem kami\" agar pengguna segera mendaftar",
+"200 dengan pesan \"Email tidak terdaftar di sistem kami\" agar user segera mendaftar",
 "500 Internal Server Error karena data akun yang dicari tidak ditemukan di database",
-"403 dengan menyebutkan nama user yang ditemukan agar pengguna tahu akun mana yang benar"
+"403 dengan menyebutkan nama user yang ditemukan agar user tahu akun mana yang benar"
 ],
 "en": [
 "401 with a generic message \"Email or password is incorrect\"",
