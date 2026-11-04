@@ -1,4 +1,4 @@
-# Bangun image Docker (web, admin, qa-drill) dan push ke GHCR agar VPS cukup `docker compose pull`.
+# Bangun image Docker (web, qa-drill) dan push ke GHCR agar VPS cukup `docker compose pull`.
 # VPS hanya punya ±1 GB RAM dan berbagi dengan aplikasi lain, jadi `npm ci` + `astro build` tidak dijalankan di sana.
 # Pull request: hanya membangun (tanpa push) untuk memastikan Dockerfile tidak rusak.
 name: docker
@@ -16,7 +16,6 @@ on:
       - astro.config.mjs
       - src/**
       - public/**
-      - admin/**
       - qa-drill/server/**
       - .github/workflows/docker.yml
   pull_request:
@@ -30,7 +29,6 @@ on:
       - astro.config.mjs
       - src/**
       - public/**
-      - admin/**
       - qa-drill/server/**
       - .github/workflows/docker.yml
   workflow_dispatch:
@@ -47,7 +45,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [web, admin, qa-drill]
+        target: [web, qa-drill]
     env:
       PUSH: ${{ github.event_name != 'pull_request' }}
 

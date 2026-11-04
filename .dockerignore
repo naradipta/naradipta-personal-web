@@ -6,7 +6,6 @@ dist
 raw-photos
 *.md
 .DS_Store
-admin/data
+admin
 qa-drill/server/data
-.admin-data
 qa-drill.env
