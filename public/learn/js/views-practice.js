@@ -19,6 +19,9 @@
     ["topic:cypress", "Interview: Cypress", "Interview: Cypress"],
     ["topic:katalon", "Interview: Katalon", "Interview: Katalon"],
     ["topic:sql", "Interview: SQL lanjutan", "Interview: Advanced SQL"],
+    ["topic:fundamentals", "Dasar QA dan metodologi", "QA fundamentals"],
+    ["topic:nonfunctional", "Performa, keamanan, aksesibilitas", "Performance, security, accessibility"],
+    ["topic:tooling", "Git, CI/CD, dan monitoring", "Git, CI/CD and monitoring"],
     ["topic:interview", "Interview: jawaban terbuka", "Interview: open-ended answers"],
     ["due", "Hanya yang jatuh tempo", "Due for review only"]
   ];

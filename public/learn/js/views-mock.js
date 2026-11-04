@@ -176,7 +176,8 @@
   function cardKey(g) { return g.t; }
 
   var DECKS = [["all", "Semua topik", "All topics"], ["istqb", "ISTQB CTFL", "ISTQB CTFL"], ["rest-api", "REST API", "REST API"], ["selenium", "Selenium", "Selenium"],
-    ["sql", "SQL", "SQL"], ["playwright", "Playwright", "Playwright"], ["cypress", "Cypress", "Cypress"], ["qa-general", "QA umum", "General QA"], ["interview", "Interview", "Interview"]];
+    ["sql", "SQL", "SQL"], ["playwright", "Playwright", "Playwright"], ["cypress", "Cypress", "Cypress"], ["qa-general", "QA umum", "General QA"],
+    ["fundamentals", "Dasar QA", "QA fundamentals"], ["nonfunctional", "Non-fungsional", "Non-functional"], ["tooling", "Git, CI/CD", "Git, CI/CD"], ["interview", "Interview", "Interview"]];
   function inTopic(g, topic) { return topic === "all" || g.topic === topic; }
 
   function startDeck(mode, topic) {

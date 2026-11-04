@@ -1,0 +1,698 @@
+[
+ {
+  "id": "fun-001",
+  "topic": "fundamentals",
+  "level": 1,
+  "type": "mcq",
+  "q": {
+   "id": "Apa beda verifikasi dan validasi?",
+   "en": "What is the difference between verification and validation?"
+  },
+  "options": {
+   "id": [
+    "Verifikasi: sesuai spesifikasi? Validasi: sesuai kebutuhan?",
+    "Verifikasi dilakukan pengguna; validasi dilakukan developer",
+    "Verifikasi hanya untuk kode; validasi hanya untuk dokumen",
+    "Keduanya sama dan hanya beda istilah antar perusahaan"
+   ],
+   "en": [
+    "Verification: matches the spec? Validation: meets user needs?",
+    "Verification is done by users; validation is done by developers",
+    "Verification is only for code; validation is only for documents",
+    "Both are the same and only differ by company terminology"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Verifikasi memeriksa kesesuaian dengan spesifikasi ('membangun dengan benar'); validasi memeriksa apakah produk memenuhi kebutuhan nyata ('membangun yang benar'). Produk bisa lolos verifikasi tetapi gagal validasi bila spesifikasinya salah.",
+   "en": "Verification checks conformance to the spec ('building it right'); validation checks it meets real needs ('building the right thing'). A product can pass verification yet fail validation if the spec itself is wrong."
+  }
+ },
+ {
+  "id": "fun-002",
+  "topic": "fundamentals",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Peran QA yang paling tepat dalam tim Scrum?",
+   "en": "What is the most fitting QA role in a Scrum team?"
+  },
+  "options": {
+   "id": [
+    "Menajamkan acceptance criteria sejak refinement dan menguji di dalam sprint",
+    "Menunggu fitur selesai lalu menguji di fase terpisah setelah sprint",
+    "Hanya menulis laporan bug untuk dibaca manajer proyek",
+    "Memutuskan prioritas backlog menggantikan product owner"
+   ],
+   "en": [
+    "Sharpen acceptance criteria from refinement and test within the sprint",
+    "Wait for features to finish, then test in a separate post-sprint phase",
+    "Only write bug reports for the project manager to read",
+    "Decide backlog priority in place of the product owner"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Dalam Agile kualitas dikerjakan bersama sepanjang sprint. Fase test terpisah mengembalikan pola waterfall, dan prioritas backlog adalah wewenang product owner.",
+   "en": "In Agile, quality is built together throughout the sprint. A separate test phase brings back waterfall habits, and backlog priority belongs to the product owner."
+  }
+ },
+ {
+  "id": "fun-003",
+  "topic": "fundamentals",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Aturan usia minimal 18 tahun. Nilai uji boundary value yang paling relevan?",
+   "en": "The rule says minimum age is 18. Which boundary values are most relevant?"
+  },
+  "options": {
+   "id": [
+    "17, 18, 19",
+    "1, 50, 100",
+    "0, 18, 180",
+    "18, 28, 38"
+   ],
+   "en": [
+    "17, 18, 19",
+    "1, 50, 100",
+    "0, 18, 180",
+    "18, 28, 38"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "BVA menguji di dan sekitar tepi: tepat di bawah (17), tepat di batas (18), dan tepat di atas (19). Nilai lain tidak berada di tepi kelompok.",
+   "en": "BVA tests at and around the edge: just below (17), on the boundary (18) and just above (19). The other values are not at a partition edge."
+  }
+ },
+ {
+  "id": "fun-004",
+  "topic": "fundamentals",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Status pesanan: baru, dibayar, dikirim, dibatalkan. Teknik apa paling cocok untuk menguji perpindahan statusnya?",
+   "en": "Order status: new, paid, shipped, cancelled. Which technique fits testing its transitions?"
+  },
+  "options": {
+   "id": [
+    "State transition testing",
+    "Equivalence partitioning pada nama pelanggan",
+    "Uji performa beban tinggi",
+    "Uji kompatibilitas browser"
+   ],
+   "en": [
+    "State transition testing",
+    "Equivalence partitioning on the customer name",
+    "High-load performance testing",
+    "Browser compatibility testing"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "State transition memodelkan status, kejadian, dan perpindahan yang sah maupun tidak sah (mis. dikirim lalu dibayar harus ditolak).",
+   "en": "State transition models states, events and valid or invalid moves (e.g. shipped then paid must be rejected)."
+  }
+ },
+ {
+  "id": "fun-005",
+  "topic": "fundamentals",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Apa itu test oracle?",
+   "en": "What is a test oracle?"
+  },
+  "options": {
+   "id": [
+    "Sumber penentu hasil yang benar dari sebuah test",
+    "Alat otomasi untuk menjalankan test secara paralel",
+    "Database khusus yang menyimpan seluruh data uji",
+    "Laporan ringkasan hasil regression tiap malam"
+   ],
+   "en": [
+    "A source that decides the correct result of a test",
+    "An automation tool for running tests in parallel",
+    "A special database that stores all of the test data",
+    "A nightly summary report of regression results"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Oracle bisa berupa spesifikasi, versi sebelumnya, sistem pembanding, atau perhitungan independen. Tanpa oracle, hasil sebenarnya tidak bisa dinilai.",
+   "en": "An oracle can be a spec, a previous version, a reference system or an independent calculation. Without one, an actual result cannot be judged."
+  }
+ },
+ {
+  "id": "fun-006",
+  "topic": "fundamentals",
+  "level": 1,
+  "type": "mcq",
+  "q": {
+   "id": "Urutan siklus TDD yang benar?",
+   "en": "What is the correct TDD cycle?"
+  },
+  "options": {
+   "id": [
+    "Tulis test gagal, buat lulus, refactor",
+    "Tulis kode, tulis test, abaikan hasilnya",
+    "Refactor dulu, tulis kode, hapus test",
+    "Deploy dulu, tulis test, lalu perbaiki kode"
+   ],
+   "en": [
+    "Write a failing test, make it pass, refactor",
+    "Write code, write a test, ignore the result",
+    "Refactor first, write code, delete the test",
+    "Deploy first, write a test, then fix the code"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Red-green-refactor: test gagal dulu (red), kode minimal agar lulus (green), lalu rapikan desain tanpa mengubah perilaku.",
+   "en": "Red-green-refactor: failing test first (red), minimal code to pass (green), then clean the design without changing behaviour."
+  }
+ },
+ {
+  "id": "fun-007",
+  "topic": "fundamentals",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Skenario Given-When-Then manakah yang ditulis dengan baik?",
+   "en": "Which Given-When-Then scenario is written well?"
+  },
+  "options": {
+   "id": [
+    "Given pesanan dibayar, When pelanggan membatalkan, Then dana dikembalikan",
+    "Given klik tombol biru, When klik menu ketiga, Then lihat halaman",
+    "Given buka browser, When ketik teks, Then tekan enter lalu tutup",
+    "Given sebuah database, When sebuah query dijalankan, Then ada hasil"
+   ],
+   "en": [
+    "Given an order is paid, When the customer cancels, Then the money is refunded",
+    "Given click the blue button, When click the third menu, Then see the page",
+    "Given open the browser, When type text, Then press enter then close",
+    "Given a database, When a query is run, Then there is a result"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Skenario BDD menggambarkan perilaku bisnis yang bisa disepakati semua pihak, bukan rangkaian klik antarmuka.",
+   "en": "A BDD scenario describes business behaviour everyone can agree on, not a sequence of interface clicks."
+  }
+ },
+ {
+  "id": "fun-008",
+  "topic": "fundamentals",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Mengapa test data sebaiknya disiapkan dan dibersihkan oleh test itu sendiri?",
+   "en": "Why should each test prepare and clean up its own data?"
+  },
+  "options": {
+   "id": [
+    "Agar test independen, bisa diulang, dan aman paralel",
+    "Agar suite berjalan lebih lambat dan lebih teliti",
+    "Agar tidak perlu environment khusus untuk menguji",
+    "Agar data produksi bisa langsung dipakai ulang"
+   ],
+   "en": [
+    "So tests stay independent, repeatable and parallel-safe",
+    "So the suite runs slower and with more thoroughness",
+    "So that no dedicated test environment is needed",
+    "So that production data can be reused directly"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Data bersama membuat test saling memengaruhi sehingga hasilnya berubah-ubah. Data produksi juga membawa risiko privasi.",
+   "en": "Shared data makes tests affect each other so results vary. Production data also carries privacy risk."
+  }
+ },
+ {
+  "id": "nfn-001",
+  "topic": "nonfunctional",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Mengapa laporan performa sebaiknya memakai persentil (p95/p99) dan bukan hanya rata-rata?",
+   "en": "Why should performance reports use percentiles (p95/p99) rather than only the average?"
+  },
+  "options": {
+   "id": [
+    "Rata-rata menyembunyikan pengguna yang sangat lambat",
+    "Persentil selalu bernilai lebih kecil dari rata-rata",
+    "Rata-rata tidak dapat dihitung pada data waktu respons",
+    "Persentil hanya berlaku untuk pengukuran database"
+   ],
+   "en": [
+    "The average hides users with very slow responses",
+    "Percentiles are always smaller than the average",
+    "The average cannot be computed on response time data",
+    "Percentiles only apply to database measurements"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Sebagian kecil permintaan yang sangat lambat tidak terlihat di rata-rata, padahal itulah yang dirasakan pengguna tertentu. Persentil menampilkan ekor distribusi.",
+   "en": "A small share of very slow requests vanishes in the average, yet some users feel exactly that. Percentiles show the tail of the distribution."
+  }
+ },
+ {
+  "id": "nfn-002",
+  "topic": "nonfunctional",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Perbedaan load test dan stress test?",
+   "en": "What is the difference between a load test and a stress test?"
+  },
+  "options": {
+   "id": [
+    "Load: beban diharapkan; stress: lewat batas untuk cari titik gagal",
+    "Load: tanpa pengguna sama sekali; stress: dengan satu pengguna",
+    "Load: khusus untuk keamanan; stress: khusus untuk tampilan",
+    "Tidak ada perbedaan, hanya beda nama pada alat tertentu"
+   ],
+   "en": [
+    "Load: expected demand; stress: past the limit to find breaking point",
+    "Load: with no users at all; stress: with one single user",
+    "Load: for security only; stress: for appearance only",
+    "No difference, only different names in particular tools"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Load test memverifikasi sistem sanggup menangani beban normal-puncak; stress test mencari batas dan perilaku saat gagal (apakah pulih dengan baik).",
+   "en": "A load test verifies the system handles normal-to-peak demand; a stress test finds the limit and how it behaves on failure (does it recover gracefully)."
+  }
+ },
+ {
+  "id": "nfn-003",
+  "topic": "nonfunctional",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Test beban 500 pengguna menunjukkan CPU mesin pembangkit beban 100% sedangkan server target santai. Kesimpulan?",
+   "en": "A 500-user load test shows the load generator at 100% CPU while the target server is idle. What follows?"
+  },
+  "options": {
+   "id": [
+    "Tidak valid: bottleneck ada di pembangkit beban, bukan target",
+    "Server target pasti sangat cepat dan efisien",
+    "Sistem dinyatakan lulus uji beban dengan baik",
+    "Jumlah pengguna sebaiknya dinaikkan lagi segera"
+   ],
+   "en": [
+    "Invalid: the bottleneck is the load generator, not the target",
+    "The target server must be extremely fast and efficient",
+    "The system is declared to pass the load test well",
+    "The user count should be raised again right away"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Bila generator jenuh, angka latency dan throughput mencerminkan generator, bukan sistem yang diuji. Tambah mesin pembangkit atau kurangi beban per mesin.",
+   "en": "When the generator is saturated, latency and throughput reflect the generator, not the system under test. Add generators or reduce the per-machine load."
+  }
+ },
+ {
+  "id": "nfn-004",
+  "topic": "nonfunctional",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Mana yang termasuk risiko 'broken access control' pada OWASP Top 10?",
+   "en": "Which is an example of 'broken access control' in the OWASP Top 10?"
+  },
+  "options": {
+   "id": [
+    "Pengguna biasa membuka halaman admin lewat URL langsung",
+    "Situs memuat gambar lebih lambat di jaringan 3G biasa",
+    "Warna tombol utama tidak persis sesuai desain awal",
+    "Teks bantuan di halaman profil memuat salah ketik"
+   ],
+   "en": [
+    "A normal user opens an admin page via a direct URL",
+    "The site loads images more slowly on a regular 3G network",
+    "The main button colour does not match the original design",
+    "The help text on the profile page contains a typo"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Access control memastikan setiap pengguna hanya mengakses yang berhak. Mengandalkan 'menu disembunyikan' tanpa pemeriksaan di server adalah celah klasik.",
+   "en": "Access control ensures each user reaches only what they are entitled to. Relying on 'hiding the menu' without a server-side check is a classic hole."
+  }
+ },
+ {
+  "id": "nfn-005",
+  "topic": "nonfunctional",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Mengapa alat aksesibilitas otomatis (axe, Lighthouse) tidak cukup?",
+   "en": "Why are automated accessibility tools (axe, Lighthouse) not enough?"
+  },
+  "options": {
+   "id": [
+    "Hanya menangkap sebagian; keyboard dan pembaca layar perlu uji manual",
+    "Alat otomatis selalu memberikan hasil yang salah",
+    "WCAG sama sekali tidak bisa diuji oleh tim mana pun",
+    "Aksesibilitas hanya berkaitan dengan warna halaman"
+   ],
+   "en": [
+    "They catch only part; keyboard and screen readers need manual checks",
+    "Automated tools always give wrong results",
+    "WCAG cannot be tested by any team at all",
+    "Accessibility is only related to page colours"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Alat menangkap pelanggaran yang bisa dideteksi mesin (kontras, label hilang). Urutan fokus yang logis atau teks alternatif yang bermakna butuh penilaian manusia.",
+   "en": "Tools catch machine-detectable violations (contrast, missing labels). A logical focus order or meaningful alt text needs human judgement."
+  }
+ },
+ {
+  "id": "nfn-006",
+  "topic": "nonfunctional",
+  "level": 1,
+  "type": "mcq",
+  "q": {
+   "id": "Apa singkatan POUR pada WCAG?",
+   "en": "What does POUR stand for in WCAG?"
+  },
+  "options": {
+   "id": [
+    "Perceivable, Operable, Understandable, Robust",
+    "Performance, Output, Usability, Reliability",
+    "Planning, Operation, Updates, Review",
+    "Public, Open, Universal, Reachable"
+   ],
+   "en": [
+    "Perceivable, Operable, Understandable, Robust",
+    "Performance, Output, Usability, Reliability",
+    "Planning, Operation, Updates, Review",
+    "Public, Open, Universal, Reachable"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "POUR adalah empat prinsip aksesibilitas WCAG: dapat dipersepsi, dapat dioperasikan, dapat dipahami, dan kokoh terhadap teknologi bantu.",
+   "en": "POUR are the four WCAG accessibility principles: perceivable, operable, understandable and robust against assistive technology."
+  }
+ },
+ {
+  "id": "nfn-007",
+  "topic": "nonfunctional",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Cara memilih kombinasi browser/perangkat untuk uji kompatibilitas?",
+   "en": "How should you choose browser/device combinations for compatibility testing?"
+  },
+  "options": {
+   "id": [
+    "Dari data pengguna nyata (analytics) dan risiko",
+    "Semua kombinasi yang pernah ada di pasar",
+    "Hanya browser yang dipakai oleh developer",
+    "Dipilih acak setiap kali ada rilis baru"
+   ],
+   "en": [
+    "From real user data (analytics) and risk",
+    "Every combination that has ever existed on the market",
+    "Only the browsers that the developers use",
+    "Chosen at random each time there is a new release"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Semua kombinasi mustahil diuji. Analytics menunjukkan yang benar-benar dipakai pengguna sehingga usaha tertuju pada risiko terbesar.",
+   "en": "Testing all combinations is impossible. Analytics shows what users actually use, so effort goes to the biggest risk."
+  }
+ },
+ {
+  "id": "nfn-008",
+  "topic": "nonfunctional",
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Pengujian keamanan di sistem milik klien tanpa izin tertulis, 'hanya untuk membantu'. Penilaian?",
+   "en": "Security testing a client's system without written permission, 'just to help'. Assessment?"
+  },
+  "options": {
+   "id": [
+    "Tidak etis dan bisa melanggar hukum; minta izin tertulis",
+    "Boleh saja selama niatnya memang baik",
+    "Boleh bila hanya dilakukan pada malam hari",
+    "Boleh bila hasilnya dirahasiakan dari semua orang"
+   ],
+   "en": [
+    "Unethical and possibly illegal; get written permission",
+    "Perfectly fine as long as the intent is good",
+    "Fine if it is only done during the night",
+    "Fine if the results are kept secret from everyone"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Niat baik tidak menggantikan otorisasi. Uji keamanan hanya pada sistem yang secara jelas Anda berwenang menguji.",
+   "en": "Good intent does not replace authorisation. Security-test only systems you are clearly authorised to test."
+  }
+ },
+ {
+  "id": "tool-001",
+  "topic": "tooling",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Perbedaan utama git merge dan git rebase?",
+   "en": "What is the main difference between git merge and git rebase?"
+  },
+  "options": {
+   "id": [
+    "Merge menyatukan riwayat; rebase menulis ulang commit",
+    "Merge menghapus sebuah cabang; rebase membuat cabang",
+    "Rebase hanya dipakai untuk file gambar dan biner",
+    "Tidak ada perbedaan sama sekali antara keduanya"
+   ],
+   "en": [
+    "Merge joins histories; rebase rewrites commits",
+    "Merge deletes a branch; rebase creates a branch",
+    "Rebase is only used for image and binary files",
+    "There is no difference at all between the two"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Rebase mengubah riwayat commit sehingga tidak dilakukan pada cabang yang dipakai bersama. Merge mempertahankan riwayat apa adanya.",
+   "en": "Rebase changes commit history so it is avoided on shared branches. Merge preserves history as is."
+  }
+ },
+ {
+  "id": "tool-002",
+  "topic": "tooling",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Anda tidak sengaja meng-commit API key ke repository. Tindakan yang benar?",
+   "en": "You accidentally committed an API key to the repository. What is the right action?"
+  },
+  "options": {
+   "id": [
+    "Cabut dan ganti key, lalu bersihkan riwayat bila perlu",
+    "Hapus commit terakhir saja lalu anggap selesai",
+    "Biarkan saja karena repository ini bersifat privat",
+    "Ubah nama file yang memuat key tersebut saja"
+   ],
+   "en": [
+    "Revoke and rotate the key, then clean history if needed",
+    "Just delete the last commit and consider it done",
+    "Leave it alone because the repository is private",
+    "Only rename the file that contains the key"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Key yang pernah masuk riwayat harus dianggap bocor. Menghapus commit tidak cukup karena salinan dan cache mungkin ada.",
+   "en": "A key that ever entered history must be considered leaked. Deleting the commit is not enough because copies and caches may exist."
+  }
+ },
+ {
+  "id": "tool-003",
+  "topic": "tooling",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Tujuan Docker pada environment test?",
+   "en": "What is Docker's purpose in a test environment?"
+  },
+  "options": {
+   "id": [
+    "Membuat environment sama di laptop dan CI",
+    "Menggantikan seluruh test otomatis di proyek",
+    "Menambah kecepatan CPU secara fisik di server",
+    "Menghapus kebutuhan akan versi dependensi aplikasi"
+   ],
+   "en": [
+    "Creating the same environment on laptops and CI",
+    "Replacing every automated test in the project",
+    "Physically adding CPU speed on the server",
+    "Removing the need for application dependency versions"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Container membungkus aplikasi dan dependensinya sehingga perbedaan environment, penyebab umum flaky test dan 'works on my machine', berkurang.",
+   "en": "Containers bundle the app and its dependencies, reducing environment differences, a common cause of flaky tests and 'works on my machine'."
+  }
+ },
+ {
+  "id": "tool-004",
+  "topic": "tooling",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Laporan test otomatis yang berguna harus menjawab apa?",
+   "en": "What must a useful automated test report answer?"
+  },
+  "options": {
+   "id": [
+    "Apa yang gagal, di mana, dan buktinya (log, screenshot)",
+    "Hanya berapa banyak test yang sudah dijalankan",
+    "Siapa nama penulis dari setiap test yang ada",
+    "Berapa lama server CI tetap menyala hari ini"
+   ],
+   "en": [
+    "What failed, where, and the evidence (logs, screenshots)",
+    "Only how many tests have been run so far",
+    "The name of the author of each existing test",
+    "How long the CI server stayed on today"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Laporan yang tidak memberi bukti memaksa orang mereproduksi kegagalan dari nol. Artefak kegagalan mempercepat diagnosis.",
+   "en": "A report without evidence forces people to reproduce failures from scratch. Failure artefacts speed up diagnosis."
+  }
+ },
+ {
+  "id": "tool-005",
+  "topic": "tooling",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Tiga sinyal observability?",
+   "en": "What are the three observability signals?"
+  },
+  "options": {
+   "id": [
+    "Log, metrik, trace",
+    "CPU, RAM, disk",
+    "Build, test, deploy",
+    "Alpha, beta, gamma"
+   ],
+   "en": [
+    "Logs, metrics, traces",
+    "CPU, RAM, disk",
+    "Build, test, deploy",
+    "Alpha, beta, gamma"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Log mencatat kejadian, metrik menghitung tren, trace mengikuti satu request lintas layanan. Ketiganya saling melengkapi saat menyelidiki bug produksi.",
+   "en": "Logs record events, metrics count trends, traces follow a single request across services. Together they help investigate production bugs."
+  }
+ },
+ {
+  "id": "tool-006",
+  "topic": "tooling",
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Dalam RCA, mana yang disebut akar masalah?",
+   "en": "In an RCA, which is the root cause?"
+  },
+  "options": {
+   "id": [
+    "Kontrol yang hilang hingga bug lolos, mis. tak ada test-nya",
+    "Baris kode tempat error pertama kali muncul",
+    "Pengguna yang melaporkan masalah itu pertama kali",
+    "Waktu terjadinya insiden menurut jam server"
+   ],
+   "en": [
+    "The missing control that let it through, e.g. no test",
+    "The line of code where the error first appeared",
+    "The user who first reported the problem",
+    "The time of the incident according to server clock"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Baris kode adalah penyebab langsung. Akar masalah adalah celah proses/kontrol yang bisa dicegah ke depan.",
+   "en": "The code line is the proximate cause. The root cause is the process/control gap that can be prevented in future."
+  }
+ },
+ {
+  "id": "tool-007",
+  "topic": "tooling",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Tantangan khas pengujian aplikasi mobile dibanding web?",
+   "en": "What is a typical challenge of mobile testing compared with web?"
+  },
+  "options": {
+   "id": [
+    "Fragmentasi perangkat/OS, izin, jaringan buruk, interupsi",
+    "Perangkat mobile tidak memiliki layar sama sekali",
+    "Aplikasi mobile sama sekali tidak bisa diotomasi",
+    "Hanya ada satu ukuran layar untuk semua perangkat"
+   ],
+   "en": [
+    "Device/OS fragmentation, permissions, poor network, interruptions",
+    "Mobile devices have no screen at all",
+    "Mobile apps cannot be automated at all",
+    "There is only one screen size for all devices"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Perangkat, versi OS, izin (kamera/lokasi), kondisi jaringan, dan interupsi (telepon, notifikasi) membuat kasus mobile unik. Appium dan alat lain bisa mengotomasi.",
+   "en": "Devices, OS versions, permissions (camera/location), network conditions and interruptions (calls, notifications) make mobile unique. Appium and others can automate it."
+  }
+ },
+ {
+  "id": "tool-008",
+  "topic": "tooling",
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Mengapa pipeline CI sebaiknya menyimpan screenshot/trace saat test gagal?",
+   "en": "Why should CI keep screenshots/traces when a test fails?"
+  },
+  "options": {
+   "id": [
+    "Agar kegagalan bisa didiagnosis tanpa reproduksi manual",
+    "Agar pipeline menjadi lebih lambat dari biasanya",
+    "Agar developer tidak perlu lagi membaca log apa pun",
+    "Agar test tidak akan pernah gagal di masa depan"
+   ],
+   "en": [
+    "So failures can be diagnosed without manual reproduction",
+    "So the pipeline becomes slower than it normally is",
+    "So developers no longer need to read any logs at all",
+    "So tests will never fail again in the future"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Kegagalan CI sering tidak muncul lokal. Artefak menyimpan keadaan saat gagal sehingga penyebab bisa ditelusuri.",
+   "en": "CI failures often do not reproduce locally. Artefacts keep the state at failure so the cause can be traced."
+  }
+ }
+]

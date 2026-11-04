@@ -102,6 +102,9 @@
     ["cypress", "Cypress", "Cypress", "Pertanyaan interview seputar Cypress.", "Interview questions about Cypress."],
     ["katalon", "Katalon", "Katalon", "Pertanyaan interview seputar Katalon.", "Interview questions about Katalon."],
     ["sql", "SQL lanjutan", "Advanced SQL", "Join, agregasi, dan query untuk validasi data.", "Joins, aggregation and queries for data validation."],
+    ["fundamentals", "Dasar QA dan metodologi", "QA fundamentals", "SDLC, level dan teknik test, TDD/BDD, perencanaan test.", "SDLC, test levels and techniques, TDD/BDD, test planning."],
+    ["nonfunctional", "Performa, keamanan, aksesibilitas", "Performance, security, accessibility", "Load/stress test, OWASP, WCAG, kompatibilitas.", "Load/stress testing, OWASP, WCAG, compatibility."],
+    ["tooling", "Git, CI/CD, dan monitoring", "Git, CI/CD and monitoring", "Alur Git, pipeline, Docker, log/monitoring, RCA, mobile.", "Git workflow, pipelines, Docker, logs/monitoring, RCA, mobile."],
     ["interview", "Jawaban terbuka", "Open answers", "Latihan menjawab pertanyaan interview dengan kata-kata sendiri.", "Practise answering interview questions in your own words."]
   ];
 
@@ -270,6 +273,11 @@
     root.appendChild(h("h1", null, t(c[1], c[2])));
     root.appendChild(h("p", { class: "muted" }, t(c[3], c[4])));
     root.appendChild(sectionsBlock((QA.materiKarir || {})[topic], "Full material is written in Indonesian."));
+    var src = (QA.sumberKarir || {})[topic];
+    if (src && src.length) root.appendChild(h("div", { class: "card" },
+      h("h2", { class: "h3" }, t("Sumber belajar", "Learning sources")),
+      h("p", { class: "small muted" }, t("Tautan ke sumber luar; materi di atas ditulis sendiri, bukan salinan. Label: resmi = standar atau dokumentasi pemilik alat; rujukan = penulis atau institusi tepercaya; komunitas = kurasi komunitas, dipakai sebagai peta topik.", "Links to external sources; the material above is original, not a copy. Labels: resmi = standards or the tool owner's docs; rujukan = trusted author or institution; komunitas = community-curated, used as a topic map.")),
+      h("ul", { class: "linklist" }, src.map(function (x) { return h("li", null, h("a", { href: x[1], target: "_blank", rel: "noopener" }, x[0]), " ", h("span", { class: "muted small" }, "(" + x[2] + ")")); }))));
     root.appendChild(h("div", { class: "card accent" },
       h("div", null, t(st.total + " soal tersedia untuk topik ini.", st.total + " questions available for this topic.")),
       h("a", { class: "btn primary", href: "#/practice/topic:" + topic }, t("Latihan topik ini", "Practise this topic"))));

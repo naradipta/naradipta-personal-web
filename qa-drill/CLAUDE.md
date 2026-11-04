@@ -19,6 +19,7 @@ public/learn/                    (aplikasi, ikut terbit)
   index.html, styles.css
   data/materi.js     materi lengkap Bahasa Indonesia per bab ISTQB (ditulis sendiri; tampil di Materi > Jalur 1 > bab)
   data/materi-karir.js  materi ringkas Jalur 2 per topik (REST API, Selenium, SQL, dst.; rute #/career/<topik>; tiap topik non-ISTQB wajib punya materi, dicek data.test.js)
+                     juga memuat QA.sumberKarir: tautan sumber per topik [judul, URL, jenis]; jenis = resmi | rujukan | komunitas
   js/views-community.js papan belajar opt-in (nama tampilan + angka kasar; lihat server/README.md untuk aturan privasi)
   data/lo.js           peta 64 learning objective (LO) ISTQB + catatan belajar orisinal ID/EN, struktur ujian
   data/glossary.js   kartu istilah (definisi ditulis sendiri)
@@ -44,7 +45,7 @@ qa-drill/                        (sumber dan alat, tidak terbit)
 ## Beranda, fokus, dan kartu
 - `S.state.focus` (`istqb` | `career` | `both` | null) menentukan saran "Hari ini" dan urutan jalur di Beranda; dipilih lewat kartu pertanyaan di Beranda atau Pengaturan.
 - Kartu "Hari ini" (`nextAction` di `views-home.js`), urutan prioritas: hari ujian (istirahat) → ujian <= 7 hari dan belum ada mock 3 hari terakhir (mock exam) → soal jatuh tempo → area terlemah menurut fokus. Tanggal ujian diabaikan bila fokus = karir. Kartu hanya tampil bila ada soal jatuh tempo, >= 10 soal sudah dijawab, atau ujian <= 14 hari.
-- `data/glossary.js`: tiap kartu punya `topic` (`istqb` bawaan, atau `rest-api`, `selenium`, `sql`, `playwright`, `cypress`, `qa-general`, `interview`); kartu dipilih per topik di halaman Kartu. Istilah (`t`) harus unik karena dipakai sebagai kunci progres.
+- `data/glossary.js`: tiap kartu punya `topic` (`istqb` bawaan, atau `rest-api`, `selenium`, `sql`, `playwright`, `cypress`, `qa-general`, `fundamentals`, `nonfunctional`, `tooling`, `interview`); kartu dipilih per topik di halaman Kartu. Istilah (`t`) harus unik karena dipakai sebagai kunci progres.
 - Soal Jalur 2 baru: tambah ke `questions/*.json`, buat pengecoh selevel jawaban benar (cek bias panjang di `build-data.py`).
 
 ## Email (verifikasi dan reset password)
@@ -96,6 +97,11 @@ Mengikuti struktur resmi CTFL v4.0 (ISTQB Exam Structure and Rules Tables): 40 s
 - Jangan render teks soal dengan `innerHTML`; pakai `QA.h` (textContent).
 - Semua akses `localStorage` di dalam try/catch.
 - Data divalidasi saat load (`QA.validateData`); jika gagal, tampilkan error jelas.
+
+## Menambah topik Jalur 2 dan sumber belajar
+- Topik baru (mis. `fundamentals`, `nonfunctional`, `tooling`) harus didaftarkan di tiga tempat: array `CAREER` di `views-home.js`, daftar filter di `views-practice.js`, dan `DECKS` di `views-mock.js`; lalu isi `QA.materiKarir[topik]`, `QA.sumberKarir[topik]`, soal, dan kartu istilah.
+- Sumber belajar hanya ditautkan, tidak disalin. Utamakan standar dan dokumentasi resmi (jenis `resmi`), lalu penulis/institusi tepercaya (`rujukan`). `komunitas` (mis. roadmap.sh/qa, Ministry of Testing) hanya untuk peta topik. Periksa setiap URL terbuka sebelum dimasukkan.
+- **roadmap.sh**: lisensinya melarang menyalin kontennya; hanya boleh menautkan. Pakai sebagai peta topik, tulis materi sendiri.
 
 ## Ide berikutnya
 Soal tambahan Playwright/Cypress/Katalon dan SQL lanjut; soal skenario K3 lebih banyak (EP/BVA/decision table/state transition); latihan interview jawaban terbuka; CTFL Agile Tester atau Test Automation Engineer sebagai jalur lanjutan.

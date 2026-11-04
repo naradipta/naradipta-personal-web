@@ -72,6 +72,26 @@ QA.materiKarir = {
     { h: "SQL dasar untuk QA",
       pre: "SELECT status, COUNT(*) AS jumlah\nFROM orders\nWHERE created_at >= '2026-01-01'\nGROUP BY status\nHAVING COUNT(*) > 10\nORDER BY jumlah DESC;",
       ul: ["WHERE memfilter baris sebelum pengelompokan; HAVING memfilter hasil kelompok.", "Pakai SQL untuk memverifikasi efek aplikasi: data tersimpan benar, tidak ada duplikat, relasi utuh."] }
+    ,{ h: "Kasus produksi yang paling sering terjadi",
+      ul: ["Race condition: dua request mengubah data yang sama bersamaan (stok -1, saldo ganda). Uji dengan request paralel dan periksa state akhir; perbaikan biasanya update atomik, locking, atau constraint.",
+           "Zona waktu: bug muncul di sekitar tengah malam atau saat server (UTC) dan pengguna (UTC+7) berbeda. Simpan UTC, konversi saat tampil, uji data di batas hari, akhir bulan, dan pergantian tahun.",
+           "Pagination: offset bergeser saat data berubah sehingga baris terduplikasi atau terlewat; urutan tanpa ORDER BY tidak deterministik. Pertimbangkan keyset/cursor.",
+           "Retry tanpa idempotency: timeout lalu klien mengirim ulang POST sehingga tertagih dua kali. Gunakan idempotency key.",
+           "Perbedaan environment: jumlah worker, replika database, konfigurasi, dan data staging berbeda dari produksi sehingga bug hanya muncul di produksi.",
+           "Cache dan data basi: pengguna melihat data lama setelah update. Uji invalidasi cache dan konsistensi baca-setelah-tulis.",
+           "Null, string kosong, dan karakter khusus (emoji, tanda kutip, spasi di ujung) pada input yang tidak divalidasi."],
+      tip: ["Saat bug lolos ke produksi, tanyakan 'mengapa tidak tertangkap?' dan ubah jawabannya menjadi regression test atau perbaikan proses. Fokus ke sistem, bukan menyalahkan orang."] },
+    { h: "Flaky test dan pipeline CI/CD",
+      ul: ["Penyebab umum flaky: timing/race condition, data bersama antar test, ketergantungan urutan, environment berbeda, layanan eksternal yang tidak stabil.",
+           "Langkah: kumpulkan bukti dari banyak run (log, trace, screenshot), karantina agar tidak memblokir pipeline, cari root cause, perbaiki, kembalikan. Retry hanya tambalan sementara.",
+           "Pipeline berlapis: unit + lint tiap commit, API/integration + smoke E2E tiap pull request, suite penuh paralel (sharding) malam hari atau sebelum rilis.",
+           "Metrik berguna: flaky rate, durasi pipeline, defect escape rate, waktu perbaikan. Pipeline lambat atau tidak dipercaya akan diabaikan tim."] },
+    { h: "Strategi test dan keamanan dasar",
+      ul: ["Test pyramid: banyak unit test cepat, cukup test API/integration, sedikit E2E UI. Tujuannya umpan balik cepat dengan biaya rawatan rendah.",
+           "Contract testing (mis. Pact): consumer menentukan ekspektasi, provider memverifikasi, sehingga breaking change terdeteksi tanpa menjalankan seluruh sistem.",
+           "Testing berbasis risiko: nilai kemungkinan x dampak, uji area paling berbahaya lebih dulu, dan sampaikan risiko residual kepada pengambil keputusan rilis.",
+           "Keamanan dasar yang layak diuji QA: IDOR (ganti id milik pengguna lain), token kedaluwarsa tetap diterima, SQL injection pada input, XSS pada kolom teks, data sensitif di log atau URL. Uji hanya sistem yang Anda berwenang menguji.",
+           "AI dalam QA: bantu menyusun test case, data, dan ringkasan log, tetapi hasilnya harus ditinjau dan diverifikasi; jangan menaruh data rahasia perusahaan di prompt."] }
   ],
 
   "sql": [
@@ -168,4 +188,136 @@ QA.materiKarir = {
            "Siapkan 2-3 pertanyaan balik untuk perusahaan (proses rilis, peran QA di tim, bagaimana kualitas diukur)."],
       tip: ["Jangan menyebut data internal perusahaan lama (nama sistem, angka rahasia). Gunakan contoh generik."] }
   ]
+  ,
+  "fundamentals": [
+    { h: "Pola pikir QA dan model SDLC",
+      ul: ["QA yang baik bertanya 'bagaimana ini bisa gagal?', bukan hanya 'apakah ini jalan?'. Rasa ingin tahu, skeptis yang sopan, dan komunikasi yang jelas sama pentingnya dengan alat.",
+           "Waterfall: tahap berurutan, perubahan mahal, testing di akhir. V-model: tiap tahap pengembangan punya tahap test pasangannya, sehingga test dirancang sejak requirement.",
+           "Agile (Scrum, Kanban, XP): iterasi pendek, umpan balik cepat, QA terlibat sejak refinement. Scrum punya sprint dan peran tetap; Kanban memvisualkan aliran kerja dan membatasi pekerjaan yang berjalan.",
+           "Verifikasi = 'apakah kita membangun produk dengan benar?' (sesuai spesifikasi). Validasi = 'apakah kita membangun produk yang benar?' (sesuai kebutuhan pengguna)."],
+      tip: ["Pertanyaan interview klasik: apa peran QA di Scrum? Jawab: ikut refinement (menajamkan acceptance criteria), merancang test sejak awal, menguji di dalam sprint, dan menjaga definition of done."] },
+    { h: "Pendekatan dan level pengujian",
+      ul: ["Black box: menguji dari luar berdasarkan perilaku tanpa melihat kode. White box: berdasarkan struktur kode (cakupan statement/branch). Gray box: sebagian pengetahuan internal, misalnya tahu skema database saat menguji API.",
+           "Level: unit (fungsi/kelas, biasanya developer), integration (interaksi komponen/layanan), system/E2E (alur lengkap), acceptance/UAT (diterima pengguna atau bisnis).",
+           "Jenis: fungsional (apa yang dilakukan sistem) dan non-fungsional (seberapa baik: performa, keamanan, aksesibilitas). Smoke = cek cepat build layak diuji; sanity = cek sempit setelah perubahan kecil; regression = pastikan yang lama tidak rusak.",
+           "Exploratory testing: belajar, merancang, dan menjalankan test sekaligus, biasanya dengan piagam (charter) dan batas waktu, lalu mencatat temuan."] },
+    { h: "Teknik desain test dan test oracle",
+      ul: ["Equivalence partitioning: bagi input menjadi kelompok yang diperlakukan sama, uji satu wakil per kelompok. Boundary value analysis: uji di tepi kelompok (mis. batas 17, 18, 19 untuk usia minimal 18).",
+           "Decision table untuk kombinasi aturan bisnis; state transition untuk objek yang berubah status (pesanan: baru, dibayar, dikirim, dibatalkan); pairwise untuk mengurangi kombinasi parameter.",
+           "Test oracle adalah cara menentukan hasil yang benar: spesifikasi, versi sebelumnya, sistem pembanding, atau perhitungan independen. Tanpa oracle, test tidak bisa menyimpulkan lulus atau gagal.",
+           "Test case yang baik: tujuan jelas, data dan prakondisi eksplisit, langkah bisa diulang, hasil yang diharapkan terukur, dan independen dari test lain."] },
+    { h: "TDD, BDD, ATDD, dan perencanaan test",
+      ul: ["TDD: tulis test yang gagal, buat kode minimal agar lulus, lalu refactor (red-green-refactor). Hasilnya desain yang mudah diuji dan cakupan unit yang tinggi.",
+           "BDD: perilaku ditulis dalam bahasa bersama (Given-When-Then) sehingga bisnis, developer, dan QA sepakat sebelum coding. ATDD: acceptance test disepakati lebih dulu dan dijadikan target pengembangan.",
+           "Rencana test mencakup ruang lingkup, pendekatan, environment, data uji, jadwal, peran, risiko, serta entry dan exit criteria. Prioritaskan test dengan risiko (kemungkinan x dampak), frekuensi pemakaian, dan area yang baru berubah.",
+           "Test data management: data sintetis atau tersamar, bukan data pelanggan asli; setiap test menyiapkan dan membersihkan datanya sendiri agar bisa diulang dan diparalelkan."],
+      tip: ["Given-When-Then bukan sekadar format: skenario harus menggambarkan perilaku bisnis, bukan klik-klik UI satu per satu."] }
+  ],
+  "nonfunctional": [
+    { h: "Performance, load, dan stress testing",
+      ul: ["Load test: beban yang diharapkan di produksi. Stress test: melampaui batas untuk melihat kapan dan bagaimana sistem gagal. Spike: lonjakan mendadak. Soak/endurance: beban stabil lama untuk menemukan kebocoran memori.",
+           "Metrik utama: latency (pakai persentil p95/p99, bukan hanya rata-rata), throughput (request per detik), error rate, dan pemakaian resource (CPU, memori, koneksi database).",
+           "Mulai dari tujuan terukur (mis. p95 di bawah 500 ms pada 200 pengguna bersamaan), pakai data dan skenario yang menyerupai produksi, dan jalankan di environment yang sebanding. Beban dari mesin pembangkit yang lemah bisa menjadi bottleneck palsu.",
+           "Alat umum: k6, JMeter, Gatling, Locust. Hasil tanpa analisis tidak berguna: cari bottleneck (query lambat, pool koneksi, cache, N+1) sebelum menyalahkan 'server kecil'."],
+      tip: ["Rata-rata latency menyembunyikan pengguna yang lambat. Selalu sebut persentil."] },
+    { h: "Dasar security testing untuk QA",
+      ul: ["OWASP Top 10 adalah daftar risiko aplikasi web yang paling umum, antara lain broken access control, injection, kegagalan kriptografi, desain tidak aman, dan misconfiguration. OWASP API Security Top 10 khusus untuk API (mis. BOLA/IDOR, autentikasi rusak).",
+           "Yang realistis diuji QA: otorisasi (akses data pengguna lain), autentikasi (brute force, token kedaluwarsa, reset password), validasi input (injection, XSS), data sensitif (di log, URL, respons), header keamanan, dan dependensi rentan.",
+           "Alat bantu: vulnerability scanner dan SAST/DAST di pipeline menemukan masalah umum, tetapi tidak menggantikan penilaian manusia untuk logika bisnis.",
+           "Etika: hanya uji sistem yang Anda berwenang menguji, dengan izin tertulis bila di luar tim Anda. Laporkan temuan lewat jalur yang tepat dan jangan menyimpan data pengguna sungguhan."],
+      tip: ["Jika ditanya 'bagaimana menguji login?', sebut juga keamanannya: rate limit, pesan error generik, penguncian akun, dan masa berlaku token."] },
+    { h: "Aksesibilitas, kompatibilitas, dan responsif",
+      ul: ["Aksesibilitas mengikuti WCAG (prinsip POUR: perceivable, operable, understandable, robust). Uji navigasi keyboard, fokus yang terlihat, label form, teks alternatif, kontras warna, dan pembaca layar.",
+           "Alat otomatis (axe, Lighthouse, WAVE) hanya menangkap sebagian masalah; sisanya perlu uji manual dengan keyboard dan pembaca layar.",
+           "Kompatibilitas: kombinasi browser, OS, dan perangkat dipilih dari data pengguna, bukan semua kombinasi. Responsif menyesuaikan tata letak dengan lebar layar; uji titik putus dan orientasi layar.",
+           "Kinerja web: Lighthouse dan Core Web Vitals mengukur kecepatan muat dan kestabilan tampilan dari sisi pengguna."] }
+  ],
+  "tooling": [
+    { h: "Git dan alur kerja kolaborasi",
+      ul: ["Perintah harian: clone, status, add, commit, branch, checkout/switch, pull, push, merge, rebase, stash. Pahami beda merge (menyatukan riwayat) dan rebase (menulis ulang commit di atas cabang lain; jangan pada cabang bersama).",
+           "Alur umum: cabang fitur dari main, commit kecil dengan pesan jelas, pull request, review, CI harus hijau, lalu merge. Kode test otomasi diperlakukan seperti kode produk.",
+           "Konflik merge terjadi saat dua orang mengubah baris yang sama; selesaikan dengan membaca kedua sisi, bukan menerima salah satu secara buta, lalu jalankan test.",
+           "Jangan commit rahasia (API key, password). Pakai variabel environment atau secret manager; bila terlanjur, ganti kuncinya, bukan hanya menghapus commit."] },
+    { h: "CI/CD, container, dan pelaporan",
+      ul: ["CI menjalankan build dan test otomatis tiap perubahan; CD mengirim ke environment berikutnya. Alat umum: GitHub Actions, GitLab CI, Jenkins.",
+           "Pipeline berlapis menjaga umpan balik cepat: lint dan unit tiap commit, API dan smoke E2E tiap pull request, suite penuh paralel (sharding) terjadwal atau sebelum rilis.",
+           "Docker membungkus aplikasi dan dependensinya sehingga environment test sama di laptop dan CI. Berguna untuk menjalankan database atau layanan pendukung sementara.",
+           "Pelaporan: simpan artefak kegagalan (log, screenshot, video, trace) dan tampilkan lewat laporan seperti Allure atau HTML reporter bawaan framework. Laporan harus menjawab: apa gagal, di mana, sejak kapan."] },
+    { h: "Monitoring, log, dan analisis akar masalah",
+      ul: ["Observability memakai tiga sinyal: log (kejadian), metrik (angka dari waktu ke waktu), dan trace (perjalanan satu request lintas layanan). QA memanfaatkannya untuk mereproduksi bug produksi dan memeriksa dampak rilis.",
+           "Error tracker (mis. Sentry) mengelompokkan exception produksi; alert yang baik actionable dan tidak berisik. Dashboard (mis. Grafana) membantu melihat tren setelah rilis.",
+           "RCA: pisahkan gejala, penyebab langsung, dan akar masalah; tanyakan 'mengapa' berulang sampai menemukan kontrol yang hilang (test, review, alert). Hasilnya tindakan pencegahan, bukan mencari siapa yang salah.",
+           "Pengujian pada aplikasi mobile: Appium (lintas platform), Espresso (Android), XCUITest (iOS). Tantangannya fragmentasi perangkat, izin, jaringan buruk, dan interupsi seperti telepon masuk."] }
+  ]
+};
+
+// Sumber belajar per topik: [judul, URL, jenis]. jenis: "resmi" (standar/dokumentasi pemilik alat), "rujukan" (penulis/institusi tepercaya), "komunitas" (kurasi komunitas; dipakai sebagai peta topik, bukan otoritas). Hanya ditautkan (tidak disalin); semua URL diperiksa terbuka saat ditulis.
+QA.sumberKarir = {
+ "rest-api": [
+  ["MDN: HTTP status codes", "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status", "rujukan"],
+  ["MDN: HTTP request methods", "https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods", "rujukan"],
+  ["RFC 9110: HTTP Semantics (rujukan resmi)", "https://www.rfc-editor.org/rfc/rfc9110", "resmi"],
+  ["Belajar OpenAPI (resmi)", "https://learn.openapis.org/", "resmi"],
+  ["Dokumentasi Postman", "https://learning.postman.com/docs/", "resmi"],
+  ["OWASP API Security Top 10", "https://owasp.org/API-Security/", "resmi"],
+  ["Dokumentasi Pact (contract testing)", "https://docs.pact.io/", "resmi"]
+ ],
+ "selenium": [
+  ["Dokumentasi resmi Selenium", "https://www.selenium.dev/documentation/", "resmi"],
+  ["Martin Fowler: non-determinism pada test", "https://martinfowler.com/articles/nonDeterminism.html", "rujukan"]
+ ],
+ "qa-general": [
+  ["roadmap.sh: QA Roadmap (peta topik)", "https://roadmap.sh/qa", "komunitas"],
+  ["Martin Fowler: The Practical Test Pyramid", "https://martinfowler.com/articles/practical-test-pyramid.html", "rujukan"],
+  ["Google Testing Blog", "https://testing.googleblog.com/", "rujukan"],
+  ["Ministry of Testing (komunitas)", "https://www.ministryoftesting.com/", "komunitas"],
+  ["Pro Git (buku gratis)", "https://git-scm.com/book/en/v2", "rujukan"]
+ ],
+ "sql": [
+  ["SQLBolt: latihan SQL interaktif", "https://sqlbolt.com/", "komunitas"],
+  ["PostgreSQL: tutorial SQL", "https://www.postgresql.org/docs/current/tutorial-sql.html", "resmi"]
+ ],
+ "playwright": [
+  ["Playwright: pengantar", "https://playwright.dev/docs/intro", "resmi"],
+  ["Playwright: best practices", "https://playwright.dev/docs/best-practices", "resmi"]
+ ],
+ "cypress": [
+  ["Dokumentasi Cypress", "https://docs.cypress.io/", "resmi"],
+  ["Cypress: best practices", "https://docs.cypress.io/app/core-concepts/best-practices", "resmi"]
+ ],
+ "katalon": [
+  ["Dokumentasi Katalon", "https://docs.katalon.com/", "resmi"]
+ ],
+ "interview": [
+  ["roadmap.sh: QA Roadmap (peta topik)", "https://roadmap.sh/qa", "komunitas"],
+  ["ISTQB (sertifikasi)", "https://istqb.org/", "resmi"],
+  ["Ministry of Testing (komunitas)", "https://www.ministryoftesting.com/", "komunitas"]
+ ],
+ "fundamentals": [
+  ["roadmap.sh: QA Roadmap (peta topik)", "https://roadmap.sh/qa", "komunitas"],
+  ["ISTQB", "https://istqb.org/", "resmi"],
+  ["Agile Manifesto", "https://agilemanifesto.org/", "resmi"],
+  ["The Scrum Guide", "https://scrumguides.org/", "resmi"],
+  ["Cucumber: BDD", "https://cucumber.io/docs/bdd/", "resmi"],
+  ["Martin Fowler: Test Driven Development", "https://martinfowler.com/bliki/TestDrivenDevelopment.html", "rujukan"],
+  ["Martin Fowler: The Practical Test Pyramid", "https://martinfowler.com/articles/practical-test-pyramid.html", "rujukan"]
+ ],
+ "nonfunctional": [
+  ["roadmap.sh: QA Roadmap (peta topik)", "https://roadmap.sh/qa", "komunitas"],
+  ["Dokumentasi k6", "https://grafana.com/docs/k6/latest/", "resmi"],
+  ["Apache JMeter: user manual", "https://jmeter.apache.org/usermanual/index.html", "resmi"],
+  ["OWASP Top 10", "https://owasp.org/www-project-top-ten/", "resmi"],
+  ["OWASP Web Security Testing Guide", "https://owasp.org/www-project-web-security-testing-guide/", "resmi"],
+  ["W3C: WCAG", "https://www.w3.org/WAI/standards-guidelines/wcag/", "resmi"],
+  ["W3C: menguji aksesibilitas", "https://www.w3.org/WAI/test-evaluate/", "resmi"],
+  ["Lighthouse (Chrome)", "https://developer.chrome.com/docs/lighthouse/overview", "resmi"]
+ ],
+ "tooling": [
+  ["roadmap.sh: QA Roadmap (peta topik)", "https://roadmap.sh/qa", "komunitas"],
+  ["Pro Git (buku gratis)", "https://git-scm.com/book/en/v2", "rujukan"],
+  ["GitHub Actions docs", "https://docs.github.com/en/actions", "resmi"],
+  ["Docker: get started", "https://docs.docker.com/get-started/", "resmi"],
+  ["Appium docs", "https://appium.io/docs/en/latest/", "resmi"],
+  ["Google SRE Book: monitoring", "https://sre.google/sre-book/monitoring-distributed-systems/", "rujukan"]
+ ]
 };
