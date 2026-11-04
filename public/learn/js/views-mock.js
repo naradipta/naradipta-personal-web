@@ -171,27 +171,39 @@
 
   // ===================== KARTU ISTILAH =====================
   var deck = null;
+  var deckTopic = "all";
 
   function cardKey(g) { return g.t; }
 
-  function startDeck(mode) {
+  var DECKS = [["all", "Semua topik", "All topics"], ["istqb", "ISTQB CTFL", "ISTQB CTFL"], ["rest-api", "REST API", "REST API"], ["selenium", "Selenium", "Selenium"],
+    ["sql", "SQL", "SQL"], ["playwright", "Playwright", "Playwright"], ["cypress", "Cypress", "Cypress"], ["qa-general", "QA umum", "General QA"], ["interview", "Interview", "Interview"]];
+  function inTopic(g, topic) { return topic === "all" || g.topic === topic; }
+
+  function startDeck(mode, topic) {
     var list = QA.glossary.filter(function (g) {
       var r = S.state.cards[cardKey(g)];
-      return mode === "all" ? true : (!r || S.isDue(r));
+      return inTopic(g, topic) && (mode === "all" ? true : (!r || S.isDue(r)));
     });
     deck = { items: QA.shuffle(list), i: 0, flipped: false, known: 0, mode: mode };
   }
 
   QA.routes.cards = function () {
     var root = h("div", { class: "page" });
-    root.appendChild(h("h1", null, t("Kartu istilah ISTQB", "ISTQB glossary cards")));
+    root.appendChild(h("h1", null, t("Kartu istilah", "Glossary cards")));
     if (!deck) {
-      var dueN = QA.glossary.filter(function (g) { var r = S.state.cards[cardKey(g)]; return !r || S.isDue(r); }).length;
+      var topic = h("select", { id: "deck-topic" }, DECKS.map(function (d) {
+        var n = QA.glossary.filter(function (g) { return inTopic(g, d[0]); }).length;
+        return h("option", { value: d[0], selected: d[0] === deckTopic ? "" : null }, t(d[1], d[2]) + " (" + n + ")");
+      }));
+      topic.addEventListener("change", function () { deckTopic = topic.value; QA.render(true); });
+      var dueN = QA.glossary.filter(function (g) { var r = S.state.cards[cardKey(g)]; return inTopic(g, deckTopic) && (!r || S.isDue(r)); }).length;
+      var total = QA.glossary.filter(function (g) { return inTopic(g, deckTopic); }).length;
       root.appendChild(h("div", { class: "card" },
-        h("p", null, QA.glossary.length + t(" kartu. Jatuh tempo atau baru: ", " cards. Due or new: ") + dueN),
+        h("label", { for: "deck-topic" }, t("Topik kartu", "Card topic"), topic),
+        h("p", null, total + t(" kartu. Jatuh tempo atau baru: ", " cards. Due or new: ") + dueN),
         h("div", { class: "row gap" },
-          h("button", { class: "btn primary", onclick: function () { startDeck("due"); QA.render(); } }, t("Mulai (jatuh tempo + baru)", "Start (due + new)")),
-          h("button", { class: "btn", onclick: function () { startDeck("all"); QA.render(); } }, t("Semua kartu", "All cards")))));
+          h("button", { class: "btn primary", disabled: !dueN, onclick: function () { startDeck("due", deckTopic); QA.render(); } }, t("Mulai (jatuh tempo + baru)", "Start (due + new)")),
+          h("button", { class: "btn", disabled: !total, onclick: function () { startDeck("all", deckTopic); QA.render(); } }, t("Semua kartu", "All cards")))));
       return root;
     }
     if (deck.i >= deck.items.length) {

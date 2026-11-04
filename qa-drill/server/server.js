@@ -8,6 +8,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const auth = require('./auth');
 const dbmod = require('./db');
+const stats = require('./stats');
+const mail = require('./mailer');
 
 const MAX_BODY = 1_200_000;
 const MAX_PROGRESS = 1_000_000;
@@ -21,7 +23,11 @@ function createServer(opts = {}) {
   const secure = env.COOKIE_SECURE !== undefined ? String(env.COOKIE_SECURE) === '1' || env.COOKIE_SECURE === true : env.NODE_ENV === 'production';
   const trustProxy = String(env.TRUST_PROXY) === '1';
   const maxUsers = Number(env.MAX_USERS) || 2000;
-  const ipLimit = Number(env.RATE_LIMIT_IP) || 30; // percobaan daftar/login per IP per 15 menit
+  const ipLimit = Number(env.RATE_LIMIT_IP) || 60; // percobaan daftar/login per IP per 15 menit
+  const autohideAt = Number(env.REPORT_AUTOHIDE) || 3; // laporan terbuka dari N pelapor berbeda menyembunyikan nama dari papan sampai ditinjau admin
+  const adminEmails = String(env.ADMIN_EMAILS || '').split(',').map(auth.normalizeEmail).filter(Boolean); // boleh memakai nama yang dicadangkan
+  const mailer = opts.mailer || mail.createMailer(env);
+  const appUrl = (env.APP_URL || env.ALLOWED_ORIGIN || 'http://localhost:4400').replace(/\/$/, '');
   const staticDir = env.STATIC_DIR ? path.resolve(env.STATIC_DIR) : '';
 
   // Pembatas laju sederhana di memori: kunci -> waktu percobaan dalam jendela.
@@ -36,7 +42,7 @@ function createServer(opts = {}) {
   const janitor = setInterval(() => {
     const now = Date.now();
     for (const [k, v] of hits) if (!v.some((t) => now - t < 15 * 60000)) hits.delete(k);
-    db.pruneSessions();
+    db.pruneSessions(); db.pruneTokens();
   }, 10 * 60000);
   janitor.unref();
 
@@ -91,10 +97,22 @@ function createServer(opts = {}) {
     return origin === `http://${req.headers.host}` || origin === `https://${req.headers.host}`;
   }
 
-  async function startSession(res, userId, status, email) {
+  // Buat token sekali pakai lalu kirim email di latar belakang (kegagalan kirim tidak membocorkan apa pun ke klien).
+  function sendToken(user, kind) {
+    const token = auth.newToken();
+    db.createToken(user.id, kind, auth.tokenHash(token), kind === 'verify' ? 24 * 3600000 : 3600000);
+    const url = `${appUrl}/#/${kind === 'verify' ? 'verify' : 'reset'}/${token}`;
+    const msg = kind === 'verify' ? mail.verifyEmail(url) : mail.resetEmail(url);
+    mailer.send({ to: user.email, ...msg }).catch((e) => console.error('mail gagal:', e.message));
+  }
+
+  // Bentuk respons yang sama untuk /api/me, login, dan daftar.
+  const meBody = (u) => ({ email: u ? u.email : null, id: u ? u.id : null, verified: u ? u.verified_at != null : false, emailEnabled: mailer.enabled, displayName: u ? u.display_name : null, share: u ? u.share_stats === 1 : false, nameLocked: u ? u.name_locked === 1 : false });
+
+  async function startSession(res, userId, status) {
     const token = auth.newToken();
     db.createSession(userId, auth.tokenHash(token));
-    send(res, status, { email }, { 'Set-Cookie': sessionCookie(token, dbmod.SESSION_DAYS * 86400) });
+    send(res, status, meBody(db.userById(userId)), { 'Set-Cookie': sessionCookie(token, dbmod.SESSION_DAYS * 86400) });
   }
 
   async function handleApi(req, res, url) {
@@ -102,13 +120,28 @@ function createServer(opts = {}) {
     if (route === 'GET /api/health') return send(res, 200, { ok: true });
     if (route === 'GET /api/me') {
       const u = currentUser(req);
-      return send(res, 200, { email: u ? u.email : null }); // 200 juga saat belum login, supaya konsol pengunjung bersih
+      return send(res, 200, meBody(u)); // 200 juga saat belum login, supaya konsol pengunjung bersih
     }
     if (route === 'GET /api/progress') {
       const u = currentUser(req);
       if (!u) return send(res, 401, { error: 'not_logged_in' });
       const cur = db.getProgress(u.id);
       return send(res, 200, cur ? { data: JSON.parse(cur.data), version: cur.version } : { data: null, version: 0 });
+    }
+    if (route === 'GET /api/community') {
+      const u = currentUser(req);
+      if (!u) return send(res, 401, { error: 'not_logged_in' });
+      if (mailer.enabled && u.verified_at == null) return send(res, 403, { error: 'verify_required' });
+      const rows = db.community(autohideAt).map((r) => {
+        let st = r.stats ? JSON.parse(r.stats) : null;
+        if (!st) {
+          st = r.data ? stats.summarize(JSON.parse(r.data)) : { seen: 0, mastered: 0, days: [] }; // anggota baru belum punya progres
+          if (r.data) db.setStats(r.id, JSON.stringify(st));
+        }
+        return { name: r.display_name, you: r.id === u.id, seen: st.seen, mastered: st.mastered, ...stats.activity(st.days) };
+      });
+      rows.sort((a, b) => b.active7 - a.active7 || b.streak - a.streak || b.mastered - a.mastered || a.name.localeCompare(b.name));
+      return send(res, 200, { rows: rows.slice(0, 100), total: rows.length });
     }
     if (req.method !== 'POST' && req.method !== 'PUT') return send(res, 404, { error: 'not_found' });
     if (!csrfOk(req)) return send(res, 403, { error: 'forbidden' });
@@ -129,12 +162,44 @@ function createServer(opts = {}) {
         let id;
         try { id = db.createUser(email, hash); }
         catch { return send(res, 409, { error: 'email_taken' }); }
-        return startSession(res, id, 201, email);
+        if (mailer.enabled) sendToken({ id, email }, 'verify');
+        return startSession(res, id, 201);
       }
       const user = db.userByEmail(email);
       const ok = user ? await auth.verifyPassword(body.password, user.pw_hash) : await auth.verifyDummy(body.password);
       if (!ok) return send(res, 401, { error: 'invalid_credentials' });
-      return startSession(res, user.id, 200, user.email);
+      return startSession(res, user.id, 200);
+    }
+
+    if (route === 'POST /api/password/forgot') {
+      if (!mailer.enabled) return send(res, 503, { error: 'email_disabled' });
+      if (limited('ip:' + clientIp(req), ipLimit, 15 * 60000)) return send(res, 429, { error: 'too_many_requests' });
+      const body = await readBody(req);
+      const email = auth.normalizeEmail(body.email);
+      if (!auth.validEmail(email)) return send(res, 400, { error: 'invalid_email' });
+      if (limited('fg:' + email, 3, 60 * 60000)) return send(res, 429, { error: 'too_many_requests' });
+      const user = db.userByEmail(email);
+      if (user) sendToken(user, 'reset'); // jawaban sama untuk email terdaftar atau tidak (tidak membocorkan akun)
+      return send(res, 200, { ok: true });
+    }
+    if (route === 'POST /api/password/reset') {
+      if (limited('ip:' + clientIp(req), ipLimit, 15 * 60000)) return send(res, 429, { error: 'too_many_requests' });
+      const body = await readBody(req);
+      if (!auth.validPassword(body.password)) return send(res, 400, { error: 'invalid_password' });
+      const userId = typeof body.token === 'string' ? db.takeToken(auth.tokenHash(body.token), 'reset') : null;
+      if (userId === null) return send(res, 400, { error: 'invalid_token' });
+      db.setPasswordById(userId, await auth.hashPassword(body.password));
+      db.setVerified(userId); // memegang tautan di inbox membuktikan kepemilikan email
+      db.logoutEverywhere(userId);
+      return send(res, 200, { ok: true });
+    }
+    if (route === 'POST /api/verify/confirm') {
+      if (limited('ip:' + clientIp(req), ipLimit, 15 * 60000)) return send(res, 429, { error: 'too_many_requests' });
+      const body = await readBody(req);
+      const userId = typeof body.token === 'string' ? db.takeToken(auth.tokenHash(body.token), 'verify') : null;
+      if (userId === null) return send(res, 400, { error: 'invalid_token' });
+      db.setVerified(userId);
+      return send(res, 200, { ok: true });
     }
 
     if (route === 'POST /api/logout') {
@@ -146,6 +211,45 @@ function createServer(opts = {}) {
     const user = currentUser(req);
     if (!user) return send(res, 401, { error: 'not_logged_in' });
 
+    if (route === 'POST /api/verify/send') {
+      if (!mailer.enabled) return send(res, 503, { error: 'email_disabled' });
+      if (user.verified_at != null) return send(res, 200, { ok: true, alreadyVerified: true });
+      if (limited('vs:' + user.id, 3, 60 * 60000)) return send(res, 429, { error: 'too_many_requests' });
+      sendToken(user, 'verify');
+      return send(res, 200, { ok: true });
+    }
+
+    if (route === 'POST /api/community/report') {
+      if (mailer.enabled && user.verified_at == null) return send(res, 403, { error: 'verify_required' });
+      if (limited('rp:' + user.id, 5, 60 * 60000)) return send(res, 429, { error: 'too_many_requests' });
+      const body = await readBody(req);
+      const reason = ['inappropriate', 'impersonation', 'other'].includes(body.reason) ? body.reason : null;
+      if (!reason || typeof body.name !== 'string') return send(res, 400, { error: 'invalid_report' });
+      const key = stats.nameKey(body.name);
+      const target = db.sharedNames().find((r) => stats.nameKey(r.display_name) === key);
+      if (!target) return send(res, 404, { error: 'not_found' });
+      if (target.id === user.id) return send(res, 400, { error: 'cannot_report_self' });
+      const note = typeof body.note === 'string' ? body.note.trim().slice(0, 140) : '';
+      return send(res, 200, { ok: true, duplicate: !db.addReport(user.id, target.id, reason, note) });
+    }
+
+    if (route === 'PUT /api/profile') {
+      const body = await readBody(req);
+      const share = body.share === true;
+      const name = typeof body.displayName === 'string' ? body.displayName.trim().replace(/\s+/g, ' ') : '';
+      if (share && mailer.enabled && user.verified_at == null) return send(res, 403, { error: 'verify_required' });
+      if (share && user.name_locked === 1) return send(res, 403, { error: 'name_locked' });
+      if (share && !stats.validDisplayName(name)) return send(res, 400, { error: 'invalid_display_name' });
+      if (share && !adminEmails.includes(user.email) && stats.nameBlocked(name, env.BLOCKED_NAME_WORDS)) return send(res, 400, { error: 'name_not_allowed' });
+      if (share) {
+        const key = stats.nameKey(name);
+        if (db.sharedNames().some((r) => r.id !== user.id && stats.nameKey(r.display_name) === key)) return send(res, 409, { error: 'name_taken' });
+      }
+      // Nama dibiarkan tersimpan bila berhenti berbagi supaya bisa bergabung lagi; yang menentukan tampil hanya share_stats.
+      db.setProfile(user.id, name || user.display_name || null, share);
+      return send(res, 200, { displayName: name || user.display_name || null, share });
+    }
+
     if (route === 'PUT /api/progress') {
       const body = await readBody(req);
       const d = body.data;
@@ -153,7 +257,7 @@ function createServer(opts = {}) {
       if (!isObj(d) || !isObj(d.q) || !isObj(d.cards) || !Number.isInteger(body.baseVersion) || body.baseVersion < 0) return send(res, 400, { error: 'invalid_payload' });
       const text = JSON.stringify(d);
       if (text.length > MAX_PROGRESS) return send(res, 413, { error: 'too_large' });
-      const version = db.saveProgress(user.id, text, body.baseVersion);
+      const version = db.saveProgress(user.id, text, body.baseVersion, JSON.stringify(stats.summarize(d)));
       if (version === null) {
         const cur = db.getProgress(user.id);
         return send(res, 409, { error: 'version_conflict', version: cur ? cur.version : 0, data: cur ? JSON.parse(cur.data) : null });

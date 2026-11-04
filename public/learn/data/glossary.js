@@ -1,6 +1,6 @@
 // Kartu istilah (definisi ditulis ulang dengan kata-kata sendiri, bukan salinan glosarium ISTQB).
 window.QA = window.QA || {};
-function G(t, di, de, lo) { return { t: t, id: di, en: de, lo: lo || null }; }
+function G(t, di, de, lo, topic) { return { t: t, id: di, en: de, lo: lo || null, topic: topic || "istqb" }; }
 QA.glossary = [
   G("Error (mistake)", "Kesalahan manusia yang menjadi awal terbentuknya defect.", "A human action that produces a defect.", "FL-1.2.3"),
   G("Defect (bug, fault)", "Cacat pada work product (kode, requirement, desain) yang dapat menyebabkan failure.", "An imperfection in a work product (code, requirement, design) that may cause a failure.", "FL-1.2.3"),
@@ -54,5 +54,42 @@ QA.glossary = [
   G("Defect report", "Catatan failure dengan langkah reproduksi, expected vs actual, severity, dan lingkungan.", "Record of a failure with steps to reproduce, expected vs actual, severity and environment.", "FL-5.5.1"),
   G("Severity vs priority", "Severity: besar dampak defect. Priority: seberapa cepat harus diperbaiki.", "Severity: how big the defect's impact is. Priority: how soon it must be fixed.", "FL-5.5.1"),
   G("Configuration management", "Mengidentifikasi, mengontrol versi, dan melacak item test dan testware.", "Identifying, version-controlling and tracking test items and testware.", "FL-5.4.1"),
-  G("Test automation", "Menjalankan tes lewat tool/skrip, bukan manual.", "Running tests through tools or scripts instead of by hand.", "FL-6.2.1")
+  G("Test automation", "Menjalankan tes lewat tool/skrip, bukan manual.", "Running tests through tools or scripts instead of by hand.", "FL-6.2.1"),
+  // ===== Jalur 2: bekal karir QA (topic = nilai field topic pada soal) =====
+  G("Idempotent", "Request yang bila dikirim berulang menghasilkan state akhir yang sama (GET, PUT, DELETE).", "A request that leaves the same end state however many times it is sent (GET, PUT, DELETE).", null, "rest-api"),
+  G("HTTP 401 vs 403", "401: belum terautentikasi (token tidak ada atau tidak valid). 403: sudah terautentikasi tetapi tidak berhak.", "401: not authenticated (missing or invalid token). 403: authenticated but not allowed.", null, "rest-api"),
+  G("HTTP 201 Created", "Resource baru berhasil dibuat, biasanya dengan header Location ke resource tersebut.", "A new resource was created, usually with a Location header pointing to it.", null, "rest-api"),
+  G("PUT vs PATCH", "PUT mengganti seluruh resource; PATCH mengubah sebagian field saja.", "PUT replaces the whole resource; PATCH changes only some fields.", null, "rest-api"),
+  G("Contract testing", "Memeriksa bahwa request dan response sesuai kesepakatan (skema) antara penyedia dan pemakai API.", "Checking that requests and responses match the agreed schema between API provider and consumer.", null, "rest-api"),
+  G("Pagination", "Membagi hasil daftar menjadi halaman (page/limit atau cursor); uji halaman pertama, terakhir, dan limit ekstrem.", "Splitting list results into pages (page/limit or cursor); test the first, last and extreme limits.", null, "rest-api"),
+  G("IDOR", "Kelemahan otorisasi: user bisa mengakses resource milik user lain hanya dengan mengganti ID di request.", "An authorisation flaw: a user can reach another user's resource just by changing the ID in the request.", null, "rest-api"),
+  G("Rate limiting", "Pembatasan jumlah request per waktu; melebihi batas biasanya dibalas 429 Too Many Requests.", "Limiting requests per time window; exceeding it usually returns 429 Too Many Requests.", null, "rest-api"),
+  G("Locator", "Cara menemukan elemen di halaman (id, CSS, XPath, role). Pilih yang stabil dan bermakna.", "A way to find an element on the page (id, CSS, XPath, role). Prefer stable, meaningful ones.", null, "selenium"),
+  G("Explicit wait", "Menunggu kondisi tertentu pada elemen tertentu (mis. bisa diklik) sampai timeout, bukan sleep tetap.", "Waiting for a specific condition on a specific element (e.g. clickable) until timeout, not a fixed sleep.", null, "selenium"),
+  G("Page Object Model", "Satu class per halaman berisi locator dan aksinya, supaya perubahan UI cukup diperbaiki di satu tempat.", "One class per page holding its locators and actions, so a UI change is fixed in one place.", null, "selenium"),
+  G("Flaky test", "Test yang kadang lulus kadang gagal tanpa perubahan kode; cari akar masalahnya, bukan hanya retry.", "A test that sometimes passes and sometimes fails with no code change; find the root cause, not just retry.", null, "selenium"),
+  G("Selenium Grid", "Menjalankan test Selenium paralel di banyak mesin atau browser.", "Running Selenium tests in parallel across many machines or browsers.", null, "selenium"),
+  G("Headless browser", "Browser tanpa tampilan jendela; cepat dan cocok untuk CI.", "A browser with no visible window; fast and suited to CI.", null, "selenium"),
+  G("INNER vs LEFT JOIN", "INNER hanya baris yang cocok di kedua tabel; LEFT mempertahankan semua baris tabel kiri (kolom kanan NULL bila tak cocok).", "INNER keeps only rows matching in both tables; LEFT keeps every left row (right columns NULL when unmatched).", null, "sql"),
+  G("GROUP BY / HAVING", "GROUP BY mengelompokkan baris; HAVING memfilter kelompok setelah agregasi (WHERE memfilter sebelum).", "GROUP BY groups rows; HAVING filters groups after aggregation (WHERE filters before).", null, "sql"),
+  G("NULL di SQL", "Berarti tidak diketahui: NULL = NULL tidak benar; pakai IS NULL. NOT IN dengan NULL berbahaya.", "Means unknown: NULL = NULL is not true; use IS NULL. NOT IN with NULL is dangerous.", null, "sql"),
+  G("Window function", "Menghitung per kelompok tanpa menggabungkan baris (ROW_NUMBER, RANK, SUM OVER).", "Computes per group without collapsing rows (ROW_NUMBER, RANK, SUM OVER).", null, "sql"),
+  G("CTE (WITH)", "Subquery bernama di awal query agar query panjang lebih terbaca.", "A named subquery at the top of a query to keep long queries readable.", null, "sql"),
+  G("Atomicity (ACID)", "Transaksi tuntas seluruhnya atau dibatalkan seluruhnya; tidak ada hasil setengah jalan.", "A transaction completes fully or is rolled back fully; no half results.", null, "sql"),
+  G("Auto-waiting", "Playwright menunggu elemen siap (terlihat, stabil, enabled) sebelum beraksi, sehingga sleep jarang perlu.", "Playwright waits for the element to be ready (visible, stable, enabled) before acting, so sleeps are rarely needed.", null, "playwright"),
+  G("Browser context", "Profil browser terisolasi dan ringan (cookie, storage) untuk tiap test di Playwright.", "A lightweight isolated browser profile (cookies, storage) per test in Playwright.", null, "playwright"),
+  G("Trace viewer", "Alat Playwright untuk memutar ulang langkah, snapshot DOM, dan jaringan dari test yang gagal.", "Playwright tool to replay steps, DOM snapshots and network from a failed test.", null, "playwright"),
+  G("Web-first assertion", "Assertion yang mengulang pemeriksaan sampai terpenuhi atau timeout, mis. expect(locator).toBeVisible().", "An assertion that retries until it holds or times out, e.g. expect(locator).toBeVisible().", null, "playwright"),
+  G("cy.intercept", "Menyadap, menunggu, atau mem-stub request jaringan di Cypress; dipakai dengan alias dan cy.wait.", "Intercepts, waits for or stubs network requests in Cypress; used with an alias and cy.wait.", null, "cypress"),
+  G("Retry-ability (Cypress)", "Query dan assertion diulang otomatis sampai berhasil atau timeout; tidak perlu sleep.", "Queries and assertions retry automatically until they pass or time out; no sleep needed.", null, "cypress"),
+  G("cy.session", "Menyimpan dan memulihkan sesi login antar test agar tidak login berulang namun tetap terisolasi.", "Saves and restores a login session between tests to avoid repeated logins while staying isolated.", null, "cypress"),
+  G("cy.origin", "Menjalankan perintah di origin kedua dalam satu test (lintas domain).", "Runs commands in a second origin within one test (cross-domain).", null, "cypress"),
+  G("Smoke vs sanity test", "Smoke: cek cepat fungsi inti setelah build baru. Sanity: cek sempit setelah perubahan atau perbaikan kecil.", "Smoke: quick check of core functions after a new build. Sanity: narrow check after a small change or fix.", null, "qa-general"),
+  G("Regression vs retest", "Regression: memastikan perubahan tidak merusak yang lama. Retest: memastikan bug yang diperbaiki benar selesai.", "Regression: ensuring a change did not break existing behaviour. Retest: confirming the fixed bug is truly gone.", null, "qa-general"),
+  G("Definition of Done", "Kesepakatan tim tentang syarat sebuah item dianggap selesai, termasuk syarat kualitas.", "The team's agreement on when an item counts as done, including quality conditions.", null, "qa-general"),
+  G("Git rebase vs merge", "Merge menjaga riwayat apa adanya; rebase menyusun ulang commit agar riwayat lurus. Jangan rebase branch yang sudah dibagikan.", "Merge keeps history as is; rebase replays commits to make history linear. Do not rebase shared branches.", null, "qa-general"),
+  G("CI/CD", "Integrasi dan pengiriman berkelanjutan: build, test, dan rilis otomatis tiap perubahan.", "Continuous integration and delivery: automated build, test and release on every change.", null, "qa-general"),
+  G("Test data management", "Menyiapkan, menjaga, dan membersihkan data uji agar test independen dan bisa diulang.", "Preparing, maintaining and cleaning test data so tests stay independent and repeatable.", null, "qa-general"),
+  G("STAR (interview)", "Situation, Task, Action, Result: kerangka menjawab pertanyaan perilaku dengan cerita singkat dan hasil.", "Situation, Task, Action, Result: a framework for answering behavioural questions with a short story and outcome.", null, "interview"),
+  G("Go/no-go", "Keputusan rilis berdasarkan exit criteria, defect terbuka, risiko residual, dan persetujuan stakeholder.", "A release decision based on exit criteria, open defects, residual risk and stakeholder sign-off.", null, "interview")
 ];

@@ -13,13 +13,22 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header id="topbar" class="topbar"></header>
-  <main id="app"></main>
+  <button class="skip" type="button" id="skip">Lewati ke konten</button>
+  <div class="shell">
+    <aside id="side" class="side" aria-label="Menu utama"></aside>
+    <div class="main-col">
+      <header id="topbar" class="topbar"></header>
+      <main id="app" tabindex="-1"></main>
+    </div>
+    <nav id="tabbar" class="tabbar" aria-label="Menu utama"></nav>
+  </div>
   <div id="live" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
   <!-- Data (klasik, bukan module, supaya bisa dibuka dengan klik dua kali tanpa server) -->
   <script src="data/lo.js"></script>
   <script src="data/glossary.js"></script>
+  <script src="data/materi.js"></script>
+  <script src="data/materi-karir.js"></script>
   <script src="data/questions.js"></script>
   <script src="js/util.js"></script>
   <script src="js/grade.js"></script>
@@ -29,5 +38,6 @@
   <script src="js/views-practice.js"></script>
   <script src="js/views-mock.js"></script>
   <script src="js/account.js"></script>
+  <script src="js/views-community.js"></script>
 </body>
 </html>
