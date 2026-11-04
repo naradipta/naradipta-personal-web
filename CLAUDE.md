@@ -141,7 +141,7 @@ Deploy ke VPS GCP (Nginx) dilakukan lewat `./deploy.sh` yang dijalankan di serve
 konfigurasi sistem/Nginx; setup server dilakukan manual sekali (lihat README).
 Jangan menaruh langkah konfigurasi server ke dalam kode aplikasi.
 
-Alternatif: `docker compose up -d --build` (lihat README, "Deploy dengan Docker"). Situs publik tetap statis yang
+Alternatif: `docker compose pull && docker compose up -d` (image dibangun workflow `docker` ke GHCR; lihat README, "Deploy dengan Docker"). Situs publik tetap statis yang
 disajikan Nginx; hanya volume `admin-data` dan `qa-data` yang berisi data dan perlu dicadangkan. Dua jalur deploy ini
 tidak dipakai bersamaan di server yang sama: pilih salah satu.
 

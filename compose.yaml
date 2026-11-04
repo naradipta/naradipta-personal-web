@@ -1,25 +1,35 @@
 # Seluruh naradipta.com dalam satu compose: situs statis + admin + QA Drill API.
 # Situs publik tetap HTML statis yang disajikan Nginx; admin hanya menulis ke volume `webroot`.
-# Detail, migrasi server, dan cadangan: README bagian "Deploy dengan Docker".
+# Detail, cutover VPS, migrasi server, dan cadangan: README bagian "Deploy dengan Docker".
 #
-#   docker compose up -d --build      # pertama kali / setelah kode berubah
+# Produksi (image dibangun GitHub Actions, workflow `docker`, lalu ditarik dari GHCR):
+#   docker compose pull && docker compose up -d
+# Lokal / tanpa registry (membangun dari source):
+#   docker compose up -d --build
+#
 #   docker compose run --rm --no-deps admin node admin/cli.js set-admin <username>   # buat akun admin (sekali)
 #
 # Semua data yang harus dicadangkan ada di 2 volume: admin-data dan qa-data (webroot bisa dibangun ulang).
+# Batas memori (`mem_limit`) ada karena VPS kecil dan berbagi dengan aplikasi lain: bila satu container
+# kehabisan memori, hanya container itu yang dimatikan, bukan aplikasi lain di server.
 name: naradipta
 
 services:
   web:
+    image: ghcr.io/naradipta/naradipta-personal-web-web:${IMAGE_TAG:-latest}
     build: { context: ., target: web }
     restart: unless-stopped
+    mem_limit: 64m
     ports:
       - "127.0.0.1:${WEB_PORT:-8080}:80"   # hanya loopback; Nginx/Caddy di host yang membuka 80/443
     volumes:
       - webroot:/srv/site:ro
 
   admin:
+    image: ghcr.io/naradipta/naradipta-personal-web-admin:${IMAGE_TAG:-latest}
     build: { context: ., target: admin }
     restart: unless-stopped
+    mem_limit: 512m   # `astro build` saat Publish memakan memori paling banyak; ukur lalu sesuaikan
     environment:
       ALLOWED_ORIGIN: ${SITE_ORIGIN:-https://naradipta.com}
       PUBLIC_PATH: /admin
@@ -33,10 +43,18 @@ services:
       start_period: 120s   # build awal situs saat webroot masih kosong
 
   qa-drill:
+    image: ghcr.io/naradipta/naradipta-personal-web-qa-drill:${IMAGE_TAG:-latest}
     build: { context: ., target: qa-drill }
     restart: unless-stopped
+    mem_limit: 192m
     environment:
       ALLOWED_ORIGIN: ${LEARN_ORIGIN:-https://learn.naradipta.com}
+      APP_URL: ${LEARN_ORIGIN:-https://learn.naradipta.com}   # tautan di email verifikasi/reset
+    # Rahasia (MAIL_PROVIDER, MAIL_FROM, kunci email, ADMIN_EMAILS) ada di berkas ini, bukan di repo.
+    # Contoh isi: docker/qa-drill.env.example. Berkas opsional: tanpanya fitur email mati dan API tetap jalan.
+    env_file:
+      - path: qa-drill.env
+        required: false
     volumes:
       - qa-data:/data
     healthcheck:

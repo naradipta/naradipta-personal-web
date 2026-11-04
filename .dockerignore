@@ -9,3 +9,4 @@ raw-photos
 admin/data
 qa-drill/server/data
 .admin-data
+qa-drill.env
