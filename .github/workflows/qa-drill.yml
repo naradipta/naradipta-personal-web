@@ -1,0 +1,40 @@
+name: QA Drill
+
+on:
+  pull_request:
+    paths: ['public/learn/**', 'qa-drill/**', '.github/workflows/qa-drill.yml']
+  push:
+    branches: [main]
+    paths: ['public/learn/**', 'qa-drill/**', '.github/workflows/qa-drill.yml']
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Soal sinkron dengan data yang terbit
+        run: |
+          python3 qa-drill/tools/build-data.py
+          git diff --exit-code public/learn/data/questions.js
+      - name: Tes unit dan data
+        run: |
+          node qa-drill/tests/grade.test.js
+          node qa-drill/tests/data.test.js
+          node qa-drill/tests/server.test.js
+      - name: Build situs
+        run: npm run build
+      - name: E2E dan aksesibilitas
+        working-directory: qa-drill/tests/e2e
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+          (cd ../../.. && npx astro preview --port 4399 &)
+          (cd ../../.. && PORT=4400 STATIC_DIR=public/learn DB_PATH=$RUNNER_TEMP/qd.sqlite node qa-drill/server/server.js &)
+          curl --retry 30 --retry-delay 1 --retry-connrefused -sf http://localhost:4399/ > /dev/null
+          curl --retry 30 --retry-delay 1 --retry-connrefused -sf http://localhost:4400/ > /dev/null
+          npm test

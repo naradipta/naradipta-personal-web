@@ -1,0 +1,1118 @@
+[
+ {
+  "id": "ctfl-089",
+  "topic": "istqb",
+  "lo": "FL-1.1.2",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Tester menjalankan test dan melihat total keranjang salah. Developer lalu mencari baris kode penyebabnya dan memperbaikinya. Mana pernyataan yang benar?",
+   "en": "A tester runs a test and sees a wrong cart total. A developer then finds the faulty code line and fixes it. Which statement is correct?"
+  },
+  "options": {
+   "id": [
+    "Tester melakukan testing (memunculkan failure); developer melakukan debugging (memperbaiki penyebab)",
+    "Keduanya melakukan debugging karena menemukan failure dan memperbaikinya sama-sama debugging",
+    "Tester melakukan debugging untuk memperbaiki kode, sedangkan developer melakukan testing tambahan",
+    "Menemukan failure dan memperbaiki defect adalah satu aktivitas yang sama bernama testing"
+   ],
+   "en": [
+    "The tester does testing (exposing the failure); the developer does debugging (fixing the cause)",
+    "Both do debugging because finding a failure and fixing it are both debugging",
+    "The tester does debugging to fix the code, while the developer does additional testing",
+    "Finding a failure and fixing a defect are one and the same activity called testing"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Testing memicu failure atau menemukan defect; debugging menganalisis dan memperbaiki penyebabnya. Konfirmasi perbaikan kembali menjadi testing.",
+   "en": "Testing triggers failures or finds defects; debugging analyses and fixes the cause. Verifying the fix is testing again."
+  }
+ },
+ {
+  "id": "ctfl-090",
+  "topic": "istqb",
+  "lo": "FL-1.2.3",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Analis salah memahami aturan diskon (error), sehingga kode memakai rumus yang keliru (defect), dan pelanggan melihat harga salah (failure). Apa root cause paling awal dalam rantai ini?",
+   "en": "An analyst misunderstood the discount rule (error), so the code used a wrong formula (defect), and a customer saw a wrong price (failure). What is the earliest root cause in this chain?"
+  },
+  "options": {
+   "id": [
+    "Kesalahpahaman aturan diskon oleh analis",
+    "Harga salah yang akhirnya dilihat oleh pelanggan pada halaman pembayaran aplikasi",
+    "Rumus yang keliru pada kode program yang menghitung diskon untuk setiap pesanan",
+    "Jumlah test case yang kurang untuk mencakup semua kombinasi aturan diskon yang ada"
+   ],
+   "en": [
+    "The analyst's misunderstanding of the discount rule",
+    "The wrong price the customer finally saw on the application's payment page",
+    "The wrong formula in the program code that calculates the discount for each order",
+    "Too few test cases to cover all the combinations of the existing discount rules"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Root cause adalah penyebab awal yang jika dihilangkan mencegah defect: di sini kesalahpahaman (error). Defect ada di kode; failure yang terlihat pengguna.",
+   "en": "A root cause is the earliest cause which, if removed, prevents the defect: here the misunderstanding (error). The defect is in the code; the failure is what users see."
+  }
+ },
+ {
+  "id": "ctfl-091",
+  "topic": "istqb",
+  "lo": "FL-1.3.1",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Sekitar 70% defect rilis lalu ditemukan di modul pembayaran, sementara modul lain hampir bersih. Prinsip testing mana yang paling menjelaskan ini, dan apa tindakannya?",
+   "en": "About 70% of the last release's defects were found in the payment module while other modules were almost clean. Which testing principle best explains this, and what follows?"
+  },
+  "options": {
+   "id": [
+    "Defect clustering: fokuskan lebih banyak testing pada modul pembayaran",
+    "Absence-of-defects fallacy: berhenti menguji modul lain",
+    "Testing shows presence of defects: rilis ditunda selamanya",
+    "Exhaustive testing: uji semua kombinasi modul pembayaran"
+   ],
+   "en": [
+    "Defect clustering: focus more testing on the payment module",
+    "Absence-of-defects fallacy: stop testing other modules",
+    "Testing shows the presence of defects: delay the release forever",
+    "Exhaustive testing: test every combination in the payment module"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Defect clustering: sejumlah kecil modul memuat sebagian besar defect, jadi alokasi testing berbasis risiko perlu menyesuaikan. Tetap jangan menghentikan testing di modul lain (pesticide paradox dan konteks).",
+   "en": "Defect clustering: a small number of modules contains most defects, so risk-based allocation should adapt. Still don't stop testing elsewhere."
+  }
+ },
+ {
+  "id": "ctfl-092",
+  "topic": "istqb",
+  "lo": "FL-1.4.4",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Requirement R-12 berubah. Manfaat traceability dua arah antara requirement, test case, dan hasil test dalam situasi ini adalah...",
+   "en": "Requirement R-12 changes. The benefit of bidirectional traceability between requirements, test cases and results in this situation is..."
+  },
+  "options": {
+   "id": [
+    "Segera terlihat test case mana yang perlu ditinjau atau diubah (analisis dampak)",
+    "Seluruh test case otomatis ditulis ulang oleh sistem sesuai requirement yang berubah",
+    "Requirement itu tidak perlu diuji lagi karena sudah tercatat dalam matriks keterlacakan",
+    "Defect yang terkait dengan requirement tersebut otomatis diperbaiki oleh tool"
+   ],
+   "en": [
+    "It is immediately visible which test cases must be reviewed or changed (impact analysis)",
+    "All test cases are rewritten automatically by the system to match the changed requirement",
+    "The requirement no longer needs testing since it is recorded in the traceability matrix",
+    "Defects tied to that requirement are fixed automatically by the tool"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Traceability mendukung analisis dampak perubahan, penilaian cakupan, dan pelaporan status terhadap requirement.",
+   "en": "Traceability supports change impact analysis, coverage assessment and status reporting against requirements."
+  }
+ },
+ {
+  "id": "ctfl-093",
+  "topic": "istqb",
+  "lo": "FL-1.5.3",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Apa keuntungan utama dan risiko dari tingkat independensi testing yang tinggi (tester dari tim terpisah)?",
+   "en": "What is the main benefit and risk of a high level of test independence (testers from a separate team)?"
+  },
+  "options": {
+   "id": [
+    "Keuntungan: sudut pandang berbeda dan bebas bias penulis; risiko: terisolasi dan tanggung jawab kualitas memudar",
+    "Keuntungan: komunikasi tim tidak diperlukan lagi; risiko: hampir tidak ada risiko berarti",
+    "Keuntungan: defect dijamin nol setelah testing; risiko: biaya tool menjadi lebih besar",
+    "Keuntungan: developer tidak perlu menguji kodenya sendiri; risiko: tidak ada sama sekali"
+   ],
+   "en": [
+    "Benefit: different perspective and freedom from author bias; risk: isolation and fading ownership of quality",
+    "Benefit: team communication is no longer needed; risk: hardly any meaningful risk",
+    "Benefit: zero defects guaranteed after testing; risk: tool costs become larger",
+    "Benefit: developers need not test their own code; risk: none at all"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Independensi membantu melihat asumsi yang terlewat, tetapi dapat memutus komunikasi dan membuat tim mengandalkan 'tester akan menemukan'.",
+   "en": "Independence helps expose missed assumptions but can break communication and breed 'the testers will catch it' thinking."
+  }
+ },
+ {
+  "id": "ctfl-094",
+  "topic": "istqb",
+  "lo": "FL-1.4.5",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Siapa yang umumnya merencanakan, memantau, dan mengendalikan aktivitas test serta melaporkan status, dibanding yang merancang dan menjalankan test?",
+   "en": "Who typically plans, monitors and controls test activities and reports status, as opposed to designing and executing tests?"
+  },
+  "options": {
+   "id": [
+    "Peran test management",
+    "Peran testing",
+    "Peran product owner saja",
+    "Peran operasi infrastruktur"
+   ],
+   "en": [
+    "The test management role",
+    "The testing role",
+    "The product owner role only",
+    "The infrastructure operations role"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Dua peran: test management (perencanaan, pemantauan, kontrol) dan testing (analisis, desain, implementasi, eksekusi). Satu orang bisa memegang keduanya.",
+   "en": "Two roles: test management (planning, monitoring, control) and testing (analysis, design, implementation, execution). One person can hold both."
+  }
+ },
+ {
+  "id": "ctfl-095",
+  "topic": "istqb",
+  "lo": "FL-2.1.3",
+  "k": 1,
+  "level": 1,
+  "type": "mcq",
+  "q": {
+   "id": "Pada TDD (test-driven development), urutan kerja yang benar adalah...",
+   "en": "In TDD (test-driven development), the correct working order is..."
+  },
+  "options": {
+   "id": [
+    "Tulis test yang gagal, tulis kode agar lolos, lalu refactor",
+    "Tulis kode, lalu tulis test di akhir sprint",
+    "Tulis dokumentasi, lalu test manual",
+    "Refactor, lalu tulis test"
+   ],
+   "en": [
+    "Write a failing test, write code to pass it, then refactor",
+    "Write code, then write tests at the end of the sprint",
+    "Write documentation, then manual tests",
+    "Refactor, then write tests"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Test-first approaches menulis test sebelum kode (red, green, refactor), sehingga test memandu desain.",
+   "en": "Test-first approaches write tests before code (red, green, refactor), so tests guide the design."
+  }
+ },
+ {
+  "id": "ctfl-096",
+  "topic": "istqb",
+  "lo": "FL-2.1.4",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Mengapa pipeline CI/CD yang menjalankan regression otomatis pada setiap commit mendukung testing?",
+   "en": "Why does a CI/CD pipeline that runs automated regression on every commit support testing?"
+  },
+  "options": {
+   "id": [
+    "Memberi umpan balik cepat atas perubahan sehingga defect cepat terlihat",
+    "Menghilangkan kebutuhan test case karena pipeline sudah memeriksa semua perubahan kode",
+    "Menjamin tidak ada defect yang lolos ke produksi selama pipeline berwarna hijau",
+    "Menggantikan semua testing manual sehingga tester dapat dialihkan ke pekerjaan lain"
+   ],
+   "en": [
+    "Gives fast feedback on changes so defects show up quickly",
+    "Removes the need for test cases because the pipeline already checks every code change",
+    "Guarantees no defects reach production as long as the pipeline stays green",
+    "Replaces all manual testing so testers can be reassigned to other work"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "DevOps menekankan umpan balik cepat dan otomasi. Pipeline mengurangi risiko tetapi tidak menjamin bebas defect dan tidak menggantikan eksploratori.",
+   "en": "DevOps stresses fast feedback and automation. A pipeline lowers risk but does not guarantee zero defects or replace exploratory testing."
+  }
+ },
+ {
+  "id": "ctfl-097",
+  "topic": "istqb",
+  "lo": "FL-2.1.6",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Di retrospective sprint, tim menemukan banyak test otomasi flaky yang memperlambat rilis. Hasil retrospective yang paling sesuai tujuannya adalah...",
+   "en": "In a sprint retrospective the team finds many flaky automated tests slowing releases. The outcome that best fits a retrospective's purpose is..."
+  },
+  "options": {
+   "id": [
+    "Menyepakati tindakan perbaikan proses, mis. stabilisasi test dan aturan karantina, lalu meninjaunya",
+    "Menyalahkan tester yang menulis test yang flaky agar kejadian serupa tidak terulang",
+    "Menghapus semua test otomasi supaya rilis tidak lagi terhambat oleh test yang gagal",
+    "Menunda pembahasan sampai rilis selesai agar tim tidak terganggu tekanan jadwal"
+   ],
+   "en": [
+    "Agreeing process improvement actions, e.g. stabilising tests and a quarantine rule, then reviewing them",
+    "Blaming the tester who wrote the flaky tests so a similar thing does not happen again",
+    "Deleting all automated tests so releases are no longer held up by failing tests",
+    "Postponing the discussion until the release is done so the team is not distracted by schedule pressure"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Retrospective menghasilkan perbaikan proses dan test yang disepakati tim, tanpa menyalahkan individu.",
+   "en": "A retrospective yields team-agreed improvements to process and testing, without blaming individuals."
+  }
+ },
+ {
+  "id": "ctfl-098",
+  "topic": "istqb",
+  "lo": "FL-2.2.1",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Tes yang memanggil API layanan pesanan dan layanan pembayaran bersama-sama untuk memastikan data dan kontrak antarlayanan benar termasuk level...",
+   "en": "A test that calls the order service and payment service APIs together to check data and contracts between services is at the level of..."
+  },
+  "options": {
+   "id": [
+    "Integration testing",
+    "Component testing",
+    "Acceptance testing",
+    "Maintenance testing"
+   ],
+   "en": [
+    "Integration testing",
+    "Component testing",
+    "Acceptance testing",
+    "Maintenance testing"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Integration testing berfokus pada interaksi antar komponen atau sistem. Component testing menguji satu unit terisolasi; acceptance menilai kesiapan dari sisi bisnis; maintenance testing bukan level, melainkan pengujian saat sistem berubah.",
+   "en": "Integration testing focuses on interactions between components or systems. Component testing checks one isolated unit; acceptance judges business readiness; maintenance testing is not a level but testing during system change."
+  }
+ },
+ {
+  "id": "ctfl-099",
+  "topic": "istqb",
+  "lo": "FL-2.2.2",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Mana yang termasuk functional testing, bukan non-functional?",
+   "en": "Which is functional testing rather than non-functional?"
+  },
+  "options": {
+   "id": [
+    "Memeriksa perhitungan pajak pada invoice",
+    "Mengukur waktu respons dengan 1.000 pengguna bersamaan",
+    "Memeriksa kemudahan dipelajari antarmuka baru",
+    "Memeriksa data tetap aman saat serangan injeksi"
+   ],
+   "en": [
+    "Checking the tax calculation on an invoice",
+    "Measuring response time with 1,000 concurrent users",
+    "Checking how easy a new interface is to learn",
+    "Checking data stays safe under an injection attack"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Functional testing menilai apa yang dilakukan sistem. Performa, usability, dan keamanan adalah karakteristik non-fungsional.",
+   "en": "Functional testing evaluates what the system does. Performance, usability and security are non-functional characteristics."
+  }
+ },
+ {
+  "id": "ctfl-100",
+  "topic": "istqb",
+  "lo": "FL-2.3.1",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Basis data produksi akan dimigrasikan ke platform baru tanpa perubahan fitur. Testing yang tepat?",
+   "en": "The production database will be migrated to a new platform with no feature change. What testing fits?"
+  },
+  "options": {
+   "id": [
+    "Maintenance testing: uji migrasi data, lingkungan baru, dan regression agar fungsi tetap benar",
+    "Tidak perlu testing karena tidak ada fitur yang berubah selama proses migrasi berlangsung",
+    "Hanya component testing satu fungsi, karena perubahan terjadi di lapisan penyimpanan",
+    "Hanya testing performa yang dijalankan setahun setelah migrasi selesai dilakukan"
+   ],
+   "en": [
+    "Maintenance testing: test data migration, the new environment, and regression to keep behaviour correct",
+    "No testing is needed because no feature changes while the migration is under way",
+    "Only component testing of one function, since the change is in the storage layer",
+    "Only performance testing run a year after the migration has been completed"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Migrasi adalah pemicu maintenance testing, dengan analisis dampak untuk menentukan cakupan regression.",
+   "en": "Migration is a trigger for maintenance testing, with impact analysis to scope regression."
+  }
+ },
+ {
+  "id": "ctfl-101",
+  "topic": "istqb",
+  "lo": "FL-3.1.2",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Jenis defect mana yang paling efektif ditemukan oleh static testing pada tahap requirement?",
+   "en": "Which kind of defect is static testing at the requirement stage most effective at finding?"
+  },
+  "options": {
+   "id": [
+    "Requirement yang ambigu atau saling bertentangan",
+    "Kebocoran memori saat beban tinggi",
+    "Lonjakan waktu respons pada jam sibuk",
+    "Crash pada perangkat tertentu"
+   ],
+   "en": [
+    "Ambiguous or contradictory requirements",
+    "Memory leaks under high load",
+    "Response-time spikes at peak hours",
+    "Crashes on a specific device"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Static testing memeriksa work product tanpa menjalankan kode. Masalah runtime seperti memori, performa, dan perangkat butuh dynamic testing.",
+   "en": "Static testing examines work products without running code. Runtime issues such as memory, performance and devices need dynamic testing."
+  }
+ },
+ {
+  "id": "ctfl-102",
+  "topic": "istqb",
+  "lo": "FL-3.1.3",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Mana yang lebih mungkin ditemukan oleh static analysis tool daripada oleh dynamic testing biasa?",
+   "en": "Which is more likely to be found by a static analysis tool than by ordinary dynamic testing?"
+  },
+  "options": {
+   "id": [
+    "Kode yang tidak pernah dijangkau (unreachable) dan pelanggaran standar penulisan kode",
+    "Waktu respons lambat pada beban tinggi",
+    "Layout rusak di browser tertentu",
+    "Salah hitung hanya pada input tertentu saat runtime"
+   ],
+   "en": [
+    "Unreachable code and coding-standard violations",
+    "Slow response time under load",
+    "Broken layout in a specific browser",
+    "Miscalculation only for certain runtime inputs"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Static analysis menemukan masalah struktur kode tanpa menjalankannya. Perilaku runtime muncul lewat dynamic testing.",
+   "en": "Static analysis finds code-structure problems without executing it. Runtime behaviour surfaces through dynamic testing."
+  }
+ },
+ {
+  "id": "ctfl-103",
+  "topic": "istqb",
+  "lo": "FL-3.2.2",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Urutan aktivitas review yang benar adalah...",
+   "en": "The correct order of review activities is..."
+  },
+  "options": {
+   "id": [
+    "Planning, review initiation, individual review, issue communication and analysis, fixing and reporting",
+    "Individual review, planning, fixing, review initiation, communication",
+    "Planning, fixing and reporting, individual review, initiation, communication",
+    "Review initiation, planning, communication, individual review, fixing"
+   ],
+   "en": [
+    "Planning, review initiation, individual review, issue communication and analysis, fixing and reporting",
+    "Individual review, planning, fixing, review initiation, communication",
+    "Planning, fixing and reporting, individual review, initiation, communication",
+    "Review initiation, planning, communication, individual review, fixing"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Mulai dari perencanaan, memulai review, review individual, diskusi dan analisis temuan, lalu perbaikan dan pelaporan.",
+   "en": "Start with planning, initiate the review, individual review, discuss and analyse findings, then fix and report."
+  }
+ },
+ {
+  "id": "ctfl-104",
+  "topic": "istqb",
+  "lo": "FL-3.2.4",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Review yang dipimpin penulis untuk menjelaskan work product kepada peserta dan mengumpulkan umpan balik, tanpa proses formal ketat, disebut...",
+   "en": "A review led by the author to explain the work product to participants and gather feedback, without a strict formal process, is called a..."
+  },
+  "options": {
+   "id": [
+    "Walkthrough",
+    "Inspection",
+    "Technical review oleh pakar saja",
+    "Informal review tanpa peserta"
+   ],
+   "en": [
+    "Walkthrough",
+    "Inspection",
+    "Technical review by experts only",
+    "Informal review with no participants"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Walkthrough dipimpin penulis. Inspection paling formal dengan peran, aturan masuk/keluar, dan metrik, serta dipimpin fasilitator terlatih.",
+   "en": "A walkthrough is author-led. An inspection is the most formal, with roles, entry/exit rules and metrics, led by a trained facilitator."
+  }
+ },
+ {
+  "id": "ctfl-105",
+  "topic": "istqb",
+  "lo": "FL-3.2.3",
+  "k": 1,
+  "level": 1,
+  "type": "mcq",
+  "q": {
+   "id": "Dalam review formal, siapa yang mencatat isu dan keputusan yang muncul selama pertemuan?",
+   "en": "In a formal review, who records the issues and decisions raised during the meeting?"
+  },
+  "options": {
+   "id": [
+    "Scribe (pencatat)",
+    "Author",
+    "Manager",
+    "Reviewer lain secara bergilir tanpa peran"
+   ],
+   "en": [
+    "The scribe",
+    "The author",
+    "The manager",
+    "Any reviewer in turn with no role"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Peran review: manager, author, facilitator/moderator, review leader, reviewer, dan scribe yang mencatat temuan.",
+   "en": "Review roles: manager, author, facilitator/moderator, review leader, reviewer and the scribe who records findings."
+  }
+ },
+ {
+  "id": "ctfl-106",
+  "topic": "istqb",
+  "lo": "FL-4.2.2",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Pendaftaran menerima umur 18 sampai 64 (bilangan bulat, inklusif). Nilai uji BVA dua nilai yang tepat?",
+   "en": "Registration accepts ages 18 to 64 (integers, inclusive). The correct two-value BVA test values?"
+  },
+  "options": {
+   "id": [
+    "17, 18, 64, 65",
+    "18, 19, 63, 64",
+    "17, 18, 19, 63, 64, 65",
+    "18, 64"
+   ],
+   "en": [
+    "17, 18, 64, 65",
+    "18, 19, 63, 64",
+    "17, 18, 19, 63, 64, 65",
+    "18, 64"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "BVA dua nilai: tiap batas bersama tetangganya di partisi tidak valid: 18 dengan 17, 64 dengan 65.",
+   "en": "Two-value BVA: each boundary with its neighbour in the invalid partition: 18 with 17, 64 with 65."
+  }
+ },
+ {
+  "id": "ctfl-107",
+  "topic": "istqb",
+  "lo": "FL-4.2.3",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Aturan ongkir: Jika Ekspres = Ya dan berat > 5 kg, biaya Rp50.000. Ekspres = Ya dan berat <= 5 kg, Rp30.000. Ekspres = Tidak dan berat > 5 kg, Rp20.000. Ekspres = Tidak dan berat <= 5 kg, Rp10.000. Paket 3 kg dikirim non-ekspres. Biayanya?",
+   "en": "Shipping rules: Express = Yes and weight > 5 kg costs Rp50,000. Express = Yes and weight <= 5 kg, Rp30,000. Express = No and weight > 5 kg, Rp20,000. Express = No and weight <= 5 kg, Rp10,000. A 3 kg parcel is sent non-express. The cost?"
+  },
+  "options": {
+   "id": [
+    "Rp10.000",
+    "Rp20.000",
+    "Rp30.000",
+    "Rp50.000"
+   ],
+   "en": [
+    "Rp10.000",
+    "Rp20.000",
+    "Rp30.000",
+    "Rp50.000"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Kondisi: Ekspres = Tidak, berat > 5 = Tidak, cocok dengan rule keempat: Rp10.000.",
+   "en": "Conditions: Express = No, weight > 5 = No match rule four: Rp10,000."
+  }
+ },
+ {
+  "id": "ctfl-108",
+  "topic": "istqb",
+  "lo": "FL-4.3.1",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Fungsi memiliki 10 statement yang dapat dieksekusi. Suite test mengeksekusi 8 di antaranya. Berapa statement coverage?",
+   "en": "A function has 10 executable statements. The test suite executes 8 of them. What is the statement coverage?"
+  },
+  "options": {
+   "id": [
+    "8%",
+    "20%",
+    "80%",
+    "100%"
+   ],
+   "en": [
+    "8%",
+    "20%",
+    "80%",
+    "100%"
+   ]
+  },
+  "answer": 2,
+  "exp": {
+   "id": "Statement coverage = statement yang dieksekusi / total = 8 / 10 = 80%.",
+   "en": "Statement coverage = executed statements / total = 8 / 10 = 80%."
+  }
+ },
+ {
+  "id": "ctfl-109",
+  "topic": "istqb",
+  "lo": "FL-4.3.2",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Kode memiliki dua keputusan if/else yang berurutan dan independen (total 4 branch). Test yang ada menjalankan 3 branch. Berapa branch coverage?",
+   "en": "The code has two independent consecutive if/else decisions (4 branches in total). Existing tests exercise 3 branches. What is the branch coverage?"
+  },
+  "options": {
+   "id": [
+    "25%",
+    "50%",
+    "75%",
+    "100%"
+   ],
+   "en": [
+    "25%",
+    "50%",
+    "75%",
+    "100%"
+   ]
+  },
+  "answer": 2,
+  "exp": {
+   "id": "Branch coverage = branch yang dijalankan / total branch = 3 / 4 = 75%. 100% branch coverage selalu menjamin 100% statement coverage, tetapi tidak sebaliknya.",
+   "en": "Branch coverage = executed branches / total = 3 / 4 = 75%. 100% branch coverage guarantees 100% statement coverage, but not vice versa."
+  }
+ },
+ {
+  "id": "ctfl-110",
+  "topic": "istqb",
+  "lo": "FL-4.4.1",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Tester menguji form dengan input kosong, spasi, emoji, dan string sangat panjang karena pengalaman bahwa input seperti itu sering memicu bug. Teknik apa ini?",
+   "en": "A tester tries a form with empty input, spaces, emoji and a very long string because experience shows such inputs often trigger bugs. Which technique is this?"
+  },
+  "options": {
+   "id": [
+    "Error guessing",
+    "Boundary value analysis",
+    "Decision table testing",
+    "Statement testing"
+   ],
+   "en": [
+    "Error guessing",
+    "Boundary value analysis",
+    "Decision table testing",
+    "Statement testing"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Error guessing memakai pengetahuan dan pengalaman tester tentang di mana defect biasanya muncul, tanpa model formal.",
+   "en": "Error guessing uses the tester's knowledge and experience of where defects typically occur, with no formal model."
+  }
+ },
+ {
+  "id": "ctfl-111",
+  "topic": "istqb",
+  "lo": "FL-4.5.2",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Acceptance criteria mana yang paling baik untuk story 'login'?",
+   "en": "Which acceptance criterion is best for a 'login' story?"
+  },
+  "options": {
+   "id": [
+    "Setelah 5 kali password salah berturut-turut, akun dikunci 15 menit dan muncul pesan penguncian",
+    "Login harus aman, nyaman, dan cepat bagi seluruh jenis pengguna aplikasi",
+    "Sistem harus bagus dan berfungsi dengan baik dalam semua kondisi penggunaan",
+    "Developer menulis kode login dengan rapi serta mengikuti standar penulisan kode"
+   ],
+   "en": [
+    "After 5 consecutive wrong passwords the account is locked for 15 minutes and a lock message shows",
+    "Login must be secure, pleasant and fast for every kind of application user",
+    "The system must be good and work well under all conditions of use",
+    "The developer writes tidy login code and follows the coding standard"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Acceptance criteria baik spesifik, dapat diuji, dan tidak ambigu sehingga langsung menjadi test.",
+   "en": "Good acceptance criteria are specific, testable and unambiguous so they turn straight into tests."
+  }
+ },
+ {
+  "id": "ctfl-112",
+  "topic": "istqb",
+  "lo": "FL-5.1.3",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Mana yang merupakan contoh exit criteria, bukan entry criteria?",
+   "en": "Which is an example of exit criteria rather than entry criteria?"
+  },
+  "options": {
+   "id": [
+    "Semua test kritis lolos dan tidak ada defect kritis yang masih terbuka",
+    "Lingkungan test sudah siap dan dapat diakses",
+    "Data uji sudah tersedia",
+    "Build sudah lolos smoke test"
+   ],
+   "en": [
+    "All critical tests pass and no critical defects remain open",
+    "The test environment is ready and accessible",
+    "Test data is available",
+    "The build has passed smoke testing"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Entry criteria menentukan kesiapan memulai; exit criteria menentukan kapan testing dianggap cukup selesai.",
+   "en": "Entry criteria define readiness to start; exit criteria define when testing is considered done enough."
+  }
+ },
+ {
+  "id": "ctfl-113",
+  "topic": "istqb",
+  "lo": "FL-5.1.4",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Tiga sprint lalu, tim menyelesaikan pengujian 20, 24, dan 22 test case per sprint. Masih ada 66 test case yang harus diuji. Dengan ekstrapolasi dari rata-rata, perkiraan jumlah sprint?",
+   "en": "In the last three sprints the team finished testing 20, 24 and 22 test cases per sprint. 66 test cases remain. Extrapolating from the average, about how many sprints are needed?"
+  },
+  "options": {
+   "id": [
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "en": [
+    "2",
+    "3",
+    "4",
+    "5"
+   ]
+  },
+  "answer": 1,
+  "exp": {
+   "id": "Rata-rata (20+24+22)/3 = 22 per sprint. 66 / 22 = 3 sprint. Ekstrapolasi memakai data historis proyek yang sama.",
+   "en": "Average (20+24+22)/3 = 22 per sprint. 66 / 22 = 3 sprints. Extrapolation uses historical data from the same project."
+  }
+ },
+ {
+  "id": "ctfl-114",
+  "topic": "istqb",
+  "lo": "FL-5.1.5",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Risiko = kemungkinan x dampak (skala 1-5). TC-A: 4 x 5, TC-B: 5 x 2, TC-C: 3 x 4, TC-D: 2 x 2. Urutan eksekusi berbasis risiko dari tertinggi?",
+   "en": "Risk = likelihood x impact (scale 1-5). TC-A: 4 x 5, TC-B: 5 x 2, TC-C: 3 x 4, TC-D: 2 x 2. Risk-based execution order from highest?"
+  },
+  "options": {
+   "id": [
+    "A, C, B, D",
+    "B, A, C, D",
+    "A, B, C, D",
+    "D, B, C, A"
+   ],
+   "en": [
+    "A, C, B, D",
+    "B, A, C, D",
+    "A, B, C, D",
+    "D, B, C, A"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "A = 20, C = 12, B = 10, D = 4, jadi A, C, B, D.",
+   "en": "A = 20, C = 12, B = 10, D = 4, so A, C, B, D."
+  }
+ },
+ {
+  "id": "ctfl-115",
+  "topic": "istqb",
+  "lo": "FL-5.1.7",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Dalam testing quadrants, exploratory testing dan user acceptance testing yang mengkritik produk dari sisi bisnis berada di kuadran...",
+   "en": "In the testing quadrants, exploratory testing and user acceptance testing that critique the product from the business side belong to the quadrant..."
+  },
+  "options": {
+   "id": [
+    "Business-facing, critique product (Q3)",
+    "Technology-facing, support the team (Q1)",
+    "Business-facing, support the team (Q2)",
+    "Technology-facing, critique product (Q4)"
+   ],
+   "en": [
+    "Business-facing, critique product (Q3)",
+    "Technology-facing, support the team (Q1)",
+    "Business-facing, support the team (Q2)",
+    "Technology-facing, critique product (Q4)"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Q1: component/integration; Q2: functional examples dan story tests; Q3: eksploratori, usability, UAT; Q4: performa, keamanan, dan karakteristik non-fungsional lain.",
+   "en": "Q1: component/integration; Q2: functional examples and story tests; Q3: exploratory, usability, UAT; Q4: performance, security and other non-functional characteristics."
+  }
+ },
+ {
+  "id": "ctfl-116",
+  "topic": "istqb",
+  "lo": "FL-5.2.2",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Mana yang merupakan product risk (bukan project risk)?",
+   "en": "Which is a product risk (not a project risk)?"
+  },
+  "options": {
+   "id": [
+    "Pembulatan salah pada hitungan cicilan yang merugikan pelanggan",
+    "Anggota tim kunci pindah ke perusahaan lain di tengah proyek yang sedang berjalan",
+    "Lingkungan test terlambat tersedia sehingga jadwal eksekusi tes bergeser dua minggu",
+    "Anggaran untuk tool testing dipotong oleh manajemen pada kuartal berikutnya"
+   ],
+   "en": [
+    "A rounding error in instalment calculation that harms customers",
+    "A key team member leaves for another company in the middle of the running project",
+    "The test environment arrives late so the test execution schedule slips by two weeks",
+    "The budget for testing tools is cut by management in the following quarter"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Product risk menyangkut kualitas produk; project risk menyangkut manajemen dan kontrol proyek (orang, jadwal, anggaran, lingkungan).",
+   "en": "Product risks concern product quality; project risks concern project management and control (people, schedule, budget, environment)."
+  }
+ },
+ {
+  "id": "ctfl-117",
+  "topic": "istqb",
+  "lo": "FL-5.2.1",
+  "k": 1,
+  "level": 1,
+  "type": "mcq",
+  "q": {
+   "id": "Tingkat risiko ditentukan oleh kombinasi...",
+   "en": "Risk level is determined by the combination of..."
+  },
+  "options": {
+   "id": [
+    "Kemungkinan (likelihood) dan dampak (impact)",
+    "Jumlah tester dan jumlah developer",
+    "Jumlah baris kode dan jumlah test",
+    "Harga tool dan lama sprint"
+   ],
+   "en": [
+    "Likelihood and impact",
+    "Number of testers and developers",
+    "Lines of code and number of tests",
+    "Tool price and sprint length"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Risiko dinilai dari seberapa mungkin kejadiannya dan seberapa besar akibatnya.",
+   "en": "Risk is assessed by how likely the event is and how severe its consequence would be."
+  }
+ },
+ {
+  "id": "ctfl-118",
+  "topic": "istqb",
+  "lo": "FL-5.3.1",
+  "k": 1,
+  "level": 1,
+  "type": "mcq",
+  "q": {
+   "id": "Mana yang merupakan metrik progres testing?",
+   "en": "Which is a test progress metric?"
+  },
+  "options": {
+   "id": [
+    "Persentase test case yang sudah dieksekusi dari yang direncanakan",
+    "Gaji tester yang dihitung per orang untuk setiap bulan selama proyek berjalan",
+    "Warna dashboard yang dipilih tim untuk menampilkan hasil testing kepada stakeholder",
+    "Jumlah rapat yang diadakan setiap bulan oleh tim selama iterasi berlangsung"
+   ],
+   "en": [
+    "Percentage of planned test cases executed",
+    "Tester salaries calculated per person for each month while the project is running",
+    "The dashboard colour the team picked to present testing results to stakeholders",
+    "The number of meetings the team holds every month during the iteration"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Metrik umum: kemajuan eksekusi test, defect ditemukan dan diperbaiki, cakupan requirement atau kode, usaha dan biaya.",
+   "en": "Common metrics: test execution progress, defects found and fixed, requirement or code coverage, effort and cost."
+  }
+ },
+ {
+  "id": "ctfl-119",
+  "topic": "istqb",
+  "lo": "FL-5.3.2",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Apa yang sebaiknya ada di test progress/summary report untuk manajer?",
+   "en": "What should a test progress/summary report for managers contain?"
+  },
+  "options": {
+   "id": [
+    "Ringkasan testing, deviasi dari rencana, status terhadap exit criteria, metrik, dan risiko tersisa",
+    "Seluruh log eksekusi mentah dari setiap test case yang dijalankan selama iterasi berlangsung",
+    "Hanya jumlah test yang lolos tanpa konteks apa pun tentang cakupan maupun risikonya",
+    "Kode sumber seluruh test otomasi beserta riwayat perubahannya di repositori"
+   ],
+   "en": [
+    "A summary of testing, deviations from plan, status against exit criteria, metrics and remaining risks",
+    "All raw execution logs of every test case run during the iteration",
+    "Only the number of passed tests, with no context about coverage or risks",
+    "The source code of all automated tests together with their change history in the repository"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Laporan disesuaikan dengan pembacanya: ringkas, bermakna, dan mendukung keputusan.",
+   "en": "Reports are tailored to the reader: concise, meaningful and decision-supporting."
+  }
+ },
+ {
+  "id": "ctfl-120",
+  "topic": "istqb",
+  "lo": "FL-5.4.1",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Peran configuration management dalam testing adalah...",
+   "en": "The role of configuration management in testing is..."
+  },
+  "options": {
+   "id": [
+    "Mengidentifikasi dan mengendalikan versi testware dan test item agar hasil test dapat ditelusuri",
+    "Menentukan prioritas bisnis fitur dan urutan pengerjaannya bagi tim pengembangan",
+    "Menulis test case baru secara otomatis dari perubahan kode yang di-commit hari ini",
+    "Menghitung estimasi usaha testing dari jumlah requirement pada iterasi berjalan"
+   ],
+   "en": [
+    "Identifying and controlling versions of testware and test items so results are traceable",
+    "Setting the business priority of features and the order in which the team builds them",
+    "Writing new test cases automatically from the code changes committed today",
+    "Calculating testing effort estimates from the number of requirements in the iteration"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Tanpa version control, hasil test tidak dapat direproduksi atau dikaitkan dengan build yang benar.",
+   "en": "Without version control, results cannot be reproduced or tied to the correct build."
+  }
+ },
+ {
+  "id": "ctfl-121",
+  "topic": "istqb",
+  "lo": "FL-5.5.1",
+  "k": 3,
+  "level": 3,
+  "type": "mcq",
+  "q": {
+   "id": "Salah ketik nama merek di halaman checkout, sehari sebelum kampanye besar. Penentuan severity dan priority yang paling masuk akal?",
+   "en": "A brand-name typo on the checkout page, one day before a major campaign. The most sensible severity and priority?"
+  },
+  "options": {
+   "id": [
+    "Severity rendah, priority tinggi",
+    "Severity tinggi, priority rendah",
+    "Severity dan priority rendah",
+    "Severity kritis karena sistem crash"
+   ],
+   "en": [
+    "Low severity, high priority",
+    "High severity, low priority",
+    "Low severity and low priority",
+    "Critical severity because the system crashes"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Severity menyatakan dampak teknis pada fungsi; priority menyatakan urgensi perbaikan dari sisi bisnis. Typo tidak merusak fungsi tetapi mendesak diperbaiki sebelum kampanye.",
+   "en": "Severity states technical impact on function; priority states business urgency of the fix. A typo breaks no function but must be fixed before the campaign."
+  }
+ },
+ {
+  "id": "ctfl-122",
+  "topic": "istqb",
+  "lo": "FL-6.1.1",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Tool yang melaporkan baris dan branch mana yang dijalankan oleh suite test termasuk kategori...",
+   "en": "A tool that reports which lines and branches the test suite executed falls into the category of..."
+  },
+  "options": {
+   "id": [
+    "Test execution dan coverage tools",
+    "Test management tools",
+    "Performance testing tools",
+    "Collaboration tools"
+   ],
+   "en": [
+    "Test execution and coverage tools",
+    "Test management tools",
+    "Performance testing tools",
+    "Collaboration tools"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Coverage tool mengukur seberapa besar kode terlaksana oleh test, dan dikelompokkan dengan tool eksekusi test.",
+   "en": "Coverage tools measure how much code the tests exercise and are grouped with test execution tools."
+  }
+ },
+ {
+  "id": "ctfl-123",
+  "topic": "istqb",
+  "lo": "FL-6.2.1",
+  "k": 1,
+  "level": 1,
+  "type": "mcq",
+  "q": {
+   "id": "Mana yang merupakan risiko umum otomasi test?",
+   "en": "Which is a common risk of test automation?"
+  },
+  "options": {
+   "id": [
+    "Usaha perawatan script diremehkan",
+    "Eksekusi menjadi lebih konsisten",
+    "Waktu berkurang untuk tugas berulang",
+    "Penilaian lebih objektif"
+   ],
+   "en": [
+    "Script maintenance effort is underestimated",
+    "Execution becomes more consistent",
+    "Less time is spent on repetitive tasks",
+    "Assessment is more objective"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Tiga lainnya adalah manfaat. Risiko termasuk ekspektasi tidak realistis, perawatan diremehkan, dan ketergantungan berlebihan pada tool.",
+   "en": "The other three are benefits. Risks include unrealistic expectations, underestimated maintenance and over-reliance on the tool."
+  }
+ },
+ {
+  "id": "ctfl-124",
+  "topic": "istqb",
+  "lo": "FL-6.1.1",
+  "k": 2,
+  "level": 2,
+  "type": "mcq",
+  "q": {
+   "id": "Tool CI/CD yang membangun dan menjalankan test setiap ada perubahan kode termasuk kategori dukungan...",
+   "en": "A CI/CD tool that builds and runs tests on every code change belongs to the support category of..."
+  },
+  "options": {
+   "id": [
+    "DevOps tools",
+    "Static testing tools",
+    "Defect prediction",
+    "Hanya tool dokumentasi"
+   ],
+   "en": [
+    "DevOps tools",
+    "Static testing tools",
+    "Defect prediction",
+    "Documentation tools only"
+   ]
+  },
+  "answer": 0,
+  "exp": {
+   "id": "Tool DevOps mendukung build, integrasi, dan deployment otomatis sehingga test dijalankan konsisten.",
+   "en": "DevOps tools support automated build, integration and deployment so tests run consistently."
+  }
+ }
+]

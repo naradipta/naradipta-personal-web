@@ -1,0 +1,7 @@
+{
+  "name": "qa-drill-e2e",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node e2e.mjs" },
+  "devDependencies": { "axe-core": "^4.10.0", "playwright": "^1.49.0" }
+}

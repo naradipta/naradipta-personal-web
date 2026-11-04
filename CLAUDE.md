@@ -10,8 +10,12 @@ Tujuan utama: meyakinkan recruiter dan calon klien dalam beberapa menit bahwa
 pemilik situs adalah engineer QA yang kompeten di automation, tracker validation,
 dan AI-assisted QA.
 
-Situs ini **content-first dan statis**. Tidak ada database, tidak ada backend,
-tidak ada autentikasi. Konten (studi kasus / project) adalah warga kelas satu.
+Situs utama (naradipta.com) **content-first dan statis**: tidak ada database, backend, atau
+autentikasi. Konten (studi kasus / project) adalah warga kelas satu.
+
+**Satu pengecualian terdokumentasi:** QA Drill di `learn.naradipta.com` punya akun email + password
+opsional dan sinkronisasi progres lewat API Node kecil + SQLite (`qa-drill/server/`). Pengecualian ini
+berlaku HANYA untuk QA Drill; situs utama tetap tanpa backend. Keputusan pemilik repo.
 
 ## Tech Stack
 
@@ -49,6 +53,12 @@ Kalau sebuah fitur bisa dikerjakan dengan HTML statis, kerjakan dengan HTML stat
 ## Struktur Direktori
 
 ```
+public/
+└── learn/                   # QA Drill: aplikasi belajar mandiri (HTML/CSS/JS klasik, tanpa build) → learn.naradipta.com (akar subdomain)
+qa-drill/                    # sumber dan alat QA Drill (soal *.json, build-data.py, tes); TIDAK terbit
+                             # server/ = API login + sinkronisasi (Node + SQLite, tanpa dependency npm), dijalankan manual di VPS
+                             # Pengecualian terdokumentasi: QA Drill memakai JS vanilla sendiri (bukan Astro/React)
+                             # karena berupa aplikasi interaktif mandiri; detail di qa-drill/CLAUDE.md
 src/
 ├── config/
 │   └── site.ts              # nama, tagline, kontak, link sosial, daftar skills
@@ -128,7 +138,7 @@ Jangan menaruh langkah konfigurasi server ke dalam kode aplikasi.
 
 ## Yang TIDAK boleh dilakukan
 
-- Menambahkan CMS, database, atau backend
+- Menambahkan CMS, database, atau backend ke situs utama (satu-satunya pengecualian: `qa-drill/server/`, lihat atas)
 - Hardcode daftar project di dalam komponen (harus dari Content Collection)
 - Membocorkan detail internal perusahaan
 - Mengubah struktur folder tanpa memperbarui file ini
